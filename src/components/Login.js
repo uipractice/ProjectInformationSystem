@@ -1,9 +1,7 @@
 import React from 'react'
 import { useHistory } from "react-router-dom";
-
 import "./Login.css"
 import "../index.css"
-// import ClinetForm from "./ClinetForm"
 
 function Login() {
 	
