@@ -1,10 +1,9 @@
 import React from 'react'
-import ClinetForm from './components/ClinetForm'
-import Login from './components/Login'
+import ClinetForm from './components/form/ClinetForm'
+import Login from './components/login/Login'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import AdminDashboard from './components/AdminDashboard'
+import AdminDashboard from './components/admin/AdminDashboard'
 
-import './App.css';
 
 function App() {
   return (

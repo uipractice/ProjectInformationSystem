@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Logo from '../../assets/images/eoke_logo.svg'
 
 import "./ClinetForm.css"
 
@@ -68,6 +69,7 @@ function ClinetForm() {
 
   })
 
+  
   function handleClientEmailProvided(evt){
     const val = evt.target.name
     if(val === "Yes"){
@@ -289,6 +291,12 @@ function ClinetForm() {
   return (
 
     <div className='Comp_Wrapper'>
+
+        <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
+          <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="https://www.evoketechnologies.com/">
+              <img src={Logo} alt="Evoke Technologies" />
+          </a>
+        </div>
 
       <Container>
 
@@ -597,6 +605,7 @@ function ClinetForm() {
 
               <Button 
                 variant="danger" 
+                onClick={() => window.location.reload()}
                 style={{marginBottom:'80px', marginLeft:'190px', marginRight:'15px', width: '130px'}}>   Reset 
               </Button>
 

@@ -38,7 +38,7 @@
     background-position: center;
     position: relative;
     z-index: 1;
-	background-image: url("../assets/images/Login_bg.png");
+	background-image: url("../../assets/images/Login_bg.png");
 	border-bottom-right-radius:90px;
 }
 .form_main{
