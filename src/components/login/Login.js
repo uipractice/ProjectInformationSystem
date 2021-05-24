@@ -37,7 +37,12 @@ function Login() {
 	function handleLogin(e){
 		e.preventDefault()
 		if(state.adminUserName===state.enteredUserName && state.adminPassowrd===state.enteredPassword){
+			const token = '123456abcdef';
+			sessionStorage.setItem('auth-token', token);
 			history.push('/admin_dashboard');
+		}
+		else {
+			alert('Please enter the correct user or password');
 		}
 	}
 

@@ -15,7 +15,7 @@ function ShareButtonSection() {
                 <button type="button" className="btn-light work_btn work_btn_light" onClick={handleFormOpen}>Open Project Form </button>
                 <button type="button" className="btn-light work_btn work_btn_blue" data-bs-toggle="modal" data-bs-target="#shareform">Share Project Form</button>
                 
-                <div className="modal fade" id="shareform" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="shareform" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">

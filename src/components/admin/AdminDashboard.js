@@ -1,14 +1,39 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import RowHeaderValue from './RowHeaderValue'
 import ShareButtonSection from './ShareButtonSection'
 import TableBodyData from './TableBodyData'
 
 import Logo from "../../assets/images/eoke_logo.svg" 
-import User from "../../assets/images/user.svg"
+// import User from "../../assets/images/user.svg"
 
-
+import { Redirect, useHistory } from 'react-router-dom';
 
 export default function AdminDashboard() {
+
+    // window.onunload = function() {
+    //     localStorage.removeItem('auth-token');
+    // }
+
+    function handleLogout(){
+        sessionStorage.removeItem('auth-token');
+        checkAuth();
+    }
+
+    const history = useHistory();
+
+    const checkAuth = () => {
+        if (!sessionStorage.getItem('auth-token')) {
+            history.push("/");
+        } else {
+            const authToken = '123456abcdef';
+            if (sessionStorage.getItem('auth-token') === authToken) {
+                return <Redirect to="/admin_dashboard"/> 
+            } else {
+                history.push("/");
+            }
+        }
+    };
+    checkAuth();
 
     return (
         <div>
@@ -20,9 +45,9 @@ export default function AdminDashboard() {
                 
                 <ul className="navbar-nav px-3">
                     <li className="nav-item text-nowrap">
-                    <a className="nav-link" href="https://www.evoketechnologies.com/">
-                        <img src={User} alt="user"/>
-                    </a>
+                  <button  onClick={handleLogout}> Logout</button>
+                        {/* <img src={User} alt="user" onClick={()=>sessionStorage.removeItem('auth-token')} /> */}
+                   
                     </li>
                 </ul>
             </div>
