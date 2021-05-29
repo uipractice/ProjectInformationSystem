@@ -22,7 +22,7 @@ function ClinetForm() {
     workStationFirstBtn: "outline-info",
     workStationSecondBtn: "outline-info",
     workStationThirdBtn: "outline-info",
-    workStationselected: "",
+    workStationSelected: "",
 
     devTypeValue: ["Local", "Cloud Plateform", "Client Plateform"],
     devTypeFirstBtn: "outline-info",
@@ -184,7 +184,7 @@ function ClinetForm() {
         workStationFirstBtn: "info",
         workStationSecondBtn: "outline-info",
         workStationThirdBtn: "outline-info",
-        workStationselected: val        
+        workStationSelected: val        
       }) 
     }
     else if (val === "VM"){
@@ -193,7 +193,7 @@ function ClinetForm() {
         workStationFirstBtn: "outline-info",
         workStationSecondBtn: "info",
         workStationThirdBtn: "outline-info",
-        workStationselected: val        
+        workStationSelected: val        
       })
     }
     else if (val === "cloud"){
@@ -202,7 +202,7 @@ function ClinetForm() {
           workStationFirstBtn: "outline-info",
           workStationSecondBtn: "outline-info",
           workStationThirdBtn: "info",
-          workStationselected: val        
+          workStationSelected: val        
         })
     }
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import RowHeaderValue from './RowHeaderValue'
 import ShareButtonSection from './ShareButtonSection'
 import TableBodyData from './TableBodyData'
