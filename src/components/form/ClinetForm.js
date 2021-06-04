@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Logo from '../../assets/images/eoke_logo.svg'
+import axios from 'axios';
 
 import "./ClinetForm.css"
 
@@ -286,6 +287,32 @@ function ClinetForm() {
       ...state,
       [evt.target.name]: evt.target.value
     });   
+  };
+
+  function handleSubmit(e){
+    e.preventDefault();
+    const postState = {
+      projectName: state.projectName,
+      securityMeasure: state.securityMeasure,
+      informIT: state.informIT,
+      workStationSelected: state.workStationSelected,
+      devTypeSelected: state.devTypeSelected,
+      allowedWebsite: state.allowedWebsite,
+      isNDAsigned: state.isNDAsigned,
+      isGDPRcompliance: state.isGDPRcompliance,
+      isCyberSecConducted: state.isCyberSecConducted,
+      securityBreach: state.securityBreach,
+      isDisasterInsuCovered: state.isDisasterInsuCovered,
+      disasterDetails: state.disasterDetails,
+      isolationDetails: state.isolationDetails,
+      isDLPreq: state.isDLPreq,
+      isClientEmailProvided: state.isClientEmailProvided,
+ 
+    }
+    console.log(postState);
+    axios.post('http://localhost:5000/clientInfo/add', postState)
+      .then(res => console.log(res.data)) 
+      .catch(err => console.log(err))
   }
 
   return (
@@ -294,7 +321,7 @@ function ClinetForm() {
 
         <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
           <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="https://www.evoketechnologies.com/">
-              <img src={Logo} alt="Evoke Technologies" />
+              <img src={Logo} alt="Evoke Logo" />
           </a>
         </div>
 
@@ -611,7 +638,7 @@ function ClinetForm() {
 
               <Button 
                 variant="primary" 
-                type="submit" 
+                onClick = {handleSubmit}
                 style={{marginBottom:'80px', marginLeft:'20px', marginRight:'15px', width: '130px'}}> Submit 
               </Button>
               

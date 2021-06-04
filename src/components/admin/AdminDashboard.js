@@ -60,7 +60,7 @@ export default function AdminDashboard() {
                         <ShareButtonSection/>
 
                         <div className="row">
-                            <RowHeaderValue/>
+                            <RowHeaderValue  />
                             <RowHeaderValue/>
                             <RowHeaderValue/>
                             <RowHeaderValue/>
