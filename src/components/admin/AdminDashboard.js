@@ -1,7 +1,8 @@
 import React from 'react'
 import RowHeaderValue from './RowHeaderValue'
 import ShareButtonSection from './ShareButtonSection'
-import TableBodyData from './TableBodyData'
+// import TableBodyData from './TableBodyData'
+import CompleteTable from '../table/CompleteTable'
 
 import Logo from "../../assets/images/eoke_logo.svg" 
 // import User from "../../assets/images/user.svg"
@@ -66,7 +67,8 @@ export default function AdminDashboard() {
                             <RowHeaderValue/>
                         </div>
 
-                        <TableBodyData/>
+                        {/* <TableBodyData/> */}
+                        <CompleteTable/>
                         
                     </div>
                 </div>
