@@ -1,7 +1,6 @@
 import React from 'react'
-import Score from "../../assets/images/Icon_submitted.svg"
 
-function RowHeaderValue() {
+function RowHeaderValue({count, projectStatus, iconImg}) {
     
     return (             
         <div className="col-md-3 col-lg-3"> 
@@ -9,11 +8,11 @@ function RowHeaderValue() {
                 <div className="card-body">
                     <div className="row">            
                         <div className="col-md-9">
-                            <div className="count">130</div>
-                            <div className="count_text">Submitted</div>
+                            <div className="count">{count}</div>
+                            <div className="count_text">{projectStatus}</div>
                         </div>
                         <div className="col-md-3 card_icon">
-                            <img src={Score} alt="Icon" />
+                            <img src={iconImg} alt="Icon" />
                         </div>
                     </div>
                 </div>

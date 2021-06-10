@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { useTable, useSortBy, useGlobalFilter, usePagination } from "react-table"
-import axios from "axios"
+// import axios from "axios"
 import { format } from "date-fns"
 import "./table.css"
 import GlobalFilter from "./GlobalFilter"
 
-function CompleteTable(){
+function CompleteTable({data}){
   
-  const [data, setData] = useState([])
+  // const [data, setData] = useState([])
 
-  useEffect(() => {
-    axios("http://localhost:5000/clientInfo/")
-      .then((res) => {
-        setData(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios("http://localhost:5000/clientInfo/")
+  //     .then((res) => {
+  //       setData(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   data.forEach((value, index) => {
     value.serial = index + 1;
@@ -106,10 +106,12 @@ function CompleteTable(){
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
       <select name="hall" id="hall">
-        <option> Cloud </option>
-        <option selected> Filter All </option>
-        <option> other </option>
+        <option> Pending </option>
+        {/* <option selected> Filter All </option> */}
         <option> Completed </option>
+        <option> Submitted </option>
+        <option> Active </option>
+        <option> Deleted </option>
       </select>
 
       <br></br>
