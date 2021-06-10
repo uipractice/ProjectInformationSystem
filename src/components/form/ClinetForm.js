@@ -29,7 +29,7 @@ function ClinetForm() {
     devTypeThirdBtn: "outline-info",
     devTypeSelected: "",
 
-    allowedWebsite: [],
+    allowedWebsite: "",
 
     isNDAsigned: "",
     NDAsignedFirst: "outline-info",
@@ -272,7 +272,7 @@ function ClinetForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const postState = {
+    const postObj = {
       projectName: state.projectName,
       securityMeasure: state.securityMeasure,
       informIT: state.informIT,
@@ -292,11 +292,11 @@ function ClinetForm() {
       isDLPreq: state.isDLPreq,
       isClientEmailProvided: state.isClientEmailProvided,
     };
-    console.log(postState);
+    console.log(postObj);
     axios
-      .post("http://localhost:5000/clientInfo/add", postState)
+      .post("http://localhost:5000/clientInfo/add", postObj)
       .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response));
   }
 
   return (

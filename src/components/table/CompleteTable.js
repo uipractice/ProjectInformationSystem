@@ -32,7 +32,7 @@ function CompleteTable(){
 
       {
         Header: "PROJECT NAME",
-        accessor: "projectName",
+        accessor: "projectNameByIT",
         sticky: "left",
       },
       {
@@ -42,7 +42,7 @@ function CompleteTable(){
       },
       {
         Header: "PRACTICE NAME",
-        accessor: "Practice_name",
+        accessor: "practice",
         sticky: "left",
       },
       {
@@ -107,10 +107,11 @@ function CompleteTable(){
 
       <select name="hall" id="hall">
         <option> Cloud </option>
-        <option selected> Laptop </option>
+        <option selected> Filter All </option>
         <option> other </option>
         <option> Completed </option>
       </select>
+
       <br></br>
       <br></br>
 
