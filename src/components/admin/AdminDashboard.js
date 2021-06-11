@@ -74,17 +74,20 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
-        <a
-          className="navbar-brand col-md-3 col-lg-2 me-0 px-3"
-          href="https://www.evoketechnologies.com/"
-        >
-          <img src={Logo} alt="Evoke Technologies" />
-        </a>
-
+      <div className="navbar navbar-dark sticky-top  p-0 shadow header_nav">
+        <div className="row">
+            <a
+              className="navbar-brand col-md-6 px-4"
+              href="https://www.evoketechnologies.com/"
+            >
+              <img src={Logo} alt="Evoke Technologies" />
+            </a>
+            <h3>Project Information System </h3>
+        </div>
+        
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
-            <button onClick={handleLogout}> Logout</button>
+            <button onClick={handleLogout}></button>
           </li>
         </ul>
       </div>
@@ -95,10 +98,10 @@ export default function AdminDashboard() {
             <ShareButtonSection />
 
             <div className="row">
-              <RowHeaderValue projectStatus="Projects" iconImg={IconSubmitted} count={totalCount} />
+              <RowHeaderValue projectStatus="Projects" iconImg={IconProjects} count={totalCount} />        
+              <RowHeaderValue projectStatus="Submitted" iconImg={IconSubmitted} count={submittedCount} />
+              <RowHeaderValue projectStatus="Approved" iconImg={IconApproved} count={completedCount} />
               <RowHeaderValue projectStatus="Pending" iconImg={IconPending} count={pendingCount} />
-              <RowHeaderValue projectStatus="Submitted" iconImg={IconApproved} count={submittedCount} />
-              <RowHeaderValue projectStatus="Completed" iconImg={IconProjects} count={completedCount} />
             </div>
 
             <CompleteTable data={data} />

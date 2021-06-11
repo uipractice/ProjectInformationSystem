@@ -392,7 +392,30 @@ body {
         margin-top: -2px;
         margin-right: 4px;
 }
-
+.ms-sm-auto {
+    padding-bottom: 30px;
+}
+.nav-item button{
+    background:url("./assets/images/user.svg") no-repeat center center;
+    height: 33px;
+    width: 34px;
+    border: 0;
+    vertical-align: middle;
+}
+.navbar h3{
+    font-family: Lato;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 24px;
+    color: #F8A066;
+    align-items: center;
+    display: flex;
+    margin-bottom: 0;
+}
+.navbar-brand img{
+    border-right: 2px solid #7B7B7B;
+    padding-right: 15px;
+}
 /*
 @media screen and (min-height:1951px){
 	.records_table{

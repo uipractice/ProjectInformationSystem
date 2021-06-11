@@ -90,8 +90,8 @@ function CompleteTable({data}){
     canNextPage,
     canPreviousPage,
     pageOptions,
-    gotoPage,
-    pageCount,
+    // gotoPage,
+    // pageCount,
     setPageSize,
     prepareRow,
     state,
@@ -103,7 +103,11 @@ function CompleteTable({data}){
   return (
     <>
       <br></br>
-      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      <div className="filter-row">
+        <h5>PROJECTS DETAILS</h5>
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      </div>
+      
 
       <select name="hall" id="hall">
         <option> Pending </option>
@@ -114,10 +118,16 @@ function CompleteTable({data}){
         <option> Deleted </option>
       </select>
 
+      {/* <select name="hall" id="hall">
+        <option> Cloud </option>
+        <option selected> Laptop </option>
+        <option> other </option>
+        <option> Completed </option>
+      </select> */}
       <br></br>
       <br></br>
-
-      <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+      <div className="table-responsive grid tableFixHead">
+      <table {...getTableProps()} className="table table-striped ">
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -169,28 +179,41 @@ function CompleteTable({data}){
           })}
         </tbody>
       </table>
-      <br></br>
-
-      <div>
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          Previous
-        </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          Next
-        </button>{" "}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "}
+      </div>
+      <div class="table-pagination">
+      <label>Rows per page:</label>
+        <select
+          value={pageSize}
+          onChange={(e) => setPageSize(Number(e.target.value))}
+          className= "pageNum"
+        >
+          {[10, 20, 30].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              {pageSize}
+            </option>
+          ))}
+        </select>
         <span>
           Page{" "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>{" "}
         </span>
-        <span>
+        <div className="prev-next">
+        {/* <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "} */}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>{" "}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        {">"}
+        </button>{" "}
+        {/* <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "} */}
+        </div>
+        {/* <span>
           | Go to page:{" "}
           <input
             type="number"
@@ -203,17 +226,8 @@ function CompleteTable({data}){
             }}
             style={{ width: "50px" }}
           />
-        </span>{" "}
-        <select
-          value={pageSize}
-          onChange={(e) => setPageSize(Number(e.target.value))}
-        >
-          {[10, 20, 30].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
+        </span>{" "} */}
+        
       </div>
     </>
   );
