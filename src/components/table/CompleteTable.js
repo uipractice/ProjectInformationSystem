@@ -1,4 +1,5 @@
 import React from "react";
+import DeleteImg from "../../assets/images/delete.svg";
 import {
   useTable,
   useSortBy,
@@ -21,6 +22,8 @@ function CompleteTable({ data }) {
   //     })
   //     .catch((err) => console.log(err));
   // }, []);
+
+  
 
   data.forEach((value, index) => {
     value.serial = index + 1;
@@ -79,7 +82,6 @@ function CompleteTable({ data }) {
         Cell: ({ value }) => {
           return format(new Date(value), "dd/MM/yyyy");
         },
-      
       },
       {
         Header: "STATUS",
@@ -87,7 +89,16 @@ function CompleteTable({ data }) {
       },
       {
         Header: "ACTION",
-        accessor: "workStationSelected",
+        Cell: ({row}) => (
+          <a
+            href="#/"
+            onClick={(e) => {
+              console.log(row.original);
+            }}
+          >
+            <img src={DeleteImg} alt="Evoke Technologies" />
+          </a>
+        ),
       },
     ],
     []
@@ -167,11 +178,11 @@ function CompleteTable({ data }) {
                     style = { textAlign: "center" };
                     if (cell.column.id === "status") {
                       if (cell.value === "Pending") {
-                        style = { color: "red", textAlign: "center" };
-                      } else if (cell.value === "Completed") {
-                        style = { color: "green", textAlign: "center" };
-                      } else {
-                        style = { color: "black", textAlign: "center" };
+                        style = { color: "#F16A21", textAlign: "center" };
+                      } else if (cell.value === "Submitted") {
+                        style = { color: "#0066FF", textAlign: "center" };
+                      } else if (cell.value === "Completed"){
+                        style = { color: "#13BC86", textAlign: "center" };
                       }
                     }
                     return (
@@ -206,16 +217,13 @@ function CompleteTable({ data }) {
           </strong>{" "}
         </span>
         <div className="prev-next">
-
           <button onClick={() => previousPage()} disabled={!canPreviousPage}>
             {"<"}
           </button>{" "}
           <button onClick={() => nextPage()} disabled={!canNextPage}>
             {">"}
           </button>{" "}
-
         </div>
-
       </div>
     </>
   );
