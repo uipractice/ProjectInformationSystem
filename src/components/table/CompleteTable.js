@@ -1,12 +1,16 @@
-import React from "react"
-import { useTable, useSortBy, useGlobalFilter, usePagination } from "react-table"
+import React from "react";
+import {
+  useTable,
+  useSortBy,
+  useGlobalFilter,
+  usePagination,
+} from "react-table";
 // import axios from "axios"
-import { format } from "date-fns"
-import "./table.css"
-import GlobalFilter from "./GlobalFilter"
+import { format } from "date-fns";
+import "./table.css";
+import GlobalFilter from "./GlobalFilter";
 
-function CompleteTable({data}){
-  
+function CompleteTable({ data }) {
   // const [data, setData] = useState([])
 
   // useEffect(() => {
@@ -32,7 +36,21 @@ function CompleteTable({data}){
 
       {
         Header: "PROJECT NAME",
-        accessor: "projectNameByIT",
+        // accessor: "projectNameByIT",
+        Cell: ({ row }) => {
+          return (
+            <div>
+              <a
+                href="#/"
+                onClick={(e) => {
+                  console.log(row.original);
+                }}
+              >
+                {row.original.projectNameByIT}
+              </a>
+            </div>
+          );
+        },
         sticky: "left",
       },
       {
@@ -61,16 +79,11 @@ function CompleteTable({data}){
         Cell: ({ value }) => {
           return format(new Date(value), "dd/MM/yyyy");
         },
-        maxWidth: 200,
-        minWidth: 80,
-        width: 100,
+      
       },
       {
         Header: "STATUS",
         accessor: "status",
-        maxWidth: 300,
-        minWidth: 180,
-        width: 200,
       },
       {
         Header: "ACTION",
@@ -90,8 +103,6 @@ function CompleteTable({data}){
     canNextPage,
     canPreviousPage,
     pageOptions,
-    // gotoPage,
-    // pageCount,
     setPageSize,
     prepareRow,
     state,
@@ -107,7 +118,6 @@ function CompleteTable({data}){
         <h5>PROJECTS DETAILS</h5>
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       </div>
-      
 
       <select name="hall" id="hall">
         <option> Pending </option>
@@ -118,76 +128,72 @@ function CompleteTable({data}){
         <option> Deleted </option>
       </select>
 
-      {/* <select name="hall" id="hall">
-        <option> Cloud </option>
-        <option selected> Laptop </option>
-        <option> other </option>
-        <option> Completed </option>
-      </select> */}
       <br></br>
       <br></br>
       <div className="table-responsive grid tableFixHead">
-      <table {...getTableProps()} className="table table-striped ">
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  //   style={{
-                  //     borderBottom: "solid 3px red",
-                  //     background: "aliceblue",
-                  //     color: "black",
-                  //     fontWeight: "bold",
-                  //   }}
-                >
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? " 🔽"
-                        : " 🔼"
-                      : ""}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        paddingLeft: "20px",
-                        textAlign: "center",
-                        //   border: "solid 1px gray",
-                        //   background: "papayawhip",
-                      }}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
+        <table {...getTableProps()} className="table table-striped ">
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    //   style={{
+                    //     borderBottom: "solid 3px red",
+                    //     color: "black",
+                    //     fontWeight: "bold",
+                    //   }}
+                  >
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
+                    </span>
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    let style = {};
+                    style = { textAlign: "center" };
+                    if (cell.column.id === "status") {
+                      if (cell.value === "Pending") {
+                        style = { color: "red", textAlign: "center" };
+                      } else if (cell.value === "Completed") {
+                        style = { color: "green", textAlign: "center" };
+                      } else {
+                        style = { color: "black", textAlign: "center" };
+                      }
+                    }
+                    return (
+                      <td {...cell.getCellProps({ style })}>
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
-      <div class="table-pagination">
-      <label>Rows per page:</label>
+      <div className="table-pagination">
+        <label>Rows/Page:</label>
         <select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
-          className= "pageNum"
+          className="pageNum"
         >
-          {[10, 20, 30].map((pageSize) => (
+          {[7, 10, 20, 30, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>
@@ -200,37 +206,19 @@ function CompleteTable({data}){
           </strong>{" "}
         </span>
         <div className="prev-next">
-        {/* <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "} */}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-        {">"}
-        </button>{" "}
-        {/* <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "} */}
+
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {"<"}
+          </button>{" "}
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            {">"}
+          </button>{" "}
+
         </div>
-        {/* <span>
-          | Go to page:{" "}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const pageNumber = e.target.value
-                ? Number(e.target.value) - 1
-                : 0;
-              gotoPage(pageNumber);
-            }}
-            style={{ width: "50px" }}
-          />
-        </span>{" "} */}
-        
+
       </div>
     </>
   );
-};
+}
 
 export default CompleteTable;
