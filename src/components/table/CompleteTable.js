@@ -1,5 +1,7 @@
 import React from "react";
 import DeleteImg from "../../assets/images/delete.svg";
+import axios from "axios";
+
 import {
   useTable,
   useSortBy,
@@ -12,18 +14,20 @@ import "./table.css";
 import GlobalFilter from "./GlobalFilter";
 
 function CompleteTable({ data }) {
-  // const [data, setData] = useState([])
 
-  // useEffect(() => {
-  //   axios("http://localhost:5000/clientInfo/")
-  //     .then((res) => {
-  //       setData(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
-  
+  function handleUpdateStatus(row) {
+    row.original.status = "Deleted";
+    const updateStatus = row.original;
+    console.log(updateStatus.status);
+    console.log(updateStatus);
+    console.log(data);
+    const id = row.original._id;
+    console.log(id);
+    axios
+      .post("http://localhost:5000/clientInfo/update/" + id, updateStatus)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err.response));
+  }
 
   data.forEach((value, index) => {
     value.serial = index + 1;
@@ -89,11 +93,12 @@ function CompleteTable({ data }) {
       },
       {
         Header: "ACTION",
-        Cell: ({row}) => (
+        Cell: ({ row }) => (
           <a
             href="#/"
             onClick={(e) => {
-              console.log(row.original);
+              // console.log(row.original);
+              handleUpdateStatus(row);
             }}
           >
             <img src={DeleteImg} alt="Evoke Technologies" />
@@ -181,7 +186,7 @@ function CompleteTable({ data }) {
                         style = { color: "#F16A21", textAlign: "center" };
                       } else if (cell.value === "Submitted") {
                         style = { color: "#0066FF", textAlign: "center" };
-                      } else if (cell.value === "Completed"){
+                      } else if (cell.value === "Completed") {
                         style = { color: "#13BC86", textAlign: "center" };
                       }
                     }
