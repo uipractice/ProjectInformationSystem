@@ -1,14 +1,13 @@
 import React from "react";
 import DeleteImg from "../../assets/images/delete.svg";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination,
 } from "react-table";
-// import axios from "axios"
 import { format } from "date-fns";
 import "./table.css";
 import GlobalFilter from "./GlobalFilter";
@@ -20,7 +19,6 @@ function CompleteTable({ data }) {
     const updateStatus = row.original;
     console.log(updateStatus.status);
     console.log(updateStatus);
-    console.log(data);
     const id = row.original._id;
     console.log(id);
     axios
@@ -43,18 +41,42 @@ function CompleteTable({ data }) {
 
       {
         Header: "PROJECT NAME",
-        // accessor: "projectNameByIT",
         Cell: ({ row }) => {
           return (
             <div>
-              <a
-                href="#/"
-                onClick={(e) => {
-                  console.log(row.original);
+              <Link
+                to={{
+                  pathname: "/formv",
+                  state: {
+                    projectNameByIT: row.original.projectNameByIT,
+                    projectManager: row.original.projectManager,
+                    email: row.original.email,
+                    practice: row.original.practice,
+                    status: row.original.status,
+
+                    projectName: row.original.projectName,
+                    securityMeasure: row.original.securityMeasure,
+                    informIT: row.original.informIT,
+                    workStationSelected: row.original.workStationSelected,
+                    devTypeSelected: row.original.devTypeSelected,
+                    allowedWebsite: row.original.allowedWebsite,
+                    isNDAsigned: row.original.isNDAsigned,
+                    isGDPRcompliance: row.original.isGDPRcompliance,
+                    isCyberSecConducted: row.original.isCyberSecConducted,
+                    securityBreach: row.original.securityBreach,
+                    isDisasterInsuCovered: row.original.isDisasterInsuCovered,
+                    disasterDetails: row.original.disasterDetails,
+                    showInsuranceDetails: row.original.showInsuranceDetails,
+                    isIsolatedEnvReq: row.original.isIsolatedEnvReq,
+                    isolationDetails: row.original.isolationDetails,
+                    showIsolatedDetails: row.original.showIsolatedDetails,
+                    isDLPreq: row.original.isDLPreq,
+                    isClientEmailProvided: row.original.isClientEmailProvided,
+                  },
                 }}
               >
                 {row.original.projectNameByIT}
-              </a>
+              </Link>
             </div>
           );
         },
@@ -209,7 +231,7 @@ function CompleteTable({ data }) {
           onChange={(e) => setPageSize(Number(e.target.value))}
           className="pageNum"
         >
-          {[7, 10, 20, 30, 50].map((pageSize) => (
+          {[6, 10, 20, 30, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>
