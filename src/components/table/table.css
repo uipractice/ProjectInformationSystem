@@ -12,6 +12,7 @@ table th {
   padding: 8px;
 }
 .filter-row h5{
+  float:left;
   font-family: Lato;
   font-weight: bold;
   font-size: 14px;
@@ -45,6 +46,9 @@ table th {
 }
 .filter-row input:focus-visible, .filter-row select:focus-visible{
   outline: 0 !important;
+}
+.filter-row span{
+  float: right;
 }
 table tr:nth-child(even) {
   background-color: #f2f2f2;
