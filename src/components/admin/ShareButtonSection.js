@@ -1,5 +1,7 @@
 import React from 'react'
 import { useHistory } from "react-router-dom";
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 function ShareButtonSection() {
     const history = useHistory();
@@ -7,9 +9,29 @@ function ShareButtonSection() {
     function handleFormOpen(){
         history.push('/client_form');
     }
+    const [alignment, setAlignment] = React.useState('left');
+
+    const handleAlignment = (event, newAlignment) => {
+        setAlignment(newAlignment);
+    };
+
     return (
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
-            <h1 className="h2 work_area_title">Evoke Projects</h1>
+            {/* <h1 className="h2 work_area_title">Evoke Projects</h1> */}
+            <ToggleButtonGroup
+      value={alignment}
+      exclusive
+      onChange={handleAlignment}
+      aria-label="text alignment"
+    >
+      <ToggleButton value="left" aria-label="left aligned">
+          Client Project
+      </ToggleButton>
+      <ToggleButton value="center" aria-label="centered">
+          Internal Project
+      </ToggleButton>
+     
+    </ToggleButtonGroup>
             <div className="btn-toolbar mb-2 mb-md-0">
             
                 <button type="button" className="btn-light work_btn work_btn_light" onClick={handleFormOpen}>Open Project Form </button>
