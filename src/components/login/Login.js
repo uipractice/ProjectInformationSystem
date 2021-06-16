@@ -29,7 +29,7 @@ function Login() {
 		e.preventDefault()
 		if(e.keyCode === 13){
 			if(state.adminUserName===state.enteredUserName && state.adminPassowrd===state.enteredPassword){
-				history.push('/admin_dashboard');
+				history.push('/admin');
 			}
 		}		
 	}
@@ -39,7 +39,7 @@ function Login() {
 		if(state.adminUserName===state.enteredUserName && state.adminPassowrd===state.enteredPassword){
 			const token = '123456abcdef';
 			sessionStorage.setItem('auth-token', token);
-			history.push('/admin_dashboard');
+			history.push('/admin');
 		}
 		else {
 			alert('Please enter the correct user or password');

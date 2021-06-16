@@ -98,10 +98,10 @@ export default function AdminDashboard() {
             <ShareButtonSection />
 
             <div className="row">
-              <RowHeaderValue projectStatus="Projects" iconImg={IconProjects} count={totalCount} />        
-              <RowHeaderValue projectStatus="Submitted" iconImg={IconSubmitted} count={submittedCount} />
-              <RowHeaderValue projectStatus="Approved" iconImg={IconApproved} count={completedCount} />
-              <RowHeaderValue projectStatus="Pending" iconImg={IconPending} count={pendingCount} />
+              <RowHeaderValue projectStatus="Projects" iconImg={IconProjects} className="totalCount" count={totalCount} />        
+              <RowHeaderValue projectStatus="Submitted" iconImg={IconSubmitted} className="submitCount" count={submittedCount} />
+              <RowHeaderValue projectStatus="Approved" iconImg={IconApproved} className="completCount" count={completedCount} />
+              <RowHeaderValue projectStatus="Pending" iconImg={IconPending} className="pendingCount" count={pendingCount} />
             </div>
 
             <CompleteTable data={data} />

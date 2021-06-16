@@ -1,24 +1,34 @@
-import React from "react"
-import { useTable, useSortBy, useGlobalFilter, usePagination } from "react-table"
-// import axios from "axios"
-import { format } from "date-fns"
-import "./table.css"
-import GlobalFilter from "./GlobalFilter"
+import React from "react";
+import DeleteImg from "../../assets/images/delete.svg";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import {
+  useTable,
+  useSortBy,
+  useGlobalFilter,
+  usePagination,
+} from "react-table";
+import { format } from "date-fns";
+import "./table.css";
+import GlobalFilter from "./GlobalFilter";
+
 import rightIcon from "../../assets/images/right-icon.svg"
 import leftIcon from "../../assets/images/left-icon.svg"
 
-function CompleteTable({data}){
-  
-  // const [data, setData] = useState([])
+function CompleteTable({ data }) {
 
-  // useEffect(() => {
-  //   axios("http://localhost:5000/clientInfo/")
-  //     .then((res) => {
-  //       setData(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  function handleUpdateStatus(row) {
+    row.original.status = "Deleted";
+    const updateStatus = row.original;
+    console.log(updateStatus.status);
+    console.log(updateStatus);
+    const id = row.original._id;
+    console.log(id);
+    axios
+      .post("http://localhost:5000/clientInfo/update/" + id, updateStatus)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err.response));
+  }
 
   data.forEach((value, index) => {
     value.serial = index + 1;
@@ -34,7 +44,45 @@ function CompleteTable({data}){
 
       {
         Header: "PROJECT NAME",
-        accessor: "projectNameByIT",
+        Cell: ({ row }) => {
+          return (
+            <div>
+              <Link
+                to={{
+                  pathname: "/formv",
+                  state: {
+                    projectNameByIT: row.original.projectNameByIT,
+                    projectManager: row.original.projectManager,
+                    email: row.original.email,
+                    practice: row.original.practice,
+                    status: row.original.status,
+
+                    projectName: row.original.projectName,
+                    securityMeasure: row.original.securityMeasure,
+                    informIT: row.original.informIT,
+                    workStationSelected: row.original.workStationSelected,
+                    devTypeSelected: row.original.devTypeSelected,
+                    allowedWebsite: row.original.allowedWebsite,
+                    isNDAsigned: row.original.isNDAsigned,
+                    isGDPRcompliance: row.original.isGDPRcompliance,
+                    isCyberSecConducted: row.original.isCyberSecConducted,
+                    securityBreach: row.original.securityBreach,
+                    isDisasterInsuCovered: row.original.isDisasterInsuCovered,
+                    disasterDetails: row.original.disasterDetails,
+                    showInsuranceDetails: row.original.showInsuranceDetails,
+                    isIsolatedEnvReq: row.original.isIsolatedEnvReq,
+                    isolationDetails: row.original.isolationDetails,
+                    showIsolatedDetails: row.original.showIsolatedDetails,
+                    isDLPreq: row.original.isDLPreq,
+                    isClientEmailProvided: row.original.isClientEmailProvided,
+                  },
+                }}
+              >
+                {row.original.projectNameByIT}
+              </Link>
+            </div>
+          );
+        },
         sticky: "left",
       },
       {
@@ -63,20 +111,24 @@ function CompleteTable({data}){
         Cell: ({ value }) => {
           return format(new Date(value), "dd/MM/yyyy");
         },
-        maxWidth: 200,
-        minWidth: 80,
-        width: 100,
       },
       {
         Header: "STATUS",
         accessor: "status",
-        maxWidth: 300,
-        minWidth: 180,
-        width: 200,
       },
       {
         Header: "ACTION",
-        accessor: "workStationSelected",
+        Cell: ({ row }) => (
+          <a
+            href="#/"
+            onClick={(e) => {
+              // console.log(row.original);
+              handleUpdateStatus(row);
+            }}
+          >
+            <img src={DeleteImg} alt="Evoke Technologies" />
+          </a>
+        ),
       },
     ],
     []
@@ -92,8 +144,6 @@ function CompleteTable({data}){
     canNextPage,
     canPreviousPage,
     pageOptions,
-    // gotoPage,
-    // pageCount,
     setPageSize,
     prepareRow,
     state,
@@ -123,67 +173,69 @@ function CompleteTable({data}){
       </div>
       
       <div className="table-responsive grid tableFixHead">
-      <table {...getTableProps()} className="table table-striped ">
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  //   style={{
-                  //     borderBottom: "solid 3px red",
-                  //     background: "aliceblue",
-                  //     color: "black",
-                  //     fontWeight: "bold",
-                  //   }}
-                >
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? " 🔽"
-                        : " 🔼"
-                      : ""}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        paddingLeft: "20px",
-                        textAlign: "center",
-                        //   border: "solid 1px gray",
-                        //   background: "papayawhip",
-                      }}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
+        <table {...getTableProps()} className="table table-striped ">
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    //   style={{
+                    //     borderBottom: "solid 3px red",
+                    //     color: "black",
+                    //     fontWeight: "bold",
+                    //   }}
+                  >
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
+                    </span>
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    let style = {};
+                    style = { textAlign: "center" };
+                    if (cell.column.id === "status") {
+                      if (cell.value === "Pending") {
+                        style = { color: "#F16A21", textAlign: "center" };
+                      } else if (cell.value === "Submitted") {
+                        style = { color: "#0066FF", textAlign: "center" };
+                      } else if (cell.value === "Completed") {
+                        style = { color: "#13BC86", textAlign: "center" };
+                      }
+                    }
+                    return (
+                      <td {...cell.getCellProps({ style })}>
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
-      <div class="table-pagination">
-      <label>Rows per page:</label>
+      <div className="table-pagination">
+        <label>Rows/Page:</label>
         <select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
-          className= "pageNum"
+          className="pageNum"
         >
-          {[10, 20, 30].map((pageSize) => (
+          {[6, 10, 20, 30, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>
@@ -209,24 +261,9 @@ function CompleteTable({data}){
           {">>"}
         </button>{" "} */}
         </div>
-        {/* <span>
-          | Go to page:{" "}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const pageNumber = e.target.value
-                ? Number(e.target.value) - 1
-                : 0;
-              gotoPage(pageNumber);
-            }}
-            style={{ width: "50px" }}
-          />
-        </span>{" "} */}
-        
       </div>
     </>
   );
-};
+}
 
 export default CompleteTable;
