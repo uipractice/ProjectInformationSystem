@@ -110,13 +110,13 @@ body {
         border-radius: 0;
     }
 
-    .card:hover {
-        /*box-shadow: 0 6px 12px rgba(140,152,164,.25)!important;*/
+    /* .card:hover {
+        box-shadow: 0 6px 12px rgba(140,152,164,.25)!important;
     }
 
     .card:hover .count {
-        /*color:#f16a21;*/
-    }
+        color:#f16a21;
+    } */
 
     .card_icon img {
         width: 60px;
@@ -133,9 +133,9 @@ body {
         margin: 0 15px;
     }
 
-    .user_actions a img {
-        /*width:15px*/
-    }
+    /* .user_actions a img {
+        width:15px
+    } */
 
     .records_table .grid {
         /*overflow-x: visible;*/
@@ -415,6 +415,49 @@ body {
 .navbar-brand img{
     border-right: 2px solid #7B7B7B;
     padding-right: 15px;
+}
+.MuiToggleButton-root{
+    height: 36px;
+    border-radius: 0px 2px 2px 0px !important;
+    border: 1px solid #023047 !important;
+    width: 160px;
+}
+.MuiToggleButton-root.Mui-selected{
+    background: #023047 !important;
+    border-radius: 2px 0px 0px 2px !important;   
+}
+.MuiToggleButton-label{
+    font-family: Lato;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.1px;
+    color: #023047;
+}
+.MuiToggleButton-root.Mui-selected .MuiToggleButton-label{
+    color: #fff;
+}
+.project-details-form{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    margin: 40px 0;
+    text-align: center;
+}
+.project-details-form h2{
+    padding: 20px;
+    margin: 0;
+    font-family: Lato;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    color: #209EC5;
+    background: #FBFBFB;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+.project-details-form form{
+    padding: 20px 50px;
+    text-align: left;
 }
 /*
 @media screen and (min-height:1951px){

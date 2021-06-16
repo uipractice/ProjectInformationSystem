@@ -18,6 +18,34 @@ table th {
   font-size: 14px;
   line-height: 17px;
   color: #757575;
+  margin: 0;
+}
+.filter-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.filter-row input{
+  border: 1px solid #757575;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.1px;
+  color: #757575;
+  height: 28px;
+  padding: 0 10px;
+  margin-right: 10px;
+}
+.filter-row select{
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.1px;
+  color: #757575;
+  border: none;
+  background: transparent;
+}
+.filter-row input:focus-visible, .filter-row select:focus-visible{
+  outline: 0 !important;
 }
 .filter-row span{
   float: right;
@@ -66,10 +94,12 @@ table th, tfoot td {
 }
 .prev-next{
   display: inline;
+  padding-left: 10px;
 }
 .prev-next button{
   border: 0;
   font-size: 23px;
     line-height: 23px;
     color: #757575;
+    background:transparent;
 }

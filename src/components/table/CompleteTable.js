@@ -12,6 +12,9 @@ import { format } from "date-fns";
 import "./table.css";
 import GlobalFilter from "./GlobalFilter";
 
+import rightIcon from "../../assets/images/right-icon.svg"
+import leftIcon from "../../assets/images/left-icon.svg"
+
 function CompleteTable({ data }) {
 
   function handleUpdateStatus(row) {
@@ -154,20 +157,21 @@ function CompleteTable({ data }) {
       <br></br>
       <div className="filter-row">
         <h5>PROJECTS DETAILS</h5>
-        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <div>
+           
+          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          <select name="hall" id="hall">
+            <option> Pending </option>
+            {/* <option selected> Filter All </option> */}
+            <option> Completed </option>
+            <option> Submitted </option>
+            <option> Active </option>
+            <option> Deleted </option>
+          </select>
+        </div>
+        
       </div>
-
-      <select name="hall" id="hall">
-        <option> Pending </option>
-        {/* <option selected> Filter All </option> */}
-        <option> Completed </option>
-        <option> Submitted </option>
-        <option> Active </option>
-        <option> Deleted </option>
-      </select>
-
-      <br></br>
-      <br></br>
+      
       <div className="table-responsive grid tableFixHead">
         <table {...getTableProps()} className="table table-striped ">
           <thead>
@@ -244,12 +248,18 @@ function CompleteTable({ data }) {
           </strong>{" "}
         </span>
         <div className="prev-next">
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {"<"}
-          </button>{" "}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            {">"}
-          </button>{" "}
+        {/* <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "} */}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          <img src={leftIcon} alt="prev" />
+        </button>{" "}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        <img src={rightIcon} alt="next" />
+        </button>{" "}
+        {/* <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "} */}
         </div>
       </div>
     </>
