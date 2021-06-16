@@ -4,6 +4,8 @@ import { useTable, useSortBy, useGlobalFilter, usePagination } from "react-table
 import { format } from "date-fns"
 import "./table.css"
 import GlobalFilter from "./GlobalFilter"
+import rightIcon from "../../assets/images/right-icon.svg"
+import leftIcon from "../../assets/images/left-icon.svg"
 
 function CompleteTable({data}){
   
@@ -105,27 +107,21 @@ function CompleteTable({data}){
       <br></br>
       <div className="filter-row">
         <h5>PROJECTS DETAILS</h5>
-        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <div>
+           
+          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          <select name="hall" id="hall">
+            <option> Pending </option>
+            {/* <option selected> Filter All </option> */}
+            <option> Completed </option>
+            <option> Submitted </option>
+            <option> Active </option>
+            <option> Deleted </option>
+          </select>
+        </div>
+        
       </div>
       
-
-      <select name="hall" id="hall">
-        <option> Pending </option>
-        {/* <option selected> Filter All </option> */}
-        <option> Completed </option>
-        <option> Submitted </option>
-        <option> Active </option>
-        <option> Deleted </option>
-      </select>
-
-      {/* <select name="hall" id="hall">
-        <option> Cloud </option>
-        <option selected> Laptop </option>
-        <option> other </option>
-        <option> Completed </option>
-      </select> */}
-      <br></br>
-      <br></br>
       <div className="table-responsive grid tableFixHead">
       <table {...getTableProps()} className="table table-striped ">
         <thead>
@@ -204,10 +200,10 @@ function CompleteTable({data}){
           {"<<"}
         </button>{" "} */}
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
+          <img src={leftIcon} alt="prev" />
         </button>{" "}
         <button onClick={() => nextPage()} disabled={!canNextPage}>
-        {">"}
+        <img src={rightIcon} alt="next" />
         </button>{" "}
         {/* <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           {">>"}
