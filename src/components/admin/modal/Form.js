@@ -83,31 +83,34 @@ function Form({closeModal}) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="projectNameByIT">Project Name</label>
-        <input
-          type="text"
-          className="form-control"
-          id="projectNameByIT"
-          name="projectNameByIT"
-          value={state.projectNameByIT}
-          onChange={handlePlainText}
-        />
-      </div>
+      <div class="row">
+        <div className="form-group col-md-6">
+          <label htmlFor="projectNameByIT">Project Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="projectNameByIT"
+            name="projectNameByIT"
+            value={state.projectNameByIT}
+            onChange={handlePlainText}
+          />
+        </div>
 
-      <div className="form-group">
-        <label htmlFor="projectManager">Project Manager</label>
-        <input
-          type="text"
-          className="form-control"
-          id="projectManager"
-          name="projectManager"
-          value={state.projectManager}
-          onChange={handlePlainText}
-        />
-      </div>
+        <div className="form-group col-md-6">
+          <label htmlFor="projectManager">Project Manager</label>
+          <input
+            type="text"
+            className="form-control"
+            id="projectManager"
+            name="projectManager"
+            value={state.projectManager}
+            onChange={handlePlainText}
+          />
+        </div>
 
-      <div className="form-group">
+      </div>
+      
+      <div className="form-group col-md-12">
         <label>Email address</label>
         <input
           type="email"
@@ -120,7 +123,7 @@ function Form({closeModal}) {
         />
       </div>
 
-      <div className="form-group">
+      <div className="form-group col-md-6">
         <label>Practice Name </label>
         <select
           className="form-control"
@@ -138,10 +141,16 @@ function Form({closeModal}) {
         </select>
       </div>
 
-      <div className="form-group">
+      <div className="form-group row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
         <button className="form-control btn btn-primary" type="submit">
-          Submit
+          Reset
         </button>
+        <button className="form-control btn btn-primary share-btn" type="submit">
+          Share
+        </button>
+        </div>
       </div>
     </form>
   );
