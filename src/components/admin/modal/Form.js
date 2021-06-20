@@ -1,32 +1,13 @@
 import React from "react";
-import axios from "axios"
-function Form({closeModal}) {
+import axios from "axios";
+function Form({ closeModal }) {
   const [state, setState] = React.useState({
     projectNameByIT: "",
     projectManager: "",
     email: "",
     practice: "",
-    status:"Pending",
+    status: "Pending",
     totalProjectCount: "",
-
-    projectName: "",
-    securityMeasure: "",
-    informIT: "",
-    workStationSelected: "",
-    devTypeSelected: "",
-    allowedWebsite: "",
-    isNDAsigned: "",
-    isGDPRcompliance: "",
-    isCyberSecConducted: "",
-    securityBreach: "",
-    isDisasterInsuCovered: "",
-    disasterDetails: "",
-    showInsuranceDetails: false, 
-    isIsolatedEnvReq: "",        
-    isolationDetails: "",
-    showIsolatedDetails: false,    
-    isDLPreq: "",
-    isClientEmailProvided: ""
   });
   function handlePlainText(evt) {
     setState({
@@ -49,37 +30,21 @@ function Form({closeModal}) {
       email: state.email,
       practice: state.practice,
       status: state.status,
-      
-
-      projectName: state.projectName,
-      securityMeasure: state.securityMeasure,
-      informIT: state.informIT,
-      workStationSelected: state.workStationSelected,
-      devTypeSelected: state.devTypeSelected,
-      allowedWebsite: state.allowedWebsite,
-      isNDAsigned: state.isNDAsigned,
-      isGDPRcompliance: state.isGDPRcompliance,
-      isCyberSecConducted: state.isCyberSecConducted,
-      securityBreach: state.securityBreach,
-      isDisasterInsuCovered: state.isDisasterInsuCovered,
-      disasterDetails: state.disasterDetails,
-      showInsuranceDetails: state.showInsuranceDetails,
-      isIsolatedEnvReq: state.isIsolatedEnvReq,
-      isolationDetails: state.isolationDetails,
-      showIsolatedDetails: state.showIsolatedDetails,
-      isDLPreq: state.isDLPreq,
-      isClientEmailProvided: state.isClientEmailProvided
     };
-    // console.log(postState);
+
     axios
-      .post("http://localhost:5000/clientInfo/add", postState)
+      .post("http://localhost:5000/clientInfo/email", postState)
       .then((res) => {
-        // console.log(res.data); 
-        alert("Saved Successfully!")
-      }).then(()=> closeModal())
+        if (res.data === "success") {
+          alert("Data Saved and Email Sent Successfully!");
+        }
+        else {
+          alert("Message Failed to Send, contact Practice team");
+        }
+        closeModal()
+      })
       .catch((err) => console.log(err.response));
   }
-
 
   return (
     <form onSubmit={handleSubmit}>
@@ -127,7 +92,7 @@ function Form({closeModal}) {
           id="practice"
           value={state.Practice}
           onChange={handlePractice}
-          defaultValue='Select Practice Team'
+          defaultValue="Select Practice Team"
         >
           <option disabled>Select Practice Team</option>
           <option value="QA Practice">QA Practice</option>

@@ -22,9 +22,9 @@ function CompleteTable({ data }) {
     const updateStatus = row.original;
     const id = row.original._id;
 
-    console.log(updateStatus.status);
-    console.log(updateStatus);
-    console.log(id);
+    // console.log(updateStatus.status);
+    // console.log(updateStatus);
+    // console.log(id);
 
     axios
       .post("http://localhost:5000/clientInfo/delete/" + id, updateStatus)
