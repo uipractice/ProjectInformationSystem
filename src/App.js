@@ -12,8 +12,8 @@ function App() {
        <Router>
             <Switch>
                 <Route exact path="/"> <Login/> </Route>
-                <Route path="/form"> <ClinetForm/> </Route>
-                <Route path="/formv"> <ViewForm/> </Route>
+                <Route path="/form/:id"> <ClinetForm/> </Route>
+                <Route path="/formv/:id"> <ViewForm/> </Route>
                 <Route path="/admin"> <AdminDashboard/> </Route>   
             </Switch>          
         </Router>

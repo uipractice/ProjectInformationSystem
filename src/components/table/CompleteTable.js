@@ -20,12 +20,14 @@ function CompleteTable({ data }) {
   function handleUpdateStatus(row) {
     row.original.status = "Deleted";
     const updateStatus = row.original;
-    console.log(updateStatus.status);
-    console.log(updateStatus);
     const id = row.original._id;
-    console.log(id);
+
+    // console.log(updateStatus.status);
+    // console.log(updateStatus);
+    // console.log(id);
+
     axios
-      .post("http://localhost:5000/clientInfo/update/" + id, updateStatus)
+      .post("http://localhost:5000/clientInfo/delete/" + id, updateStatus)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err.response));
   }
@@ -49,7 +51,7 @@ function CompleteTable({ data }) {
             <div>
               <Link
                 to={{
-                  pathname: "/formv",
+                  pathname: `/formv/${row.original._id}`,
                   state: {
                     projectNameByIT: row.original.projectNameByIT,
                     projectManager: row.original.projectManager,
