@@ -10,19 +10,13 @@ import "./ClinetForm.css";
 import { useLocation } from "react-router-dom";
 
 function ViewForm() {
-
   const location = useLocation();
   const {
     projectNameByIT,
-    projectManager,
-    // email,
-    practice,
-    status,
-    // projectName,
     securityMeasure,
-    // informIT,
+    informIT,
     workStationSelected,
-    // devTypeSelected,
+    devTypeSelected,
     allowedWebsite,
     isNDAsigned,
     isGDPRcompliance,
@@ -45,7 +39,6 @@ function ViewForm() {
           <img src={Logo} alt="Evoke Logo" />
         </a>
       </div>
-      
 
       <Container>
         <Row>
@@ -63,9 +56,8 @@ function ViewForm() {
                   <Form.Label>Name of the project or client</Form.Label>
                   <Form.Control
                     type="text"
-                    name="projectName"
                     value={projectNameByIT}
-                    readOnly = {true} 
+                    readOnly={true}
                   />
                 </Form.Group>
 
@@ -73,9 +65,8 @@ function ViewForm() {
                   <Form.Label>Security measures from client side</Form.Label>
                   <Form.Control
                     type="text"
-                    name="securityMeasure"
                     value={securityMeasure}
-                    readOnly = {true} 
+                    readOnly={true}
                   />
                 </Form.Group>
 
@@ -83,23 +74,13 @@ function ViewForm() {
                   <Form.Label>
                     Information to IT at the time of project kick-off
                   </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="informIT"
-                    // value={informIT}
-                    value={projectManager}
-                    readOnly = {true} 
-                  />
+                  <Form.Control type="text" value={informIT} readOnly={true} />
                 </Form.Group>
 
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label>Work stations type provided in Evoke </Form.Label>
                   <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                    // size="sm"
-                    // value={workStationSelected}
-                    // style={{ marginRight: "15px", width: "120px" }}
-                    >
+                    <Button size="sm" style={{ width: "120px" }}>
                       {workStationSelected}
                     </Button>
                   </Form.Group>
@@ -108,12 +89,8 @@ function ViewForm() {
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label> Development type </Form.Label>
                   <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                    // size="sm"
-                    // style={{ marginRight: "15px", width: "80px" }}
-                    >
-                      {/* {devTypeSelected} */}
-                      {practice}
+                    <Button size="sm" style={{ width: "120px" }}>
+                      {devTypeSelected}
                     </Button>
                   </Form.Group>
                 </Form.Group>
@@ -122,9 +99,8 @@ function ViewForm() {
                   <Form.Label>Websites need to be allowed</Form.Label>
                   <Form.Control
                     type="text"
-                    name="allowedWebsite"
                     value={allowedWebsite}
-                    readOnly = {true} 
+                    readOnly={true}
                   />
                 </Form.Group>
 
@@ -133,14 +109,8 @@ function ViewForm() {
                     NDA/DPA (Data Privacy Agreement) signed ?{" "}
                   </Form.Label>
                   <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                      size="sm"
-                      name="Yes"
-                      value={isNDAsigned}
-                      style={{ width: "80px" }}
-                    >
-                      {status}
-                      {/* {isNDAsigned} */}
+                    <Button size="sm" style={{ width: "95px" }}>
+                      {isNDAsigned}
                     </Button>
                   </Form.Group>
                 </Form.Group>
@@ -151,12 +121,7 @@ function ViewForm() {
                     complaiance and MSA) are collected from client ?{" "}
                   </Form.Label>
                   <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                      size="sm"
-                      name="Yes"
-                      value={isGDPRcompliance}
-                      style={{ marginRight: "15px", width: "80px" }}
-                    >
+                    <Button size="sm" style={{ width: "95px" }}>
                       {isGDPRcompliance}
                     </Button>
                   </Form.Group>
@@ -169,13 +134,7 @@ function ViewForm() {
                     all users) ?{" "}
                   </Form.Label>
                   <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                      size="sm"
-                      // variant={CyberSecConductedFirst}
-                      name="Yes"
-                      // value={CyberSecConductedFirst}
-                      style={{ width: "80px" }}
-                    >
+                    <Button size="sm" style={{ width: "95px" }}>
                       {isCyberSecConducted}
                     </Button>
                   </Form.Group>
@@ -188,9 +147,8 @@ function ViewForm() {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    name="securityBreach"
                     value={securityBreach}
-                    readOnly = {true}
+                    readOnly={true}
                   />
                 </Form.Group>
 
@@ -201,13 +159,9 @@ function ViewForm() {
                   <Form.Group style={{ marginBottom: "30px" }}>
                     <Button
                       size="sm"
-                      // variant={DisasterInsuCoveredFirst}
-                      name="Yes"
-                      // value={DisasterInsuCoveredFirst}
                       style={{
-                        marginRight: "15px",
-                        marginBottom: "15px",
-                        width: "80px",
+                        width: "95px",
+                        marginBottom: "20px",
                       }}
                     >
                       {isDisasterInsuCovered}
@@ -215,20 +169,15 @@ function ViewForm() {
 
                     {showInsuranceDetails && (
                       <div>
-                        <Form.Text
-                          className="text-muted"
-                          style={{ marginLeft: "20px" }}
-                        >
+                        <Form.Text>
                           {" "}
                           Details for insurance company coverage terms and
                           insurance company spoc
                         </Form.Text>
                         <Form.Control
                           type="text"
-                          style={{ marginLeft: "20px", width: "97%" }}
-                          name="disasterDetails"
                           value={disasterDetails}
-                          readOnly = {true}
+                          readOnly={true}
                         />
                       </div>
                     )}
@@ -243,34 +192,22 @@ function ViewForm() {
                   <Form.Group style={{ marginBottom: "30px" }}>
                     <Button
                       size="sm"
-                      // variant={IsolatedEnvReqFirst}
-                      name="Yes"
-                      // value={IsolatedEnvReqFirst}
-                      style={{
-                        marginRight: "15px",
-                        marginBottom: "15px",
-                        width: "80px",
-                      }}
+                      style={{ width: "95px", marginBottom: "20px" }}
                     >
                       {isIsolatedEnvReq}
                     </Button>
 
                     {showIsolatedDetails && (
                       <div>
-                        <Form.Text
-                          className="text-muted"
-                          style={{ marginLeft: "20px" }}
-                        >
+                        <Form.Text>
                           {" "}
                           Details of physical isolation of network, physical
                           isolation for workspace, DLP etc
                         </Form.Text>
                         <Form.Control
                           type="text"
-                          name="isolationDetails"
                           value={isolationDetails}
-                          style={{ marginLeft: "20px", width: "97%" }}
-                          readOnly = {true} 
+                          readOnly={true}
                         />
                       </div>
                     )}
@@ -283,13 +220,7 @@ function ViewForm() {
                     users ?{" "}
                   </Form.Label>
                   <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                      size="sm"
-                      // variant={DLPreqFirst}
-                      name="Yes"
-                      // value={DLPreqFirst}
-                      style={{ marginRight: "15px", width: "80px" }}
-                    >
+                    <Button size="sm" style={{ width: "95px" }}>
                       {isDLPreq}
                     </Button>
                   </Form.Group>
@@ -301,13 +232,7 @@ function ViewForm() {
                     business communication ?{" "}
                   </Form.Label>
                   <Form.Group style={{ marginBottom: "60px" }}>
-                    <Button
-                      size="sm"
-                      // variant={ClientEmailProvidedFirst}
-                      name="Yes"
-                      // value={ClientEmailProvidedFirst}
-                      style={{ marginRight: "15px", width: "80px" }}
-                    >
+                    <Button size="sm" style={{ width: "95px" }}>
                       {isClientEmailProvided}
                     </Button>
                   </Form.Group>

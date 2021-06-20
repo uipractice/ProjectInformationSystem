@@ -6,10 +6,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 import "./ClinetForm.css";
 
 function ClinetForm() {
+  const { id } = useParams();
+  console.log(id);
+
   const [state, setState] = React.useState({
     projectName: "",
 
@@ -64,6 +68,8 @@ function ClinetForm() {
     isClientEmailProvided: "",
     ClientEmailProvidedFirst: "outline-info",
     ClientEmailProvidedSecond: "outline-info",
+
+    newStatus: "Submitted",
   });
 
   function handleClientEmailProvided(evt) {
@@ -291,13 +297,25 @@ function ClinetForm() {
       showIsolatedDetails: state.showIsolatedDetails,
       isDLPreq: state.isDLPreq,
       isClientEmailProvided: state.isClientEmailProvided,
+      newStatus: state.newStatus,
     };
-    console.log(postObj);
+   
+    
     axios
-      .post("http://localhost:5000/clientInfo/add", postObj)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err.response));
+    .post(`http://localhost:5000/clientInfo/update/${id}`, postObj)
+
+    .then((res) =>{
+      console.log("hello")
+      console.log(postObj);
+      console.log(res.data);
+      })
+    .catch((err) => {
+      console.log("hello");
+      console.log(postObj);
+
+      console.log(err.response)});
   }
+
 
   return (
     <div className="Comp_Wrapper">
