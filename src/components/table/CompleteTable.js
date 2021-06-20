@@ -25,7 +25,7 @@ function CompleteTable({ data }) {
     const id = row.original._id;
     console.log(id);
     axios
-      .post("http://localhost:5000/clientInfo/update/" + id, updateStatus)
+      .post("http://localhost:5000/clientInfo/delete/" + id, updateStatus)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err.response));
   }
