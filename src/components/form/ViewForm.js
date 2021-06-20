@@ -41,23 +41,29 @@ function ViewForm() {
   return (
     <div className="Comp_Wrapper">
       <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
-        <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#/">
-          <img src={Logo} alt="Evoke Logo" />
-        </a>
+      <div className="row">
+            <a
+              className="navbar-brand col-md-6 px-4"
+              href="https://www.evoketechnologies.com/"
+            >
+              <img src={Logo} alt="Evoke Technologies" />
+            </a>
+            <h3>Project Information System </h3>
+        </div>
+        <ul className="navbar-nav px-3">
+          <li className="nav-item text-nowrap">
+            <button></button>
+          </li>
+        </ul>
       </div>
       
 
       <Container>
         <Row>
           <Col md={{ span: 6, offset: 2 }}>
-            <br />
-            <br />
-            <div style={{ marginBottom: "10px" }}>
-              {" "}
-              <h2> Project Details </h2>
-            </div>{" "}
-            <br />
-            <div style={{ width: "700px" }}>
+           
+            <div style={{ width: "700px" }} className="project-details-form">
+            <h2> Project Details </h2>
               <Form>
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label>Name of the project or client</Form.Label>
@@ -318,8 +324,7 @@ function ViewForm() {
                 variant="danger"
                 onClick={() => window.location.reload()}
                 style={{
-                  marginBottom: "80px",
-                  marginLeft: "190px",
+                  marginBottom: "40px",
                   marginRight: "15px",
                   width: "130px",
                 }}
@@ -332,8 +337,7 @@ function ViewForm() {
                 variant="primary"
                 // onClick={handleSubmit}
                 style={{
-                  marginBottom: "80px",
-                  marginLeft: "20px",
+                  marginBottom: "40px",
                   marginRight: "15px",
                   width: "130px",
                 }}

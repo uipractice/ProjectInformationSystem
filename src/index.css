@@ -76,7 +76,7 @@ body {
     .work_btn_blue:focus,
     .work_btn_blue:active {
         background: #1895bb;
-        border: #1895bb;
+        border: 1px solid #1895bb;
         color: #fff;
     }
 
@@ -100,7 +100,7 @@ body {
     }
 
     .card_tile .card-body {
-        padding: 11.5px 15px;
+        padding: 11.5px 30px;
     }
 
     .card {
@@ -458,6 +458,10 @@ body {
 .project-details-form form{
     padding: 20px 50px;
     text-align: left;
+}
+.form-control:focus{
+    box-shadow: 0 0 0;
+    border-color: #ced4da;
 }
 /*
 @media screen and (min-height:1951px){
