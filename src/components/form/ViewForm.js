@@ -38,7 +38,7 @@ function ViewForm() {
       <div className="row">
             <a
               className="navbar-brand col-md-6 px-4"
-              href="https://www.evoketechnologies.com/"
+              href="http://localhost:3000/admin"
             >
               <img src={Logo} alt="Evoke Technologies" />
             </a>
