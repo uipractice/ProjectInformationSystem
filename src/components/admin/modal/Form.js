@@ -33,15 +33,21 @@ function Form({ closeModal }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmitHandle)}>
-      <div class="row">
+      <div className="row">
         <div className="form-group col-md-6">
           <label htmlFor="projectNameByIT">Project Name</label>
           <input
             type="text"
             className="form-control"
-            {...register('projectNameByIT', {required: "Enter the Project Name!" })}
+            {...register("projectNameByIT", {
+              required: "Enter the Project Name!",
+            })}
           />
-          {errors.projectNameByIT && (<small className="text-denger">{errors.projectNameByIT.message}</small>)}
+          {errors.projectNameByIT && (
+            <small className="text-denger">
+              {errors.projectNameByIT.message}
+            </small>
+          )}
         </div>
 
         <div className="form-group col-md-6">
@@ -49,29 +55,38 @@ function Form({ closeModal }) {
           <input
             type="text"
             className="form-control"
-            {...register('projectManager',{ required: "Enter the Manger Name!" })}
+            {...register("projectManager", {
+              required: "Enter the Manger Name!",
+            })}
           />
-          {errors.projectManager && (<small className="text-denger">{errors.projectManager.message}</small>)} 
+          {errors.projectManager && (
+            <small className="text-denger">
+              {errors.projectManager.message}
+            </small>
+          )}
         </div>
-
       </div>
-      
+
       <div className="form-group col-md-12">
         <label>Email address</label>
         <input
           type="email"
           className="form-control"
           placeholder="name@evoketechnologies.com"
-          {...register('email', { required: "Enter the Email Id, you want to send the mail to!" })}
+          {...register("email", {
+            required: "Enter the Email Id, you want to send the mail to!",
+          })}
         />
-        {errors.email && (<small className="text-denger">{errors.email.message}</small>)} 
+        {errors.email && (
+          <small className="text-denger">{errors.email.message}</small>
+        )}
       </div>
 
       <div className="form-group col-md-6">
         <label>Practice Name </label>
         <select
           className="form-control"
-          {...register('practice', { required: "Choose the Practice Team"})}
+          {...register("practice", { required: "Choose the Practice Team" })}
         >
           <option value="">Select the Practice Team</option>
           <option value="QA Practice">QA Practice</option>
@@ -80,18 +95,23 @@ function Form({ closeModal }) {
           <option value="Microsoft Practice">Microsoft Practice</option>
           <option value="Other">Other Practice</option>
         </select>
-        {errors.practice && (<small className="text-denger">{errors.practice.message}</small>)} 
+        {errors.practice && (
+          <small className="text-denger">{errors.practice.message}</small>
+        )}
       </div>
 
       <div className="form-group row share">
         <div className="col-md-6"></div>
-        <div className="col-md-6" >
-        <button className="form-control btn btn-primary" type="submit">
-          Reset
-        </button>
-        <button  className="form-control btn btn-primary share-btn" type="submit">
-          Share
-        </button>
+        <div className="col-md-6">
+          <button className="form-control btn btn-primary" type="submit">
+            Reset
+          </button>
+          <button
+            className="form-control btn btn-primary share-btn"
+            type="submit"
+          >
+            Share
+          </button>
         </div>
       </div>
     </form>
