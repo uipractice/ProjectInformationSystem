@@ -1,35 +1,18 @@
 import React from "react";
 import axios from "axios";
-function Form({ closeModal }) {
-  const [state, setState] = React.useState({
-    projectNameByIT: "",
-    projectManager: "",
-    email: "",
-    practice: "",
-    status: "Pending",
-    totalProjectCount: "",
-  });
-  function handlePlainText(evt) {
-    setState({
-      ...state,
-      [evt.target.name]: evt.target.value,
-    });
-  }
-  function handlePractice(evt) {
-    setState({
-      ...state,
-      practice: evt.target.value,
-    });
-  }
+import { useForm } from 'react-hook-form';
+import "./Container.css"
 
-  function handleSubmit(e) {
-    e.preventDefault();
+function Form({ closeModal }) {
+  const { register, handleSubmit , formState: { errors } } = useForm();
+
+  function onSubmitHandle(data) {
     const postState = {
-      projectNameByIT: state.projectNameByIT,
-      projectManager: state.projectManager,
-      email: state.email,
-      practice: state.practice,
-      status: state.status,
+      projectNameByIT: data.projectNameByIT,
+      projectManager: data.projectManager,
+      email: data.email,
+      practice: data.practice,
+      status: "Pending",
     };
 
     axios
@@ -37,9 +20,11 @@ function Form({ closeModal }) {
       .then((res) => {
         if (res.data === "success") {
           alert("Data Saved and Email Sent Successfully!");
+          console.log(postState);
         }
         else {
           alert("Message Failed to Send, contact Practice team");
+          console.log(postState);
         }
         closeModal()
       })
@@ -47,18 +32,16 @@ function Form({ closeModal }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmitHandle)}>
       <div class="row">
         <div className="form-group col-md-6">
           <label htmlFor="projectNameByIT">Project Name</label>
           <input
             type="text"
             className="form-control"
-            id="projectNameByIT"
-            name="projectNameByIT"
-            value={state.projectNameByIT}
-            onChange={handlePlainText}
+            {...register('projectNameByIT', {required: "Enter the Project Name!" })}
           />
+          {errors.projectNameByIT && (<small className="text-denger">{errors.projectNameByIT.message}</small>)}
         </div>
 
         <div className="form-group col-md-6">
@@ -66,11 +49,9 @@ function Form({ closeModal }) {
           <input
             type="text"
             className="form-control"
-            id="projectManager"
-            name="projectManager"
-            value={state.projectManager}
-            onChange={handlePlainText}
+            {...register('projectManager',{ required: "Enter the Manger Name!" })}
           />
+          {errors.projectManager && (<small className="text-denger">{errors.projectManager.message}</small>)} 
         </div>
 
       </div>
@@ -80,39 +61,35 @@ function Form({ closeModal }) {
         <input
           type="email"
           className="form-control"
-          id="email"
-          name="email"
-          value={state.email}
-          onChange={handlePlainText}
           placeholder="name@evoketechnologies.com"
+          {...register('email', { required: "Enter the Email Id, you want to send the mail to!" })}
         />
+        {errors.email && (<small className="text-denger">{errors.email.message}</small>)} 
       </div>
 
       <div className="form-group col-md-6">
         <label>Practice Name </label>
         <select
           className="form-control"
-          id="practice"
-          value={state.Practice}
-          onChange={handlePractice}
-          defaultValue="Select Practice Team"
+          {...register('practice', { required: "Choose the Practice Team"})}
         >
-          <option disabled>Select Practice Team</option>
+          <option value="">Select the Practice Team</option>
           <option value="QA Practice">QA Practice</option>
           <option value="Oracle Practice">Oracle Practice</option>
           <option value="Java Practice">Java Practice</option>
           <option value="Microsoft Practice">Microsoft Practice</option>
           <option value="Other">Other Practice</option>
         </select>
+        {errors.practice && (<small className="text-denger">{errors.practice.message}</small>)} 
       </div>
 
-      <div className="form-group row">
-        <div class="col-md-6"></div>
-        <div class="col-md-6">
+      <div className="form-group row share">
+        <div className="col-md-6"></div>
+        <div className="col-md-6" >
         <button className="form-control btn btn-primary" type="submit">
           Reset
         </button>
-        <button className="form-control btn btn-primary share-btn" type="submit">
+        <button  className="form-control btn btn-primary share-btn" type="submit">
           Share
         </button>
         </div>

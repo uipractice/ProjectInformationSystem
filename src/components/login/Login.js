@@ -1,97 +1,102 @@
-import React from 'react'
+import React from "react";
 import { useHistory } from "react-router-dom";
-import "./Login.css"
-import "../../index.css"
+import "./Login.css";
+import "../../index.css";
+import { useForm } from "react-hook-form";
 
 function Login() {
-	
-	const [state, setState] = React.useState({
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-		adminUserName: "admin",
-		adminPassowrd: "123",
-		
-		enteredUserName: "",
-		enteredPassword: ""
+  const adminUserName = "admin";
+  const adminPassowrd = "123";
 
-	})
+  const history = useHistory();
 
-	const history = useHistory();
+  function handleLogin(data) {
+    if (
+      adminUserName === data.enteredUserName &&
+      adminPassowrd === data.enteredPassword
+    ) {
+      const token = "123456abcdef";
+      sessionStorage.setItem("auth-token", token);
+      history.push("/admin");
+    } else {
+      // {
+      //   data.enteredUserName !== "admin" ||
+      //     data.enteredUserName !== "12345" && (
+      //       <small className="text-denger">
+      //         <span>Enter the correct User name</span>
+      //       </small>
+      //     );
+      // }
+      alert("Please enter the correct user or password");
+    }
+  }
 
-	function handleCredentials(evt){
-		setState({
-			...state,
-			[evt.target.name]: evt.target.value
-		  });   
-	}
-	
-	//Not Working 
-	function handleEnterKey(e){
-		e.preventDefault()
-		if(e.keyCode === 13){
-			if(state.adminUserName===state.enteredUserName && state.adminPassowrd===state.enteredPassword){
-				history.push('/admin');
-			}
-		}		
-	}
+  return (
+    <div className="container-fluid nopad">
+      <div className="container_login">
+        <div className="wrap_login">
+          <form className="login_form" onSubmit={handleSubmit(handleLogin)}>
+            <div className="form_main">
+              <div className="login-form-title ">
+                <h3>Sign in</h3>
+                <p>Welcome to Project Management System</p>
+              </div>
 
-	function handleLogin(e){
-		e.preventDefault()
-		if(state.adminUserName===state.enteredUserName && state.adminPassowrd===state.enteredPassword){
-			const token = '123456abcdef';
-			sessionStorage.setItem('auth-token', token);
-			history.push('/admin');
-		}
-		else {
-			alert('Please enter the correct user or password');
-		}
-	}
+              <div className="validate-input m-b-20">
+                <label className="form-label">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  {...register("enteredUserName", {
+                    required: "Enter the User Name!",
+                  })}
+                />
+                {errors.enteredUserName && (
+                  <small className="text-denger">
+                    {errors.enteredUserName.message}
+                  </small>
+                )}
+              </div>
 
-	return (
-		<div className="container-fluid nopad">
+              <div className="validate-input m-b-40">
+                <label className="form-label">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  {...register("enteredPassword", {
+                    required: "Enter the User Password!",
+                  })}
+                />
+                {errors.enteredPassword && (
+                  <small className="text-denger">
+                    {errors.enteredPassword.message}
+                  </small>
+                )}
+              </div>
 
-			<div className="container_login">
+              <div className="col-md-12 form_btn_group">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn_blue w-100p"
+                >
+                  SIGN IN
+                </button>
+              </div>
+            </div>
+          </form>
 
-				<div className="wrap_login">
-
-					<form className="login_form ">
-
-						<div className="form_main">
-
-							<div className="login-form-title ">
-								<h3>Sign in</h3>
-								<p>Welcome to Evoke Management Dashboard</p>
-							</div>
-
-							<div className="validate-input m-b-20" >
-								<label className="form-label">Username</label>
-								<input type="text" className="form-control" onChange={handleCredentials} name="enteredUserName" />
-								{/* <span className="validation_msg">Validation Message </span> */}
-							</div>
-
-							<div className="validate-input m-b-40">
-								<label className="form-label">Password</label>
-								<input type="password" className="form-control" onChange={handleCredentials} name="enteredPassword" />
-							</div>
-
-							<div className="col-md-12 form_btn_group">
-								<button type="button" onClick={handleLogin} onKeyPress={handleEnterKey} className="btn btn-primary btn_blue w-100p">SIGN IN</button>
-							</div>
-
-						</div>
-						
-					</form>
-						
-					<div className="login_more" >
-						{/* <img src="../../src/assets/images/evoke_logo.svg" className="banner_logo"/> */}
-					</div>
-						
-				</div>
-
-			</div>
-		
-		</div>
-
-	)
+          <div className="login_more"></div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Login
+export default Login;
