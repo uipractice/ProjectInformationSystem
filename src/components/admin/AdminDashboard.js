@@ -78,7 +78,7 @@ export default function AdminDashboard() {
         <div className="row">
             <a
               className="navbar-brand col-md-6 px-4"
-              href="https://www.evoketechnologies.com/"
+              href="#/"
             >
               <img src={Logo} alt="Evoke Technologies" />
             </a>

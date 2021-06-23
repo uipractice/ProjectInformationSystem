@@ -1,3 +1,7 @@
+.text-denger{
+    color: red
+}
+
 .modal-cover {
     position: fixed;
     top: 0;
@@ -35,7 +39,7 @@
 .modal-body .row{
     margin: auto;
 }
-.form-group button{
+.form-group.share button{
     background: #FFFFFF;
     border: 1px solid #209EC5;
     box-sizing: border-box;
