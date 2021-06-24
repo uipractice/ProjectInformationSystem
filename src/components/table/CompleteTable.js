@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState} from "react";
 import DeleteImg from "../../assets/images/delete.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Modal from "react-modal";
 import {
   useTable,
   useSortBy,
@@ -12,23 +13,39 @@ import { format } from "date-fns";
 import "./table.css";
 import GlobalFilter from "./GlobalFilter";
 
-import rightIcon from "../../assets/images/right-icon.svg"
-import leftIcon from "../../assets/images/left-icon.svg"
+import rightIcon from "../../assets/images/right-icon.svg";
+import leftIcon from "../../assets/images/left-icon.svg";
 
+Modal.setAppElement("#root");
 function CompleteTable({ data }) {
+
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isDeleteConfirm, setIsDeleteConfirm] = useState(false);
+
+  const [stateD, setStateD] = useState({
+
+    isModalOpen: false,
+    isDeleteConfirm: false,
+  });
+
+  const[rowOriginal, setRowOriginal] = useState({})
 
   function handleUpdateStatus(row) {
     row.original.status = "Deleted";
     const updateStatus = row.original;
     const id = row.original._id;
 
-    // console.log(updateStatus.status);
-    // console.log(updateStatus);
-    // console.log(id);
+    console.log(updateStatus.status);
+    console.log(updateStatus);
+    console.log(id);
 
     axios
       .post("http://localhost:5000/clientInfo/delete/" + id, updateStatus)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data);
+        window.location.reload();
+        // setIsModalOpen(false);
+      })
       .catch((err) => console.log(err.response));
   }
 
@@ -124,8 +141,21 @@ function CompleteTable({ data }) {
           <a
             href="#/"
             onClick={(e) => {
-              // console.log(row.original);
-              handleUpdateStatus(row);
+              let rowData = row.original;
+              setRowOriginal(rowData)
+              setStateD({
+                ...stateD,
+                isModalOpen: true,
+              });
+              console.log("After model is opened");
+              console.log(rowData);
+
+              if (stateD.isDeleteConfirm) {
+                console.log("Delete is clicked & working");
+                handleUpdateStatus(row);
+                console.log(rowData);
+                // window.location.reload();
+              }
             }}
           >
             <img src={DeleteImg} alt="Evoke Technologies" />
@@ -133,7 +163,7 @@ function CompleteTable({ data }) {
         ),
       },
     ],
-    []
+    [stateD]
   );
 
   const {
@@ -160,7 +190,6 @@ function CompleteTable({ data }) {
       <div className="filter-row">
         <h5>PROJECTS DETAILS</h5>
         <div>
-           
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
           <select name="hall" id="hall">
             <option> Pending </option>
@@ -171,9 +200,64 @@ function CompleteTable({ data }) {
             <option> Deleted </option>
           </select>
         </div>
-        
       </div>
-      
+
+      <div>
+        <Modal
+          isOpen={stateD.isModalOpen}
+          onRequestClose={() => {
+            setStateD({
+              isModalOpen: false,
+            });
+          }}
+          className="modalDesign"
+        >
+          <h2>Are you sure?</h2>
+          <p>Please enter the reason to delete the record.</p>
+
+          <input type="text" />
+          <br></br>
+          <p>
+            {" "}
+            Do you really want to delete the records? This process cannot be
+            undone.
+          </p>
+          <br></br>
+
+          <div className="row">
+            <div className="col-md-2">
+              <button
+                className="form-control btn btn-primary"
+                onClick={() => {
+                  setStateD({
+                    ...stateD,
+                    isModalOpen: false,
+                  });
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+            <div className="col-md-2">
+              <button
+                className="form-control btn btn-primary"
+                onClick={() => {
+                  console.log("Delete is clicked but not sure if api call is made");
+                  setStateD({
+                    // ...stateD,
+                    isDeleteConfirm: true,
+                    // isModalOpen: true,
+                  });
+
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </Modal>
+      </div>
+
       <div className="table-responsive grid tableFixHead">
         <table {...getTableProps()} className="table table-striped ">
           <thead>
@@ -250,18 +334,12 @@ function CompleteTable({ data }) {
           </strong>{" "}
         </span>
         <div className="prev-next">
-        {/* <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "} */}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          <img src={leftIcon} alt="prev" />
-        </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-        <img src={rightIcon} alt="next" />
-        </button>{" "}
-        {/* <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "} */}
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            <img src={leftIcon} alt="prev" />
+          </button>{" "}
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            <img src={rightIcon} alt="next" />
+          </button>{" "}
         </div>
       </div>
     </>

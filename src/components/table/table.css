@@ -1,3 +1,14 @@
+.modalDesign {
+  width: 900px;
+  height: 550px;
+  align-items: center;
+  background-color:rgb(153, 134, 121);
+  margin-left: 20%;
+  margin-top: 7%;
+  padding-left: 20%;
+  padding-top: 10%;
+
+}
 table {
   font-family: 'Lato', sans-serif;
   border-collapse: collapse;
