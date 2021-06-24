@@ -44,7 +44,7 @@ export class ShareModalContainer extends Component {
           // onChange={handleAlignment}
           aria-label="text alignment"
         >
-          <ToggleButton value="left" aria-label="left aligned">
+          <ToggleButton value="left" aria-label="left aligned" className="Mui-selected">
             Client Project
           </ToggleButton>
           <ToggleButton value="center" aria-label="centered">

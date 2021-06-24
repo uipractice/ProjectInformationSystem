@@ -123,6 +123,7 @@ function CompleteTable({ data }) {
         Cell: ({ row }) => (
           <a
             href="#/"
+            className="delete-icon"
             onClick={(e) => {
               // console.log(row.original);
               handleUpdateStatus(row);
@@ -208,14 +209,14 @@ function CompleteTable({ data }) {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     let style = {};
-                    style = { textAlign: "center" };
+                    style = { textAlign: "left" };
                     if (cell.column.id === "status") {
                       if (cell.value === "Pending") {
-                        style = { color: "#F16A21", textAlign: "center" };
+                        style = { color: "#F16A21", textAlign: "left" };
                       } else if (cell.value === "Submitted") {
-                        style = { color: "#0066FF", textAlign: "center" };
+                        style = { color: "#0066FF", textAlign: "left" };
                       } else if (cell.value === "Completed") {
-                        style = { color: "#13BC86", textAlign: "center" };
+                        style = { color: "#13BC86", textAlign: "left" };
                       }
                     }
                     return (
@@ -231,7 +232,7 @@ function CompleteTable({ data }) {
         </table>
       </div>
       <div className="table-pagination">
-        <label>Rows/Page:</label>
+        <label>Rows per page:</label>
         <select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}

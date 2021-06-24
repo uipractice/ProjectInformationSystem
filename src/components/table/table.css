@@ -10,6 +10,9 @@ table td,
 table th {
   border: none;
   padding: 8px;
+  padding: 0 15px !important;
+  height: 40px;
+  line-height: 40px;
 }
 .filter-row h5{
   float:left;
@@ -27,7 +30,6 @@ table th {
   margin-bottom: 15px;
 }
 .filter-row input{
-  border: 1px solid #757575;
   font-size: 12px;
   line-height: 18px;
   letter-spacing: 0.1px;
@@ -35,6 +37,10 @@ table th {
   height: 28px;
   padding: 0 10px;
   margin-right: 10px;
+  background: #fff url("../../assets/images/search.svg") no-repeat 95%;
+  box-shadow: 0px 0px 2px rgb(0 0 0 / 35%);
+  border-radius: 2px;
+  border: 1px solid transparent;
 }
 .filter-row select{
   font-size: 14px;
@@ -42,7 +48,8 @@ table th {
   letter-spacing: 0.1px;
   color: #757575;
   border: none;
-  background: transparent;
+  background:transparent url("../../assets/images/filter.svg") no-repeat;
+  padding-left: 16px;
 }
 .filter-row input:focus-visible, .filter-row select:focus-visible{
   outline: 0 !important;
@@ -58,11 +65,9 @@ table tr:hover {
 table th, tfoot td {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: center;
+  text-align: left;
   background-color: #4caf50;
   color: white;
-  height: 49px;
-  line-height: 24px !important;
 }
 .table-pagination{
   text-align: right;
