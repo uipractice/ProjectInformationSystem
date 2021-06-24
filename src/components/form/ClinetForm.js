@@ -395,6 +395,7 @@ function ClinetForm() {
                   <Form.Group style={{ marginBottom: "30px" }}>
                     <Button
                       size="sm"
+                      className="btn-padding"
                       variant={state.workStationFirstBtn}
                       onClick={handleWorkStation}
                       value={state.workStationValue[0]}
@@ -460,6 +461,7 @@ function ClinetForm() {
                       onClick={handleDevType}
                       value={state.devTypeValue[1]}
                       style={{ marginRight: "15px" }}
+                      className="btn-padding"
                     >
                       {" "}
                       Cloud Plateform
@@ -470,6 +472,7 @@ function ClinetForm() {
                       onClick={handleDevType}
                       value={state.devTypeValue[2]}
                       style={{ marginRight: "15px" }}
+                      className="btn-padding"
                     >
                       {" "}
                       Client Plateform
@@ -807,6 +810,7 @@ function ClinetForm() {
                 <Button
                   variant="danger"
                   onClick={() => window.location.reload()}
+                  className="reshare"
                   style={{
                     marginBottom: "40px",
                     marginRight: "15px",
@@ -820,6 +824,7 @@ function ClinetForm() {
                 <Button
                   variant="primary"
                   type="submit"
+                  className="submit-btn"
                   onSubmit={handleSubmitForm}
                   style={{
                     marginBottom: "40px",

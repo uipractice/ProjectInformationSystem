@@ -233,10 +233,12 @@ body {
         color: #209EC5;
         border-bottom: 0 !important;
         background: #fff;
+        height: 40px;
+        line-height: 40px;
     }
 
     .grid tr {
-        min-height: 49px;
+        min-height: 40px;
     }
 
     .grid tr td.center,
@@ -244,13 +246,18 @@ body {
         text-align: center;
     }
 
-    .grid tr td {
+    .grid tr td, .grid tr td a {
         font-size: 14px;
         color: #929292;
         padding: 13px .5rem;
         box-shadow: none;
     }
-
+    .grid tr td a{
+        padding: 0;
+    }
+    .grid tr td a.delete-icon{
+        padding-left: 20px;
+    }
     .grid .table-striped>tbody>tr:nth-of-type(odd) {
         background: rgb(242 242 242 / 50%);
         border: 0.5px solid #e6e6e6;
@@ -457,11 +464,79 @@ body {
 }
 .project-details-form form{
     padding: 20px 50px;
+    text-align: center;
+}
+.project-details-form form .form-group{
     text-align: left;
+    position: relative;
 }
 .form-control:focus{
     box-shadow: 0 0 0;
     border-color: #ced4da;
+}
+.project-details-form .btn-outline-info, .project-details-form .btn-outline-info:hover{
+    color: #626364;
+    background: #ECEDF1;
+    border-radius: 4px;
+    border-color: #ECEDF1;
+}
+.project-details-form .btn-info{
+    background: #209EC5 url('./assets/images/Subtract.svg') no-repeat 4px;
+    /* padding-left: 22px; */
+    border-color:#209EC5;
+}
+.project-details-form .btn-info.btn-padding{
+    padding-left: 22px;
+}
+.project-details-form .form-control{
+    height: 44px;
+}
+.project-details-form.formView .form-control{
+    height: 44px;
+    background:#fff;
+    font-size: 14px;
+    color: #333;
+    cursor: not-allowed;
+    border: 0;
+    border-bottom: 1px solid #BDBDBD;
+    border-radius: 0;
+}
+.project-details-form.formView .form-group button, .project-details-form.formView .form-group button:active, .project-details-form.formView .form-group button:hover{
+    background: #209EC5 url('./assets/images/Subtract.svg') no-repeat 15px;
+    border-radius: 4px;
+    height: 30px;
+    color: #fff;
+    border: 0;
+    cursor: not-allowed;
+}
+.project-details-form.formView .form-text{
+    margin-bottom: 10px;
+}
+.project-details-form.formView .dev-btn{
+    padding-left: 35px;
+}
+.project-details-form.formView .reshare, .project-details-form .reshare {
+    background: #FFFFFF;
+    border: 1px solid #209EC5;
+    box-sizing: border-box;
+    border-radius: 2px;
+    color: #209EC5;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+}
+.project-details-form.formView .approve, .project-details-form .submit-btn{
+    background: #209EC5;
+    border: 1px solid #209EC5;
+    box-sizing: border-box;
+    border-radius: 2px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+}
+.modal-cover .form-control{
+    height: 44px;
 }
 /*
 @media screen and (min-height:1951px){
