@@ -1,5 +1,8 @@
 .text-denger{
-    color: red
+    color: red;
+    position: absolute;
+    font-size: 10px;
+    bottom: -17px;
 }
 
 .modal-cover {
@@ -54,9 +57,9 @@
 }
 .form-group .share-btn{
     margin-left:13px;
-    background: rgba(32, 158, 197, 0.5);
-    border: 1px solid rgb(32 158 197 / 27%);
-    color: #fff;
+    background: #209EC5 !important;
+    border: 1px solid #209EC5 !important;
+    color: #fff !important;
 }
 .btn-primary:hover{
     background:transparent;
@@ -125,4 +128,7 @@
     line-height: 17px;
     letter-spacing: 0.01em;
     color: #626364;
+}
+.form-group select, .form-group .form-control{
+    height: 44px;
 }

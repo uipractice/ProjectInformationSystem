@@ -73,7 +73,7 @@ function Form({ closeModal }) {
         <input
           type="email"
           className="form-control"
-          placeholder="name@evoketechnologies.com"
+          placeholder=" "
           {...register("email", {
             required: "Enter the Email Id, you want to send the mail to!",
           })}
@@ -89,7 +89,7 @@ function Form({ closeModal }) {
           className="form-control"
           {...register("practice", { required: "Choose the Practice Team" })}
         >
-          <option value="">Select the Practice Team</option>
+          <option value=""></option>
           <option value="QA Practice">QA Practice</option>
           <option value="Oracle Practice">Oracle Practice</option>
           <option value="Java Practice">Java Practice</option>

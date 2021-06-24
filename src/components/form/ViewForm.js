@@ -55,8 +55,9 @@ function ViewForm() {
       <Container>
         <Row>
           <Col md={{ span: 6, offset: 2 }}>
-            <div style={{ width: "700px" }} className="project-details-form">
-              <h2> Project Details </h2>
+           
+            <div style={{ width: "700px" }} className="project-details-form formView">
+            <h2> Project Details </h2>
               <Form>
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label>Name of the project or client</Form.Label>
@@ -95,7 +96,7 @@ function ViewForm() {
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label> Development type </Form.Label>
                   <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button size="sm" style={{ width: "120px" }}>
+                    <Button size="sm" style={{ width: "auto" }} className="dev-btn">
                       {devTypeSelected}
                     </Button>
                   </Form.Group>
@@ -248,6 +249,7 @@ function ViewForm() {
               <Button
                 variant="danger"
                 onClick={() => window.location.reload()}
+                className="reshare"
                 style={{
                   marginBottom: "40px",
                   marginRight: "15px",
@@ -255,12 +257,13 @@ function ViewForm() {
                 }}
               >
                 {" "}
-                Reset
+                Reshare
               </Button>
 
               <Button
                 variant="primary"
                 // onClick={handleSubmit}
+                className="approve"
                 style={{
                   marginBottom: "40px",
                   marginRight: "15px",
@@ -268,7 +271,7 @@ function ViewForm() {
                 }}
               >
                 {" "}
-                Submit
+                Approve
               </Button>
             </div>
           </Col>
