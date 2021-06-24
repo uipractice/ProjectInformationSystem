@@ -13,6 +13,7 @@ function Form({ closeModal }) {
       email: data.email,
       practice: data.practice,
       status: "Pending",
+      deleteReason: "",
     };
 
     axios

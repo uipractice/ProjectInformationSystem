@@ -32,17 +32,18 @@ function ViewForm() {
     isClientEmailProvided,
   } = location.state;
 
+
   return (
     <div className="Comp_Wrapper">
       <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
-      <div className="row">
-            <a
-              className="navbar-brand col-md-6 px-4"
-              href="http://localhost:3000/admin"
-            >
-              <img src={Logo} alt="Evoke Technologies" />
-            </a>
-            <h3>Project Information System </h3>
+        <div className="row">
+          <a
+            className="navbar-brand col-md-6 px-4"
+            href="http://localhost:3000/admin"
+          >
+            <img src={Logo} alt="Evoke Technologies" />
+          </a>
+          <h3>Project Information System </h3>
         </div>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
@@ -54,9 +55,8 @@ function ViewForm() {
       <Container>
         <Row>
           <Col md={{ span: 6, offset: 2 }}>
-           
             <div style={{ width: "700px" }} className="project-details-form">
-            <h2> Project Details </h2>
+              <h2> Project Details </h2>
               <Form>
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label>Name of the project or client</Form.Label>
@@ -173,7 +173,7 @@ function ViewForm() {
                       {isDisasterInsuCovered}
                     </Button>
 
-                    {showInsuranceDetails && (
+                    {showInsuranceDetails === "true" ? (
                       <div>
                         <Form.Text>
                           {" "}
@@ -186,7 +186,7 @@ function ViewForm() {
                           readOnly={true}
                         />
                       </div>
-                    )}
+                    ) : null}
                   </Form.Group>
                 </Form.Group>
 
@@ -203,7 +203,7 @@ function ViewForm() {
                       {isIsolatedEnvReq}
                     </Button>
 
-                    {showIsolatedDetails && (
+                    {showIsolatedDetails === "true" ? (
                       <div>
                         <Form.Text>
                           {" "}
@@ -216,7 +216,7 @@ function ViewForm() {
                           readOnly={true}
                         />
                       </div>
-                    )}
+                    ) : null}
                   </Form.Group>
                 </Form.Group>
 

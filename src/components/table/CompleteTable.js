@@ -1,7 +1,8 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import DeleteImg from "../../assets/images/delete.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import Modal from "react-modal";
 import {
   useTable,
@@ -17,37 +18,34 @@ import rightIcon from "../../assets/images/right-icon.svg";
 import leftIcon from "../../assets/images/left-icon.svg";
 
 Modal.setAppElement("#root");
+
 function CompleteTable({ data }) {
+  const [rowOriginal, setRowOriginal] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [isDeleteConfirm, setIsDeleteConfirm] = useState(false);
-
-  const [stateD, setStateD] = useState({
-
-    isModalOpen: false,
-    isDeleteConfirm: false,
-  });
-
-  const[rowOriginal, setRowOriginal] = useState({})
-
-  function handleUpdateStatus(row) {
-    row.original.status = "Deleted";
-    const updateStatus = row.original;
-    const id = row.original._id;
-
-    console.log(updateStatus.status);
-    console.log(updateStatus);
-    console.log(id);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  
+  const handleUpdateStatus = (rowOriginal) => {
+    rowOriginal.status = "Deleted";
+    const id = rowOriginal._id;
+    console.log("id inside api is ", id);
+    const valueEntered = rowOriginal.deleteReason; //addd delte 
+    console.log("Entered Value ", valueEntered);
 
     axios
-      .post("http://localhost:5000/clientInfo/delete/" + id, updateStatus)
+      .post("http://localhost:5000/clientInfo/delete/" + id, rowOriginal)
       .then((res) => {
-        console.log(res.data);
-        window.location.reload();
-        // setIsModalOpen(false);
+        // console.log(res.data);
+        setIsModalOpen(false);
+        // window.location.reload();
+        alert("Record has been marked Deleted!");
       })
       .catch((err) => console.log(err.response));
-  }
+  };
 
   data.forEach((value, index) => {
     value.serial = index + 1;
@@ -142,20 +140,8 @@ function CompleteTable({ data }) {
             href="#/"
             onClick={(e) => {
               let rowData = row.original;
-              setRowOriginal(rowData)
-              setStateD({
-                ...stateD,
-                isModalOpen: true,
-              });
-              console.log("After model is opened");
-              console.log(rowData);
-
-              if (stateD.isDeleteConfirm) {
-                console.log("Delete is clicked & working");
-                handleUpdateStatus(row);
-                console.log(rowData);
-                // window.location.reload();
-              }
+              setRowOriginal(rowData);
+              setIsModalOpen(true);
             }}
           >
             <img src={DeleteImg} alt="Evoke Technologies" />
@@ -163,7 +149,7 @@ function CompleteTable({ data }) {
         ),
       },
     ],
-    [stateD]
+    []
   );
 
   const {
@@ -204,57 +190,59 @@ function CompleteTable({ data }) {
 
       <div>
         <Modal
-          isOpen={stateD.isModalOpen}
+          isOpen={isModalOpen}
           onRequestClose={() => {
-            setStateD({
-              isModalOpen: false,
-            });
+            setIsModalOpen(false);
           }}
           className="modalDesign"
         >
           <h2>Are you sure?</h2>
-          <p>Please enter the reason to delete the record.</p>
 
-          <input type="text" />
-          <br></br>
-          <p>
-            {" "}
-            Do you really want to delete the records? This process cannot be
-            undone.
-          </p>
-          <br></br>
+          <form onSubmit={handleSubmit(() => handleUpdateStatus(rowOriginal))}>
+            <p>Please enter the reason to delete the record.</p>
+            <input
+              type="text"
+              {...register("deleteReason", { required: true })}
+            />
+            {errors.deleteReason && (
+              <span style={{ color: "red" }}>
+                Delete Reason name is required
+              </span>
+            )}
 
-          <div className="row">
-            <div className="col-md-2">
-              <button
-                className="form-control btn btn-primary"
-                onClick={() => {
-                  setStateD({
-                    ...stateD,
-                    isModalOpen: false,
-                  });
-                }}
-              >
-                Cancel
-              </button>
+            <br></br>
+            <p>
+              {" "}
+              Do you really want to delete the records? This process cannot be
+              undone.
+            </p>
+            <br></br>
+
+            <div className="row">
+              <div className="col-md-2">
+                <button
+                  className="form-control btn btn-primary"
+                  onClick={() => {
+                    setIsModalOpen(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+              <div className="col-md-2">
+                <button
+                  type="submit"
+                  className="form-control btn btn-primary"
+                  
+                  // onClick={() => {
+                  //   handleUpdateStatus(rowOriginal);
+                  // }}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-            <div className="col-md-2">
-              <button
-                className="form-control btn btn-primary"
-                onClick={() => {
-                  console.log("Delete is clicked but not sure if api call is made");
-                  setStateD({
-                    // ...stateD,
-                    isDeleteConfirm: true,
-                    // isModalOpen: true,
-                  });
-
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
+          </form>
         </Modal>
       </div>
 
