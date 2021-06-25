@@ -538,6 +538,9 @@ body {
 .modal-cover .form-control{
     height: 44px;
 }
+.ReactModal__Overlay {
+    background: rgba(83, 83, 83, 0.3) !important;
+}
 /*
 @media screen and (min-height:1951px){
 	.records_table{
