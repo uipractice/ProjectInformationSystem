@@ -205,10 +205,9 @@ function CompleteTable({ data }) {
           onRequestClose={() => {
             setIsModalOpen(false);
           }}
-          className="modalDesign"
+          className="modalDesign deleteModal"
         >
           <h2>Are you sure?</h2>
-
           <form onSubmit={handleSubmit(() => handleUpdateStatus(rowOriginal))}>
             <p>Please enter the reason to delete the record.</p>
             <input
@@ -216,13 +215,13 @@ function CompleteTable({ data }) {
               {...register("deleteReason", { required: true })}
             />
             {errors.deleteReason && (
-              <span style={{ color: "red" }}>
+              <span className="error-msg" style={{ color: "red" }}>
                 Delete Reason name is required
               </span>
             )}
 
             <br></br>
-            <p>
+            <p className="descr">
               {" "}
               Do you really want to delete the records? This process cannot be
               undone.
@@ -230,7 +229,7 @@ function CompleteTable({ data }) {
             <br></br>
 
             <div className="row">
-              <div className="col-md-2">
+              <div className="col-md-6 text-right">
                 <button
                   className="form-control btn btn-primary"
                   onClick={() => {
@@ -240,11 +239,16 @@ function CompleteTable({ data }) {
                   Cancel
                 </button>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-6">
                 <button
                   type="submit"
+<<<<<<< HEAD
                   className="form-control btn btn-primary"
 
+=======
+                  className="form-control btn btn-primary delete-btn"
+                  
+>>>>>>> d052fdf1e2450489ba6c58eaec6ebca035afa2f2
                   // onClick={() => {
                   //   handleUpdateStatus(rowOriginal);
                   // }}
