@@ -242,13 +242,8 @@ function CompleteTable({ data }) {
               <div className="col-md-6">
                 <button
                   type="submit"
-<<<<<<< HEAD
-                  className="form-control btn btn-primary"
-
-=======
                   className="form-control btn btn-primary delete-btn"
                   
->>>>>>> d052fdf1e2450489ba6c58eaec6ebca035afa2f2
                   // onClick={() => {
                   //   handleUpdateStatus(rowOriginal);
                   // }}
