@@ -81,8 +81,8 @@
 
 ._modal-close {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
     padding: 0.5em;
     line-height: 1;
     background: #f6f6f7;
