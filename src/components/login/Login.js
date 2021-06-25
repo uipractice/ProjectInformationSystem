@@ -4,6 +4,11 @@ import "./Login.css";
 import "../../index.css";
 import { useForm } from "react-hook-form";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
+
 function Login() {
   
   const {
@@ -25,16 +30,12 @@ function Login() {
       const token = "123456abcdef";
       sessionStorage.setItem("auth-token", token);
       history.push("/admin");
+      // console.log("correct pwd", data);
     } else {
-      // {
-      //   data.enteredUserName !== "admin" ||
-      //     data.enteredUserName !== "12345" && (
-      //       <small className="text-denger">
-      //         <span>Enter the correct User name</span>
-      //       </small>
-      //     );
-      // }
-      alert("Please enter the correct user or password");
+      toast.error("Please enter the correct User & Password !", {
+        autoClose: 2000,
+      });
+      // console.log("In correct pwd", data);
     }
   }
 

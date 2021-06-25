@@ -17,6 +17,11 @@ import GlobalFilter from "./GlobalFilter";
 import rightIcon from "../../assets/images/right-icon.svg";
 import leftIcon from "../../assets/images/left-icon.svg";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
+
 Modal.setAppElement("#root");
 
 function CompleteTable({ data }) {
@@ -28,12 +33,12 @@ function CompleteTable({ data }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
+
   const handleUpdateStatus = (rowOriginal) => {
     rowOriginal.status = "Deleted";
     const id = rowOriginal._id;
     console.log("id inside api is ", id);
-    const valueEntered = rowOriginal.deleteReason; //addd delte 
+    const valueEntered = rowOriginal.deleteReason; //addd delte
     console.log("Entered Value ", valueEntered);
 
     axios
@@ -42,7 +47,12 @@ function CompleteTable({ data }) {
         // console.log(res.data);
         setIsModalOpen(false);
         // window.location.reload();
-        alert("Record has been marked Deleted!");
+        toast.warn("Record has been marked DELETED !", {
+          autoClose: 3000,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       })
       .catch((err) => console.log(err.response));
   };
@@ -234,7 +244,7 @@ function CompleteTable({ data }) {
                 <button
                   type="submit"
                   className="form-control btn btn-primary"
-                  
+
                   // onClick={() => {
                   //   handleUpdateStatus(rowOriginal);
                   // }}

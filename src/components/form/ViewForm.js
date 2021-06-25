@@ -9,6 +9,13 @@ import Logo from "../../assets/images/eoke_logo.svg";
 import "./ClinetForm.css";
 import { useLocation } from "react-router-dom";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { useHistory } from "react-router-dom";
+
+toast.configure();
+
 function ViewForm() {
   const location = useLocation();
   const {
@@ -32,6 +39,28 @@ function ViewForm() {
     isClientEmailProvided,
   } = location.state;
 
+  const history = useHistory();
+
+  const handleApprove = () => {
+    toast.success("Record Approved !", {
+      autoClose: 2500,
+    });
+    setTimeout(() => {
+      history.push("/admin");
+    }, 2000);
+
+    // const handleUpdateStatus = (rowOriginal) => {
+    //   rowOriginal.status = "Approved";
+    //   const id = rowOriginal._id;
+    //   console.log("id inside api is ", id);
+    //   axios
+    //     .post("http://localhost:5000/clientInfo/delete/" + id, rowOriginal)
+    //     .then((res) => {
+    //        console.log(res.data);
+    //     })
+    //     .catch((err) => console.log(err.response));
+    // };
+  };
 
   return (
     <div className="Comp_Wrapper">
@@ -55,9 +84,11 @@ function ViewForm() {
       <Container>
         <Row>
           <Col md={{ span: 6, offset: 2 }}>
-           
-            <div style={{ width: "700px" }} className="project-details-form formView">
-            <h2> Project Details </h2>
+            <div
+              style={{ width: "700px" }}
+              className="project-details-form formView"
+            >
+              <h2> Project Details </h2>
               <Form>
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label>Name of the project or client</Form.Label>
@@ -96,7 +127,11 @@ function ViewForm() {
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label> Development type </Form.Label>
                   <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button size="sm" style={{ width: "auto" }} className="dev-btn">
+                    <Button
+                      size="sm"
+                      style={{ width: "auto" }}
+                      className="dev-btn"
+                    >
                       {devTypeSelected}
                     </Button>
                   </Form.Group>
@@ -262,7 +297,7 @@ function ViewForm() {
 
               <Button
                 variant="primary"
-                // onClick={handleSubmit}
+                onClick={handleApprove}
                 className="approve"
                 style={{
                   marginBottom: "40px",
