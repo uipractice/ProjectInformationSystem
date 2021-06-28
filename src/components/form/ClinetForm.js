@@ -9,6 +9,11 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
+
 function ClinetForm() {
   const {
     register,
@@ -309,15 +314,18 @@ function ClinetForm() {
       .post(`http://localhost:5000/clientInfo/update/${id}`, postObj)
 
       .then((res) => {
-        console.log("hello");
-        console.log(postObj);
-        console.log(res.data);
+        console.log("Data has been saved successfully. ", postObj);
+        console.log("response from backend after successful post request. ", res.data);
+        toast.success("Data Saved Successfully !", {
+          autoClose: 2000,
+        });
       })
       .catch((err) => {
-        console.log("hello");
-        console.log(postObj);
-
-        console.log(err.response);
+        console.log("Data has NOT saved. ", postObj);
+        console.log("response from backend after Failed to post request. ", err.response);
+        toast.error("Failed to save the data !", {
+          autoClose: 2000,
+        });
       });
   }
 
@@ -788,7 +796,7 @@ function ClinetForm() {
                   </Form.Group>
                 </Form.Group>
 
-                <Form.Group
+                {/* <Form.Group
                   controlId="formBasicCheckbox"
                   style={{ marginBottom: "30px" }}
                 >
@@ -805,7 +813,9 @@ function ClinetForm() {
                       {errors.checked.message}
                     </small>
                   )}
-                </Form.Group>
+                </Form.Group> */}
+                <br></br>
+                <br></br>
 
                 <Button
                   variant="danger"

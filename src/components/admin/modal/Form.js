@@ -1,10 +1,24 @@
 import React from "react";
 import axios from "axios";
-import { useForm } from 'react-hook-form';
-import "./Container.css"
+import { useForm } from "react-hook-form";
+import "./Container.css";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 function Form({ closeModal }) {
-  const { register, handleSubmit , formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const handleReset = () => {
+    reset();
+  };
 
   function onSubmitHandle(data) {
     const postState = {
@@ -20,15 +34,24 @@ function Form({ closeModal }) {
       .post("http://localhost:5000/clientInfo/email", postState)
       .then((res) => {
         if (res.data === "success") {
-          alert("Data Saved and Email Sent Successfully!");
+          closeModal();
+          toast.success("Data Saved Successfully !", {
+            autoClose: 2000,
+          });
+          console.log(postState);
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+          
+        } else {
+          toast.error("Data Saved FAILED !", {
+            autoClose: 2000,
+          });
           console.log(postState);
         }
-        else {
-          alert("Message Failed to Send, contact Practice team");
-          console.log(postState);
-        }
-        closeModal()
       })
+
       .catch((err) => console.log(err.response));
   }
 
@@ -104,7 +127,10 @@ function Form({ closeModal }) {
       <div className="form-group row share">
         <div className="col-md-6"></div>
         <div className="col-md-6">
-          <button className="form-control btn btn-primary" type="submit">
+          <button
+            className="form-control btn btn-primary"
+            onClick={handleReset}
+          >
             Reset
           </button>
           <button

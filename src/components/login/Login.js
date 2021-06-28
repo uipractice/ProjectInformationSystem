@@ -2,39 +2,43 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "./Login.css";
 import "../../index.css";
-import { useForm } from "react-hook-form";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 function Login() {
-  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [state, setState] = React.useState({
+    adminUserName: "admin",
+    adminPassowrd: "123",
 
-  const adminUserName = "admin";
-  const adminPassowrd = "123";
+    enteredUserName: "",
+    enteredPassword: "",
+  });
 
   const history = useHistory();
 
-  function handleLogin(data) {
+  function handleCredentials(evt) {
+    setState({
+      ...state,
+      [evt.target.name]: evt.target.value,
+    });
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
     if (
-      adminUserName === data.enteredUserName &&
-      adminPassowrd === data.enteredPassword
+      state.adminUserName === state.enteredUserName &&
+      state.adminPassowrd === state.enteredPassword
     ) {
       const token = "123456abcdef";
       sessionStorage.setItem("auth-token", token);
       history.push("/admin");
     } else {
-      // {
-      //   data.enteredUserName !== "admin" ||
-      //     data.enteredUserName !== "12345" && (
-      //       <small className="text-denger">
-      //         <span>Enter the correct User name</span>
-      //       </small>
-      //     );
-      // }
-      alert("Please enter the correct user or password");
+      toast.error("Please enter correct Username & Password !", {
+        autoClose: 2000,
+      });
     }
   }
 
@@ -42,7 +46,7 @@ function Login() {
     <div className="container-fluid nopad">
       <div className="container_login">
         <div className="wrap_login">
-          <form className="login_form" onSubmit={handleSubmit(handleLogin)}>
+          <form className="login_form" onSubmit={handleLogin}>
             <div className="form_main">
               <div className="login-form-title ">
                 <h3>Sign in</h3>
@@ -54,15 +58,9 @@ function Login() {
                 <input
                   type="text"
                   className="form-control"
-                  {...register("enteredUserName", {
-                    required: "Enter the User Name!",
-                  })}
+                  onChange={handleCredentials}
+                  name="enteredUserName"
                 />
-                {errors.enteredUserName && (
-                  <small className="text-denger">
-                    {errors.enteredUserName.message}
-                  </small>
-                )}
               </div>
 
               <div className="validate-input m-b-40">
@@ -70,24 +68,20 @@ function Login() {
                 <input
                   type="password"
                   className="form-control"
-                  {...register("enteredPassword", {
-                    required: "Enter the User Password!",
-                  })}
+                  onChange={handleCredentials}
+                  name="enteredPassword"
                 />
-                {errors.enteredPassword && (
-                  <small className="text-denger">
-                    {errors.enteredPassword.message}
-                  </small>
-                )}
               </div>
 
               <div className="col-md-12 form_btn_group">
-                <button
-                  type="submit"
-                  className="btn btn-primary btn_blue w-100p"
-                >
-                  SIGN IN
-                </button>
+                {state.enteredUserName && state.enteredPassword ? (
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn_blue w-100p"
+                  >
+                    SIGN IN
+                  </button>
+                ) : null}
               </div>
             </div>
           </form>

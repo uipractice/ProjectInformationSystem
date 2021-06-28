@@ -7,18 +7,18 @@ function GlobalFilter({ filter, setFilter }){
     setFilter(value || undefined)
   }, 1000)
   return (
-    <span >
+    <span>
       <input
-        value={value || ''}
-        onChange={e => {
+        value={value || ""}
+        onChange={(e) => {
           setValue(e.target.value);
           onChange(e.target.value);
         }}
         type="search"
-        placeholder="Search anything"
+        placeholder="Search"
       />
     </span>
-  )
+  );
 }
 
 export default GlobalFilter

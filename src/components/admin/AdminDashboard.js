@@ -3,10 +3,10 @@ import RowHeaderValue from "./RowHeaderValue";
 import ShareButtonSection from "./ShareButtonSection";
 import CompleteTable from "../table/CompleteTable";
 import axios from "axios";
-import IconSubmitted from "../../assets/images/Icon_submitted.svg"
-import IconPending from "../../assets/images/Icon_Pending.svg"
-import IconApproved from "../../assets/images/Icon_approved.svg"
-import IconProjects from "../../assets/images/Icon_Projects.svg"
+import IconSubmitted from "../../assets/images/Icon_submitted.svg";
+import IconPending from "../../assets/images/Icon_Pending.svg";
+import IconApproved from "../../assets/images/Icon_approved.svg";
+import IconProjects from "../../assets/images/Icon_Projects.svg";
 
 import Logo from "../../assets/images/eoke_logo.svg";
 // import User from "../../assets/images/user.svg"
@@ -38,8 +38,8 @@ export default function AdminDashboard() {
   const [data, setData] = useState([]);
   const [totalCount, setTotalCount] = useState("");
   const [pendingCount, setPendingCount] = useState("");
+  const [approvedCount, setApprovedCount] = useState("");
   const [submittedCount, setSubmittedCount] = useState("");
-  const [completedCount, setCompletedCount] = useState("");
 
   useEffect(() => {
     axios("http://localhost:5000/clientInfo/")
@@ -51,17 +51,19 @@ export default function AdminDashboard() {
             return n + (person.status === "Pending");
           }, 0)
         );
+
         setSubmittedCount(
           res.data.reduce(function (n, person) {
             return n + (person.status === "Submitted");
           }, 0)
         );
 
-        setCompletedCount(
+        setApprovedCount(
           res.data.reduce(function (n, person) {
-            return n + (person.status === "Completed");
+            return n + (person.status === "Approved");
           }, 0)
         );
+
         // console.log(res.data);
       })
       .catch((err) => console.log(err));
@@ -76,15 +78,12 @@ export default function AdminDashboard() {
     <div>
       <div className="navbar navbar-dark sticky-top  p-0 shadow header_nav">
         <div className="row">
-            <a
-              className="navbar-brand col-md-6 px-4"
-              href="#/"
-            >
-              <img src={Logo} alt="Evoke Technologies" />
-            </a>
-            <h3>Project Information System </h3>
+          <a className="navbar-brand col-md-6 px-4" href="#/">
+            <img src={Logo} alt="Evoke Technologies" />
+          </a>
+          <h3>Project Information System </h3>
         </div>
-        
+
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
             <button onClick={handleLogout}></button>
@@ -98,10 +97,30 @@ export default function AdminDashboard() {
             <ShareButtonSection />
 
             <div className="row">
-              <RowHeaderValue projectStatus="Projects" iconImg={IconProjects} className="totalCount" count={totalCount} />        
-              <RowHeaderValue projectStatus="Submitted" iconImg={IconSubmitted} className="submitCount" count={submittedCount} />
-              <RowHeaderValue projectStatus="Approved" iconImg={IconApproved} className="completCount" count={completedCount} />
-              <RowHeaderValue projectStatus="Pending" iconImg={IconPending} className="pendingCount" count={pendingCount} />
+              <RowHeaderValue
+                projectStatus="Projects"
+                iconImg={IconProjects}
+                className="totalCount"
+                count={totalCount}
+              />
+              <RowHeaderValue
+                projectStatus="Submitted"
+                iconImg={IconSubmitted}
+                className="submitCount"
+                count={submittedCount}
+              />
+              <RowHeaderValue
+                projectStatus="Approved"
+                iconImg={IconApproved}
+                className="completCount"
+                count={approvedCount}
+              />
+              <RowHeaderValue
+                projectStatus="Pending"
+                iconImg={IconPending}
+                className="pendingCount"
+                count={pendingCount}
+              />
             </div>
 
             <CompleteTable data={data} />
