@@ -315,16 +315,22 @@ function ClinetForm() {
 
       .then((res) => {
         console.log("Data has been saved successfully. ", postObj);
-        console.log("response from backend after successful post request. ", res.data);
+        console.log(
+          "response from backend after successful post request. ",
+          res.data
+        );
         toast.success("Data Saved Successfully !", {
-          autoClose: 2000,
+          autoClose: 3000,
         });
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       })
       .catch((err) => {
         console.log("Data has NOT saved. ", postObj);
         console.log("response from backend after Failed to post request. ", err.response);
         toast.error("Failed to save the data !", {
-          autoClose: 2000,
+          autoClose: 3000,
         });
       });
   }

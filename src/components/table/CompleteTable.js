@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import DeleteImg from "../../assets/images/delete.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import Modal from "react-modal";
 import {
   useTable,
@@ -28,28 +27,25 @@ function CompleteTable({ data }) {
   const [rowOriginal, setRowOriginal] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  function handleInputChange(evt) {
+    setRowOriginal({
+      ...rowOriginal,
+      deleteReason: evt.target.value,
+    });
+  }
 
-  const handleUpdateStatus = (rowOriginal) => {
+  const handleUpdateStatus = (e) => {
+    e.preventDefault();
     rowOriginal.status = "Deleted";
     const id = rowOriginal._id;
-    console.log("id inside api is ", id);
-    const valueEntered = rowOriginal.deleteReason; //add delete
-    console.log("Entered Value ", valueEntered);
-
     axios
       .post("http://localhost:5000/clientInfo/deleteStatus/" + id, rowOriginal)
       .then((res) => {
-        // console.log(res.data);
-        setIsModalOpen(false);
-        // window.location.reload();
         toast.warn("Record has been marked DELETED !", {
-          autoClose: 3000,
+          autoClose: 2900,
         });
+        setIsModalOpen(false);
+        console.log(res.data);
         setTimeout(() => {
           window.location.reload();
         }, 3000);
@@ -73,9 +69,8 @@ function CompleteTable({ data }) {
         Header: "PROJECT NAME",
         Cell: ({ row }) => {
           return (
-
             <div>
-              {row.original.status === "Submitted" ? (
+              {/* {row.original.status === "Submitted" ? ( */}
                 <Link
                   to={{
                     pathname: `/formv/${row.original._id}`,
@@ -110,9 +105,10 @@ function CompleteTable({ data }) {
                 >
                   {row.original.projectNameByIT}
                 </Link>
-              ) :  (row.original.projectNameByIT)}
+              {/* ) : (
+                row.original.projectNameByIT
+              )} */}
             </div>
-            
           );
         },
         sticky: "left",
@@ -138,7 +134,7 @@ function CompleteTable({ data }) {
         width: 100,
       },
       {
-        Header: "SUBMITTED DATE",
+        Header: "UPDATED DATE",
         accessor: "updatedAt",
         Cell: ({ value }) => {
           return format(new Date(value), "dd/MM/yyyy");
@@ -153,10 +149,11 @@ function CompleteTable({ data }) {
         Cell: ({ row }) => (
           <a
             href="#/"
-            className="delete-icon"
+            {...(row.original.status === "Deleted"
+              ? { className: "delete-icon disableDeleteBtn" }
+              : { className: "delete-icon " })}
             onClick={(e) => {
-              let rowData = row.original;
-              setRowOriginal(rowData);
+              setRowOriginal(row.original);
               setIsModalOpen(true);
             }}
           >
@@ -193,14 +190,14 @@ function CompleteTable({ data }) {
         <h5>PROJECTS DETAILS</h5>
         <div>
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-          <select name="hall" id="hall">
+          {/* <select name="hall" id="hall">
             <option> Pending </option>
-            {/* <option selected> Filter All </option> */}
+            // <option selected> Filter All </option> 
             <option> Completed </option>
             <option> Submitted </option>
             <option> Active </option>
             <option> Deleted </option>
-          </select>
+          </select>*/}
         </div>
       </div>
 
@@ -214,18 +211,13 @@ function CompleteTable({ data }) {
         >
           <h2>Are you sure?</h2>
 
-          <form onSubmit={handleSubmit(() => handleUpdateStatus(rowOriginal))}>
-            <p>Please enter the reason to delete the record.</p>
+          <form >
+            <p>Please enter the reason to delete the record*</p>
             <input
               type="text"
-              {...register("deleteReason", { required: true })}
+              onChange={handleInputChange}
+              name="deleteReason"
             />
-            {errors.deleteReason && (
-              <span className="error-msg" style={{ color: "red" }}>
-                Delete reason is required
-              </span>
-            )}
-
             <br></br>
             <p className="descr">
               {" "}
@@ -246,16 +238,14 @@ function CompleteTable({ data }) {
                 </button>
               </div>
               <div className="col-md-6">
-                <button
-                  type="submit"
-                  className="form-control btn btn-primary delete-btn"
-
-                  // onClick={() => {
-                  //   handleUpdateStatus(rowOriginal);
-                  // }}
-                >
-                  Delete
-                </button>
+                {rowOriginal.deleteReason ? (
+                  <button
+                    onClick={handleUpdateStatus}
+                    className="form-control btn btn-primary delete-btn"
+                  >
+                    Delete
+                  </button>
+                ) : null}
               </div>
             </div>
           </form>
