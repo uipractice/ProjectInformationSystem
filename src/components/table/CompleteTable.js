@@ -38,11 +38,11 @@ function CompleteTable({ data }) {
     rowOriginal.status = "Deleted";
     const id = rowOriginal._id;
     console.log("id inside api is ", id);
-    const valueEntered = rowOriginal.deleteReason; //addd delte
+    const valueEntered = rowOriginal.deleteReason; //add delete
     console.log("Entered Value ", valueEntered);
 
     axios
-      .post("http://localhost:5000/clientInfo/delete/" + id, rowOriginal)
+      .post("http://localhost:5000/clientInfo/deleteStatus/" + id, rowOriginal)
       .then((res) => {
         // console.log(res.data);
         setIsModalOpen(false);
@@ -73,41 +73,46 @@ function CompleteTable({ data }) {
         Header: "PROJECT NAME",
         Cell: ({ row }) => {
           return (
-            <div>
-              <Link
-                to={{
-                  pathname: `/formv/${row.original._id}`,
-                  state: {
-                    projectNameByIT: row.original.projectNameByIT,
-                    projectManager: row.original.projectManager,
-                    email: row.original.email,
-                    practice: row.original.practice,
-                    status: row.original.status,
 
-                    projectName: row.original.projectName,
-                    securityMeasure: row.original.securityMeasure,
-                    informIT: row.original.informIT,
-                    workStationSelected: row.original.workStationSelected,
-                    devTypeSelected: row.original.devTypeSelected,
-                    allowedWebsite: row.original.allowedWebsite,
-                    isNDAsigned: row.original.isNDAsigned,
-                    isGDPRcompliance: row.original.isGDPRcompliance,
-                    isCyberSecConducted: row.original.isCyberSecConducted,
-                    securityBreach: row.original.securityBreach,
-                    isDisasterInsuCovered: row.original.isDisasterInsuCovered,
-                    disasterDetails: row.original.disasterDetails,
-                    showInsuranceDetails: row.original.showInsuranceDetails,
-                    isIsolatedEnvReq: row.original.isIsolatedEnvReq,
-                    isolationDetails: row.original.isolationDetails,
-                    showIsolatedDetails: row.original.showIsolatedDetails,
-                    isDLPreq: row.original.isDLPreq,
-                    isClientEmailProvided: row.original.isClientEmailProvided,
-                  },
-                }}
-              >
-                {row.original.projectNameByIT}
-              </Link>
+            <div>
+              {row.original.status === "Submitted" ? (
+                <Link
+                  to={{
+                    pathname: `/formv/${row.original._id}`,
+                    state: {
+                      projectNameByIT: row.original.projectNameByIT,
+                      projectManager: row.original.projectManager,
+                      email: row.original.email,
+                      practice: row.original.practice,
+                      status: row.original.status,
+                      id: row.original._id,
+
+                      projectName: row.original.projectName,
+                      securityMeasure: row.original.securityMeasure,
+                      informIT: row.original.informIT,
+                      workStationSelected: row.original.workStationSelected,
+                      devTypeSelected: row.original.devTypeSelected,
+                      allowedWebsite: row.original.allowedWebsite,
+                      isNDAsigned: row.original.isNDAsigned,
+                      isGDPRcompliance: row.original.isGDPRcompliance,
+                      isCyberSecConducted: row.original.isCyberSecConducted,
+                      securityBreach: row.original.securityBreach,
+                      isDisasterInsuCovered: row.original.isDisasterInsuCovered,
+                      disasterDetails: row.original.disasterDetails,
+                      showInsuranceDetails: row.original.showInsuranceDetails,
+                      isIsolatedEnvReq: row.original.isIsolatedEnvReq,
+                      isolationDetails: row.original.isolationDetails,
+                      showIsolatedDetails: row.original.showIsolatedDetails,
+                      isDLPreq: row.original.isDLPreq,
+                      isClientEmailProvided: row.original.isClientEmailProvided,
+                    },
+                  }}
+                >
+                  {row.original.projectNameByIT}
+                </Link>
+              ) :  (row.original.projectNameByIT)}
             </div>
+            
           );
         },
         sticky: "left",
@@ -208,6 +213,7 @@ function CompleteTable({ data }) {
           className="modalDesign deleteModal"
         >
           <h2>Are you sure?</h2>
+
           <form onSubmit={handleSubmit(() => handleUpdateStatus(rowOriginal))}>
             <p>Please enter the reason to delete the record.</p>
             <input
@@ -216,7 +222,7 @@ function CompleteTable({ data }) {
             />
             {errors.deleteReason && (
               <span className="error-msg" style={{ color: "red" }}>
-                Delete Reason name is required
+                Delete reason is required
               </span>
             )}
 
@@ -243,7 +249,7 @@ function CompleteTable({ data }) {
                 <button
                   type="submit"
                   className="form-control btn btn-primary delete-btn"
-                  
+
                   // onClick={() => {
                   //   handleUpdateStatus(rowOriginal);
                   // }}
@@ -298,6 +304,8 @@ function CompleteTable({ data }) {
                         style = { color: "#0066FF", textAlign: "left" };
                       } else if (cell.value === "Completed") {
                         style = { color: "#13BC86", textAlign: "left" };
+                      } else if (cell.value === "Approved") {
+                        style = { color: "green", textAlign: "left" };
                       }
                     }
                     return (
@@ -319,7 +327,7 @@ function CompleteTable({ data }) {
           onChange={(e) => setPageSize(Number(e.target.value))}
           className="pageNum"
         >
-          {[6, 10, 20, 30, 50].map((pageSize) => (
+          {[8, 10, 20, 30, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>

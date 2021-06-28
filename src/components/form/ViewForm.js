@@ -6,6 +6,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
 
+import axios from "axios";
+
 import "./ClinetForm.css";
 import { useLocation } from "react-router-dom";
 
@@ -20,6 +22,41 @@ function ViewForm() {
   const location = useLocation();
   const {
     projectNameByIT,
+    projectManager,
+    email,
+    practice,
+    status,
+    id,
+
+    securityMeasure,
+
+    informIT,
+    workStationSelected,
+    devTypeSelected,
+    allowedWebsite,
+    isNDAsigned,
+    isGDPRcompliance,
+    isCyberSecConducted,
+    securityBreach,
+    isDisasterInsuCovered,
+    disasterDetails,
+    showInsuranceDetails,
+    isIsolatedEnvReq,
+    isolationDetails,
+    showIsolatedDetails,
+    isDLPreq,
+    isClientEmailProvided,
+   
+
+  } = location.state;
+
+  const totalState = {
+    id,
+    projectNameByIT,
+    projectManager,
+    email,
+    practice,
+    status,
     securityMeasure,
     informIT,
     workStationSelected,
@@ -37,29 +74,25 @@ function ViewForm() {
     showIsolatedDetails,
     isDLPreq,
     isClientEmailProvided,
-  } = location.state;
+  }
 
   const history = useHistory();
 
   const handleApprove = () => {
-    toast.success("Record Approved !", {
-      autoClose: 2500,
-    });
+    totalState.status = "Approved"
+    axios
+      .post("http://localhost:5000/clientInfo/approvStatus/" + id, totalState)
+      .then((res) => {
+          console.log(res.data);
+          toast.success("Record Approved !", {
+            autoClose: 1800,
+          });
+      })
+      .catch((err) => console.log(err.response));
+  
     setTimeout(() => {
       history.push("/admin");
     }, 2000);
-
-    // const handleUpdateStatus = (rowOriginal) => {
-    //   rowOriginal.status = "Approved";
-    //   const id = rowOriginal._id;
-    //   console.log("id inside api is ", id);
-    //   axios
-    //     .post("http://localhost:5000/clientInfo/delete/" + id, rowOriginal)
-    //     .then((res) => {
-    //        console.log(res.data);
-    //     })
-    //     .catch((err) => console.log(err.response));
-    // };
   };
 
   return (
@@ -281,7 +314,8 @@ function ViewForm() {
                 </Form.Group>
               </Form>
 
-              <Button
+              {status === "Submitted" ? 
+              (<Button
                 variant="danger"
                 onClick={() => window.location.reload()}
                 className="reshare"
@@ -293,11 +327,12 @@ function ViewForm() {
               >
                 {" "}
                 Reshare
-              </Button>
-
-              <Button
+              </Button>): null}
+              
+              {status === "Submitted" ? 
+              (<Button
                 variant="primary"
-                onClick={handleApprove}
+                onClick={()=> {handleApprove()}}
                 className="approve"
                 style={{
                   marginBottom: "40px",
@@ -307,7 +342,8 @@ function ViewForm() {
               >
                 {" "}
                 Approve
-              </Button>
+              </Button>): null}
+              
             </div>
           </Col>
         </Row>
