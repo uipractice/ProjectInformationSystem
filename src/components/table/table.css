@@ -1,3 +1,10 @@
+.disableDeleteBtn {
+  /* 
+  cursor: not-allowed;   
+  display: none; */
+  pointer-events: none;
+  opacity: 30%;
+}
 .modalDesign.deleteModal {
   width: 532px;
   align-items: center;
