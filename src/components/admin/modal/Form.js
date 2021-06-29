@@ -126,16 +126,14 @@ function Form({ closeModal }) {
 
       <div className="form-group row share">
         <div className="col-md-6"></div>
-        <div className="col-md-6">
-          <button
-            className="form-control btn btn-primary"
-            onClick={handleReset}
-          >
+        <div className="col-md-6 text-right">
+          <button className="form-control btn btn-primary" onClick={handleReset} disabled>
             Reset
           </button>
           <button
             className="form-control btn btn-primary share-btn"
             type="submit"
+            disabled
           >
             Share
           </button>

@@ -210,10 +210,17 @@ function CompleteTable({ data }) {
           className="modalDesign deleteModal"
         >
           <h2>Are you sure?</h2>
-
-          <form >
-            <p>Please enter the reason to delete the record*</p>
-            <input
+          <button
+             type="submit"
+            className="_modal-close"
+          >
+            <svg className="_modal-close-icon" viewBox="0 0 40 40">
+              <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+            </svg>
+          </button>
+          <form>
+            <p>Please enter the reason to delete the record.</p>
+            <textarea
               type="text"
               onChange={handleInputChange}
               name="deleteReason"
@@ -227,7 +234,7 @@ function CompleteTable({ data }) {
             <br></br>
 
             <div className="row">
-              <div className="col-md-6 text-right">
+              <div className="col-md-6 text-right padding0">
                 <button
                   className="form-control btn btn-primary"
                   onClick={() => {

@@ -125,10 +125,15 @@
     font-family: Lato;
     font-weight: normal;
     font-size: 14px;
-    line-height: 17px;
+    line-height: 20px;
     letter-spacing: 0.01em;
     color: #626364;
 }
 .form-group select, .form-group .form-control{
     height: 44px;
+}
+.form-group select{
+    appearance: none;
+    position: relative;
+    background:url('../../../assets/images/down-arrow.svg') no-repeat 96%;
 }
