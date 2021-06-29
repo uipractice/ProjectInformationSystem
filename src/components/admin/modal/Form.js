@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import "./Container.css";
 
 import { toast } from "react-toastify";
@@ -9,46 +8,53 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 function Form({ closeModal }) {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
 
-  const handleReset = () => {
-    reset();
+  const [state, setState] = useState({
+    projectNameByIT: "",
+    projectManager: "",
+    email: "",
+    practice: "",
+    status: "Pending",
+    deleteReason: "",
+  });
+  
+  function handleOnChange(e) {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  const handleReset = (e) => {
+    e.preventDefault();
+    setState({
+    projectNameByIT: "",
+    projectManager: "",
+    email: "",
+    practice: "",
+    });
   };
 
-  function onSubmitHandle(data) {
-    const postState = {
-      projectNameByIT: data.projectNameByIT,
-      projectManager: data.projectManager,
-      email: data.email,
-      practice: data.practice,
-      status: "Pending",
-      deleteReason: "",
-    };
-
+  function handleSubmit(e) {
+    e.preventDefault();
     axios
-      .post("http://localhost:5000/clientInfo/email", postState)
+      .post("http://localhost:5000/clientInfo/email", state)
       .then((res) => {
         if (res.data === "success") {
           closeModal();
           toast.success("Data Saved Successfully !", {
             autoClose: 2000,
           });
-          console.log(postState);
+          console.log(state);
 
           setTimeout(() => {
             window.location.reload();
           }, 2000);
-          
         } else {
           toast.error("Data Saved FAILED !", {
             autoClose: 2000,
           });
-          console.log(postState);
+          console.log(state);
         }
       })
 
@@ -56,22 +62,18 @@ function Form({ closeModal }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmitHandle)}>
+    <form >
       <div className="row">
         <div className="form-group col-md-6">
           <label htmlFor="projectNameByIT">Project Name</label>
           <input
             type="text"
             className="form-control"
-            {...register("projectNameByIT", {
-              required: "Enter the Project Name!",
-            })}
+            onChange={handleOnChange}
+            name="projectNameByIT"
+            value={state.projectNameByIT}
           />
-          {errors.projectNameByIT && (
-            <small className="text-denger">
-              {errors.projectNameByIT.message}
-            </small>
-          )}
+          
         </div>
 
         <div className="form-group col-md-6">
@@ -79,15 +81,11 @@ function Form({ closeModal }) {
           <input
             type="text"
             className="form-control"
-            {...register("projectManager", {
-              required: "Enter the Manger Name!",
-            })}
+            onChange={handleOnChange}
+            name="projectManager"
+            // value={state.projectManager}             
           />
-          {errors.projectManager && (
-            <small className="text-denger">
-              {errors.projectManager.message}
-            </small>
-          )}
+          
         </div>
       </div>
 
@@ -96,21 +94,20 @@ function Form({ closeModal }) {
         <input
           type="email"
           className="form-control"
-          placeholder=" "
-          {...register("email", {
-            required: "Enter the Email Id, you want to send the mail to!",
-          })}
+          onChange={handleOnChange}
+          name="email"
+          // value={state.email}
         />
-        {errors.email && (
-          <small className="text-denger">{errors.email.message}</small>
-        )}
+        
       </div>
 
       <div className="form-group col-md-6">
         <label>Practice Name </label>
         <select
           className="form-control"
-          {...register("practice", { required: "Choose the Practice Team" })}
+          onChange={handleOnChange}
+          name="practice"
+          // value={state.practice}
         >
           <option value=""></option>
           <option value="QA Practice">QA Practice</option>
@@ -119,9 +116,7 @@ function Form({ closeModal }) {
           <option value="Microsoft Practice">Microsoft Practice</option>
           <option value="Other">Other Practice</option>
         </select>
-        {errors.practice && (
-          <small className="text-denger">{errors.practice.message}</small>
-        )}
+        
       </div>
 
       <div className="form-group row share">
@@ -133,12 +128,15 @@ function Form({ closeModal }) {
           >
             Reset
           </button>
-          <button
-            className="form-control btn btn-primary share-btn"
-            type="submit"
-          >
-            Share
-          </button>
+
+          {state.projectNameByIT && state.projectManager && state.email && state.practice ? (
+            <button
+              className="form-control btn btn-primary share-btn"
+              onClick={handleSubmit}
+            >
+              Share
+            </button>
+          ) : null} 
         </div>
       </div>
     </form>

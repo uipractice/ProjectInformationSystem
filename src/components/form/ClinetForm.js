@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -7,7 +7,6 @@ import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,16 +14,11 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 function ClinetForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     projectName: "",
 
     securityMeasure: "",
@@ -81,6 +75,13 @@ function ClinetForm() {
 
     newStatus: "Submitted",
   });
+
+  function handlePlainText(e) {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  }
 
   function handleClientEmailProvided(evt) {
     const val = evt.target.name;
@@ -279,35 +280,30 @@ function ClinetForm() {
     }
   }
 
-  // function handlePlainText(evt) {
-  //   setState({
-  //     ...state,
-  //     [evt.target.name]: evt.target.value,
-  //   });
-  // }
-
-  function handleSubmitForm(data) {
-  
+ 
+  function handleSubmitForm() {
+    // e.preventDefault();
     const postObj = {
-      projectName: data.projectName,
-      securityMeasure: data.securityMeasure,
-      informIT: data.informIT,
+      projectName: state.projectName,
+      securityMeasure: state.securityMeasure,
+      informIT: state.informIT,
       workStationSelected: state.workStationSelected,
       devTypeSelected: state.devTypeSelected,
-      allowedWebsite: data.allowedWebsite,
+      allowedWebsite: state.allowedWebsite,
       isNDAsigned: state.isNDAsigned,
       isGDPRcompliance: state.isGDPRcompliance,
       isCyberSecConducted: state.isCyberSecConducted,
-      securityBreach: data.securityBreach,
+      securityBreach: state.securityBreach,
       isDisasterInsuCovered: state.isDisasterInsuCovered,
-      disasterDetails: data.disasterDetails,
+      disasterDetails: state.disasterDetails,
       showInsuranceDetails: state.showInsuranceDetails,
       isIsolatedEnvReq: state.isIsolatedEnvReq,
-      isolationDetails: data.isolationDetails,
+      isolationDetails: state.isolationDetails,
       showIsolatedDetails: state.showIsolatedDetails,
       isDLPreq: state.isDLPreq,
       isClientEmailProvided: state.isClientEmailProvided,
       newStatus: state.newStatus,
+
     };
 
     axios
@@ -315,16 +311,13 @@ function ClinetForm() {
 
       .then((res) => {
         console.log("Data has been saved successfully. ", postObj);
-        console.log(
-          "response from backend after successful post request. ",
-          res.data
-        );
-        toast.success("Data Saved Successfully !", {
-          autoClose: 3000,
+        console.log("response from backend : ", res.data );
+        toast.success("Form sumbitted successfully. Concerned team might reach you if any further information is required.", {
+          autoClose: 5900,
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 6000);
       })
       .catch((err) => {
         console.log("Data has NOT saved. ", postObj);
@@ -337,6 +330,7 @@ function ClinetForm() {
 
   return (
     <div>
+
       <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
         <div className="row">
           <a className="navbar-brand col-md-6 px-4" href="#/">
@@ -352,39 +346,31 @@ function ClinetForm() {
       </div>
 
       <Container>
+
         <Row>
+
           <Col md={{ span: 6, offset: 2 }}>
+
             <div style={{ width: "700px" }} className="project-details-form">
+
               <h2> Project Details </h2>
-              <Form onSubmit={handleSubmit(handleSubmitForm)}>
+
+              <Form >
+
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label>Name of the project or client</Form.Label>
                   <Form.Control
-                    type="text"
-                    {...register("projectName", {
-                      required: "Enter the Project Name!",
-                    })}
+                    name="projectName"
+                    onChange={handlePlainText}
                   />
-                  {errors.projectName && (
-                    <small className="text-denger">
-                      {errors.projectName.message}
-                    </small>
-                  )}
                 </Form.Group>
 
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label>Security measures from client side</Form.Label>
                   <Form.Control
-                    type="text"
-                    {...register("securityMeasure", {
-                      required: "Enter the Security Measures",
-                    })}
+                    name="securityMeasure"
+                    onChange={handlePlainText}
                   />
-                  {errors.securityMeasure && (
-                    <small className="text-denger">
-                      {errors.securityMeasure.message}
-                    </small>
-                  )}
                 </Form.Group>
 
                 <Form.Group style={{ marginBottom: "40px" }}>
@@ -392,16 +378,9 @@ function ClinetForm() {
                     Information to IT at the time of project kick-off
                   </Form.Label>
                   <Form.Control
-                    // type="text"
-                    {...register("informIT", {
-                      required: "Enter the information provided to IT, if N/A then enter 'No' ",
-                    })}
+                    name="informIT"
+                    onChange={handlePlainText}
                   />
-                  {errors.informIT && (
-                    <small className="text-denger">
-                      {errors.informIT.message}
-                    </small>
-                  )}
                 </Form.Group>
 
                 <Form.Group style={{ marginBottom: "40px" }}>
@@ -414,9 +393,6 @@ function ClinetForm() {
                       onClick={handleWorkStation}
                       value={state.workStationValue[0]}
                       style={{ marginRight: "15px", width: "80px" }}
-                      // {...register("laptop", {
-                      //   required: "Choose the WorkStation Type",
-                      // })}
                     >
                       {" "}
                       Laptop
@@ -428,9 +404,6 @@ function ClinetForm() {
                       onClick={handleWorkStation}
                       value={state.workStationValue[1]}
                       style={{ marginRight: "15px", width: "80px" }}
-                      // {...register("VM", {
-                      //   required: "Choose the WorkStation Type",
-                      // })}
                     >
                       {" "}
                       VM
@@ -441,19 +414,12 @@ function ClinetForm() {
                       onClick={handleWorkStation}
                       value={state.workStationValue[2]}
                       style={{ marginRight: "15px", width: "80px" }}
-                      // {...register("cloud", {
-                      //   required: "Choose the WorkStation Type",
-                      // })}
                     >
                       {" "}
                       Cloud
                     </Button>
                   </Form.Group>
-                  {/* {errors.projectNameByIT && (
-                    <small className="text-denger">
-                      {errors.projectNameByIT.message}
-                    </small>
-                  )} */}
+
                 </Form.Group>
 
                 <Form.Group style={{ marginBottom: "40px" }}>
@@ -497,21 +463,14 @@ function ClinetForm() {
                 <Form.Group style={{ marginBottom: "40px" }}>
                   <Form.Label>Website(s) need to be allowed</Form.Label>
                   <Form.Control
-
-                    {...register("allowedWebsite", {
-                      required: "If N/A then mention Evoke Website",
-                    })}
+                    name = "allowedWebsite"
+                    onChange = {handlePlainText}                    
                   />
                   <Form.Text className="text-muted">
                     {" "}
                     Use comma(,) to saperate multiple URLs, eg-
                     https://www.evoketechnologies.com/, 2nd URL{" "}
                   </Form.Text>
-                  {errors.allowedWebsite && (
-                    <small className="text-denger">
-                      {errors.allowedWebsite.message}
-                    </small>
-                  )}
                 </Form.Group>
 
                 <Form.Group style={{ marginBottom: "40px" }}>
@@ -613,15 +572,9 @@ function ClinetForm() {
                     security breach or calamities ?
                   </Form.Label>
                   <Form.Control
-                    {...register("securityBreach", {
-                      required: "If N/A then mention 'No'",
-                    })}
+                    name="securityBreach"
+                    onChange={handlePlainText}
                   />
-                  {errors.securityBreach && (
-                    <small className="text-denger">
-                      {errors.securityBreach.message}
-                    </small>
-                  )}
                 </Form.Group>
 
                 <Form.Group style={{ marginBottom: "40px" }}>
@@ -664,16 +617,14 @@ function ClinetForm() {
                         </Form.Label>
 
                         <Form.Control
-                          {...register("disasterDetails", {
-                            required:
-                              "Please enter Insurance Details",
-                          })}
+                          name="disasterDetails"
+                          onChange={handlePlainText}
+
+                          // text = "text"
+                          // name = "isolationDetails"
+                          // onChange = {handlePlainText}
                         />
-                        {errors.disasterDetails && (
-                          <small className="text-denger">
-                            {errors.disasterDetails.message}
-                          </small>
-                        )}
+
                       </div>
                     )}
                   </Form.Group>
@@ -725,16 +676,9 @@ function ClinetForm() {
                         </Form.Label>
 
                         <Form.Control
-                          {...register("isolationDetails", {
-                            required:
-                              "Share the details of isolation requested by client",
-                          })}
+                          name = "isolationDetails"
+                          onChange = {handlePlainText}
                         />
-                        {errors.isolationDetails && (
-                          <small className="text-denger">
-                            {errors.isolationDetails.message}
-                          </small>
-                        )}
                       </div>
                     )}
                   </Form.Group>
@@ -802,32 +746,12 @@ function ClinetForm() {
                   </Form.Group>
                 </Form.Group>
 
-                {/* <Form.Group
-                  controlId="formBasicCheckbox"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <Form.Check
-                    type="checkbox"
-                    label="I have re-checked my response and now I am ready to submit"
-                    {...register("checked", {
-                      required:
-                        "Please check this checkbox once you are ready to submit",
-                    })}
-                  />
-                  {errors.checked && (
-                    <small className="text-denger">
-                      {errors.checked.message}
-                    </small>
-                  )}
-                </Form.Group> */}
-                <br></br>
-                <br></br>
-
                 <Button
                   variant="danger"
                   onClick={() => window.location.reload()}
                   className="reshare"
                   style={{
+                    marginTop: "50px",
                     marginBottom: "40px",
                     marginRight: "15px",
                     width: "130px",
@@ -839,22 +763,30 @@ function ClinetForm() {
 
                 <Button
                   variant="primary"
-                  type="submit"
                   className="submit-btn"
-                  onSubmit={handleSubmitForm}
+                  onClick={()=> handleSubmitForm()}
                   style={{
+                    marginTop: "50px",
                     marginBottom: "40px",
                     width: "130px",
                   }}
+                  // disabled={false}
+                  // disabled={true}
                 >
                   {" "}
                   Submit
                 </Button>
+              
               </Form>
+
             </div>
+
           </Col>
+
         </Row>
+
       </Container>
+
     </div>
   );
 }

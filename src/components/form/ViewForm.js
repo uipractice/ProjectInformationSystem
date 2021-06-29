@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -19,6 +19,12 @@ import { useHistory } from "react-router-dom";
 toast.configure();
 
 function ViewForm() {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const location = useLocation();
   const {
     projectNameByIT,
@@ -27,9 +33,7 @@ function ViewForm() {
     practice,
     status,
     id,
-
     securityMeasure,
-
     informIT,
     workStationSelected,
     devTypeSelected,
@@ -46,8 +50,6 @@ function ViewForm() {
     showIsolatedDetails,
     isDLPreq,
     isClientEmailProvided,
-   
-
   } = location.state;
 
   const totalState = {
@@ -74,22 +76,22 @@ function ViewForm() {
     showIsolatedDetails,
     isDLPreq,
     isClientEmailProvided,
-  }
+  };
 
   const history = useHistory();
 
   const handleApprove = () => {
-    totalState.status = "Approved"
+    totalState.status = "Approved";
     axios
       .post("http://localhost:5000/clientInfo/approvStatus/" + id, totalState)
       .then((res) => {
-          console.log(res.data);
-          toast.success("Record Approved !", {
-            autoClose: 1800,
-          });
+        console.log(res.data);
+        toast.success("Record Approved !", {
+          autoClose: 1800,
+        });
       })
       .catch((err) => console.log(err.response));
-  
+
     setTimeout(() => {
       history.push("/admin");
     }, 2000);
@@ -122,228 +124,272 @@ function ViewForm() {
               className="project-details-form formView"
             >
               <h2> Project Details </h2>
-              <Form>
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>Name of the project or client</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={projectNameByIT}
-                    readOnly={true}
-                  />
-                </Form.Group>
-
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>Security measures from client side</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={securityMeasure}
-                    readOnly={true}
-                  />
-                </Form.Group>
-
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
-                    Information to IT at the time of project kick-off
-                  </Form.Label>
-                  <Form.Control type="text" value={informIT} readOnly={true} />
-                </Form.Group>
-
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>Work stations type provided in Evoke </Form.Label>
-                  <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button size="sm" style={{ width: "120px" }}>
-                      {workStationSelected}
-                    </Button>
+              {status !== "Pending" ? (
+                <Form>
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>Name of the project or client</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={projectNameByIT}
+                      readOnly={true}
+                    />
                   </Form.Group>
-                </Form.Group>
 
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label> Development type </Form.Label>
-                  <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                      size="sm"
-                      style={{ width: "auto" }}
-                      className="dev-btn"
-                    >
-                      {devTypeSelected}
-                    </Button>
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>Security measures from client side</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={securityMeasure}
+                      readOnly={true}
+                    />
                   </Form.Group>
-                </Form.Group>
 
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>Websites need to be allowed</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={allowedWebsite}
-                    readOnly={true}
-                  />
-                </Form.Group>
-
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
-                    NDA/DPA (Data Privacy Agreement) signed ?{" "}
-                  </Form.Label>
-                  <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button size="sm" style={{ width: "95px" }}>
-                      {isNDAsigned}
-                    </Button>
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      Information to IT at the time of project kick-off
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={informIT}
+                      readOnly={true}
+                    />
                   </Form.Group>
-                </Form.Group>
 
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
-                    Did all the project related documents (security, GDPR
-                    complaiance and MSA) are collected from client ?{" "}
-                  </Form.Label>
-                  <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button size="sm" style={{ width: "95px" }}>
-                      {isGDPRcompliance}
-                    </Button>
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      Work stations type provided in Evoke{" "}
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "30px" }}>
+                      <Button
+                        size="sm"
+                        style={{ width: "120px" }}
+                        ref={inputRef}
+                      >
+                        {workStationSelected}
+                      </Button>
+                    </Form.Group>
                   </Form.Group>
-                </Form.Group>
 
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
-                    Cyber security induction meeting conducted with client as
-                    well as in house (importance of data security to followed by
-                    all users) ?{" "}
-                  </Form.Label>
-                  <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button size="sm" style={{ width: "95px" }}>
-                      {isCyberSecConducted}
-                    </Button>
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label> Development type </Form.Label>
+                    <Form.Group style={{ marginBottom: "30px" }}>
+                      <Button
+                        size="sm"
+                        style={{ width: "auto" }}
+                        className="dev-btn"
+                      >
+                        {devTypeSelected}
+                      </Button>
+                    </Form.Group>
                   </Form.Group>
-                </Form.Group>
 
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
-                    Any project risks identified in the course of interims of
-                    security breach or calamities ?
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={securityBreach}
-                    readOnly={true}
-                  />
-                </Form.Group>
-
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
-                    Insurance coverage in case of disater issues ?{" "}
-                  </Form.Label>
-                  <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                      size="sm"
-                      style={{
-                        width: "95px",
-                        marginBottom: "20px",
-                      }}
-                    >
-                      {isDisasterInsuCovered}
-                    </Button>
-
-                    {showInsuranceDetails === "true" ? (
-                      <div>
-                        <Form.Text>
-                          {" "}
-                          Details for insurance company coverage terms and
-                          insurance company spoc
-                        </Form.Text>
-                        <Form.Control
-                          type="text"
-                          value={disasterDetails}
-                          readOnly={true}
-                        />
-                      </div>
-                    ) : null}
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>Websites need to be allowed</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={allowedWebsite}
+                      readOnly={true}
+                    />
                   </Form.Group>
-                </Form.Group>
 
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      NDA/DPA (Data Privacy Agreement) signed ?{" "}
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "30px" }}>
+                      <Button size="sm" style={{ width: "95px" }}>
+                        {isNDAsigned}
+                      </Button>
+                    </Form.Group>
+                  </Form.Group>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      Did all the project related documents (security, GDPR
+                      complaiance and MSA) are collected from client ?{" "}
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "30px" }}>
+                      <Button size="sm" style={{ width: "95px" }}>
+                        {isGDPRcompliance}
+                      </Button>
+                    </Form.Group>
+                  </Form.Group>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      Cyber security induction meeting conducted with client as
+                      well as in house (importance of data security to followed
+                      by all users) ?{" "}
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "30px" }}>
+                      <Button size="sm" style={{ width: "95px" }}>
+                        {isCyberSecConducted}
+                      </Button>
+                    </Form.Group>
+                  </Form.Group>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      Any project risks identified in the course of interims of
+                      security breach or calamities ?
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={securityBreach}
+                      readOnly={true}
+                    />
+                  </Form.Group>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      Insurance coverage in case of disater issues ?{" "}
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "30px" }}>
+                      <Button
+                        size="sm"
+                        style={{
+                          width: "95px",
+                          marginBottom: "20px",
+                        }}
+                      >
+                        {isDisasterInsuCovered}
+                      </Button>
+
+                      {showInsuranceDetails === "true" ? (
+                        <div>
+                          <Form.Text>
+                            {" "}
+                            Details for insurance company coverage terms and
+                            insurance company spoc
+                          </Form.Text>
+                          <Form.Control
+                            type="text"
+                            value={disasterDetails}
+                            readOnly={true}
+                          />
+                        </div>
+                      ) : null}
+                    </Form.Group>
+                  </Form.Group>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      {" "}
+                      Does client need any isolated environment requirement ?{" "}
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "30px" }}>
+                      <Button
+                        size="sm"
+                        style={{ width: "95px", marginBottom: "20px" }}
+                      >
+                        {isIsolatedEnvReq}
+                      </Button>
+
+                      {showIsolatedDetails === "true" ? (
+                        <div>
+                          <Form.Text>
+                            {" "}
+                            Details of physical isolation of network, physical
+                            isolation for workspace, DLP etc
+                          </Form.Text>
+                          <Form.Control
+                            type="text"
+                            value={isolationDetails}
+                            readOnly={true}
+                          />
+                        </div>
+                      ) : null}
+                    </Form.Group>
+                  </Form.Group>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      Does client require DLP/Encryption enabled laptops for
+                      their users ?{" "}
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "30px" }}>
+                      <Button size="sm" style={{ width: "95px" }}>
+                        {isDLPreq}
+                      </Button>
+                    </Form.Group>
+                  </Form.Group>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>
+                      Is client providing Email services to user for regular
+                      business communication ?{" "}
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "60px" }}>
+                      <Button size="sm" style={{ width: "95px" }}>
+                        {isClientEmailProvided}
+                      </Button>
+                    </Form.Group>
+                  </Form.Group>
+                </Form>
+              ) : (
+                <span>
+                  <Form.Group style={{ marginTop: "150px" }}>
+                    <Form.Label>
+                      The project details has not been shared by the Manager.{" "}
+                      <br />
+                      Would you like to send him/her a gentel reminder?
+                    </Form.Label>
+                  </Form.Group>
+                  <Button
+                    variant="danger"
+                    // onClick={() => window.location.reload()}
+                    className="reshare"
+                    ref={inputRef}
+                    style={{
+                      marginBottom: "90px",
+                      marginTop: "90px",
+                      marginRight: "15px",
+                      width: "130px",
+                    }}
+                  >
                     {" "}
-                    Does client need any isolated environment requirement ?{" "}
-                  </Form.Label>
-                  <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button
-                      size="sm"
-                      style={{ width: "95px", marginBottom: "20px" }}
-                    >
-                      {isIsolatedEnvReq}
-                    </Button>
+                    Reminder
+                  </Button>
+                </span>
+              )}
 
-                    {showIsolatedDetails === "true" ? (
-                      <div>
-                        <Form.Text>
-                          {" "}
-                          Details of physical isolation of network, physical
-                          isolation for workspace, DLP etc
-                        </Form.Text>
-                        <Form.Control
-                          type="text"
-                          value={isolationDetails}
-                          readOnly={true}
-                        />
-                      </div>
-                    ) : null}
-                  </Form.Group>
-                </Form.Group>
+              {status === "Submitted" ? (
+                <Button
+                  variant="danger"
+                  onClick={() => window.location.reload()}
+                  className="reshare"
+                  style={{
+                    marginBottom: "40px",
+                    marginRight: "15px",
+                    width: "130px",
+                  }}
+                >
+                  {" "}
+                  Reshare
+                </Button>
+              ) : null}
 
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
-                    Does client require DLP/Encryption enabled laptops for their
-                    users ?{" "}
-                  </Form.Label>
-                  <Form.Group style={{ marginBottom: "30px" }}>
-                    <Button size="sm" style={{ width: "95px" }}>
-                      {isDLPreq}
-                    </Button>
-                  </Form.Group>
-                </Form.Group>
+              {status === "Submitted" ? (
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    handleApprove();
+                  }}
+                  className="approve"
+                  style={{
+                    marginBottom: "40px",
+                    marginRight: "15px",
+                    width: "130px",
+                  }}
+                >
+                  {" "}
+                  Approve
+                </Button>
+              ) : null}
 
-                <Form.Group style={{ marginBottom: "40px" }}>
-                  <Form.Label>
-                    Is client providing Email services to user for regular
-                    business communication ?{" "}
-                  </Form.Label>
-                  <Form.Group style={{ marginBottom: "60px" }}>
-                    <Button size="sm" style={{ width: "95px" }}>
-                      {isClientEmailProvided}
-                    </Button>
-                  </Form.Group>
-                </Form.Group>
-              </Form>
-
-              {status === "Submitted" ? 
-              (<Button
-                variant="danger"
-                onClick={() => window.location.reload()}
-                className="reshare"
-                style={{
-                  marginBottom: "40px",
-                  marginRight: "15px",
-                  width: "130px",
-                }}
-              >
-                {" "}
-                Reshare
-              </Button>): null}
-              
-              {status === "Submitted" ? 
-              (<Button
-                variant="primary"
-                onClick={()=> {handleApprove()}}
-                className="approve"
-                style={{
-                  marginBottom: "40px",
-                  marginRight: "15px",
-                  width: "130px",
-                }}
-              >
-                {" "}
-                Approve
-              </Button>): null}
-              
+              {/* {status === "Hidden" ? (
+                <input ref={inputRef} type="text" />
+              ) : null} */}
             </div>
           </Col>
         </Row>

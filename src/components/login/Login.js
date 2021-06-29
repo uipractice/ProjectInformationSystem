@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import "./Login.css";
 import "../../index.css";
@@ -9,6 +9,12 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 function Login() {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const [state, setState] = React.useState({
     adminUserName: "admin",
     adminPassowrd: "123",
@@ -42,6 +48,22 @@ function Login() {
     }
   }
 
+  function SubmitButton() {
+    if (state.enteredUserName && state.enteredPassword) {
+      return (
+        <button className="btn btn-primary btn_blue w-100p" type="submit">
+          SIGN IN
+        </button>
+      );
+    } else {
+      return (
+        <button className="btn btn-primary btn_blue w-100p" disabled>
+          SIGN IN
+        </button>
+      );
+    }
+  }
+
   return (
     <div className="container-fluid nopad">
       <div className="container_login">
@@ -56,6 +78,7 @@ function Login() {
               <div className="validate-input m-b-20">
                 <label className="form-label">Username</label>
                 <input
+                  ref={inputRef}
                   type="text"
                   className="form-control"
                   onChange={handleCredentials}
@@ -74,14 +97,7 @@ function Login() {
               </div>
 
               <div className="col-md-12 form_btn_group">
-                {state.enteredUserName && state.enteredPassword ? (
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn_blue w-100p"
-                  >
-                    SIGN IN
-                  </button>
-                ) : null}
+                <SubmitButton />
               </div>
             </div>
           </form>

@@ -190,14 +190,14 @@ function CompleteTable({ data }) {
         <h5>PROJECTS DETAILS</h5>
         <div>
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-          {/* <select name="hall" id="hall">
+          <select name="hall" id="hall">
             <option> Pending </option>
-            // <option selected> Filter All </option> 
+             {/* <option selected> Filter All </option>  */}
             <option> Completed </option>
             <option> Submitted </option>
             <option> Active </option>
             <option> Deleted </option>
-          </select>*/}
+          </select>
         </div>
       </div>
 
