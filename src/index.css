@@ -485,9 +485,9 @@ body {
     /* padding-left: 22px; */
     border-color:#209EC5;
 }
-.project-details-form .btn-info.btn-padding{
+/* .project-details-form .btn-info.btn-padding{
     padding-left: 22px;
-}
+} */
 .project-details-form .form-control{
     height: 44px;
 }
@@ -540,6 +540,12 @@ body {
 }
 .ReactModal__Overlay {
     background: rgba(83, 83, 83, 0.3) !important;
+}
+.ReactModalPortal ._modal-close{
+    background: transparent !important;
+    border: 0 !important;
+    width: auto !important;
+    top: 3px;
 }
 /*
 @media screen and (min-height:1951px){

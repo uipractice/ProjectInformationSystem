@@ -392,7 +392,7 @@ function ClinetForm() {
                       variant={state.workStationFirstBtn}
                       onClick={handleWorkStation}
                       value={state.workStationValue[0]}
-                      style={{ marginRight: "15px", width: "80px" }}
+                      style={{ marginRight: "15px", width: "100px" }}
                     >
                       {" "}
                       Laptop
@@ -430,7 +430,7 @@ function ClinetForm() {
                       variant={state.devTypeFirstBtn}
                       onClick={handleDevType}
                       value={state.devTypeValue[0]}
-                      style={{ marginRight: "15px", width: "80px" }}
+                      style={{ marginRight: "15px", width: "90px" }}
                     >
                       {" "}
                       Local
@@ -440,7 +440,7 @@ function ClinetForm() {
                       variant={state.devTypeSecondBtn}
                       onClick={handleDevType}
                       value={state.devTypeValue[1]}
-                      style={{ marginRight: "15px" }}
+                      style={{ marginRight: "15px", width: "150px" }}
                       className="btn-padding"
                     >
                       {" "}
@@ -451,7 +451,7 @@ function ClinetForm() {
                       variant={state.devTypeThirdBtn}
                       onClick={handleDevType}
                       value={state.devTypeValue[2]}
-                      style={{ marginRight: "15px" }}
+                      style={{ marginRight: "15px", width: "150px" }}
                       className="btn-padding"
                     >
                       {" "}

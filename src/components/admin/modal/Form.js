@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./Container.css";
 
@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 function Form({ closeModal }) {
-
   const [state, setState] = useState({
     projectNameByIT: "",
     projectManager: "",
@@ -17,7 +16,7 @@ function Form({ closeModal }) {
     status: "Pending",
     deleteReason: "",
   });
-  
+
   function handleOnChange(e) {
     setState({
       ...state,
@@ -28,10 +27,10 @@ function Form({ closeModal }) {
   const handleReset = (e) => {
     e.preventDefault();
     setState({
-    projectNameByIT: "",
-    projectManager: "",
-    email: "",
-    practice: "",
+      projectNameByIT: "",
+      projectManager: "",
+      email: "",
+      practice: "",
     });
   };
 
@@ -62,7 +61,7 @@ function Form({ closeModal }) {
   }
 
   return (
-    <form >
+    <form>
       <div className="row">
         <div className="form-group col-md-6">
           <label htmlFor="projectNameByIT">Project Name</label>
@@ -73,7 +72,6 @@ function Form({ closeModal }) {
             name="projectNameByIT"
             value={state.projectNameByIT}
           />
-          
         </div>
 
         <div className="form-group col-md-6">
@@ -83,9 +81,8 @@ function Form({ closeModal }) {
             className="form-control"
             onChange={handleOnChange}
             name="projectManager"
-            // value={state.projectManager}             
+            // value={state.projectManager}
           />
-          
         </div>
       </div>
 
@@ -98,7 +95,6 @@ function Form({ closeModal }) {
           name="email"
           // value={state.email}
         />
-        
       </div>
 
       <div className="form-group col-md-6">
@@ -116,27 +112,30 @@ function Form({ closeModal }) {
           <option value="Microsoft Practice">Microsoft Practice</option>
           <option value="Other">Other Practice</option>
         </select>
-        
       </div>
 
       <div className="form-group row share">
         <div className="col-md-6"></div>
-        <div className="col-md-6">
+        <div className="col-md-6 text-right">
           <button
             className="form-control btn btn-primary"
             onClick={handleReset}
+            disabled
           >
             Reset
           </button>
 
-          {state.projectNameByIT && state.projectManager && state.email && state.practice ? (
+          {state.projectNameByIT &&
+          state.projectManager &&
+          state.email &&
+          state.practice ? (
             <button
               className="form-control btn btn-primary share-btn"
               onClick={handleSubmit}
             >
               Share
             </button>
-          ) : null} 
+          ) : null}
         </div>
       </div>
     </form>
