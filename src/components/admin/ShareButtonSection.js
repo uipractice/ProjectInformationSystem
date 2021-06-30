@@ -71,7 +71,6 @@ export class ShareModalContainer extends Component {
               onClickOutside={this.onClickOutside}
             />
           ) : null}
-          {/* //her changes goes here */}
         </div>
       </div>
     );

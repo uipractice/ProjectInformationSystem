@@ -71,40 +71,40 @@ function CompleteTable({ data }) {
           return (
             <div>
               {/* {row.original.status === "Submitted" ? ( */}
-                <Link
-                  to={{
-                    pathname: `/formv/${row.original._id}`,
-                    state: {
-                      projectNameByIT: row.original.projectNameByIT,
-                      projectManager: row.original.projectManager,
-                      email: row.original.email,
-                      practice: row.original.practice,
-                      status: row.original.status,
-                      id: row.original._id,
+              <Link
+                to={{
+                  pathname: `/formv/${row.original._id}`,
+                  state: {
+                    projectNameByIT: row.original.projectNameByIT,
+                    projectManager: row.original.projectManager,
+                    email: row.original.email,
+                    practice: row.original.practice,
+                    status: row.original.status,
+                    id: row.original._id,
 
-                      projectName: row.original.projectName,
-                      securityMeasure: row.original.securityMeasure,
-                      informIT: row.original.informIT,
-                      workStationSelected: row.original.workStationSelected,
-                      devTypeSelected: row.original.devTypeSelected,
-                      allowedWebsite: row.original.allowedWebsite,
-                      isNDAsigned: row.original.isNDAsigned,
-                      isGDPRcompliance: row.original.isGDPRcompliance,
-                      isCyberSecConducted: row.original.isCyberSecConducted,
-                      securityBreach: row.original.securityBreach,
-                      isDisasterInsuCovered: row.original.isDisasterInsuCovered,
-                      disasterDetails: row.original.disasterDetails,
-                      showInsuranceDetails: row.original.showInsuranceDetails,
-                      isIsolatedEnvReq: row.original.isIsolatedEnvReq,
-                      isolationDetails: row.original.isolationDetails,
-                      showIsolatedDetails: row.original.showIsolatedDetails,
-                      isDLPreq: row.original.isDLPreq,
-                      isClientEmailProvided: row.original.isClientEmailProvided,
-                    },
-                  }}
-                >
-                  {row.original.projectNameByIT}
-                </Link>
+                    projectName: row.original.projectName,
+                    securityMeasure: row.original.securityMeasure,
+                    informIT: row.original.informIT,
+                    workStationSelected: row.original.workStationSelected,
+                    devTypeSelected: row.original.devTypeSelected,
+                    allowedWebsite: row.original.allowedWebsite,
+                    isNDAsigned: row.original.isNDAsigned,
+                    isGDPRcompliance: row.original.isGDPRcompliance,
+                    isCyberSecConducted: row.original.isCyberSecConducted,
+                    securityBreach: row.original.securityBreach,
+                    isDisasterInsuCovered: row.original.isDisasterInsuCovered,
+                    disasterDetails: row.original.disasterDetails,
+                    showInsuranceDetails: row.original.showInsuranceDetails,
+                    isIsolatedEnvReq: row.original.isIsolatedEnvReq,
+                    isolationDetails: row.original.isolationDetails,
+                    showIsolatedDetails: row.original.showIsolatedDetails,
+                    isDLPreq: row.original.isDLPreq,
+                    isClientEmailProvided: row.original.isClientEmailProvided,
+                  },
+                }}
+              >
+                {row.original.projectNameByIT}
+              </Link>
               {/* ) : (
                 row.original.projectNameByIT
               )} */}
@@ -188,16 +188,17 @@ function CompleteTable({ data }) {
       <br></br>
       <div className="filter-row">
         <h5>PROJECTS DETAILS</h5>
-        <div>
+        <div >
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-          {/* <select name="hall" id="hall">
+          <select name="hall" id="hall" style={{ marginLeft: "12px" }}>
+            <option> All Records </option>
             <option> Pending </option>
-            // <option selected> Filter All </option> 
+            {/* <option selected> Filter All </option>  */}
             <option> Completed </option>
             <option> Submitted </option>
             <option> Active </option>
             <option> Deleted </option>
-          </select>*/}
+          </select>
         </div>
       </div>
 
@@ -211,8 +212,10 @@ function CompleteTable({ data }) {
         >
           <h2>Are you sure?</h2>
           <button
-             type="submit"
             className="_modal-close"
+            onClick={() => {
+              setIsModalOpen(false);
+            }}
           >
             <svg className="_modal-close-icon" viewBox="0 0 40 40">
               <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
@@ -222,6 +225,7 @@ function CompleteTable({ data }) {
             <p>Please enter the reason to delete the record.</p>
             <textarea
               type="text"
+              style={{ color: "black" }}
               onChange={handleInputChange}
               name="deleteReason"
             />
@@ -252,7 +256,15 @@ function CompleteTable({ data }) {
                   >
                     Delete
                   </button>
-                ) : null}
+                ) : (
+                  <button
+                    onClick={handleUpdateStatus}
+                    className="form-control btn btn-primary delete-btn"
+                    disabled
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
             </div>
           </form>
