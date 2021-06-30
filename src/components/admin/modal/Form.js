@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Container.css";
 
@@ -8,6 +8,15 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 function Form({ closeModal }) {
+
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+
   const [state, setState] = useState({
     projectNameByIT: "",
     projectManager: "",
@@ -67,6 +76,7 @@ function Form({ closeModal }) {
           <label htmlFor="projectNameByIT">Project Name</label>
           <input
             type="text"
+            ref={inputRef}
             className="form-control"
             onChange={handleOnChange}
             name="projectNameByIT"
@@ -81,7 +91,7 @@ function Form({ closeModal }) {
             className="form-control"
             onChange={handleOnChange}
             name="projectManager"
-            // value={state.projectManager}
+            value={state.projectManager}
           />
         </div>
       </div>
@@ -93,7 +103,7 @@ function Form({ closeModal }) {
           className="form-control"
           onChange={handleOnChange}
           name="email"
-          // value={state.email}
+          value={state.email}
         />
       </div>
 
@@ -103,7 +113,7 @@ function Form({ closeModal }) {
           className="form-control"
           onChange={handleOnChange}
           name="practice"
-          // value={state.practice}
+          value={state.practice}
         >
           <option value=""></option>
           <option value="QA Practice">QA Practice</option>
@@ -120,7 +130,6 @@ function Form({ closeModal }) {
           <button
             className="form-control btn btn-primary"
             onClick={handleReset}
-            disabled
           >
             Reset
           </button>
@@ -135,7 +144,17 @@ function Form({ closeModal }) {
             >
               Share
             </button>
-          ) : null}
+          ) : (
+            <button
+              className="form-control btn btn-primary share-btn"
+              onClick={handleSubmit}
+              disabled
+            >
+              Share
+            </button>
+          )
+          
+          }
         </div>
       </div>
     </form>

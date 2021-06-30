@@ -9,12 +9,11 @@ import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
 
 import "./ClinetForm.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useHistory } from "react-router-dom";
 
 toast.configure();
 
@@ -105,9 +104,10 @@ function ViewForm() {
             className="navbar-brand col-md-6 px-4"
             href="http://localhost:3000/admin"
           >
-            <img src={Logo} alt="Evoke Technologies" />
+            <img src={Logo} alt="Evoke Logo" />
           </a>
           <h3>Project Information System </h3>
+
         </div>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
@@ -124,6 +124,17 @@ function ViewForm() {
               className="project-details-form formView"
             >
               <h2> Project Details </h2>
+
+              {/* todo */}
+              <button
+                // className="_modal-close"
+                onClick={() => history.push("/admin")}
+              >
+                <svg className="_modal-close-icon" viewBox="0 0 40 40">
+                  <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                </svg>
+              </button>
+
               {status !== "Pending" ? (
                 <Form>
                   <Form.Group style={{ marginBottom: "40px" }}>
