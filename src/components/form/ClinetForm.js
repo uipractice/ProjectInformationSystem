@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -15,8 +15,21 @@ toast.configure();
 
 function ClinetForm() {
 
+  const[prevStatus, setPrevStatus]=useState('');
+
+  useEffect(()=>{
+    axios
+      .get(`http://localhost:5000/clientInfo/${id}`)
+      .then((res) => {
+        setPrevStatus(res.data.status)
+        console.log("Status: ", prevStatus);
+      })
+      .catch((err) => {
+        console.log("Failed to get the status: ", err.response);
+      })
+  })
+
   const { id } = useParams();
-  // console.log(id);
 
   const [state, setState] = useState({
     projectName: "",
@@ -280,7 +293,6 @@ function ClinetForm() {
     }
   }
 
- 
   function handleSubmitForm() {
     // e.preventDefault();
     const postObj = {
@@ -354,7 +366,7 @@ function ClinetForm() {
             <div style={{ width: "700px" }} className="project-details-form">
 
               <h2> Project Details </h2>
-
+              { prevStatus === "Pending" ? (
               <Form >
 
                 <Form.Group style={{ marginBottom: "40px" }}>
@@ -779,6 +791,16 @@ function ClinetForm() {
               
               </Form>
 
+              ):(
+                <div
+                  style={{
+                    padding:"140px",
+                  }}
+                >
+                  Form has already been submitted !
+
+                </div>
+              )}
             </div>
 
           </Col>
@@ -787,7 +809,7 @@ function ClinetForm() {
 
       </Container>
 
-    </div>
+    </div> 
   );
 }
 

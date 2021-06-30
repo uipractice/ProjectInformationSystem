@@ -44,7 +44,9 @@ export default function AdminDashboard() {
   useEffect(() => {
     axios("http://localhost:5000/clientInfo/")
       .then((res) => {
+
         setData(res.data);
+
         setTotalCount(res.data.length);
         setPendingCount(
           res.data.reduce(function (n, person) {

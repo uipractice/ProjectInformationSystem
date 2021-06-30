@@ -24,6 +24,7 @@ toast.configure();
 Modal.setAppElement("#root");
 
 function CompleteTable({ data }) {
+
   const [rowOriginal, setRowOriginal] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -190,6 +191,8 @@ function CompleteTable({ data }) {
         <h5>PROJECTS DETAILS</h5>
         <div >
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          
+{/* FIXME: */}
           <select name="hall" id="hall" style={{ marginLeft: "12px" }}>
             <option> All Records </option>
             <option> Pending </option>
@@ -225,6 +228,7 @@ function CompleteTable({ data }) {
             <p>Please enter the reason to delete the record.</p>
             <textarea
               type="text"
+              autoFocus={true}
               style={{ color: "black" }}
               onChange={handleInputChange}
               name="deleteReason"
