@@ -14,7 +14,6 @@ import { useLocation, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 toast.configure();
 
 function ViewForm() {
@@ -32,6 +31,7 @@ function ViewForm() {
     practice,
     status,
     id,
+    deleteReason,
     securityMeasure,
     informIT,
     workStationSelected,
@@ -53,6 +53,7 @@ function ViewForm() {
 
   const totalState = {
     id,
+    deleteReason,
     projectNameByIT,
     projectManager,
     email,
@@ -107,7 +108,6 @@ function ViewForm() {
             <img src={Logo} alt="Evoke Logo" />
           </a>
           <h3>Project Information System </h3>
-
         </div>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
@@ -137,6 +137,22 @@ function ViewForm() {
 
               {status !== "Pending" ? (
                 <Form>
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    {projectNameByIT && (
+                      <div>
+                        <Form.Label style={{ color: "red" }}>
+                          This project has been Deleted bacause
+                        </Form.Label>
+
+                        <Form.Control
+                          type="text"
+                          value={deleteReason}
+                          readOnly={true}
+                        />
+                      </div>
+                    )}
+                  </Form.Group>
+
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Name of the project or client</Form.Label>
                     <Form.Control
@@ -341,21 +357,46 @@ function ViewForm() {
                 <span>
                   <Form.Group style={{ marginTop: "150px" }}>
                     <Form.Label>
-                      The project details has not been shared by the Manager.{" "}
+                      The project details has not been Submitted by the{" "}
+                      <b> {projectManager} </b> yet. <br />
                       <br />
-                      Would you like to send him/her a gentel reminder?
+                      Would you like to send a gentel reminder?
                     </Form.Label>
                   </Form.Group>
+
                   <Button
                     variant="danger"
-                    // onClick={() => window.location.reload()}
+                    className="reshare"
+                    onClick={() => history.push("/admin")}
+                    ref={inputRef}
+                    style={{
+                      marginBottom: "90px",
+                      marginTop: "80px",
+                      marginRight: "15px",
+                      width: "130px",
+                    }}
+                  >
+                    {" "}
+                    Close
+                  </Button>
+
+                  <Button
+                    variant="danger"
                     className="reshare"
                     ref={inputRef}
                     style={{
                       marginBottom: "90px",
-                      marginTop: "90px",
+                      marginTop: "80px",
                       marginRight: "15px",
                       width: "130px",
+                    }}
+                    onClick={() => {
+                      toast.success("We have send a gental reminder.", {
+                        autoClose: 1800,
+                      });
+                      setTimeout(() => {
+                        history.push("/admin");
+                      }, 2000);
                     }}
                   >
                     {" "}
@@ -367,7 +408,18 @@ function ViewForm() {
               {status === "Submitted" ? (
                 <Button
                   variant="danger"
-                  onClick={() => window.location.reload()}
+                  onClick={() => {
+                    toast.success(
+                      "We have requrested to fill the form again.",
+                      {
+                        autoClose: 1800,
+                      }
+                    );
+
+                    setTimeout(() => {
+                      history.push("/admin");
+                    }, 2000);
+                  }}
                   className="reshare"
                   style={{
                     marginBottom: "40px",
@@ -395,6 +447,55 @@ function ViewForm() {
                 >
                   {" "}
                   Approve
+                </Button>
+              ) : null}
+
+              {status === "Deleted" ? (
+                <Button
+                  variant="danger"
+                  className="reshare"
+                  onClick={() => history.push("/admin")}
+                  ref={inputRef}
+                  style={{
+                    marginBottom: "70px",
+                    marginRight: "15px",
+                    width: "130px",
+                  }}
+                >
+                  {" "}
+                  Close
+                </Button>
+              ) : null}
+
+              {status === "Deleted" ? (
+                <Button
+                  variant="danger"
+                  onClick={() => handleApprove()}
+                  style={{
+                    marginBottom: "70px",
+                    width: "130px",
+                  }}
+                >
+                  {" "}
+                  Restore
+                </Button>
+              ) : null}
+
+              {status === "Approved" ? (
+                <Button
+                  variant="danger"
+                  className="reshare"
+                  onClick={() => history.push("/admin")}
+                  ref={inputRef}
+                  style={{
+                    marginBottom: "70px",
+                    //  marginTop: "30px",
+                    marginRight: "15px",
+                    width: "130px",
+                  }}
+                >
+                  {" "}
+                  Close
                 </Button>
               ) : null}
 

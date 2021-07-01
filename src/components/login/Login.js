@@ -42,7 +42,7 @@ function Login() {
       sessionStorage.setItem("auth-token", token);
       history.push("/admin");
     } else {
-      toast.error("Please enter correct Username & Password !", {
+      toast.error("Wrong user or password !", {
         autoClose: 2000,
       });
     }

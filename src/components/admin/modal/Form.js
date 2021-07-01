@@ -43,31 +43,49 @@ function Form({ closeModal }) {
     });
   };
 
+  function ValidateEmail(inputText) {
+    const mailformat = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    // const mailformat = /^\w+@evoketechnologies.com/;
+    if (inputText.match(mailformat)) {
+      return true;
+    } else {
+      toast.error("Invalid email ID !", {
+        autoClose: 1800,
+      });
+      return false;
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/clientInfo/email", state)
-      .then((res) => {
-        if (res.data === "success") {
-          closeModal();
-          toast.success("Data Saved Successfully !", {
-            autoClose: 2000,
-          });
-          console.log(state);
 
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        } else {
-          toast.error("Data Saved FAILED !", {
-            autoClose: 2000,
-          });
-          console.log(state);
-        }
-      })
+    if (ValidateEmail(state.email))  {
+      axios
+            .post("http://localhost:5000/clientInfo/email", state)
+            .then((res) => {
+              if (res.data === "success") {
+                closeModal();
+                toast.success("Data Saved Successfully !", {
+                  autoClose: 2000,
+                });
+                console.log(state);
 
-      .catch((err) => console.log(err.response));
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000);
+              } else {
+                toast.error("Data Saved FAILED !", {
+                  autoClose: 2000,
+                });
+                console.log(state);
+              }
+            })
+
+            .catch((err) => console.log(err.response));
+      }
   }
+
+   
 
   return (
     <form>
@@ -152,9 +170,7 @@ function Form({ closeModal }) {
             >
               Share
             </button>
-          )
-          
-          }
+          )}
         </div>
       </div>
     </form>
