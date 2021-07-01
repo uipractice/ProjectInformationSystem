@@ -46,6 +46,7 @@ export default function AdminDashboard() {
       .then((res) => {
 
         setData(res.data);
+        // console.log("respose data", res.data)
 
         setTotalCount(res.data.length);
         setPendingCount(
@@ -65,16 +66,10 @@ export default function AdminDashboard() {
             return n + (person.status === "Approved");
           }, 0)
         );
-
-        // console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  // var pendingCount = res.data.reduce(function (n, person) {
-  //   return n + (person.status === "Pending");
-  // }, 0);
-  // console.log(pendingCount);
 
   return (
     <div>

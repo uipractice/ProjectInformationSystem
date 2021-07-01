@@ -26,6 +26,7 @@ Modal.setAppElement("#root");
 function CompleteTable({ data }) {
 
   const [rowOriginal, setRowOriginal] = useState({});
+ 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function handleInputChange(evt) {
@@ -71,7 +72,7 @@ function CompleteTable({ data }) {
         Cell: ({ row }) => {
           return (
             <div>
-              {/* {row.original.status === "Submitted" ? ( */}
+              
               <Link
                 to={{
                   pathname: `/formv/${row.original._id}`,
@@ -101,14 +102,13 @@ function CompleteTable({ data }) {
                     showIsolatedDetails: row.original.showIsolatedDetails,
                     isDLPreq: row.original.isDLPreq,
                     isClientEmailProvided: row.original.isClientEmailProvided,
+                    deleteReason: row.original.deleteReason,
                   },
                 }}
               >
                 {row.original.projectNameByIT}
               </Link>
-              {/* ) : (
-                row.original.projectNameByIT
-              )} */}
+ 
             </div>
           );
         },
@@ -149,7 +149,6 @@ function CompleteTable({ data }) {
         Header: "ACTION",
         Cell: ({ row }) => (
           <a
-            href="#/"
             {...(row.original.status === "Deleted"
               ? { className: "delete-icon disableDeleteBtn" }
               : { className: "delete-icon " })}
@@ -262,7 +261,6 @@ function CompleteTable({ data }) {
                   </button>
                 ) : (
                   <button
-                    onClick={handleUpdateStatus}
                     className="form-control btn btn-primary delete-btn"
                     disabled
                   >
@@ -281,14 +279,7 @@ function CompleteTable({ data }) {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    //   style={{
-                    //     borderBottom: "solid 3px red",
-                    //     color: "black",
-                    //     fontWeight: "bold",
-                    //   }}
-                  >
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} >
                     {column.render("Header")}
                     <span>
                       {column.isSorted
