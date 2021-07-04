@@ -24,6 +24,8 @@ function Form({ closeModal }) {
     practice: "",
     status: "Pending",
     deleteReason: "",
+    restoreReason: "",
+    reshareReason: "",
   });
 
   function handleOnChange(e) {

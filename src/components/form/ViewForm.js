@@ -97,6 +97,38 @@ function ViewForm() {
     }, 2000);
   };
 
+  const handleReshare = () => {
+    totalState.status = "Pending";
+    axios
+      .post("http://localhost:5000/clientInfo/mailReshare/" + id, totalState)
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Record Marked Pending Again !", {
+          autoClose: 1800,
+        });
+      })
+      .catch((err) => console.log(err.response));
+
+    setTimeout(() => {
+      history.push("/admin");
+    }, 2000);
+  };
+  const handleReminder = () => {
+    axios
+      .post("http://localhost:5000/clientInfo/mailReminder/" + id, totalState)
+      .then((res) => {
+        console.log(res.data);
+        toast.success("A Reminder mail has been triggered !", {
+          autoClose: 1800,
+        });
+      })
+      .catch((err) => console.log(err.response));
+
+      setTimeout(() => {
+        history.push("/admin");
+      }, 2000);
+  };
+
   return (
     <div className="Comp_Wrapper">
       <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
@@ -391,12 +423,13 @@ function ViewForm() {
                       width: "130px",
                     }}
                     onClick={() => {
-                      toast.success("We have send a gental reminder.", {
-                        autoClose: 1800,
-                      });
-                      setTimeout(() => {
-                        history.push("/admin");
-                      }, 2000);
+                      handleReminder();
+                      // toast.success("We have send a gental reminder.", {
+                      //   autoClose: 1800,
+                      // });
+                      // setTimeout(() => {
+                      //   history.push("/admin");
+                      // }, 2000);
                     }}
                   >
                     {" "}
@@ -409,16 +442,17 @@ function ViewForm() {
                 <Button
                   variant="danger"
                   onClick={() => {
-                    toast.success(
-                      "We have requrested to fill the form again.",
-                      {
-                        autoClose: 1800,
-                      }
-                    );
+                    handleReshare();
+                    // toast.success(
+                    //   "We have requrested to fill the form again.",
+                    //   {
+                    //     autoClose: 1800,
+                    //   }
+                    // );
 
-                    setTimeout(() => {
-                      history.push("/admin");
-                    }, 2000);
+                    // setTimeout(() => {
+                    //   history.push("/admin");
+                    // }, 2000);
                   }}
                   className="reshare"
                   style={{
