@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
-function ClinetForm() {
+function ClientForm() {
   const [prevStatus, setPrevStatus] = useState("");
   const [prevProjectName, setPrevProjectName] = useState("");
 
@@ -836,4 +836,4 @@ function ClinetForm() {
   );
 }
 
-export default ClinetForm;
+export default ClientForm;

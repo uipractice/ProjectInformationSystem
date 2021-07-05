@@ -1,5 +1,5 @@
 import React from 'react'
-import ClinetForm from './components/form/ClinetForm'
+import ClientForm from './components/form/ClientForm'
 import ViewForm from './components/form/ViewForm'
 import Login from './components/login/Login'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
@@ -12,7 +12,7 @@ function App() {
        <Router>
             <Switch>
                 <Route exact path="/"> <Login/> </Route>
-                <Route path="/form/:id"> <ClinetForm/> </Route>
+                <Route path="/form/:id"> <ClientForm/> </Route>
                 <Route path="/formv/:id"> <ViewForm/> </Route>
                 <Route path="/admin"> <AdminDashboard/> </Route>   
             </Switch>          

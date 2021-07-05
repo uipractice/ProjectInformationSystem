@@ -64,14 +64,14 @@ function CompleteTable({ data }) {
       {
         Header: "SL.NO",
         accessor: "serial",
-        filterable: false,
+        // filterable: false,
       },
 
       {
         Header: "PROJECT NAME",
         Cell: ({ row }) => {
           return (
-            <div>
+            
               
               <Link
                 to={{
@@ -103,13 +103,14 @@ function CompleteTable({ data }) {
                     isDLPreq: row.original.isDLPreq,
                     isClientEmailProvided: row.original.isClientEmailProvided,
                     deleteReason: row.original.deleteReason,
+                    reshareReason: row.original.reshareReason,
                   },
                 }}
               >
                 {row.original.projectNameByIT}
               </Link>
  
-            </div>
+           
           );
         },
         sticky: "left",
@@ -191,7 +192,7 @@ function CompleteTable({ data }) {
         <div >
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
           
-{/* FIXME: */}
+    {/* FIXME: */}
           <select name="hall" id="hall" style={{ marginLeft: "12px" }}>
             <option> All Records </option>
             <option> Pending </option>
