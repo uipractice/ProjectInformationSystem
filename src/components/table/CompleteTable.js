@@ -81,14 +81,14 @@ function CompleteTable({ data }) {
       {
         Header: "SL.NO",
         accessor: "serial",
-        filterable: false,
+        // filterable: false,
       },
 
       {
         Header: "PROJECT NAME",
         Cell: ({ row }) => {
           return (
-            <div>
+            
               
               <Link
                 to={{
@@ -120,13 +120,14 @@ function CompleteTable({ data }) {
                     isDLPreq: row.original.isDLPreq,
                     isClientEmailProvided: row.original.isClientEmailProvided,
                     deleteReason: row.original.deleteReason,
+                    reshareReason: row.original.reshareReason,
                   },
                 }}
               >
                 {row.original.projectNameByIT}
               </Link>
  
-            </div>
+           
           );
         },
         sticky: "left",
@@ -216,7 +217,7 @@ function CompleteTable({ data }) {
             <option> Submitted </option>
             <option> Active </option>
             <option> Deleted </option>
-          </select> */}
+          </select> */} 
           <FormControl className={classes.formControl}>
             <Select
               value={age}
@@ -235,6 +236,7 @@ function CompleteTable({ data }) {
               <MenuItem value={50}>Deleted</MenuItem>
             </Select>
           </FormControl>
+          
         </div>
       </div>
 

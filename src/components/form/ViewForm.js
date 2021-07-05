@@ -1,15 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
+import Modal from "react-modal"; //why you removed this one?
 import Footer from "../admin/Footer";
 
 import axios from "axios";
 
-import "./ClinetForm.css";
 import { useLocation, useHistory } from "react-router-dom";
 
 import { toast } from "react-toastify";
@@ -18,13 +18,15 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 function ViewForm() {
-  const inputRef = useRef(null);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
-  const location = useLocation();
+  const location = useLocation(); 
   const {
     projectNameByIT,
     projectManager,
@@ -33,6 +35,7 @@ function ViewForm() {
     status,
     id,
     deleteReason,
+    reshareReason,
     securityMeasure,
     informIT,
     workStationSelected,
@@ -52,14 +55,20 @@ function ViewForm() {
     isClientEmailProvided,
   } = location.state;
 
-  const totalState = {
-    id,
-    deleteReason,
+  function handleInputChange(evt) {
+    setTotalState({
+      ...totalState,
+      reshareReason: evt.target.value,
+    });
+  }
+  const[totalState, setTotalState] = useState({
     projectNameByIT,
     projectManager,
     email,
     practice,
     status,
+    id,
+    deleteReason,
     securityMeasure,
     informIT,
     workStationSelected,
@@ -77,7 +86,8 @@ function ViewForm() {
     showIsolatedDetails,
     isDLPreq,
     isClientEmailProvided,
-  };
+    reshareReason
+  })
 
   const history = useHistory();
 
@@ -98,22 +108,27 @@ function ViewForm() {
     }, 2000);
   };
 
-  const handleReshare = () => {
+  
+
+  const handleReshare = (e) => {
+    e.preventDefault();
     totalState.status = "Pending";
     axios
       .post("http://localhost:5000/clientInfo/mailReshare/" + id, totalState)
       .then((res) => {
         console.log(res.data);
-        toast.success("Record Marked Pending Again !", {
+        toast.success("Record is Re-Shared !", {
           autoClose: 1800,
         });
+        setIsModalOpen(false);
       })
       .catch((err) => console.log(err.response));
 
-    setTimeout(() => {
-      history.push("/admin");
-    }, 2000);
+    // setTimeout(() => {
+    //   history.push("/admin");
+    // }, 2000);
   };
+
   const handleReminder = () => {
     axios
       .post("http://localhost:5000/clientInfo/mailReminder/" + id, totalState)
@@ -130,8 +145,11 @@ function ViewForm() {
       }, 2000);
   };
 
+
+
+
   return (
-    <div className="Comp_Wrapper">
+    <div >
       <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
         <div className="row">
           <a
@@ -147,6 +165,69 @@ function ViewForm() {
             <button></button>
           </li>
         </ul>
+      </div>
+
+      <div>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() => {
+            setIsModalOpen(false);
+          }}
+          className="modalDesign deleteModal"
+        >
+          <h2>Request the re-submit the form</h2>
+          <button
+            className="_modal-close"
+            onClick={() => {
+              setIsModalOpen(false);
+            }}
+          >
+            <svg className="_modal-close-icon" viewBox="0 0 40 40">
+              <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+            </svg>
+          </button>
+          <form>
+            <p >Please enter the which data is incompleted.</p>
+            <textarea
+              type="text"
+              autoFocus={true}
+              style={{ color: "black", marginTop: "20px", marginBottom: "60px" }}
+              onChange={handleInputChange}
+              name="deleteReason"
+            />
+            
+
+            <div className="row">
+              <div className="col-md-6 text-right padding0">
+                <button
+                  className="form-control btn btn-primary"
+                  onClick={() => {
+                    setIsModalOpen(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+              <div className="col-md-6">
+                {totalState.reshareReason ? (
+                  <button
+                    onClick={handleReshare}
+                    className="form-control btn btn-primary delete-btn"
+                  >
+                    Reshare
+                  </button>
+                ) : (
+                  <button
+                    className="form-control btn btn-primary delete-btn"
+                    disabled
+                  >
+                    Reshare
+                  </button>
+                )}
+              </div>
+            </div>
+          </form>
+        </Modal>
       </div>
 
       <Container>
@@ -171,7 +252,7 @@ function ViewForm() {
               {status !== "Pending" ? (
                 <Form>
                   <Form.Group style={{ marginBottom: "40px" }}>
-                    {projectNameByIT && (
+                    {totalState.deleteReason && (
                       <div>
                         <Form.Label style={{ color: "red" }}>
                           This project has been Deleted bacause
@@ -190,7 +271,7 @@ function ViewForm() {
                     <Form.Label>Name of the project or client</Form.Label>
                     <Form.Control
                       type="text"
-                      value={projectNameByIT}
+                      value={totalState.projectNameByIT}
                       readOnly={true}
                     />
                   </Form.Group>
@@ -425,12 +506,6 @@ function ViewForm() {
                     }}
                     onClick={() => {
                       handleReminder();
-                      // toast.success("We have send a gental reminder.", {
-                      //   autoClose: 1800,
-                      // });
-                      // setTimeout(() => {
-                      //   history.push("/admin");
-                      // }, 2000);
                     }}
                   >
                     {" "}
@@ -443,17 +518,9 @@ function ViewForm() {
                 <Button
                   variant="danger"
                   onClick={() => {
-                    handleReshare();
-                    // toast.success(
-                    //   "We have requrested to fill the form again.",
-                    //   {
-                    //     autoClose: 1800,
-                    //   }
-                    // );
+                    
+                    setIsModalOpen(true);
 
-                    // setTimeout(() => {
-                    //   history.push("/admin");
-                    // }, 2000);
                   }}
                   className="reshare"
                   style={{
