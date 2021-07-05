@@ -251,7 +251,7 @@ function ViewForm() {
               {status !== "Pending" ? (
                 <Form>
                   <Form.Group style={{ marginBottom: "40px" }}>
-                    {totalState.projectNameByIT && (
+                    {totalState.deleteReason && (
                       <div>
                         <Form.Label style={{ color: "red" }}>
                           This project has been Deleted bacause
