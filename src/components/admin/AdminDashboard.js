@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RowHeaderValue from "./RowHeaderValue";
 import ShareButtonSection from "./ShareButtonSection";
+import Footer from "./Footer";
 import CompleteTable from "../table/CompleteTable";
 import axios from "axios";
 import IconSubmitted from "../../assets/images/Icon_submitted.svg";
@@ -124,6 +125,7 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

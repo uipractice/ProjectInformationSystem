@@ -5,7 +5,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
-import Modal from "react-modal";
+import Modal from "react-modal"; //why you removed this one?
+import Footer from "../admin/Footer";
 
 import axios from "axios";
 
@@ -231,7 +232,7 @@ function ViewForm() {
 
       <Container>
         <Row>
-          <Col md={{ span: 6, offset: 2 }}>
+          <Col md={{ span: 8, offset: 2 }}>
             <div
               style={{ width: "700px" }}
               className="project-details-form formView"
@@ -240,7 +241,7 @@ function ViewForm() {
 
               {/* todo */}
               <button
-                // className="_modal-close"
+                className="modal-closeBtn"
                 onClick={() => history.push("/admin")}
               >
                 <svg className="_modal-close-icon" viewBox="0 0 40 40">
@@ -302,7 +303,7 @@ function ViewForm() {
                     <Form.Group style={{ marginBottom: "30px" }}>
                       <Button
                         size="sm"
-                        style={{ width: "120px" }}
+                        style={{ width: "100px" }}
                         ref={inputRef}
                       >
                         {workStationSelected}
@@ -337,7 +338,7 @@ function ViewForm() {
                       NDA/DPA (Data Privacy Agreement) signed ?{" "}
                     </Form.Label>
                     <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button size="sm" style={{ width: "95px" }}>
+                      <Button size="sm" style={{ width: "80px" }}>
                         {isNDAsigned}
                       </Button>
                     </Form.Group>
@@ -349,7 +350,7 @@ function ViewForm() {
                       complaiance and MSA) are collected from client ?{" "}
                     </Form.Label>
                     <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button size="sm" style={{ width: "95px" }}>
+                      <Button size="sm" style={{ width: "80px" }}>
                         {isGDPRcompliance}
                       </Button>
                     </Form.Group>
@@ -362,7 +363,7 @@ function ViewForm() {
                       by all users) ?{" "}
                     </Form.Label>
                     <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button size="sm" style={{ width: "95px" }}>
+                      <Button size="sm" style={{ width: "80px" }}>
                         {isCyberSecConducted}
                       </Button>
                     </Form.Group>
@@ -388,7 +389,7 @@ function ViewForm() {
                       <Button
                         size="sm"
                         style={{
-                          width: "95px",
+                          width: "80px",
                           marginBottom: "20px",
                         }}
                       >
@@ -420,7 +421,7 @@ function ViewForm() {
                     <Form.Group style={{ marginBottom: "30px" }}>
                       <Button
                         size="sm"
-                        style={{ width: "95px", marginBottom: "20px" }}
+                        style={{ width: "80px", marginBottom: "20px" }}
                       >
                         {isIsolatedEnvReq}
                       </Button>
@@ -448,7 +449,7 @@ function ViewForm() {
                       their users ?{" "}
                     </Form.Label>
                     <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button size="sm" style={{ width: "95px" }}>
+                      <Button size="sm" style={{ width: "80px" }}>
                         {isDLPreq}
                       </Button>
                     </Form.Group>
@@ -460,7 +461,7 @@ function ViewForm() {
                       business communication ?{" "}
                     </Form.Label>
                     <Form.Group style={{ marginBottom: "60px" }}>
-                      <Button size="sm" style={{ width: "95px" }}>
+                      <Button size="sm" style={{ width: "80px" }}>
                         {isClientEmailProvided}
                       </Button>
                     </Form.Group>
@@ -607,6 +608,7 @@ function ViewForm() {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </div>
   );
 }

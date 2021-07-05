@@ -3,6 +3,10 @@ import DeleteImg from "../../assets/images/delete.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   useTable,
   useSortBy,
@@ -22,12 +26,25 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 Modal.setAppElement("#root");
-
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 function CompleteTable({ data }) {
 
   const [rowOriginal, setRowOriginal] = useState({});
  
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const classes = useStyles();
+  const [age, setAge] = React.useState('');
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
   function handleInputChange(evt) {
     setRowOriginal({
@@ -192,16 +209,34 @@ function CompleteTable({ data }) {
         <div >
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
           
-    {/* FIXME: */}
-          <select name="hall" id="hall" style={{ marginLeft: "12px" }}>
+{/* FIXME: */}
+          {/* <select name="hall" id="hall" style={{ marginLeft: "12px" }}>
             <option> All Records </option>
             <option> Pending </option>
-            {/* <option selected> Filter All </option>  */}
             <option> Completed </option>
             <option> Submitted </option>
             <option> Active </option>
             <option> Deleted </option>
-          </select>
+          </select> */} 
+          <FormControl className={classes.formControl}>
+            <Select
+              value={age}
+              onChange={handleChange}
+              displayEmpty
+              className={classes.selectEmpty}
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value="" disabled>
+              All Records
+              </MenuItem>
+              <MenuItem value={10}>Pending</MenuItem>
+              <MenuItem value={20}>Completed</MenuItem>
+              <MenuItem value={30}>Submitted</MenuItem>
+              <MenuItem value={40}>Active</MenuItem>
+              <MenuItem value={50}>Deleted</MenuItem>
+            </Select>
+          </FormControl>
+          
         </div>
       </div>
 

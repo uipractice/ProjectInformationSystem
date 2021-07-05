@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Footer from "../admin/Footer";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -832,6 +833,7 @@ function ClientForm() {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </div>
   );
 }
