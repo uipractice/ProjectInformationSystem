@@ -126,7 +126,7 @@ function Form({ closeModal }) {
           value={state.email}
         />
       </div>
-
+      <div className="row">
       <div className="form-group col-md-6">
         <label>Practice Name </label>
         <select
@@ -143,7 +143,18 @@ function Form({ closeModal }) {
           <option value="Other">Other Practice</option>
         </select>
       </div>
-
+      <div className="form-group col-md-6">
+          <label htmlFor="projectManager">Other Practice</label>
+          <input
+            type="text"
+            className="form-control"
+            onChange={handleOnChange}
+            name="other practice"
+            value=''
+          />
+        </div>
+      </div>
+      
       <div className="form-group row share">
         <div className="col-md-6"></div>
         <div className="col-md-6 text-right">
