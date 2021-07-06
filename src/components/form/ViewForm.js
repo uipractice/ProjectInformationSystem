@@ -20,6 +20,7 @@ toast.configure();
 function ViewForm() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRestoreModalOpen, setRestoreIsModalOpen] = useState(false);
 
   const inputRef = useRef(null);
   useEffect(() => {
@@ -55,12 +56,8 @@ function ViewForm() {
     isClientEmailProvided,
   } = location.state;
 
-  function handleInputChange(evt) {
-    setTotalState({
-      ...totalState,
-      reshareReason: evt.target.value,
-    });
-  }
+
+
   const[totalState, setTotalState] = useState({
     projectNameByIT,
     projectManager,
@@ -89,6 +86,20 @@ function ViewForm() {
     reshareReason
   })
 
+  function reshareReasonInput(evt) {
+    setTotalState({
+      ...totalState,
+      reshareReason: evt.target.value,
+    });
+  }
+
+  function restoreReasonInput(evt) {
+    setTotalState({
+      ...totalState,
+      restoreReason: evt.target.value,
+    });
+  }
+
   const history = useHistory();
 
   const handleApprove = () => {
@@ -108,7 +119,25 @@ function ViewForm() {
     }, 2000);
   };
 
-  
+
+  const handleRestore = (e) => {
+    e.preventDefault();
+    totalState.status = "Submitted";
+    axios
+      .post("http://localhost:5000/clientInfo/restoreProject/" + id, totalState)
+      .then((res) => {
+        console.log(totalState);
+        toast.success("Record is Restored !", {
+          autoClose: 1800,
+        });
+        setRestoreIsModalOpen(false);
+      })
+      .catch((err) => console.log(err.response));
+
+    // setTimeout(() => {
+    //   history.push("/admin");
+    // }, 2000);
+  };
 
   const handleReshare = (e) => {
     e.preventDefault();
@@ -169,6 +198,68 @@ function ViewForm() {
 
       <div>
         <Modal
+          isOpen={isRestoreModalOpen}
+          onRequestClose={() => {
+            setIsModalOpen(false);
+          }}
+          className="modalDesign deleteModal"
+        >
+          <h2>Restore the project</h2>
+          <button
+            className="_modal-close"
+            onClick={() => {
+              setRestoreIsModalOpen(false);
+            }}
+          >
+            <svg className="_modal-close-icon" viewBox="0 0 40 40">
+              <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+            </svg>
+          </button>
+          <form>
+            <p >Please enter why you want to restore the record.</p>
+            <textarea
+              type="text"
+              autoFocus={true}
+              style={{ color: "black", marginTop: "20px", marginBottom: "60px" }}
+              onChange={restoreReasonInput}
+              name="restoreReason"
+            />
+            
+
+            <div className="row">
+              <div className="col-md-6 text-right padding0">
+                <button
+                  className="form-control btn btn-primary"
+                  onClick={() => {
+                    setRestoreIsModalOpen(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+              <div className="col-md-6">
+                {totalState.restoreReason ? (
+                  <button
+                    onClick={handleRestore}
+                    className="form-control btn btn-primary delete-btn"
+                  >
+                    Restore
+                  </button>
+                ) : (
+                  <button
+                    className="form-control btn btn-primary delete-btn"
+                    disabled
+                  >
+                    Reshare
+                  </button>
+                )}
+              </div>
+            </div>
+          </form>
+        </Modal>
+      </div>
+      <div>
+        <Modal
           isOpen={isModalOpen}
           onRequestClose={() => {
             setIsModalOpen(false);
@@ -192,11 +283,10 @@ function ViewForm() {
               type="text"
               autoFocus={true}
               style={{ color: "black", marginTop: "20px", marginBottom: "60px" }}
-              onChange={handleInputChange}
-              name="deleteReason"
+              onChange={reshareReasonInput}
+              name="reshareReason"
             />
             
-
             <div className="row">
               <div className="col-md-6 text-right padding0">
                 <button
@@ -254,13 +344,27 @@ function ViewForm() {
                   <Form.Group style={{ marginBottom: "40px" }}>
                     {totalState.deleteReason && (
                       <div>
-                        <Form.Label style={{ color: "red" }}>
+                        <Form.Label style={{ color: "red", marginTop: "20px" }}>
                           This project has been Deleted bacause
                         </Form.Label>
 
                         <Form.Control
                           type="text"
                           value={deleteReason}
+                          readOnly={true}
+                        />
+                      </div>
+                    )}
+
+                    {totalState.restoreReason && (
+                      <div>
+                        <Form.Label style={{ color: "blue", marginTop: "40px" }}>
+                          This project has been Restored back bacause
+                        </Form.Label>
+
+                        <Form.Control
+                          type="text"
+                          value={totalState.restoreReason}
                           readOnly={true}
                         />
                       </div>
@@ -572,7 +676,7 @@ function ViewForm() {
               {status === "Deleted" ? (
                 <Button
                   variant="danger"
-                  onClick={() => handleApprove()}
+                  onClick={() => setRestoreIsModalOpen(true)}
                   style={{
                     marginBottom: "70px",
                     width: "130px",

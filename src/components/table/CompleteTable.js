@@ -86,6 +86,7 @@ function CompleteTable({ data }) {
 
       {
         Header: "PROJECT NAME",
+        accessor: "projectNameByIT",
         Cell: ({ row }) => {
           return (
             
@@ -167,7 +168,7 @@ function CompleteTable({ data }) {
         Header: "ACTION",
         Cell: ({ row }) => (
           <a
-            {...(row.original.status === "Deleted"
+            {...(row.original.status === "Deleted" || row.original.status === "Pending" 
               ? { className: "delete-icon disableDeleteBtn" }
               : { className: "delete-icon " })}
             onClick={(e) => {
@@ -197,7 +198,7 @@ function CompleteTable({ data }) {
     prepareRow,
     state,
     setGlobalFilter,
-  } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
+  } = useTable({ columns, data , initialState: { pageSize: 8 }}, useGlobalFilter, useSortBy, usePagination);
 
   const { globalFilter, pageIndex, pageSize } = state;
 
@@ -236,7 +237,7 @@ function CompleteTable({ data }) {
               <MenuItem value={50}>Deleted</MenuItem>
             </Select>
           </FormControl>
-          
+
         </div>
       </div>
 
@@ -367,7 +368,7 @@ function CompleteTable({ data }) {
           onChange={(e) => setPageSize(Number(e.target.value))}
           className="pageNum"
         >
-          {[8, 10, 20, 30, 50].map((pageSize) => (
+          {[8, 15, 25, 50, 100].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>

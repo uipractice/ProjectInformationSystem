@@ -11,6 +11,7 @@ function GlobalFilter({ filter, setFilter }){
   const [value, setValue] = useState(filter)
   const onChange = useAsyncDebounce(value => {
     setFilter(value || undefined)
+
   }, 1000)
   return (
     <span>
@@ -21,7 +22,8 @@ function GlobalFilter({ filter, setFilter }){
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        type="search"
+        // TODO: Uncomment and hide the search icon on keypress.
+        // type="search"  
         placeholder="Search"
       />
     </span>
