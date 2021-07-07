@@ -409,7 +409,7 @@ function ClientForm() {
           </li>
         </ul>
       </div>
-
+      <div className="custom-scroll">
       <Container>
         <Row>
           <Col md={{ span: 6, offset: 2 }}>
@@ -833,6 +833,7 @@ function ClientForm() {
           </Col>
         </Row>
       </Container>
+      </div>
       <Footer />
     </div>
   );
