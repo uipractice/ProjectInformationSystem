@@ -91,7 +91,7 @@ export default function AdminDashboard() {
 
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-12 ms-sm-auto col-lg-12">
+          <div className="col-md-12 ms-sm-auto col-lg-12 custom-scroll">
             <ShareButtonSection />
 
             <div className="row">

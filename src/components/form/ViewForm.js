@@ -319,7 +319,7 @@ function ViewForm() {
           </form>
         </Modal>
       </div>
-
+      <div className="custom-scroll">
       <Container>
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
@@ -706,6 +706,7 @@ function ViewForm() {
           </Col>
         </Row>
       </Container>
+      </div>
       <Footer />
     </div>
   );
