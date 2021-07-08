@@ -335,7 +335,7 @@ function ViewForm() {
           </form>
         </Modal>
       </div>
-
+      <div className="custom-scroll">
       <Container>
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
@@ -603,7 +603,6 @@ function ViewForm() {
                   </Form.Group>
 
                   <Button
-                    variant="danger"
                     className="reshare"
                     onClick={() => history.push("/admin")}
                     ref={inputRef}
@@ -619,7 +618,6 @@ function ViewForm() {
                   </Button>
 
                   <Button
-                    variant="danger"
                     className="reshare"
                     ref={inputRef}
                     style={{
@@ -640,7 +638,6 @@ function ViewForm() {
 
               {status === "Submitted" ? (
                 <Button
-                  variant="danger"
                   onClick={() => {
                     
                     setIsModalOpen(true);
@@ -711,7 +708,6 @@ function ViewForm() {
 
               {status === "Deleted" ? (
                 <Button
-                  variant="danger"
                   className="reshare"
                   onClick={() => history.push("/admin")}
                   ref={inputRef}
@@ -728,7 +724,6 @@ function ViewForm() {
 
               {status === "Deleted" ? (
                 <Button
-                  variant="danger"
                   onClick={() => setRestoreIsModalOpen(true)}
                   style={{
                     marginBottom: "70px",
@@ -742,7 +737,6 @@ function ViewForm() {
 
               {status === "Approved" ? (
                 <Button
-                  variant="danger"
                   className="reshare"
                   onClick={() => history.push("/admin")}
                   ref={inputRef}
@@ -765,6 +759,7 @@ function ViewForm() {
           </Col>
         </Row>
       </Container>
+      </div>
       <Footer />
     </div>
   );
