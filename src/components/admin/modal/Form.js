@@ -173,9 +173,9 @@ function Form({ closeModal }) {
           </button>
 
           {state.projectNameByIT &&
-          state.projectManager &&
-          state.email &&
-          state.practice ? (
+            state.projectManager &&
+            state.email &&
+            state.practice ? (
             <button
               className="form-control btn btn-primary share-btn"
               onClick={handleSubmit}
