@@ -21,14 +21,9 @@ function ViewForm() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRestoreModalOpen, setRestoreIsModalOpen] = useState(false);
-  const [readBoolean, setReadBoolean] = useState(true);
 
-  const handleEdit = () => {
-    setReadBoolean(false);
-
-  }
-  const handleUpdate = () => {
-   console.log(totalState);
+  const handleEditViewForm = () => {
+    console.log("handleEditForm is called")
   }
 
   const inputRef = useRef(null);
@@ -67,7 +62,7 @@ function ViewForm() {
 
   function handlePlainText(e) {
     setTotalState({
-      // ...totalState,
+      ...totalState,
       [e.target.name]: e.target.value,
     });
   }
@@ -367,7 +362,7 @@ function ViewForm() {
                         <Form.Control
                           type="text"
                           value={deleteReason}
-                          // readOnly={true}
+                          readOnly
 
                         />
                       </div>
@@ -382,7 +377,7 @@ function ViewForm() {
                         <Form.Control
                           type="text"
                           value={totalState.restoreReason}
-                          readOnly={true}
+                          readOnly
                         />
                       </div>
                     )}
@@ -393,8 +388,7 @@ function ViewForm() {
                     <Form.Control
                       type="text"
                       value={totalState.projectNameByIT}
-                      onChange={handlePlainText}
-                      readOnly={readBoolean}
+                      readOnly
                     />
                   </Form.Group>
 
@@ -403,8 +397,7 @@ function ViewForm() {
                     <Form.Control
                       type="text"
                       value={totalState.securityMeasure}
-                      onChange={handlePlainText}
-                      readOnly={readBoolean}
+                      readOnly
                     />
                   </Form.Group>
 
@@ -415,8 +408,7 @@ function ViewForm() {
                     <Form.Control
                       type="text"
                       value={totalState.informIT}
-                      onChange={handlePlainText}
-                      readOnly={readBoolean}
+                      readOnly
                     />
                   </Form.Group>
 
@@ -673,11 +665,11 @@ function ViewForm() {
                 </Button>
               ) : null}
 
-              {status === "Submitted" && readBoolean===true? (
+              {status === "Submitted" ? (
                 <Button
                   variant="primary"
                   onClick={() => {
-                    handleEdit();
+                    handleEditViewForm();
                   }}
                   className="approve"
                   style={{
@@ -689,21 +681,7 @@ function ViewForm() {
                   {" "}
                   Edit
                 </Button>
-              ) : <Button
-              variant="primary"
-              onClick={() => {
-                handleUpdate();
-              }}
-              className="approve"
-              style={{
-                marginBottom: "40px",
-                marginRight: "15px",
-                width: "130px",
-              }}
-            >
-              {" "}
-              Update
-            </Button>}
+              ) : null }
 
 
               {status === "Deleted" ? (
