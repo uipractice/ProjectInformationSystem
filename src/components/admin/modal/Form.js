@@ -61,33 +61,33 @@ function Form({ closeModal }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (ValidateEmail(state.email))  {
+    if (ValidateEmail(state.email)) {
       axios
-            .post("http://localhost:5000/clientInfo/email", state)
-            .then((res) => {
-              if (res.data === "success") {
-                closeModal();
-                toast.success("Data Saved Successfully !", {
-                  autoClose: 2000,
-                });
-                console.log(state);
+        .post("http://localhost:5000/clientInfo/email", state)
+        .then((res) => {
+          if (res.data === "success") {
+            closeModal();
+            toast.success("Data Saved Successfully !", {
+              autoClose: 2000,
+            });
+            console.log(state);
 
-                setTimeout(() => {
-                  window.location.reload();
-                }, 2000);
-              } else {
-                toast.error("Data Saved FAILED !", {
-                  autoClose: 2000,
-                });
-                console.log(state);
-              }
-            })
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          } else {
+            toast.error("Data Saved FAILED !", {
+              autoClose: 2000,
+            });
+            console.log(state);
+          }
+        })
 
-            .catch((err) => console.log(err.response));
-      }
+        .catch((err) => console.log(err.response));
+    }
   }
 
-   
+
 
   return (
     <form>
@@ -127,35 +127,38 @@ function Form({ closeModal }) {
         />
       </div>
       <div className="row">
-      <div className="form-group col-md-6">
-        <label>Practice Name </label>
-        <select
-          className="form-control"
-          onChange={handleOnChange}
-          name="practice"
-          value={state.practice}
-        >
-          <option value=""></option>
-          <option value="QA Practice">QA Practice</option>
-          <option value="Oracle Practice">Oracle Practice</option>
-          <option value="Java Practice">Java Practice</option>
-          <option value="Microsoft Practice">Microsoft Practice</option>
-          <option value="Other">Other Practice</option>
-        </select>
-      </div>
-      <div className="form-group col-md-6">
-          <label htmlFor="projectManager">Other Practice</label>
-          <input
-            type="text"
+        <div className="form-group col-md-6">
+          <label>Practice Name </label>
+          <select
             className="form-control"
             onChange={handleOnChange}
-            name="other practice"
-            value=''
-          />
+            name="practice"
+            value={state.practice}
+          >
+            <option value=""></option>
+            <option value="QA Practice">QA Practice</option>
+            <option value="Oracle Practice">Oracle Practice</option>
+            <option value="Java Practice">Java Practice</option>
+            <option value="Microsoft Practice">Microsoft Practice</option>
+            <option value="Other">Other Practice</option>
+          </select>
         </div>
+        {state.practice === 'Other' &&
+          (
+            <div className="form-group col-md-6">
+              <label htmlFor="projectManager">Other Practice</label>
+              <input
+                type="text"
+                className="form-control"
+                onChange={handleOnChange}
+                name="other practice"
+                value=''
+              />
+            </div>
+          )
+        }
       </div>
-      
-      <div className="form-group row share">
+       <div className="form-group row share">
         <div className="col-md-6"></div>
         <div className="col-md-6 text-right">
           <button
@@ -166,9 +169,9 @@ function Form({ closeModal }) {
           </button>
 
           {state.projectNameByIT &&
-          state.projectManager &&
-          state.email &&
-          state.practice ? (
+            state.projectManager &&
+            state.email &&
+            state.practice ? (
             <button
               className="form-control btn btn-primary share-btn"
               onClick={handleSubmit}
