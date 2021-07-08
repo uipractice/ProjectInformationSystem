@@ -15,6 +15,9 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
 function ClientForm() {
+
+  const { id } = useParams();
+
   const [prevStatus, setPrevStatus] = useState("");
   const [prevProjectName, setPrevProjectName] = useState("");
 
@@ -32,7 +35,8 @@ function ClientForm() {
       });
   });
 
-  const { id } = useParams();
+ 
+  // const [files, setFiles] = useState();
 
   const [state, setState] = useState({
     projectName: "",
@@ -369,8 +373,12 @@ function ClientForm() {
       newStatus: state.newStatus,
     };
 
+    // const data = new FormData();
+    // data.append("postObj", postObj);
+    // data.append("files", files);
+
     axios
-      .post(`http://localhost:5000/clientInfo/update/${id}`, postObj)
+      .post(`http://localhost:5000/clientInfo/mailAndUpdate/${id}`, postObj)
 
       .then((res) => {
         console.log("Data has been saved successfully. ", postObj);
@@ -426,6 +434,21 @@ function ClientForm() {
                       autoFocus={true}
                     />
                   </Form.Group>
+
+
+                  {/* <div className="flex">
+                    <label htmlFor="files">Choose files to upload </label> <br></br>
+                    <input
+                      type="file"
+                      id="files"
+                      accept="*.*"
+                      onChange={(event) => {
+                        const files = event.target.files[0];
+                        setFiles(files);
+                      }}
+                    />
+                  </div>
+                  <br></br><br></br> */}
 
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Security measures from client side</Form.Label>
