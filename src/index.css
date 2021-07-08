@@ -517,7 +517,7 @@ body {
     background:#fff;
     font-size: 14px;
     color: #333;
-    cursor: not-allowed;
+    /* cursor: not-allowed; */  
     border: 0;
     border-bottom: 1px solid #BDBDBD;
     border-radius: 0;

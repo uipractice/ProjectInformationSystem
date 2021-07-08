@@ -93,7 +93,7 @@ function CompleteTable({ data }) {
               
               <Link
                 to={{
-                  pathname: `/formv/${row.original._id}`,
+                  pathname: `/view/${row.original._id}`,
                   state: {
                     projectNameByIT: row.original.projectNameByIT,
                     projectManager: row.original.projectManager,
@@ -168,9 +168,9 @@ function CompleteTable({ data }) {
         Header: "ACTION",
         Cell: ({ row }) => (
           <a
-            {...(row.original.status === "Deleted" || row.original.status === "Pending" 
-              ? { className: "delete-icon disableDeleteBtn" }
-              : { className: "delete-icon " })}
+            {...(row.original.status === "Deleted" ? 
+            { className: "delete-icon disableDeleteBtn" } : 
+          { className: "delete-icon " })}
             onClick={(e) => {
               setRowOriginal(row.original);
               setIsModalOpen(true);

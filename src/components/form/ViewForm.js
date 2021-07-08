@@ -22,6 +22,10 @@ function ViewForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRestoreModalOpen, setRestoreIsModalOpen] = useState(false);
 
+  const handleEditViewForm = () => {
+    console.log("handleEditForm is called")
+  }
+
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
@@ -55,6 +59,13 @@ function ViewForm() {
     isDLPreq,
     isClientEmailProvided,
   } = location.state;
+
+  function handlePlainText(e) {
+    setTotalState({
+      ...totalState,
+      [e.target.name]: e.target.value,
+    });
+  }
 
 
 
@@ -351,7 +362,8 @@ function ViewForm() {
                         <Form.Control
                           type="text"
                           value={deleteReason}
-                          readOnly={true}
+                          readOnly
+
                         />
                       </div>
                     )}
@@ -365,7 +377,7 @@ function ViewForm() {
                         <Form.Control
                           type="text"
                           value={totalState.restoreReason}
-                          readOnly={true}
+                          readOnly
                         />
                       </div>
                     )}
@@ -376,7 +388,7 @@ function ViewForm() {
                     <Form.Control
                       type="text"
                       value={totalState.projectNameByIT}
-                      readOnly={true}
+                      readOnly
                     />
                   </Form.Group>
 
@@ -384,8 +396,8 @@ function ViewForm() {
                     <Form.Label>Security measures from client side</Form.Label>
                     <Form.Control
                       type="text"
-                      value={securityMeasure}
-                      readOnly={true}
+                      value={totalState.securityMeasure}
+                      readOnly
                     />
                   </Form.Group>
 
@@ -395,8 +407,8 @@ function ViewForm() {
                     </Form.Label>
                     <Form.Control
                       type="text"
-                      value={informIT}
-                      readOnly={true}
+                      value={totalState.informIT}
+                      readOnly
                     />
                   </Form.Group>
 
@@ -652,6 +664,25 @@ function ViewForm() {
                   Approve
                 </Button>
               ) : null}
+
+              {status === "Submitted" ? (
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    handleEditViewForm();
+                  }}
+                  className="approve"
+                  style={{
+                    marginBottom: "40px",
+                    marginRight: "15px",
+                    width: "130px",
+                  }}
+                >
+                  {" "}
+                  Edit
+                </Button>
+              ) : null }
+
 
               {status === "Deleted" ? (
                 <Button

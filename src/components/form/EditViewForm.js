@@ -14,12 +14,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
-function ClientForm() {
+function EditViewForm() {
 
   const { id } = useParams();
 
   const [prevStatus, setPrevStatus] = useState("");
   const [prevProjectName, setPrevProjectName] = useState("");
+  const [prevState, setPrevState] = useState("");
 
   useEffect(() => {
     axios
@@ -27,17 +28,17 @@ function ClientForm() {
       .then((res) => {
         setPrevStatus(res.data.status);  // Don't allow form submittion for Pending or Deleted Project
         setPrevProjectName(res.data.projectNameByIT);
+        setPrevState(res.data);
       })
       .catch((err) => {
         console.log("Failed to get the status: ", err.response);
       });
   });
-
-
+ 
   // const [files, setFiles] = useState();
 
   const [state, setState] = useState({
-    projectName: "",
+    projectName: prevProjectName,
 
     securityMeasure: "",
 
@@ -421,7 +422,7 @@ function ClientForm() {
           <Col md={{ span: 6, offset: 2 }}>
             <div style={{ width: "700px" }} className="project-details-form">
               <h2> Project Details </h2>
-              {prevStatus === "Pending" && prevStatus !== "deleted" ? (
+              {prevStatus === "Submitted" && prevStatus !== "deleted" ? (
                 <Form>
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Name of the project or client</Form.Label>
@@ -429,7 +430,7 @@ function ClientForm() {
                       name="projectName"
                       onChange={handlePlainText}
                       defaultValue = {prevProjectName}
-                      
+                      autoFocus={true}
                     />
                   </Form.Group>
 
@@ -453,7 +454,8 @@ function ClientForm() {
                     <Form.Control
                       name="securityMeasure"
                       onChange={handlePlainText}
-                      autoFocus={true}
+                      // defaultValue = {securityMeasure}
+                      value={state.securityMeasure}
                     />
                   </Form.Group>
 
@@ -474,7 +476,8 @@ function ClientForm() {
                         className="btn-padding"
                         variant={state.workStationFirstBtn}
                         onClick={handleWorkStation}
-                        value={state.workStationValue[0]}
+                        // value={state.workStationValue[0]}
+                        defaultValue={state.workStationSelected}
                         style={{ marginRight: "15px", width: "100px" }}
                       >
                         {" "}
@@ -485,7 +488,8 @@ function ClientForm() {
                         size="sm"
                         variant={state.workStationSecondBtn}
                         onClick={handleWorkStation}
-                        value={state.workStationValue[1]}
+                        defaultValue={state.workStationSelected}
+                        // value={state.workStationValue[1]}
                         style={{ marginRight: "15px", width: "80px" }}
                       >
                         {" "}
@@ -495,7 +499,8 @@ function ClientForm() {
                         size="sm"
                         variant={state.workStationThirdBtn}
                         onClick={handleWorkStation}
-                        value={state.workStationValue[2]}
+                        defaultValue={state.workStationSelected}
+                        // value={state.workStationValue[2]}
                         style={{ marginRight: "15px", width: "80px" }}
                       >
                         {" "}
@@ -838,7 +843,8 @@ function ClientForm() {
                     Reset
                   </Button>
                   <SubmitButton />
-                </Form>              
+                </Form>
+              
               ) : (
                 <div
                   style={{
@@ -861,4 +867,4 @@ function ClientForm() {
   );
 }
 
-export default ClientForm;
+export default EditViewForm;
