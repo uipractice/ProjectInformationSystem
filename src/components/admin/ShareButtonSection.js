@@ -55,7 +55,7 @@ export class ShareModalContainer extends Component {
         <div className="btn-toolbar mb-2 mb-md-0">
           <button
             type="button"
-            className="btn btn-light work_btn work_btn_blue center modal-button"
+            className="btn work_btn work_btn_blue center modal-button"
             ref={this.buttonRef}
             onClick={this.showModal}
           >
