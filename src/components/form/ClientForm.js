@@ -11,13 +11,33 @@ import Footer from "../admin/Footer";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Redirect, useHistory } from "react-router-dom";
 
 toast.configure();
 
 function ClientForm() {
 
   const { id } = useParams();
+  function handleLogout() {
+    sessionStorage.removeItem("auth-token");
+    checkAuth();
+  }
 
+  const history = useHistory();
+
+  const checkAuth = () => {
+    if (!sessionStorage.getItem("auth-token")) {
+      history.push("/");
+    } else {
+      const authToken = "123456abcdef";
+      if (sessionStorage.getItem("auth-token") === authToken) {
+        return <Redirect to="/admin_dashboard" />;
+      } else {
+        history.push("/");
+      }
+    }
+  };
+  checkAuth();
   const [prevStatus, setPrevStatus] = useState("");
   const [prevProjectName, setPrevProjectName] = useState("");
 
@@ -404,14 +424,14 @@ function ClientForm() {
     <div>
       <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
         <div className="row">
-          <a className="navbar-brand col-md-6 px-4" href="#/">
+          <a className="navbar-brand col-md-6 px-4" href="http://localhost:3000/admin">
             <img src={Logo} alt="Evoke Technologies" />
           </a>
           <h3>Project Information System </h3>
         </div>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
-            <button></button>
+            <button onClick={handleLogout}></button>
           </li>
         </ul>
       </div>
@@ -496,7 +516,7 @@ function ClientForm() {
                         variant={state.workStationThirdBtn}
                         onClick={handleWorkStation}
                         value={state.workStationValue[2]}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: "15px", width: "90px" }}
                       >
                         {" "}
                         Cloud
@@ -824,7 +844,6 @@ function ClientForm() {
                   </Form.Group>
 
                   <Button
-                    variant="danger"
                     onClick={() => window.location.reload()}
                     className="reshare"
                     style={{
