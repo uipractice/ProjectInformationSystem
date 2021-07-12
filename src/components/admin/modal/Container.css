@@ -34,7 +34,7 @@
     font-size: 18px;
     line-height: 22px;
     color: #209EC5;
-    padding: 15px 35px;
+    padding: 15px 20px;
     background: #F8F8F8;
     box-shadow: 0px 1px 0px rgb(0 0 0 / 15%);
     border-radius: 4px 4px 0px 0px;
@@ -56,10 +56,14 @@
     text-transform: uppercase;
 }
 .form-group .share-btn{
-    margin-left:13px;
+    margin-left:20px;
     background: #209EC5 !important;
     border: 1px solid #209EC5 !important;
     color: #fff !important;
+}
+.share{
+    margin-top: 15px !important;
+    margin-bottom: 10px !important;
 }
 .btn-primary:hover{
     background:transparent;
@@ -128,6 +132,9 @@
     line-height: 20px;
     letter-spacing: 0.01em;
     color: #626364;
+}
+.formView .form-group label, .formView .form-group select{
+    color: #929292;
 }
 .form-group select, .form-group .form-control{
     height: 44px;

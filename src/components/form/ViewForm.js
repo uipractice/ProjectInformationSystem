@@ -702,6 +702,7 @@ function ViewForm() {
 
               {status === "Deleted" ? (
                 <Button
+                  className="approve"
                   onClick={() => setRestoreIsModalOpen(true)}
                   style={{
                     marginBottom: "70px",

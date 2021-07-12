@@ -275,6 +275,8 @@ body {
     }
     .grid tr td a{
         padding: 0;
+        color: #008FDF;
+        text-decoration: none !important;
     }
     .grid tr td a.delete-icon{
         padding-left: 20px;
@@ -516,7 +518,7 @@ body {
     height: 44px;
     background:#fff;
     font-size: 14px;
-    color: #333;
+    color: #4B4A4B;
     /* cursor: not-allowed; */  
     border: 0;
     border-bottom: 1px solid #BDBDBD;
@@ -536,6 +538,7 @@ body {
     right: 8%;
     border: 0;
     background: transparent;
+    padding: 0;
 }
 .project-details-form.formView .form-text{
     margin-bottom: 10px;
@@ -554,11 +557,11 @@ body {
     letter-spacing: 0.1px;
 }
 .project-details-form.formView .approve, .project-details-form .submit-btn{
-    background: #209EC5;
+    background: #209EC5 !important;
     border: 1px solid #209EC5;
     box-sizing: border-box;
     border-radius: 2px;
-    color: #fff;
+    color: #fff !important;
     text-transform: uppercase;
     font-size: 14px;
     letter-spacing: 0.1px;
@@ -629,7 +632,7 @@ body {
 .footer p{
     font-size: 12px;
     color: #373741;
-    padding: 0 15px!important;
+    padding: 0!important;
     font-weight: 500;
     text-align: left;
     margin:0;
@@ -643,7 +646,7 @@ body {
 .footer ul li:first-child {
     position: absolute;
     left: 14px;
-    top: 7px;
+    top: 5px;
 }
 .footer ul li {
     font-size: 12px;
