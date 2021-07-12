@@ -19,11 +19,13 @@ toast.configure();
 
 function ViewForm() {
 
+  const history = useHistory();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRestoreModalOpen, setRestoreIsModalOpen] = useState(false);
 
   const handleEditViewForm = () => {
-    console.log("handleEditForm is called")
+    history.push("/edit/"+id);
   }
 
   const inputRef = useRef(null);
@@ -60,13 +62,12 @@ function ViewForm() {
     isClientEmailProvided,
   } = location.state;
 
-  function handlePlainText(e) {
-    setTotalState({
-      ...totalState,
-      [e.target.name]: e.target.value,
-    });
-  }
-
+  // function handlePlainText(e) {
+  //   setTotalState({
+  //     ...totalState,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // }
 
 
   const[totalState, setTotalState] = useState({
@@ -111,7 +112,7 @@ function ViewForm() {
     });
   }
 
-  const history = useHistory();
+ 
 
   const handleApprove = () => {
     totalState.status = "Approved";
@@ -665,7 +666,7 @@ function ViewForm() {
                 </Button>
               ) : null}
 
-              {status === "Submitted" ? (
+             
                 <Button
                   variant="primary"
                   onClick={() => {
@@ -678,10 +679,9 @@ function ViewForm() {
                     width: "130px",
                   }}
                 >
-                  {" "}
                   Edit
                 </Button>
-              ) : null }
+             
 
 
               {status === "Deleted" ? (
