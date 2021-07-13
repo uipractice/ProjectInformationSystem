@@ -48,6 +48,8 @@ export default function AdminDashboard() {
   const [pendingCount, setPendingCount] = useState("");
   const [approvedCount, setApprovedCount] = useState("");
   const [submittedCount, setSubmittedCount] = useState("");
+  const [activeCount, setActiveCount] = useState("");
+  const [deleteCount, setDeleteCount] = useState("");
 
   useEffect(() => {
     axios("http://localhost:5000/clientInfo/")
@@ -57,6 +59,7 @@ export default function AdminDashboard() {
         // console.log("respose data", res.data)
 
         setTotalCount(res.data.length);
+        setActiveCount(res.data.length-deleteCount)
         setPendingCount(
           res.data.reduce(function (n, person) {
             return n + (person.status === "Pending");
@@ -68,6 +71,11 @@ export default function AdminDashboard() {
             return n + (person.status === "Submitted");
           }, 0)
         );
+        setDeleteCount(
+          res.data.reduce(function (n, person) {
+            return n + (person.status === "Deleted");
+          }, 0)
+        );
 
         setApprovedCount(
           res.data.reduce(function (n, person) {
@@ -76,7 +84,7 @@ export default function AdminDashboard() {
         );
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [deleteCount]);
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -159,6 +167,13 @@ export default function AdminDashboard() {
                 className="totalCount"
                 count={totalCount}
               />
+              <RowHeaderValue
+                projectStatus="Active"
+                iconImg={IconApproved}
+                className="completCount"
+                count={activeCount}
+              />
+
               <RowHeaderValue
                 projectStatus="Submitted"
                 iconImg={IconSubmitted}

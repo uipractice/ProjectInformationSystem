@@ -241,11 +241,12 @@ function CompleteTable({ data }) {
             defaultValue="Active"
             onChange={(e) => handleSelectedStatus(e.target.value)}
           >
-            <option />
-            <option> Pending </option>
-            <option> Completed </option>
-            <option> Submitted </option>
+            {/* <option /> */}
+           
             <option> Active </option>
+            <option> Pending </option>
+            <option> Submitted </option>
+            <option> Approved </option>
             <option> Deleted </option>
             <option> All Project </option>
           </Input>
