@@ -462,6 +462,7 @@ function ClientForm() {
 
     setOpen(false);
   };
+
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -539,7 +540,8 @@ function ClientForm() {
                     <label htmlFor="files">Choose files to upload </label> <br></br>
                     <input
                       type="file"
-                      name="fileNameInputFeild"
+                      name="file" 
+                      id="file"
                       accept="*.*"
                       onChange={(e) => {
                         setFileData(e.target.files[0]);
