@@ -45,6 +45,7 @@ function Form({ closeModal }) {
       email: "",
       practice: "",
     });
+    setNewPractice("");
   };
 
   function ValidateEmail(inputText) {
@@ -64,7 +65,7 @@ function Form({ closeModal }) {
     e.preventDefault();
 
     if (ValidateEmail(state.email)) {
-      if(state.practice==="Other"){
+      if (state.practice === "Other") {
         state.practice = newPractice;
       }
       axios
@@ -148,15 +149,13 @@ function Form({ closeModal }) {
         </div>
         {state.practice === "Other" && (
           <div className="form-group col-md-6">
-            <label htmlFor="projectManager">Mention the Practice name</label>
+            <label htmlFor="projectManager">Practice / Project name</label>
             <input
               type="text"
               className="form-control"
+              value={newPractice}
               onChange={handleOtherPractice}
-              placeholder = " "
-              autoFocus={true}
-
-              // defaultValue={state.practice}
+              autoFocus
             />
             </div>
         )}
@@ -173,12 +172,20 @@ function Form({ closeModal }) {
           </button>
 
           {state.projectNameByIT &&
+<<<<<<< HEAD
             state.projectManager &&
             state.email && state.practice && (state.practice !== "Other" ||
-             (state.practice === "Other" && newPractice.length >0)) ? (
+             (state.practice === "Other" && newPractice)) ? (
            // state.practice &&
             //state.practice != "Other" ||
             //state.practice === 'Other' && newPractice ? (
+=======
+          state.projectManager &&
+          state.email &&
+          state.practice &&
+          (state.practice !== "Other" ||
+            (state.practice === "Other" && newPractice)) ? (
+>>>>>>> 14ed1fcbead479f9c0b447b7f9ff702379c14ab7
             <button
               className="form-control btn btn-primary share-btn"
               onClick={handleSubmit}
