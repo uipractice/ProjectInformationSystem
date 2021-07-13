@@ -14,6 +14,12 @@ import { useLocation, useHistory } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 
 toast.configure();
 
@@ -186,7 +192,35 @@ function ViewForm() {
   };
 
 
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
 
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   return (
     <div >
@@ -202,7 +236,30 @@ function ViewForm() {
         </div>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
-            <button></button>
+            {/* <button></button> */}
+            <Button
+            ref={anchorRef}
+            aria-controls={open ? 'menu-list-grow' : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+          >
+          </Button>
+            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem>Logout</MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
           </li>
         </ul>
       </div>
@@ -576,7 +633,7 @@ function ViewForm() {
                       Is client providing Email services to user for regular
                       business communication ?{" "}
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "60px" }}>
+                    <Form.Group style={{ marginBottom: "40px" }}>
                       <Button size="sm" style={{ width: "80px" }}>
                         {isClientEmailProvided}
                       </Button>
@@ -637,7 +694,8 @@ function ViewForm() {
                   }}
                   className="reshare"
                   style={{
-                    marginBottom: "40px",
+                    marginBottom: "30px",
+                    marginTop: "30px",
                     marginRight: "15px",
                     width: "130px",
                   }}
@@ -655,7 +713,8 @@ function ViewForm() {
                   }}
                   className="approve"
                   style={{
-                    marginBottom: "40px",
+                    marginBottom: "30px",
+                    marginTop: "30px",
                     marginRight: "15px",
                     width: "130px",
                   }}
@@ -673,7 +732,8 @@ function ViewForm() {
                   }}
                   className="approve"
                   style={{
-                    marginBottom: "40px",
+                    marginBottom: "30px",
+                    marginTop: "30px",
                     marginRight: "15px",
                     width: "130px",
                   }}
@@ -690,7 +750,8 @@ function ViewForm() {
                   onClick={() => history.push("/admin")}
                   ref={inputRef}
                   style={{
-                    marginBottom: "70px",
+                    marginBottom: "30px",
+                    marginTop: "30px",
                     marginRight: "15px",
                     width: "130px",
                   }}
@@ -705,7 +766,8 @@ function ViewForm() {
                   className="approve"
                   onClick={() => setRestoreIsModalOpen(true)}
                   style={{
-                    marginBottom: "70px",
+                    marginBottom: "30px",
+                    marginTop: "30px",
                     width: "130px",
                   }}
                 >
@@ -720,8 +782,8 @@ function ViewForm() {
                   onClick={() => history.push("/admin")}
                   ref={inputRef}
                   style={{
-                    marginBottom: "70px",
-                    //  marginTop: "30px",
+                    marginBottom: "30px",
+                    marginTop: "30px",
                     marginRight: "15px",
                     width: "130px",
                   }}
