@@ -426,11 +426,16 @@ body {
     padding-bottom: 30px;
 }
 .nav-item button{
-    background:url("./assets/images/user.svg") no-repeat center center;
+    background:url("./assets/images/user.svg") no-repeat center center !important;
     height: 33px;
     width: 34px;
     border: 0;
     vertical-align: middle;
+    border: none !important;
+}
+.nav-item .MuiButton-root{
+    padding: 0;
+    min-width: auto;
 }
 .navbar h3{
     font-family: Lato;
@@ -488,6 +493,25 @@ body {
 .project-details-form form{
     padding: 20px 50px;
     text-align: center;
+    height:50vh;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #afaeae #e3e1e1;
+}
+.project-details-form form::-webkit-scrollbar {
+    width: 5px;
+}
+.project-details-form form::-webkit-scrollbar-track {
+    background: #e3e1e1;
+    border-radius: 15px;
+}
+.project-details-form form::-webkit-scrollbar-thumb {
+    background: #afaeae;
+    border-radius: 15px;
+    height: 5%;
+}
+.project-details-form form::-webkit-scrollbar-thumb:hover {
+    background: #afaeae;
 }
 .project-details-form form .form-group{
     text-align: left;
@@ -660,7 +684,27 @@ body {
     font-weight: 500;
     text-decoration: none;
 }
-
+.navbar-nav .MuiList-padding {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.header_nav .navbar-nav .MuiPaper-root{
+    background-color: #fff !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.2) !important;
+    z-index: 1 !important;
+}
+.header_nav .navbar-nav .MuiPaper-root::before{
+    content: "";
+    position: absolute;
+    top: -41%;
+    left: -17%;
+    margin-left: 43px;
+    border-width: 10px;
+    border-bottom: 10px solid #f8f8fb;
+    border-style: solid;
+    border-color: transparent transparent #f8f8fb transparent;
+}
 @media(max-width:448px){
     .footer{
       height:60px;
