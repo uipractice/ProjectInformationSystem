@@ -158,7 +158,7 @@ function Form({ closeModal }) {
 
               // defaultValue={state.practice}
             />
-          </div>
+            </div>
         )}
       </div>
 
@@ -174,15 +174,18 @@ function Form({ closeModal }) {
 
           {state.projectNameByIT &&
             state.projectManager &&
-            state.email &&
-            state.practice ? (
+            state.email && state.practice && (state.practice !== "Other" ||
+             (state.practice === "Other" && newPractice.length >0)) ? (
+           // state.practice &&
+            //state.practice != "Other" ||
+            //state.practice === 'Other' && newPractice ? (
             <button
               className="form-control btn btn-primary share-btn"
               onClick={handleSubmit}
             >
               Share
             </button>
-          ) : (
+          ) : ( 
             <button
               className="form-control btn btn-primary share-btn"
               onClick={handleSubmit}

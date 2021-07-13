@@ -71,10 +71,11 @@ function CompleteTable({ data }) {
       })
       .catch((err) => console.log(err.response));
   };
-
+  
   data.forEach((value, index) => {
     value.serial = index + 1;
   });
+  console.log(data)
 
   const columns = React.useMemo(
     () => [
@@ -101,7 +102,7 @@ function CompleteTable({ data }) {
                     practice: row.original.practice,
                     status: row.original.status,
                     id: row.original._id,
-
+                    
                     projectName: row.original.projectName,
                     securityMeasure: row.original.securityMeasure,
                     informIT: row.original.informIT,
@@ -361,6 +362,9 @@ function CompleteTable({ data }) {
           </tbody>
         </table>
       </div>
+      
+      {data.length >=6 &&
+      data.length ===30 ? ( 
       <div className="table-pagination">
         <label>Rows per page:</label>
         <select
@@ -368,7 +372,7 @@ function CompleteTable({ data }) {
           onChange={(e) => setPageSize(Number(e.target.value))}
           className="pageNum"
         >
-          {[8, 15, 25, 50, 100].map((pageSize) => (
+          {[8, 15, 25, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>
@@ -389,6 +393,10 @@ function CompleteTable({ data }) {
           </button>{" "}
         </div>
       </div>
+      ): ( 
+        " "
+      )}
+  
     </>
   );
 }

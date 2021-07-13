@@ -22,9 +22,9 @@ function GlobalFilter({ filter, setFilter }){
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        // TODO: Uncomment and hide the search icon on keypress.
-        // type="search"  
-        placeholder="Search"
+        type="search"
+         placeholder="Search"
+         
       />
     </span>
   );
