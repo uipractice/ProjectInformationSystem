@@ -60,10 +60,10 @@ function CompleteTable({ data }) {
     console.log("SelectedState value: ", selectedState);
     console.log("Data dot status value: ", data.status);
     console.log("Data value: ", data);
-    if (data.status === "Active") {
+    if (selectedState === "Active") {
       let filterResult = data.filter((row) => row.status !== "Deleted");
       setFilteredData(filterResult);
-    } else if (data.status === "All Project") {
+    } else if (selectedState === "All Project") {
       setFilteredData(data);
     } else {
       let filterResult = data.filter((row) => row.status === selectedState);
@@ -268,7 +268,7 @@ function CompleteTable({ data }) {
               <MenuItem value={50}>Deleted</MenuItem>
             </Select>
           </FormControl> */}
-          
+
         </div>
       </div>
 
