@@ -199,3 +199,32 @@ table th, tfoot td {
 .padding0{
   padding:0;
 }
+.tableFixHead{ 
+  overflow: auto; 
+  height: 250px; 
+  scrollbar-width: thin;
+  scrollbar-color: #afaeae #e3e1e1;
+}
+.tableFixHead::-webkit-scrollbar {
+  width: 5px;
+}
+.tableFixHead::-webkit-scrollbar-track {
+  background: #e3e1e1;
+  border-radius: 15px;
+}
+.tableFixHead::-webkit-scrollbar-thumb {
+  background: #afaeae;
+  border-radius: 15px;
+  height: 5%;
+}
+.tableFixHead::-webkit-scrollbar-thumb:hover {
+  background: #afaeae;
+}
+.tableFixHead thead th { 
+  position: sticky; 
+  top: 0; 
+  z-index: 1; 
+}
+.table-pagination .pageNum:focus-visible{
+  outline: none !important;
+}
