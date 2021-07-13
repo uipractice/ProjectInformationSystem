@@ -169,8 +169,8 @@ export default function AdminDashboard() {
               />
               <RowHeaderValue
                 projectStatus="Active"
-                iconImg={IconProjects}
-                className="totalCount"
+                iconImg={IconApproved}
+                className="completCount"
                 count={activeCount}
               />
 
