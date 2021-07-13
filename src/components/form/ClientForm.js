@@ -54,7 +54,7 @@ function ClientForm() {
   });
 
 
-  // const [files, setFiles] = useState();
+  const [fileData, setFileData] = useState();
 
   const [state, setState] = useState({
     projectName: "",
@@ -114,6 +114,31 @@ function ClientForm() {
     newStatus: "Submitted",
   });
 
+  function uploadFileHandler(e){
+    e.preventDefault();
+    const data = new FormData();
+    // data.append("postObj", postObj);
+    data.append("fileNameInputFeild", fileData);
+
+    axios
+      .post(`http://localhost:5000/clientInfo/multiple/`, data)
+      .then((res) => {
+        console.log("Data has been . ", res);
+        console.log("File saved successfully : ", res.data);
+        toast.success("File Saved !", {
+          autoClose: 900, 
+        });
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
+      })
+      .catch((err) => {
+        console.log("Failed to save Files : ", err.response);
+        toast.error("Failed to save FIles !", {
+          autoClose: 900,
+        });
+      });
+  }
   function handlePlainText(e) {
     setState({
       ...state,
@@ -391,13 +416,8 @@ function ClientForm() {
       newStatus: state.newStatus,
     };
 
-    // const data = new FormData();
-    // data.append("postObj", postObj);
-    // data.append("files", files);
-
     axios
       .post(`http://localhost:5000/clientInfo/mailAndUpdate/${id}`, postObj)
-
       .then((res) => {
         console.log("Data has been saved successfully. ", postObj);
         console.log("response from backend : ", res.data);
@@ -418,6 +438,9 @@ function ClientForm() {
           autoClose: 3000,
         });
       });
+
+
+    
   }
 
   return (
@@ -453,20 +476,19 @@ function ClientForm() {
                     />
                   </Form.Group>
 
-
-                  {/* <div className="flex">
+                  <div className="flex">
                     <label htmlFor="files">Choose files to upload </label> <br></br>
                     <input
                       type="file"
-                      id="files"
+                      name="fileNameInputFeild"
                       accept="*.*"
-                      onChange={(event) => {
-                        const files = event.target.files[0];
-                        setFiles(files);
+                      onChange={(e) => {
+                        setFileData(e.target.files[0]);
                       }}
                     />
+                    <button onClick={uploadFileHandler}> Upload files</button>
                   </div>
-                  <br></br><br></br> */}
+                  <br></br><br></br>
 
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Security measures from client side</Form.Label>
