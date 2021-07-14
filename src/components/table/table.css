@@ -152,7 +152,7 @@ table th {
   letter-spacing: 0.1px;
   color: #757575;
   border: none;
-  background:transparent url("../../assets/images/filter.svg") no-repeat;
+  background:transparent url("../../assets/images/filter.svg") no-repeat 0;
   padding-left: 16px;
 }
 .filter-row input:focus-visible, .filter-row select:focus-visible{

@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory  } from "react-router-dom";
 import Footer from "../admin/Footer";
 
 import { toast } from "react-toastify";
@@ -16,6 +16,8 @@ toast.configure();
 
 function EditViewForm() {
   const { id } = useParams();
+
+  const history = useHistory();
 
   const [status, setStatus] = useState("");
   const [projectNameByIT, setProjectNameByIT] = useState("");
@@ -399,6 +401,64 @@ function EditViewForm() {
     }
   }
 
+  function handleSubmitForm() {
+   
+    const postObj = {
+      projectNameByIT,
+      securityMeasure,
+      informIT,
+      allowedWebsite,
+      securityBreach,
+      disasterDetails,
+      isolationDetails,
+      status,
+      NDAsigned,
+      GDPRcompliance,
+      CyberSecConducted,
+      IsolatedEnvReq,
+      DisasterInsuCovered,
+      showInsuranceDetails,
+      showIsolatedDetails,
+      DLPreq,
+      ClientEmailProvided,
+      workStationValue,
+      devTypeValue,
+    };
+  
+    axios
+      .post(`http://localhost:5000/clientInfo/editAndUpdate/${id}`, postObj)
+
+      .then((res) => {
+        // console.log("Data has been saved successfully. ", postObj);
+        // console.log("response from backend : ", res.postObj);
+        toast.success("Form sumbitted successfully !", {
+          autoClose: 1900,
+        });
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
+      })
+      .catch((err) => {
+        // console.log("Data has NOT saved. ", postObj);
+        // console.log(
+        //   "response from backend after Failed to post request. ",
+        //   err.response
+        // );
+        toast.error("Failed to save the data !", {
+          autoClose: 3000,
+        });
+        
+      });
+
+      toast.success("Form sumbitted successfully !", {
+        autoClose: 1900,
+      });
+      setTimeout(() => {
+        history.push("/admin");
+      }, 2000);
+
+  }
+
   function SubmitButton() {
     if (
       projectNameByIT &&
@@ -442,55 +502,6 @@ function EditViewForm() {
         </Button>
       );
     }
-  }
-
-  function handleSubmitForm() {
-   
-
-    const postObj = {
-      projectNameByIT,
-      securityMeasure,
-      informIT,
-      allowedWebsite,
-      securityBreach,
-      disasterDetails,
-      isolationDetails,
-      status,
-      NDAsigned,
-      GDPRcompliance,
-      CyberSecConducted,
-      IsolatedEnvReq,
-      DisasterInsuCovered,
-      showInsuranceDetails,
-      showIsolatedDetails,
-      DLPreq,
-      ClientEmailProvided,
-      workStationValue,
-      devTypeValue,
-    };
-    console.log("postObj --- ", postObj);
-    axios
-      .post(`http://localhost:5000/clientInfo/editAndUpdate/${id}`, postObj)
-      .then((res) => {
-        console.log("Data has been saved successfully. ", postObj);
-        console.log("response from backend : ", res.data);
-        toast.success("Form sumbitted successfully !", {
-          autoClose: 1900,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      })
-      .catch((err) => {
-        console.log("Data has NOT saved. ", postObj);
-        console.log(
-          "response from backend after Failed to post request. ",
-          err.response
-        );
-        toast.error("Failed to save the data !", {
-          autoClose: 3000,
-        });
-      });
   }
 
   return (

@@ -223,9 +223,9 @@ function ClientForm() {
         toast.success("Form sumbitted successfully !", {
           autoClose: 1900,
         });
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       })
       .catch((err) => {
         console.log("Data has NOT saved. ", postObj);
