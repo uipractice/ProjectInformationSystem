@@ -233,7 +233,7 @@ function CompleteTable({ data }) {
         <div>
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
-          {/* <FormControl className={classes.formControl}>
+          <FormControl className={classes.formControl}>
             <Input
               type="select"
               defaultValue="Active"
@@ -246,12 +246,12 @@ function CompleteTable({ data }) {
               <option> Deleted </option>
               <option> All Project </option>
             </Input>
-          </FormControl>   */}
+          </FormControl>  
 
 
-          <FormControl className={classes.formControl}>
+          {/* <FormControl className={classes.formControl}>
             <Select
-              value={statusFilter}
+              alue={statusFilter}
               onChange={(e)=>{handleSelectedStatus(e.target.value)}}
               displayEmpty
               className={classes.selectEmpty}
@@ -264,7 +264,7 @@ function CompleteTable({ data }) {
               <MenuItem value="Deleted">Deleted</MenuItem>
               <MenuItem value="All Project">All Projects</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
 
 
 
