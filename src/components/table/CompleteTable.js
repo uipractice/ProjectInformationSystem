@@ -22,6 +22,7 @@ import leftIcon from "../../assets/images/left-icon.svg";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Ellipsis } from "react-bootstrap/esm/PageItem";
 
 toast.configure();
 
@@ -363,8 +364,8 @@ function CompleteTable({ data }) {
         </table>
       </div>
       
-      {data.length >=6 &&
-      data.length ===30 ? ( 
+      {data.length > 7 &&
+      data.length < 26 ? ( 
       <div className="table-pagination">
         <label>Rows per page:</label>
         <select
@@ -372,7 +373,7 @@ function CompleteTable({ data }) {
           onChange={(e) => setPageSize(Number(e.target.value))}
           className="pageNum"
         >
-          {[8, 15, 25, 50].map((pageSize) => (
+          {[8, 15, 25].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>

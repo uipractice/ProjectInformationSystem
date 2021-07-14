@@ -10,7 +10,11 @@ function GlobalFilter({ filter, setFilter }){
 
   const [value, setValue] = useState(filter)
   const onChange = useAsyncDebounce(value => {
+    //if (value.length >2)
     setFilter(value || undefined)
+    if (value.length >2) {
+      setFilter(value || undefined)
+    }
 
   }, 1000)
   return (

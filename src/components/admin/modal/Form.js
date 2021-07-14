@@ -172,20 +172,11 @@ function Form({ closeModal }) {
           </button>
 
           {state.projectNameByIT &&
-<<<<<<< HEAD
-            state.projectManager &&
-            state.email && state.practice && (state.practice !== "Other" ||
-             (state.practice === "Other" && newPractice)) ? (
-           // state.practice &&
-            //state.practice != "Other" ||
-            //state.practice === 'Other' && newPractice ? (
-=======
           state.projectManager &&
           state.email &&
           state.practice &&
           (state.practice !== "Other" ||
             (state.practice === "Other" && newPractice)) ? (
->>>>>>> 14ed1fcbead479f9c0b447b7f9ff702379c14ab7
             <button
               className="form-control btn btn-primary share-btn"
               onClick={handleSubmit}
