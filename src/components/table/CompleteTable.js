@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DeleteImg from "../../assets/images/delete.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { makeStyles } from "@material-ui/core/styles";
+import { Input } from "reactstrap";
 import {
   useTable,
   useSortBy,
@@ -37,15 +38,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function CompleteTable({ data }) {
+  const [filteredData, setFilteredData] = useState([]);
 
   const [rowOriginal, setRowOriginal] = useState({});
- 
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const classes = useStyles();
-  const [age, setAge] = React.useState('');
+
+  const [age, setAge] = React.useState("");
+
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
+  useEffect(() => {
+    let filterResult = data.filter((row) => row.status !== "Deleted");
+    setFilteredData(filterResult);
+  }, [data]);
+
+  function handleSelectedStatus(selectedState) {
+    console.log("SelectedState value: ", selectedState);
+    console.log("Data dot status value: ", data.status);
+    console.log("Data value: ", data);
+    if (selectedState === "Active") {
+      let filterResult = data.filter((row) => row.status !== "Deleted");
+      setFilteredData(filterResult);
+    } else if (selectedState === "All Project") {
+      setFilteredData(data);
+    } else {
+      let filterResult = data.filter((row) => row.status === selectedState);
+      setFilteredData(filterResult);
+    }
+  }
 
   function handleInputChange(evt) {
     setRowOriginal({
@@ -91,46 +116,42 @@ function CompleteTable({ data }) {
         accessor: "projectNameByIT",
         Cell: ({ row }) => {
           return (
-            
-              
-              <Link
-                to={{
-                  pathname: `/view/${row.original._id}`,
-                  state: {
-                    projectNameByIT: row.original.projectNameByIT,
-                    projectManager: row.original.projectManager,
-                    email: row.original.email,
-                    practice: row.original.practice,
-                    status: row.original.status,
-                    id: row.original._id,
-                    
-                    projectName: row.original.projectName,
-                    securityMeasure: row.original.securityMeasure,
-                    informIT: row.original.informIT,
-                    workStationSelected: row.original.workStationSelected,
-                    devTypeSelected: row.original.devTypeSelected,
-                    allowedWebsite: row.original.allowedWebsite,
-                    isNDAsigned: row.original.isNDAsigned,
-                    isGDPRcompliance: row.original.isGDPRcompliance,
-                    isCyberSecConducted: row.original.isCyberSecConducted,
-                    securityBreach: row.original.securityBreach,
-                    isDisasterInsuCovered: row.original.isDisasterInsuCovered,
-                    disasterDetails: row.original.disasterDetails,
-                    showInsuranceDetails: row.original.showInsuranceDetails,
-                    isIsolatedEnvReq: row.original.isIsolatedEnvReq,
-                    isolationDetails: row.original.isolationDetails,
-                    showIsolatedDetails: row.original.showIsolatedDetails,
-                    isDLPreq: row.original.isDLPreq,
-                    isClientEmailProvided: row.original.isClientEmailProvided,
-                    deleteReason: row.original.deleteReason,
-                    reshareReason: row.original.reshareReason,
-                  },
-                }}
-              >
-                {row.original.projectNameByIT}
-              </Link>
- 
-           
+            <Link
+              to={{
+                pathname: `/view/${row.original._id}`,
+                state: {
+                  projectNameByIT: row.original.projectNameByIT,
+                  projectManager: row.original.projectManager,
+                  email: row.original.email,
+                  practice: row.original.practice,
+                  status: row.original.status,
+                  id: row.original._id,
+
+                  projectName: row.original.projectName,
+                  securityMeasure: row.original.securityMeasure,
+                  informIT: row.original.informIT,
+                  workStationSelected: row.original.workStationSelected,
+                  devTypeSelected: row.original.devTypeSelected,
+                  allowedWebsite: row.original.allowedWebsite,
+                  isNDAsigned: row.original.isNDAsigned,
+                  isGDPRcompliance: row.original.isGDPRcompliance,
+                  isCyberSecConducted: row.original.isCyberSecConducted,
+                  securityBreach: row.original.securityBreach,
+                  isDisasterInsuCovered: row.original.isDisasterInsuCovered,
+                  disasterDetails: row.original.disasterDetails,
+                  showInsuranceDetails: row.original.showInsuranceDetails,
+                  isIsolatedEnvReq: row.original.isIsolatedEnvReq,
+                  isolationDetails: row.original.isolationDetails,
+                  showIsolatedDetails: row.original.showIsolatedDetails,
+                  isDLPreq: row.original.isDLPreq,
+                  isClientEmailProvided: row.original.isClientEmailProvided,
+                  deleteReason: row.original.deleteReason,
+                  reshareReason: row.original.reshareReason,
+                },
+              }}
+            >
+              {row.original.projectNameByIT}
+            </Link>
           );
         },
         sticky: "left",
@@ -170,9 +191,9 @@ function CompleteTable({ data }) {
         Header: "ACTION",
         Cell: ({ row }) => (
           <a
-            {...(row.original.status === "Deleted" ? 
-            { className: "delete-icon disableDeleteBtn" } : 
-          { className: "delete-icon " })}
+            {...(row.original.status === "Deleted"
+              ? { className: "delete-icon disableDeleteBtn" }
+              : { className: "delete-icon " })}
             onClick={(e) => {
               setRowOriginal(row.original);
               setIsModalOpen(true);
@@ -200,7 +221,12 @@ function CompleteTable({ data }) {
     prepareRow,
     state,
     setGlobalFilter,
-  } = useTable({ columns, data , initialState: { pageSize: 8 }}, useGlobalFilter, useSortBy, usePagination);
+  } = useTable(
+    { columns, data: filteredData, initialState: { pageSize: 8 } },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
   const { globalFilter, pageIndex, pageSize } = state;
 
@@ -209,19 +235,25 @@ function CompleteTable({ data }) {
       <br></br>
       <div className="filter-row">
         <h5>PROJECTS DETAILS</h5>
-        <div >
+        <div>
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-          
-{/* FIXME: */}
-          {/* <select name="hall" id="hall" style={{ marginLeft: "12px" }}>
-            <option> All Records </option>
-            <option> Pending </option>
-            <option> Completed </option>
-            <option> Submitted </option>
+
+          <Input
+            type="select"
+            defaultValue="Active"
+            onChange={(e) => handleSelectedStatus(e.target.value)}
+          >
+            {/* <option /> */}
+           
             <option> Active </option>
+            <option> Pending </option>
+            <option> Submitted </option>
+            <option> Approved </option>
             <option> Deleted </option>
-          </select> */} 
-          <FormControl className={classes.formControl}>
+            <option> All Project </option>
+          </Input>
+
+          {/* <FormControl className={classes.formControl}>
             <Select
               value={age}
               onChange={handleChange}
@@ -238,7 +270,7 @@ function CompleteTable({ data }) {
               <MenuItem value={40}>Active</MenuItem>
               <MenuItem value={50}>Deleted</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
 
         </div>
       </div>
@@ -318,7 +350,7 @@ function CompleteTable({ data }) {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())} >
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
                     <span>
                       {column.isSorted

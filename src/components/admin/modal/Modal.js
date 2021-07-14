@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Form from './Form';
 import FocusTrap from 'focus-trap-react';
 export const Modal = ({
-  onClickOutside,
+  // onClickOutside,
   onKeyDown,
   modalRef,
   buttonRef,
@@ -17,7 +17,7 @@ export const Modal = ({
         tabIndex="-1"
         aria-modal="true"
         className="modal-cover"
-        onClick={onClickOutside}
+        // onClick={onClickOutside}
         onKeyDown={onKeyDown}
       >
         <div className="modal-area" ref={modalRef}>
