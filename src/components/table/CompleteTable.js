@@ -45,11 +45,8 @@ function CompleteTable({ data }) {
 
   const classes = useStyles();
 
-  const [age, setAge] = React.useState("");
+  const [statusFilter, setStatusFilter] = React.useState("Active");
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
 
   useEffect(() => {
     let filterResult = data.filter((row) => row.status !== "Deleted");
@@ -236,39 +233,41 @@ function CompleteTable({ data }) {
         <div>
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
-          <Input
-            type="select"
-            defaultValue="Active"
-            onChange={(e) => handleSelectedStatus(e.target.value)}
-          >
-            {/* <option /> */}
-           
-            <option> Active </option>
-            <option> Pending </option>
-            <option> Submitted </option>
-            <option> Approved </option>
-            <option> Deleted </option>
-            <option> All Project </option>
-          </Input>
-
           {/* <FormControl className={classes.formControl}>
+            <Input
+              type="select"
+              defaultValue="Active"
+              onChange={(e) => handleSelectedStatus(e.target.value)}
+            >           
+              <option> Active </option>
+              <option> Pending </option>
+              <option> Submitted </option>
+              <option> Approved </option>
+              <option> Deleted </option>
+              <option> All Project </option>
+            </Input>
+          </FormControl>   */}
+
+
+          <FormControl className={classes.formControl}>
             <Select
-              value={age}
-              onChange={handleChange}
+              value={statusFilter}
+              onChange={(e)=>{handleSelectedStatus(e.target.value)}}
               displayEmpty
               className={classes.selectEmpty}
               inputProps={{ 'aria-label': 'Without label' }}
-            >
-              <MenuItem value="" disabled>
-              All Records
-              </MenuItem>
-              <MenuItem value={10}>Pending</MenuItem>
-              <MenuItem value={20}>Completed</MenuItem>
-              <MenuItem value={30}>Submitted</MenuItem>
-              <MenuItem value={40}>Active</MenuItem>
-              <MenuItem value={50}>Deleted</MenuItem>
+            >             
+              <MenuItem value="Active">Active</MenuItem>
+              <MenuItem value="Pending">Pending</MenuItem>
+              <MenuItem value="Submitted">Submitted</MenuItem>
+              <MenuItem value="Approved">Approved</MenuItem>
+              <MenuItem value="Deleted">Deleted</MenuItem>
+              <MenuItem value="All Project">All Projects</MenuItem>
             </Select>
-          </FormControl> */}
+          </FormControl>
+
+
+
 
         </div>
       </div>
