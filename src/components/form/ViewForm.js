@@ -417,7 +417,7 @@ function ViewForm() {
 
               {status !== "Pending" ? (
                 <Form>
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: "0" }}>
                     {totalState.deleteReason && (
                       <div>
                         <Form.Label style={{ color: "red", marginTop: "20px" }}>
@@ -636,17 +636,123 @@ function ViewForm() {
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: "0px" }}>
                     <Form.Label>
                       Is client providing Email services to user for regular
                       business communication ?{" "}
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: "20px" }}>
                       <Button size="sm" style={{ width: "80px" }}>
                         {isClientEmailProvided}
                       </Button>
                     </Form.Group>
                   </Form.Group>
+                  {status === "Submitted" ? (
+                    <Button
+                      onClick={() => {
+                        
+                        setIsModalOpen(true);
+
+                      }}
+                      className="reshare"
+                      style={{
+                        marginBottom: "20px",
+                        marginTop: "20px",
+                        marginRight: "15px",
+                        width: "130px",
+                      }}
+                    >
+                      {" "}
+                      Reshare
+                    </Button>
+                  ) : null}
+
+                  {status === "Submitted" ? (
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        handleApprove();
+                      }}
+                      className="approve"
+                      style={{
+                        marginBottom: "20px",
+                        marginTop: "20px",
+                        marginRight: "15px",
+                        width: "130px",
+                      }}
+                    >
+                      {" "}
+                      Approve
+                    </Button>
+                  ) : null}
+
+                
+                    {/* <Button
+                      variant="primary"
+                      onClick={() => {
+                        handleEditViewForm();
+                      }}
+                      className="approve"
+                      style={{
+                        marginBottom: "30px",
+                        marginTop: "30px",
+                        marginRight: "15px",
+                        width: "130px",
+                      }}
+                    >
+                      Edit
+                    </Button> */}
+                
+
+
+                  {status === "Deleted" ? (
+                    <Button
+                      className="reshare"
+                      onClick={() => history.push("/admin")}
+                      ref={inputRef}
+                      style={{
+                        marginBottom: "20px",
+                        marginTop: "20px",
+                        marginRight: "15px",
+                        width: "130px",
+                      }}
+                    >
+                      {" "}
+                      Close
+                    </Button>
+                  ) : null}
+
+                  {status === "Deleted" ? (
+                    <Button
+                      className="approve"
+                      onClick={() => setRestoreIsModalOpen(true)}
+                      style={{
+                        marginBottom: "20px",
+                        marginTop: "20px",
+                        width: "130px",
+                      }}
+                    >
+                      {" "}
+                      Restore
+                    </Button>
+                  ) : null}
+
+                  {status === "Approved" ? (
+                    <Button
+                      className="reshare"
+                      onClick={() => history.push("/admin")}
+                      ref={inputRef}
+                      style={{
+                        marginBottom: "20px",
+                        marginTop: "20px",
+                        marginRight: "15px",
+                        width: "130px",
+                      }}
+                    >
+                      {" "}
+                      Close
+                    </Button>
+                  ) : null}
                 </Form>
               ) : (
                 <span>
@@ -693,112 +799,7 @@ function ViewForm() {
                 </span>
               )}
 
-              {status === "Submitted" ? (
-                <Button
-                  onClick={() => {
-                    
-                    setIsModalOpen(true);
-
-                  }}
-                  className="reshare"
-                  style={{
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                    marginRight: "15px",
-                    width: "130px",
-                  }}
-                >
-                  {" "}
-                  Reshare
-                </Button>
-              ) : null}
-
-              {status === "Submitted" ? (
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    handleApprove();
-                  }}
-                  className="approve"
-                  style={{
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                    marginRight: "15px",
-                    width: "130px",
-                  }}
-                >
-                  {" "}
-                  Approve
-                </Button>
-              ) : null}
-
-             
-                {/* <Button
-                  variant="primary"
-                  onClick={() => {
-                    handleEditViewForm();
-                  }}
-                  className="approve"
-                  style={{
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                    marginRight: "15px",
-                    width: "130px",
-                  }}
-                >
-                  Edit
-                </Button> */}
-             
-
-
-              {status === "Deleted" ? (
-                <Button
-                  className="reshare"
-                  onClick={() => history.push("/admin")}
-                  ref={inputRef}
-                  style={{
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                    marginRight: "15px",
-                    width: "130px",
-                  }}
-                >
-                  {" "}
-                  Close
-                </Button>
-              ) : null}
-
-              {status === "Deleted" ? (
-                <Button
-                  className="approve"
-                  onClick={() => setRestoreIsModalOpen(true)}
-                  style={{
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                    width: "130px",
-                  }}
-                >
-                  {" "}
-                  Restore
-                </Button>
-              ) : null}
-
-              {status === "Approved" ? (
-                <Button
-                  className="reshare"
-                  onClick={() => history.push("/admin")}
-                  ref={inputRef}
-                  style={{
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                    marginRight: "15px",
-                    width: "130px",
-                  }}
-                >
-                  {" "}
-                  Close
-                </Button>
-              ) : null}
+              
 
               {/* {status === "Hidden" ? (
                 <input ref={inputRef} type="text" />

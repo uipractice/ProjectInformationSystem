@@ -20,8 +20,8 @@ body {
         outline: none !important;
     }
 .custom-scroll{
-    height: 85vh;
-    overflow: auto;
+    /* height: 85vh;
+    overflow: auto; */
     scrollbar-width: thin;
     scrollbar-color: #afaeae #e3e1e1;
 }
@@ -517,9 +517,10 @@ body {
     text-align: left;
     position: relative;
 }
-.form-control:focus{
+.form-control:focus, .form-control:active, .form-control:-internal-autofill-selected{
     box-shadow: 0 0 0;
-    border-color: #ced4da;
+    border-color: #209EC5;
+    background-color: rgba(32, 158, 197, 0.05) !important;
 }
 .project-details-form .btn-outline-info, .project-details-form .btn-outline-info:hover{
     color: #626364;
@@ -652,7 +653,7 @@ body {
     background: transparent !important;
     border: 0 !important;
     width: auto !important;
-    top: 3px;
+    top: 2px;
 }
 .footer{
     position: fixed;

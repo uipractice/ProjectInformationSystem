@@ -8,7 +8,6 @@ import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
 import { useParams, useHistory  } from "react-router-dom";
 import Footer from "../admin/Footer";
-import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -483,8 +482,8 @@ function EditViewForm() {
           className="submit-btn"
           onClick={() => handleSubmitForm()}
           style={{
-            marginTop: "50px",
-            marginBottom: "40px",
+            marginTop: "20px",
+            marginBottom: "20px",
             width: "130px",
           }}
         >
@@ -498,8 +497,8 @@ function EditViewForm() {
           variant="primary"
           className="submit-btn"
           style={{
-            marginTop: "50px",
-            marginBottom: "40px",
+            marginTop: "20px",
+            marginBottom: "20px",
             width: "130px",
           }}
         >
@@ -508,55 +507,6 @@ function EditViewForm() {
         </Button>
       );
     }
-  }
-
-  function handleSubmitForm() {
-   
-
-    const postObj = {
-      projectNameByIT,
-      securityMeasure,
-      informIT,
-      allowedWebsite,
-      securityBreach,
-      disasterDetails,
-      isolationDetails,
-      status,
-      NDAsigned,
-      GDPRcompliance,
-      CyberSecConducted,
-      IsolatedEnvReq,
-      DisasterInsuCovered,
-      showInsuranceDetails,
-      showIsolatedDetails,
-      DLPreq,
-      ClientEmailProvided,
-      workStationValue,
-      devTypeValue,
-    };
-    console.log("postObj --- ", postObj);
-    axios
-      .post(`http://localhost:5000/clientInfo/editAndUpdate/${id}`, postObj)
-      .then((res) => {
-        console.log("Data has been saved successfully. ", postObj);
-        console.log("response from backend : ", res.data);
-        toast.success("Form sumbitted successfully !", {
-          autoClose: 1900,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      })
-      .catch((err) => {
-        console.log("Data has NOT saved. ", postObj);
-        console.log(
-          "response from backend after Failed to post request. ",
-          err.response
-        );
-        toast.error("Failed to save the data !", {
-          autoClose: 3000,
-        });
-      });
   }
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -587,7 +537,6 @@ function EditViewForm() {
 
     prevOpen.current = open;
   }, [open]);
-  const history = useHistory();
   return (
     <div>
       <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
@@ -1046,8 +995,8 @@ function EditViewForm() {
                     onClick={() => window.location.reload()}
                     className="reshare"
                     style={{
-                      marginTop: "50px",
-                      marginBottom: "40px",
+                      marginTop: "20px",
+                      marginBottom: "20px",
                       marginRight: "15px",
                       width: "130px",
                     }}
