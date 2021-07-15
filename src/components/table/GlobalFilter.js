@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useAsyncDebounce } from 'react-table'
+import searchIcon from "../../assets/images/search.svg";
 
 function GlobalFilter({ filter, setFilter }){
 
@@ -14,6 +15,7 @@ function GlobalFilter({ filter, setFilter }){
   }, 1000)
   return (
     <span>
+      {value ? (
       <input
         ref={inputRef}
           value={value || ""}
@@ -21,10 +23,23 @@ function GlobalFilter({ filter, setFilter }){
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-         type="search"
-         placeholder="Search"
-         
+        type="search"  
+        placeholder="Search"
       />
+      ):(
+    <input
+        ref={inputRef}
+        value={value || ""}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        type="search"  
+        placeholder="Search"
+      />
+      )
+    }
+      
     </span>
   );
 }

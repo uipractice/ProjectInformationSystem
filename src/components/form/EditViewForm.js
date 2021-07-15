@@ -5,16 +5,24 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory  } from "react-router-dom";
 import Footer from "../admin/Footer";
 import NavBar from "../NavBar/NavBar.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 
 toast.configure();
 
 function EditViewForm() {
   const { id } = useParams();
+
+  const history = useHistory();
 
   const [status, setStatus] = useState("");
   const [projectNameByIT, setProjectNameByIT] = useState("");
@@ -110,30 +118,39 @@ function EditViewForm() {
           setNDAsignedFirst("info");
           setNDAsignedSecond("outline-info");
           setNDAsigned("Yes");
-        } else {
+        } else if (isNDAsigned === "No"){
           setNDAsignedFirst("outline-info");
           setNDAsignedSecond("info");
           setNDAsigned("No");
+        } else {
+          setNDAsignedFirst("outline-info");
+          setNDAsignedSecond("outline-info");
         }
 
         if (isGDPRcompliance === "Yes") {
           setGDPRcomplianceFirst("info");
           setGDPRcomplianceSecond("outline-info");
           setGDPRcompliance("Yes");
-        } else {
+        } else if (isGDPRcompliance === "No"){
           setGDPRcomplianceFirst("outline-info");
           setGDPRcomplianceSecond("info");
           setGDPRcompliance("No");
+        } else {
+          setGDPRcomplianceFirst("outline-info");
+          setGDPRcomplianceSecond("outline-info");
         }
 
         if (isCyberSecConducted === "Yes") {
           setCyberSecConductedFirst("info");
           setCyberSecConductedSecond("outline-info");
           setCyberSecConducted("Yes");
-        } else {
+        } else if (isCyberSecConducted === "No") {
           setCyberSecConductedFirst("outline-info");
           setCyberSecConductedSecond("info");
           setCyberSecConducted("No");
+        }else {
+          setCyberSecConductedFirst("outline-info");
+          setCyberSecConductedSecond("outline-info");
         }
 
         if (isIsolatedEnvReq === "Yes") {
@@ -141,10 +158,14 @@ function EditViewForm() {
           setIsolatedEnvReqSecond("outline-info");
           setIsolatedEnvReq("Yes");
           setShowIsolatedDetails(true);
-        } else {
+        } else if (isIsolatedEnvReq === "No") {
           setIsolatedEnvReqFirst("outline-info");
           setIsolatedEnvReqSecond("info");
           setIsolatedEnvReq("No");
+          setShowIsolatedDetails(false);
+        }else {
+          setIsolatedEnvReqFirst("outline-info");
+          setIsolatedEnvReqSecond("outline-info");
           setShowIsolatedDetails(false);
         }
 
@@ -153,10 +174,14 @@ function EditViewForm() {
           setDisasterInsuCoveredSecond("outline-info");
           setDisasterInsuCovered("Yes");
           setShowInsuranceDetails(true);
-        } else {
+        } else if (isDisasterInsuCovered === "No")  {
           setDisasterInsuCoveredFirst("outline-info");
           setDisasterInsuCoveredSecond("info");
           setDisasterInsuCovered("No");
+          setShowInsuranceDetails(false);
+        }else {
+          setDisasterInsuCoveredFirst("outline-info");
+          setDisasterInsuCoveredSecond("outline-info");
           setShowInsuranceDetails(false);
         }
 
@@ -164,20 +189,26 @@ function EditViewForm() {
           setDLPreqFirst("info");
           setDLPreqSecond("outline-info");
           setDLPreq("Yes");
-        } else {
+        } else if (isDLPreq === "No"){
           setDLPreqFirst("outline-info");
           setDLPreqSecond("info");
           setDLPreq("No");
+        } else {
+          setDLPreqFirst("outline-info");
+          setDLPreqSecond("outline-info");
         }
 
         if (isClientEmailProvided === "Yes") {
           setClientEmailProvidedFirst("info");
           setClientEmailProvidedSecond("outline-info");
           setClientEmailProvided("Yes");
-        } else {
+        } else if (isClientEmailProvided === "No") {
           setClientEmailProvidedFirst("outline-info");
           setClientEmailProvidedSecond("info");
           setClientEmailProvided("No");
+        } else{
+          setClientEmailProvidedFirst("outline-info");
+          setClientEmailProvidedSecond("outline-info");
         }
 
         if (workStationSelected === "Laptop") {
@@ -190,11 +221,15 @@ function EditViewForm() {
           setWorkStationSecondBtn("info");
           setWorkStationThirdBtn("outline-info");
           setWorkStationValue("VM");
-        } else {
+        } else if (workStationSelected === "Cloud") {
           setWorkStationFirstBtn("outline-info");
           setWorkStationSecondBtn("outline-info");
           setWorkStationThirdBtn("info");
           setWorkStationValue("Cloud");
+        }else {
+          setWorkStationFirstBtn("outline-info");
+          setWorkStationSecondBtn("outline-info");
+          setWorkStationThirdBtn("outline-info");
         }
 
         if (devTypeSelected === "Local") {
@@ -207,11 +242,16 @@ function EditViewForm() {
           setDevTypeSecondBtn("info");
           setDevTypeThirdBtn("outline-info");
           setDevTypeValue("Cloud Plateform");
-        } else {
+        }else if (devTypeSelected === "Client Plateform") {
+            setDevTypeFirstBtn("outline-info");
+            setDevTypeSecondBtn("outline-info");
+            setDevTypeThirdBtn("info");
+            setDevTypeValue("Client Plateform");
+          } 
+        else {
           setDevTypeFirstBtn("outline-info");
           setDevTypeSecondBtn("outline-info");
-          setDevTypeThirdBtn("info");
-          setDevTypeValue("Client Plateform");
+          setDevTypeThirdBtn("outline-info");
         }
       })
 
@@ -366,54 +406,8 @@ function EditViewForm() {
     }
   }
 
-  function SubmitButton() {
-    if (
-      projectNameByIT &&
-      securityMeasure &&
-      informIT &&
-      securityBreach &&
-      allowedWebsite &&
-      ((showInsuranceDetails === true && disasterDetails) ||
-        showInsuranceDetails === false) &&
-      ((showIsolatedDetails === true && isolationDetails) ||
-        showIsolatedDetails === false)
-    ) {
-      return (
-        <Button
-          variant="primary"
-          className="submit-btn"
-          onClick={() => handleSubmitForm()}
-          style={{
-            marginTop: "50px",
-            marginBottom: "40px",
-            width: "130px",
-          }}
-        >
-          Update
-        </Button>
-      );
-    } else {
-      return (
-        <Button
-          disabled
-          variant="primary"
-          className="submit-btn"
-          style={{
-            marginTop: "50px",
-            marginBottom: "40px",
-            width: "130px",
-          }}
-        >
-          {" "}
-          Update
-        </Button>
-      );
-    }
-  }
-
   function handleSubmitForm() {
    
-
     const postObj = {
       projectNameByIT,
       securityMeasure,
@@ -435,41 +429,131 @@ function EditViewForm() {
       workStationValue,
       devTypeValue,
     };
-    console.log("postObj --- ", postObj);
+  
     axios
       .post(`http://localhost:5000/clientInfo/editAndUpdate/${id}`, postObj)
+
       .then((res) => {
-        console.log("Data has been saved successfully. ", postObj);
-        console.log("response from backend : ", res.data);
+        // console.log("Data has been saved successfully. ", postObj);
+        // console.log("response from backend : ", res.postObj);
         toast.success("Form sumbitted successfully !", {
           autoClose: 1900,
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
       })
       .catch((err) => {
-        console.log("Data has NOT saved. ", postObj);
-        console.log(
-          "response from backend after Failed to post request. ",
-          err.response
-        );
+        // console.log("Data has NOT saved. ", postObj);
+        // console.log(
+        //   "response from backend after Failed to post request. ",
+        //   err.response
+        // );
         toast.error("Failed to save the data !", {
           autoClose: 3000,
         });
+        
       });
+
+      toast.success("Form sumbitted successfully !", {
+        autoClose: 1900,
+      });
+      setTimeout(() => {
+        history.push("/admin");
+      }, 2000);
+
   }
 
+  function SubmitButton() {
+    if (
+      projectNameByIT &&
+      securityMeasure &&
+      informIT &&
+      securityBreach &&
+      allowedWebsite &&
+      ((showInsuranceDetails === true && disasterDetails) ||
+        showInsuranceDetails === false) &&
+      ((showIsolatedDetails === true && isolationDetails) ||
+        showIsolatedDetails === false)
+    ) {
+      return (
+        <Button
+          variant="primary"
+          className="submit-btn"
+          onClick={() => handleSubmitForm()}
+          style={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            width: "130px",
+          }}
+        >
+          Update
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          disabled
+          variant="primary"
+          className="submit-btn"
+          style={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            width: "130px",
+          }}
+        >
+          {" "}
+          Update
+        </Button>
+      );
+    }
+  }
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
   return (
     <div>
       <NavBar/>
       <div className="custom-scroll">
         <Container>
           <Row>
-            <Col md={{ span: 6, offset: 2 }}>
+            <Col md={{ span: 8, offset: 2 }}>
               <div style={{ width: "700px" }} className="project-details-form">
                 <h2> Project Details </h2>
-
+                <button
+                className="modal-closeBtn"
+                onClick={() => history.push("/admin")}
+              >
+                <svg className="_modal-close-icon" viewBox="0 0 40 40">
+                  <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                </svg>
+              </button>
                 <Form>
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Name of the project or client</Form.Label>
@@ -478,7 +562,7 @@ function EditViewForm() {
                         setProjectNameByIT(e.target.value);
                       }}
                       value={projectNameByIT}
-                      autoFocus
+                      
                     />
                   </Form.Group>
 
@@ -489,6 +573,7 @@ function EditViewForm() {
                         setSecurityMeasure(e.target.value);
                       }}
                       value={securityMeasure}
+                      autoFocus
                     />
                   </Form.Group>
 
@@ -536,7 +621,7 @@ function EditViewForm() {
                         variant={workStationThirdBtn}
                         onClick={handleWorkStation}
                         name="Cloud"
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: "15px", width: "90px" }}
                       >
                         {" "}
                         Cloud
@@ -872,12 +957,11 @@ function EditViewForm() {
                   </Form.Group>
 
                   <Button
-                    variant="danger"
                     onClick={() => window.location.reload()}
                     className="reshare"
                     style={{
-                      marginTop: "50px",
-                      marginBottom: "40px",
+                      marginTop: "20px",
+                      marginBottom: "20px",
                       marginRight: "15px",
                       width: "130px",
                     }}

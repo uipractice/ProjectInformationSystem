@@ -20,8 +20,8 @@ body {
         outline: none !important;
     }
 .custom-scroll{
-    height: 85vh;
-    overflow: auto;
+    /* height: 85vh;
+    overflow: auto; */
     scrollbar-width: thin;
     scrollbar-color: #afaeae #e3e1e1;
 }
@@ -475,11 +475,11 @@ body {
     background: #FFFFFF;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     border-radius: 4px;
-    margin: 40px 0;
+    margin: 20px 0;
     text-align: center;
 }
 .project-details-form h2{
-    padding: 20px;
+    padding: 10px 20px;
     margin: 0;
     font-family: Lato;
     font-weight: bold;
@@ -493,7 +493,7 @@ body {
 .project-details-form form{
     padding: 20px 50px;
     text-align: center;
-    height:50vh;
+    height:calc(100vh - 175px);
     overflow: auto;
     scrollbar-width: thin;
     scrollbar-color: #afaeae #e3e1e1;
@@ -517,9 +517,10 @@ body {
     text-align: left;
     position: relative;
 }
-.form-control:focus{
+.form-control:focus, .form-control:active, .form-control:-internal-autofill-selected{
     box-shadow: 0 0 0;
-    border-color: #ced4da;
+    border-color: #209EC5;
+    background-color: rgba(32, 158, 197, 0.05) !important;
 }
 .project-details-form .btn-outline-info, .project-details-form .btn-outline-info:hover{
     color: #626364;
@@ -556,13 +557,24 @@ body {
     border: 0;
     cursor: not-allowed;
 }
-.project-details-form.formView .modal-closeBtn{
+.project-details-form .modal-closeBtn{
     position: absolute;
-    top: 55px;
+    top: 27px;
     right: 8%;
     border: 0;
     background: transparent;
     padding: 0;
+}
+.project-details-form.formView .edit-button{
+    position: absolute;
+    top: 27px;
+    right: 13%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+}
+.project-details-form.formView .edit-button img{
+    width: 16px;
 }
 .project-details-form.formView .form-text{
     margin-bottom: 10px;
@@ -615,7 +627,7 @@ body {
     border-bottom: 0 !important;
 }
 .MuiPaper-root{
-    top:275px !important;
+    top:370px !important;
 }
 .MuiPopover-paper{
     box-shadow: 0px 0px 2px rgb(0 0 0 / 25%) !important;
@@ -641,7 +653,7 @@ body {
     background: transparent !important;
     border: 0 !important;
     width: auto !important;
-    top: 3px;
+    top: 2px;
 }
 .footer{
     position: fixed;
