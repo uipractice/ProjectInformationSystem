@@ -16,7 +16,7 @@ function App() {
                 <Route path="/form/:id"> <ClientForm/> </Route>
                 <Route path="/view/:id"> <ViewForm/> </Route>
                 <Route path="/edit/:id"> <EditViewForm/> </Route>
-                <Route path="/admin"> <AdminDashboard/> </Route>   
+                <Route path="/admin"> <AdminDashboard/> </Route>
             </Switch>          
         </Router>
     </div>

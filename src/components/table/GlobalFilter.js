@@ -10,23 +10,18 @@ function GlobalFilter({ filter, setFilter }){
 
   const [value, setValue] = useState(filter)
   const onChange = useAsyncDebounce(value => {
-    //if (value.length >2)
     setFilter(value || undefined)
-    if (value.length >2) {
-      setFilter(value || undefined)
-    }
-
   }, 1000)
   return (
     <span>
       <input
         ref={inputRef}
-        value={value || ""}
-        onChange={(e) => {
+          value={value || ""}
+          onChange={(e) => {
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        type="search"
+         type="search"
          placeholder="Search"
          
       />

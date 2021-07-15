@@ -4,11 +4,10 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Footer from "../admin/Footer";
-
+import NavBar from "../NavBar/NavBar.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -463,19 +462,7 @@ function EditViewForm() {
 
   return (
     <div>
-      <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
-        <div className="row">
-          <a className="navbar-brand col-md-6 px-4" href="#/">
-            <img src={Logo} alt="Evoke Technologies" />
-          </a>
-          <h3>Project Information System </h3>
-        </div>
-        <ul className="navbar-nav px-3">
-          <li className="nav-item text-nowrap">
-            <button></button>
-          </li>
-        </ul>
-      </div>
+      <NavBar/>
       <div className="custom-scroll">
         <Container>
           <Row>

@@ -58,9 +58,6 @@ function CompleteTable({ data }) {
   }, [data]);
 
   function handleSelectedStatus(selectedState) {
-    console.log("SelectedState value: ", selectedState);
-    console.log("Data dot status value: ", data.status);
-    console.log("Data value: ", data);
     if (selectedState === "Active") {
       let filterResult = data.filter((row) => row.status !== "Deleted");
       setFilteredData(filterResult);
@@ -252,7 +249,7 @@ function CompleteTable({ data }) {
             <option> Deleted </option>
             <option> All Project </option>
           </Input>
-
+          
           {/* <FormControl className={classes.formControl}>
             <Select
               value={age}
@@ -396,8 +393,7 @@ function CompleteTable({ data }) {
         </table>
       </div>
       
-      {data.length > 7 &&
-      data.length < 26 ? ( 
+      {data.length > 6 ? ( 
       <div className="table-pagination">
         <label>Rows per page:</label>
         <select
@@ -405,7 +401,7 @@ function CompleteTable({ data }) {
           onChange={(e) => setPageSize(Number(e.target.value))}
           className="pageNum"
         >
-          {[8, 15, 25].map((pageSize) => (
+          {[8, 15, 25, 100].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>
@@ -429,7 +425,7 @@ function CompleteTable({ data }) {
       ): ( 
         " "
       )}
-  
+
     </>
   );
 }
