@@ -13,10 +13,10 @@ function App() {
        <Router>
             <Switch>
                 <Route exact path="/"> <Login/> </Route>
-                <Route path="/form/:id"> <ClientForm/> </Route>
+                <Route path="/admin"> <AdminDashboard/> </Route> 
                 <Route path="/view/:id"> <ViewForm/> </Route>
                 <Route path="/edit/:id"> <EditViewForm/> </Route>
-                <Route path="/admin"> <AdminDashboard/> </Route>   
+                <Route path="/form/:id"> <ClientForm/> </Route>
             </Switch>          
         </Router>
     </div>

@@ -94,7 +94,7 @@ function CompleteTable({ data }) {
       .catch((err) => console.log(err.response));
   };
 
-  data.forEach((value, index) => {
+  filteredData.forEach((value, index) => {
     value.serial = index + 1;
   });
 
