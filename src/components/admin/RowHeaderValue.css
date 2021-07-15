@@ -7,7 +7,13 @@
     line-height: 38px;
 
 }
-
+.head-card{
+    flex: auto;
+    padding: 0 15px;
+}
+.head-card:nth-child(2n){
+    padding: 0;
+}
 .submitCount {
     color: #0066FF;
     font-family: Lato;

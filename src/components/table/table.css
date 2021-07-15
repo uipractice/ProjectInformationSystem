@@ -214,7 +214,7 @@ table th, tfoot td {
 }
 .tableFixHead{ 
   overflow: auto; 
-  height: 250px; 
+  height:calc(100vh - 400px);
   scrollbar-width: thin;
   scrollbar-color: #afaeae #e3e1e1;
 }
@@ -236,7 +236,6 @@ table th, tfoot td {
 .tableFixHead thead th { 
   position: sticky; 
   top: 0; 
-  z-index: 1; 
 }
 .table-pagination .pageNum:focus-visible{
   outline: none !important;
