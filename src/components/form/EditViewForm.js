@@ -8,9 +8,15 @@ import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Footer from "../admin/Footer";
-
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 
 toast.configure();
 
@@ -460,29 +466,88 @@ function EditViewForm() {
         });
       });
   }
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
 
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
+  const history = useHistory();
   return (
     <div>
       <div className="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header_nav">
         <div className="row">
-          <a className="navbar-brand col-md-6 px-4" href="#/">
+          <a className="navbar-brand col-md-6 px-4" href="/admin">
             <img src={Logo} alt="Evoke Technologies" />
           </a>
           <h3>Project Information System </h3>
         </div>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
-            <button></button>
+            {/* <button></button> */}
+            <Button
+            ref={anchorRef}
+            aria-controls={open ? 'menu-list-grow' : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+          >
+          </Button>
+            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem>Logout</MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
           </li>
         </ul>
       </div>
       <div className="custom-scroll">
         <Container>
           <Row>
-            <Col md={{ span: 6, offset: 2 }}>
+            <Col md={{ span: 8, offset: 2 }}>
               <div style={{ width: "700px" }} className="project-details-form">
                 <h2> Project Details </h2>
-
+                <button
+                className="modal-closeBtn"
+                onClick={() => history.push("/admin")}
+              >
+                <svg className="_modal-close-icon" viewBox="0 0 40 40">
+                  <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                </svg>
+              </button>
                 <Form>
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Name of the project or client</Form.Label>
@@ -549,7 +614,7 @@ function EditViewForm() {
                         variant={workStationThirdBtn}
                         onClick={handleWorkStation}
                         name="Cloud"
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: "15px", width: "90px" }}
                       >
                         {" "}
                         Cloud
@@ -885,7 +950,6 @@ function EditViewForm() {
                   </Form.Group>
 
                   <Button
-                    variant="danger"
                     onClick={() => window.location.reload()}
                     className="reshare"
                     style={{

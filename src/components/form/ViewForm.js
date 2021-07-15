@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
 import Modal from "react-modal"; //why you removed this one?
 import Footer from "../admin/Footer";
-
+import editIcon from "../../assets/images/edit-icon.svg" ;
 import axios from "axios";
 
 import { useLocation, useHistory } from "react-router-dom";
@@ -398,7 +398,14 @@ function ViewForm() {
             >
               <h2> Project Details </h2>
 
-              {/* todo */}
+              <button 
+                className="edit-button"
+                onClick={() => {
+                  handleEditViewForm();
+                }}
+                >
+                <img src={editIcon} alt="edit icon"/>
+              </button>
               <button
                 className="modal-closeBtn"
                 onClick={() => history.push("/admin")}
@@ -643,7 +650,7 @@ function ViewForm() {
                 </Form>
               ) : (
                 <span>
-                  <Form.Group style={{ marginTop: "150px" }}>
+                  <Form.Group style={{ marginTop: "120px" }}>
                     <Form.Label>
                       The project details has not been Submitted by the{" "}
                       <b> {projectManager} </b> yet. <br />
@@ -726,7 +733,7 @@ function ViewForm() {
               ) : null}
 
              
-                <Button
+                {/* <Button
                   variant="primary"
                   onClick={() => {
                     handleEditViewForm();
@@ -740,7 +747,7 @@ function ViewForm() {
                   }}
                 >
                   Edit
-                </Button>
+                </Button> */}
              
 
 
