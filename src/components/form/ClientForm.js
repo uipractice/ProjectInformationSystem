@@ -415,11 +415,6 @@ function ClientForm() {
     }
   }
 
-
-
-    
-  }
-
   return (
     <div>
       <NavBar/>

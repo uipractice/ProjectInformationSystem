@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Modal from "react-modal"; //why you removed this one?
 import Footer from "../admin/Footer";
 import NavBar from "../NavBar/NavBar.js";
+import editIcon from "../../assets/images/edit-icon.svg" ;
 import axios from "axios";
 import { useLocation, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
