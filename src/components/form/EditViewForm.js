@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Logo from "../../assets/images/eoke_logo.svg";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory  } from "react-router-dom";
 import Footer from "../admin/Footer";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -22,6 +22,8 @@ toast.configure();
 
 function EditViewForm() {
   const { id } = useParams();
+
+  const history = useHistory();
 
   const [status, setStatus] = useState("");
   const [projectNameByIT, setProjectNameByIT] = useState("");
@@ -117,30 +119,39 @@ function EditViewForm() {
           setNDAsignedFirst("info");
           setNDAsignedSecond("outline-info");
           setNDAsigned("Yes");
-        } else {
+        } else if (isNDAsigned === "No"){
           setNDAsignedFirst("outline-info");
           setNDAsignedSecond("info");
           setNDAsigned("No");
+        } else {
+          setNDAsignedFirst("outline-info");
+          setNDAsignedSecond("outline-info");
         }
 
         if (isGDPRcompliance === "Yes") {
           setGDPRcomplianceFirst("info");
           setGDPRcomplianceSecond("outline-info");
           setGDPRcompliance("Yes");
-        } else {
+        } else if (isGDPRcompliance === "No"){
           setGDPRcomplianceFirst("outline-info");
           setGDPRcomplianceSecond("info");
           setGDPRcompliance("No");
+        } else {
+          setGDPRcomplianceFirst("outline-info");
+          setGDPRcomplianceSecond("outline-info");
         }
 
         if (isCyberSecConducted === "Yes") {
           setCyberSecConductedFirst("info");
           setCyberSecConductedSecond("outline-info");
           setCyberSecConducted("Yes");
-        } else {
+        } else if (isCyberSecConducted === "No") {
           setCyberSecConductedFirst("outline-info");
           setCyberSecConductedSecond("info");
           setCyberSecConducted("No");
+        }else {
+          setCyberSecConductedFirst("outline-info");
+          setCyberSecConductedSecond("outline-info");
         }
 
         if (isIsolatedEnvReq === "Yes") {
@@ -148,10 +159,14 @@ function EditViewForm() {
           setIsolatedEnvReqSecond("outline-info");
           setIsolatedEnvReq("Yes");
           setShowIsolatedDetails(true);
-        } else {
+        } else if (isIsolatedEnvReq === "No") {
           setIsolatedEnvReqFirst("outline-info");
           setIsolatedEnvReqSecond("info");
           setIsolatedEnvReq("No");
+          setShowIsolatedDetails(false);
+        }else {
+          setIsolatedEnvReqFirst("outline-info");
+          setIsolatedEnvReqSecond("outline-info");
           setShowIsolatedDetails(false);
         }
 
@@ -160,10 +175,14 @@ function EditViewForm() {
           setDisasterInsuCoveredSecond("outline-info");
           setDisasterInsuCovered("Yes");
           setShowInsuranceDetails(true);
-        } else {
+        } else if (isDisasterInsuCovered === "No")  {
           setDisasterInsuCoveredFirst("outline-info");
           setDisasterInsuCoveredSecond("info");
           setDisasterInsuCovered("No");
+          setShowInsuranceDetails(false);
+        }else {
+          setDisasterInsuCoveredFirst("outline-info");
+          setDisasterInsuCoveredSecond("outline-info");
           setShowInsuranceDetails(false);
         }
 
@@ -171,20 +190,26 @@ function EditViewForm() {
           setDLPreqFirst("info");
           setDLPreqSecond("outline-info");
           setDLPreq("Yes");
-        } else {
+        } else if (isDLPreq === "No"){
           setDLPreqFirst("outline-info");
           setDLPreqSecond("info");
           setDLPreq("No");
+        } else {
+          setDLPreqFirst("outline-info");
+          setDLPreqSecond("outline-info");
         }
 
         if (isClientEmailProvided === "Yes") {
           setClientEmailProvidedFirst("info");
           setClientEmailProvidedSecond("outline-info");
           setClientEmailProvided("Yes");
-        } else {
+        } else if (isClientEmailProvided === "No") {
           setClientEmailProvidedFirst("outline-info");
           setClientEmailProvidedSecond("info");
           setClientEmailProvided("No");
+        } else{
+          setClientEmailProvidedFirst("outline-info");
+          setClientEmailProvidedSecond("outline-info");
         }
 
         if (workStationSelected === "Laptop") {
@@ -197,11 +222,15 @@ function EditViewForm() {
           setWorkStationSecondBtn("info");
           setWorkStationThirdBtn("outline-info");
           setWorkStationValue("VM");
-        } else {
+        } else if (workStationSelected === "Cloud") {
           setWorkStationFirstBtn("outline-info");
           setWorkStationSecondBtn("outline-info");
           setWorkStationThirdBtn("info");
           setWorkStationValue("Cloud");
+        }else {
+          setWorkStationFirstBtn("outline-info");
+          setWorkStationSecondBtn("outline-info");
+          setWorkStationThirdBtn("outline-info");
         }
 
         if (devTypeSelected === "Local") {
@@ -214,11 +243,16 @@ function EditViewForm() {
           setDevTypeSecondBtn("info");
           setDevTypeThirdBtn("outline-info");
           setDevTypeValue("Cloud Plateform");
-        } else {
+        }else if (devTypeSelected === "Client Plateform") {
+            setDevTypeFirstBtn("outline-info");
+            setDevTypeSecondBtn("outline-info");
+            setDevTypeThirdBtn("info");
+            setDevTypeValue("Client Plateform");
+          } 
+        else {
           setDevTypeFirstBtn("outline-info");
           setDevTypeSecondBtn("outline-info");
-          setDevTypeThirdBtn("info");
-          setDevTypeValue("Client Plateform");
+          setDevTypeThirdBtn("outline-info");
         }
       })
 
@@ -371,6 +405,64 @@ function EditViewForm() {
       setGDPRcomplianceFirst("outline-info");
       setGDPRcomplianceSecond("info");
     }
+  }
+
+  function handleSubmitForm() {
+   
+    const postObj = {
+      projectNameByIT,
+      securityMeasure,
+      informIT,
+      allowedWebsite,
+      securityBreach,
+      disasterDetails,
+      isolationDetails,
+      status,
+      NDAsigned,
+      GDPRcompliance,
+      CyberSecConducted,
+      IsolatedEnvReq,
+      DisasterInsuCovered,
+      showInsuranceDetails,
+      showIsolatedDetails,
+      DLPreq,
+      ClientEmailProvided,
+      workStationValue,
+      devTypeValue,
+    };
+  
+    axios
+      .post(`http://localhost:5000/clientInfo/editAndUpdate/${id}`, postObj)
+
+      .then((res) => {
+        // console.log("Data has been saved successfully. ", postObj);
+        // console.log("response from backend : ", res.postObj);
+        toast.success("Form sumbitted successfully !", {
+          autoClose: 1900,
+        });
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
+      })
+      .catch((err) => {
+        // console.log("Data has NOT saved. ", postObj);
+        // console.log(
+        //   "response from backend after Failed to post request. ",
+        //   err.response
+        // );
+        toast.error("Failed to save the data !", {
+          autoClose: 3000,
+        });
+        
+      });
+
+      toast.success("Form sumbitted successfully !", {
+        autoClose: 1900,
+      });
+      setTimeout(() => {
+        history.push("/admin");
+      }, 2000);
+
   }
 
   function SubmitButton() {
@@ -556,7 +648,7 @@ function EditViewForm() {
                         setProjectNameByIT(e.target.value);
                       }}
                       value={projectNameByIT}
-                      autoFocus
+                      
                     />
                   </Form.Group>
 
@@ -567,6 +659,7 @@ function EditViewForm() {
                         setSecurityMeasure(e.target.value);
                       }}
                       value={securityMeasure}
+                      autoFocus
                     />
                   </Form.Group>
 
