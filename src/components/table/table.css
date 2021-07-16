@@ -236,6 +236,7 @@ table th, tfoot td {
 .tableFixHead thead th { 
   position: sticky; 
   top: 0; 
+  z-index: 1;
 }
 .table-pagination .pageNum:focus-visible{
   outline: none !important;
