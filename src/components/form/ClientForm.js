@@ -87,24 +87,24 @@ function ClientForm() {
     ClientEmailProvidedSecond: "outline-info",
   });
 
-  // function uploadFileHandler(e) {
-  //   axios
-  //     // .post(`http://localhost:5000/clientInfo/multiple/`, data)
-  //     .post("http://httpbin.org/anything", data)
-  //     .then((res) => {
-  //       console.log("Data has been . ", res);
-  //       console.log("File saved successfully : ", res.data);
-  //       toast.success("File Saved !", {
-  //         autoClose: 900,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log("Failed to save Files : ", err.response);
-  //       toast.error("Failed to save FIles !", {
-  //         autoClose: 900,
-  //       });
-  //     });
-  // }
+  function uploadFileHandler(e) {
+    axios
+      .post(`http://localhost:5000/multiple/`, fileData)
+      // .post("http://httpbin.org/anything", data)
+      .then((res) => {
+        console.log("Data has been . ", res);
+        console.log("File saved successfully : ", res.fileData);
+        toast.success("File Saved !", {
+          autoClose: 900,
+        });
+      })
+      .catch((err) => {
+        console.log("Failed to save Files : ", err.response);
+        toast.error("Failed to save FIles !", {
+          autoClose: 900,
+        });
+      });
+  }
 
   function SubmitButton() {
     if (
@@ -424,7 +424,8 @@ function ClientForm() {
               <div style={{ width: "700px" }} className="project-details-form">
                 <h2> Project Details </h2>
                 {prevStatus === "Pending" && prevStatus !== "deleted" ? (
-                  <Form>
+                  // <Form action="/multiple" method="POST" enctype = "multipart/form-data">
+                  <Form action="/multiple">
                     <Form.Group style={{ marginBottom: "40px" }}>
                       <Form.Label>Name of the project or client</Form.Label>
                       <Form.Control
@@ -439,15 +440,16 @@ function ClientForm() {
                         <br></br>
                         <input
                           type="file"
-                          name="file"
+                          name="fileName"
                           id="file"
                           htmlFor="file"
                           accept="*.*"
                           onChange={(e) => {
                             setFileData(e.target.files[0]);
+                            console.log("clicked")
                           }}
                         />
-                        {/* <button onClick={uploadFileHandler}> Upload files</button> */}
+                        <button onClick={uploadFileHandler}> Upload files</button>
                       </div>
                     </Form.Group>
 
