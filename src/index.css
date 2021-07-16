@@ -522,6 +522,9 @@ body {
     border-color: #209EC5;
     background-color: rgba(32, 158, 197, 0.05) !important;
 }
+select.form-control:focus, select.form-control:active, select.form-control:-internal-autofill-selected{
+    background-color: transparent !important;
+}
 .project-details-form .btn-outline-info, .project-details-form .btn-outline-info:hover{
     color: #626364;
     background: #ECEDF1;
@@ -648,6 +651,7 @@ body {
 }
 .ReactModal__Overlay {
     background: rgba(83, 83, 83, 0.3) !important;
+    z-index: 2;
 }
 .ReactModalPortal ._modal-close{
     background: transparent !important;
@@ -702,15 +706,19 @@ body {
 }
 .header_nav .navbar-nav .MuiPaper-root{
     background-color: #fff !important;
-    border-radius: 4px !important;
+    border-radius: 0 !important;
     box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.2) !important;
     z-index: 1 !important;
+}
+.nav-item div{
+    top: 6px !important;
+    left: -5px !important;
 }
 .header_nav .navbar-nav .MuiPaper-root::before{
     content: "";
     position: absolute;
     top: -41%;
-    left: -17%;
+    left: 0;
     margin-left: 43px;
     border-width: 10px;
     border-bottom: 10px solid #f8f8fb;

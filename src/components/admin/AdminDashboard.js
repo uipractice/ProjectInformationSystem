@@ -8,6 +8,7 @@ import IconSubmitted from "../../assets/images/Icon_submitted.svg";
 import IconPending from "../../assets/images/Icon_Pending.svg";
 import IconApproved from "../../assets/images/Icon_approved.svg";
 import IconProjects from "../../assets/images/Icon_Projects.svg";
+import IconActive from "../../assets/images/active.svg";
 import NavBar from "./NavBar";
 
 export default function AdminDashboard() {
@@ -69,8 +70,8 @@ export default function AdminDashboard() {
               />
               <RowHeaderValue
                 projectStatus="Active"
-                iconImg={IconApproved}
-                className="completCount"
+                iconImg={IconActive}
+                className="activeCount"
                 count={activeCount}
               />
 
