@@ -23,7 +23,14 @@
     line-height: 38px;
 
 }
-
+.activeCount{
+    font-family: Lato;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 32px;
+    line-height: 38px;
+    color: #00C6E1;
+}
 .completCount {
     color: #13BC86;
     font-family: Lato;

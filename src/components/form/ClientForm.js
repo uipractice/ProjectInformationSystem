@@ -127,8 +127,8 @@ function ClientForm() {
           className="submit-btn"
           onClick={(e) => handleSubmitForm(e)}
           style={{
-            marginTop: "50px",
-            marginBottom: "40px",
+            marginTop: "20px",
+            marginBottom: "20px",
             width: "130px",
           }}
         >
@@ -143,8 +143,8 @@ function ClientForm() {
           variant="primary"
           className="submit-btn"
           style={{
-            marginTop: "50px",
-            marginBottom: "40px",
+            marginTop: "20px",
+            marginBottom: "20px",
             width: "130px",
           }}
         >
@@ -837,8 +837,8 @@ function ClientForm() {
                       onClick={() => window.location.reload()}
                       className="reshare"
                       style={{
-                        marginTop: "50px",
-                        marginBottom: "40px",
+                        marginTop: "20px",
+                        marginBottom: "20px",
                         marginRight: "15px",
                         width: "130px",
                       }}
