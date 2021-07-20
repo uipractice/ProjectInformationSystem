@@ -89,7 +89,9 @@ const NavBar = ({validate}) => {
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      <MenuItem className="myprofile" onClick={handleLogout}>My profile</MenuItem>
+                      <MenuItem className="feedback" onClick={handleLogout}>Provide Feedback</MenuItem>
+                        <MenuItem className="logout" onClick={handleLogout}>Logout</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
