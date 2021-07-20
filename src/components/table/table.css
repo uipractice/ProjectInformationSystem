@@ -238,6 +238,12 @@ table th, tfoot td {
   top: 0; 
   z-index: 1;
 }
+.tableFixHead thead th:first-child, .tableFixHead thead th:last-child{
+  text-align: center;
+}
+.tableFixHead tr td:first-child, .tableFixHead tr td:last-child{
+  text-align: center !important;
+}
 .table-pagination .pageNum:focus-visible{
   outline: none !important;
 }
