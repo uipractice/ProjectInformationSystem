@@ -498,19 +498,34 @@ body {
     scrollbar-width: thin;
     scrollbar-color: #afaeae #e3e1e1;
 }
-.project-details-form form::-webkit-scrollbar {
+.project-details-form form::-webkit-scrollbar{
     width: 5px;
 }
-.project-details-form form::-webkit-scrollbar-track {
+.project-details-form form::-webkit-scrollbar-track{
     background: #e3e1e1;
     border-radius: 15px;
 }
-.project-details-form form::-webkit-scrollbar-thumb {
+.project-details-form form::-webkit-scrollbar-thumb{
     background: #afaeae;
     border-radius: 15px;
     height: 5%;
 }
-.project-details-form form::-webkit-scrollbar-thumb:hover {
+.project-details-form form::-webkit-scrollbar-thumb:hover{
+    background: #afaeae;
+}
+.project-details-form form::-moz-scrollbar{
+    width: 5px;
+}
+.project-details-form form::-moz-scrollbar-track{
+    background: #e3e1e1;
+    border-radius: 15px;
+}
+.project-details-form form::-moz-scrollbar-thumb{
+    background: #afaeae;
+    border-radius: 15px;
+    height: 5%;
+}
+.project-details-form form::-moz-scrollbar-thumb:hover{
     background: #afaeae;
 }
 .project-details-form form .form-group{
