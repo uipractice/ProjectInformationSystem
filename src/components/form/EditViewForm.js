@@ -508,25 +508,33 @@ function EditViewForm() {
 
 
   return (
+    
     <div>
 
       <NavBar validate={true}/>
 
       <div className="custom-scroll">
+        
         <Container>
+          
           <Row>
+            
             <Col md={{ span: 8, offset: 2 }}>
+              
               <div style={{ width: "700px" }} className="project-details-form">
+                
                 <h2> Project Details </h2>
                 <button
-                className="modal-closeBtn"
-                onClick={() => history.push("/admin")}
-              >
-                <svg className="_modal-close-icon" viewBox="0 0 40 40">
-                  <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
-                </svg>
-              </button>
+                  className="modal-closeBtn"
+                  onClick={() => history.push("/admin")}
+                >
+                  <svg className="_modal-close-icon" viewBox="0 0 40 40">
+                    <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                  </svg>
+                </button>
+                
                 <Form>
+
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Name of the project or client</Form.Label>
                     <Form.Control
@@ -941,15 +949,25 @@ function EditViewForm() {
                     {" "}
                     Reset
                   </Button>
+
                   <SubmitButton />
+
                 </Form>
+
               </div>
+
             </Col>
+
           </Row>
+
         </Container>
+
       </div>
+
       <Footer />
+
     </div>
+
   );
 }
 

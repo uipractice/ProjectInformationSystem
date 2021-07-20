@@ -50,9 +50,9 @@ function Form({ closeModal }) {
 
   function ValidateEmail(inputText) {
     
-    // const mailformat = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    const mailformat = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     
-    const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com$/;
+    // const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com$/;
 
     if (inputText.match(mailformat)) {
       return true;
