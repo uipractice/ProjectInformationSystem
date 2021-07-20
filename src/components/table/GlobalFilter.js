@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useAsyncDebounce } from 'react-table'
-import searchIcon from "../../assets/images/search.svg";
+// import searchIcon from "../../assets/images/search.svg";
 
 function GlobalFilter({ filter, setFilter }){
 

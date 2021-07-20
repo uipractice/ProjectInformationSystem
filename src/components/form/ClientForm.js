@@ -29,7 +29,7 @@ function ClientForm() {
       });
   }, [id, prevProjectName, prevStatus]);
 
-  const [fileData, setFileData] = useState();
+  const [fileData, setFileData] = useState("");
 
   const [state, setState] = useState({
     projectName: "",
@@ -87,38 +87,20 @@ function ClientForm() {
     ClientEmailProvidedSecond: "outline-info",
   });
 
-  // function uploadFileHandler(e) {
-  //   axios
-  //     // .post(`http://localhost:5000/clientInfo/multiple/`, data)
-  //     .post("http://httpbin.org/anything", data)
-  //     .then((res) => {
-  //       console.log("Data has been . ", res);
-  //       console.log("File saved successfully : ", res.data);
-  //       toast.success("File Saved !", {
-  //         autoClose: 900,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log("Failed to save Files : ", err.response);
-  //       toast.error("Failed to save FIles !", {
-  //         autoClose: 900,
-  //       });
-  //     });
-  // }
-
   function SubmitButton() {
     if (
-      // state.projectName &&
-      // state.securityMeasure &&
-      // state.informIT &&
-      // state.workStationSelected &&
-      // state.devTypeSelected &&
-      // state.allowedWebsite &&
-      // state.isNDAsigned &&
-      // state.isGDPRcompliance &&
-      // state.isCyberSecConducted &&
-      // state.securityBreach &&
-      // state.isDLPreq &&
+      // 5 === 5
+      state.projectName &&
+      state.securityMeasure &&
+      state.informIT &&
+      state.workStationSelected &&
+      state.devTypeSelected &&
+      state.allowedWebsite &&
+      state.isNDAsigned &&
+      state.isGDPRcompliance &&
+      state.isCyberSecConducted &&
+      state.securityBreach &&
+      state.isDLPreq &&
       state.isClientEmailProvided
     ) {
       return (
@@ -155,9 +137,23 @@ function ClientForm() {
     }
   }
 
+  function uploadFileHandler(e) {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("fileName", fileData);
+    axios
+      .post(`http://localhost:5000/multiple/`, data)
+      .then((res) => {
+        console.log("Data has been . ", res);
+        console.log("File saved successfully : ", res.fileData);
+      })
+      .catch((err) => {
+        console.log("Failed to save Files : ", err.response);
+      });
+  }
+
   function handleSubmitForm(e) {
     e.preventDefault();
-
     const postObj = {
       preProjectNameByIT: prevProjectName,
       securityMeasure: state.securityMeasure,
@@ -177,24 +173,13 @@ function ClientForm() {
       showIsolatedDetails: state.showIsolatedDetails,
       isDLPreq: state.isDLPreq,
       isClientEmailProvided: state.isClientEmailProvided,
-    };
-
-    // const data = new FormData();
-    // data.append("postObj", postObj);
-    // // data.append("fileData", fileData);
+    }; 
 
     axios
       .post(`http://localhost:5000/clientInfo/mailAndUpdate/${id}`, postObj)
-
       .then((res) => {
         console.log("Data has been saved successfully. ", postObj);
         console.log("response from backend : ", res.postObj);
-        toast.success("Form sumbitted successfully !", {
-          autoClose: 1900,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
       })
       .catch((err) => {
         console.log("Data has NOT saved. ", postObj);
@@ -202,11 +187,25 @@ function ClientForm() {
           "response from backend after Failed to post request. ",
           err.response
         );
-        toast.error("Failed to save the data !", {
-          autoClose: 3000,
-        });
+      });
+
+    const formData = new FormData();
+    // data.append("postObj", ...postObj);
+    formData.append("fileName", fileData);
+
+    axios
+      .post(`http://localhost:5000/multiple`, formData)
+      .then((res) => {
+        console.log("Data has been saved successfully. ", formData);
+        console.log("Data has been saved successfully. ", res.response);
+      })
+      .catch((err) => {
+        console.log("Data has NOT saved. ", formData);
+        console.log("Data has NOT saved. ", err.response);
       });
   }
+
+  
 
   function handlePlainText(e) {
     setState({
@@ -412,10 +411,14 @@ function ClientForm() {
     }
   }
 
+  function handleClearFiles(e){
+    // e.preventDefault();
+    setFileData("");
+  }
+
   return (
     <div>
-
-      <NavBar validate= {false}/>
+      <NavBar validate={false} />
 
       <div className="custom-scroll">
         <Container>
@@ -424,31 +427,30 @@ function ClientForm() {
               <div style={{ width: "700px" }} className="project-details-form">
                 <h2> Project Details </h2>
                 {prevStatus === "Pending" && prevStatus !== "deleted" ? (
+                  
                   <Form>
+
                     <Form.Group style={{ marginBottom: "40px" }}>
                       <Form.Label>Name of the project or client</Form.Label>
                       <Form.Control
+                        name="prevProjectName"
                         value={prevProjectName}
                         onChange={(e) => setPrevProjectName(e.target.value)}
                       />
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: "40px" }}>
-                      <div className="flex">
-                        <label htmlFor="files">Choose files to upload </label>{" "}
-                        <br></br>
-                        <input
-                          type="file"
-                          name="file"
-                          id="file"
-                          htmlFor="file"
-                          accept="*.*"
-                          onChange={(e) => {
-                            setFileData(e.target.files[0]);
-                          }}
-                        />
-                        {/* <button onClick={uploadFileHandler}> Upload files</button> */}
-                      </div>
+                      <Form.Label>Choose files to upload </Form.Label>
+                      <br></br>
+                      <input
+                        type="file"
+                        name="fileName"
+                        accept="*.*"
+                        multiple
+                        onChange={(e) => setFileData(e.target.files[0])}
+                      />
+                      <button onClick={handleClearFiles}> Clear Files</button> {" "}
+                      <button onClick={uploadFileHandler}> Upload files</button>
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: "40px" }}>
@@ -845,6 +847,7 @@ function ClientForm() {
                       Reset
                     </Button>
                     <SubmitButton />
+                    {/* <button>Save temp</button> */}
                   </Form>
                 ) : (
                   <div

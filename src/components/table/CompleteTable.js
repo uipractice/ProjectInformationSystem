@@ -7,7 +7,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
-import { Input } from "reactstrap";
 import {
   useTable,
   useSortBy,
@@ -37,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function CompleteTable({ data }) {
+
   const [filteredData, setFilteredData] = useState([]);
 
   const [rowOriginal, setRowOriginal] = useState({});
@@ -44,9 +44,6 @@ function CompleteTable({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const classes = useStyles();
-
-  const [statusFilter, setStatusFilter] = React.useState("Active");
-
 
   useEffect(() => {
     let filterResult = data.filter((row) => row.status !== "Deleted");
@@ -217,7 +214,7 @@ function CompleteTable({ data }) {
     state,
     setGlobalFilter,
   } = useTable(
-    { columns, data: filteredData, initialState: { pageSize: 8 } },
+    { columns, data: filteredData, initialState: { pageSize: 7 } },
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -234,29 +231,15 @@ function CompleteTable({ data }) {
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
           <FormControl className={classes.formControl}>
-            <Input
-              type="select"
-              defaultValue="Active"
-              onChange={(e) => handleSelectedStatus(e.target.value)}
-            >           
-              <option> Active </option>
-              <option> Pending </option>
-              <option> Submitted </option>
-              <option> Approved </option>
-              <option> Deleted </option>
-              <option> All Project </option>
-            </Input>
-          </FormControl>  
-
-
-          {/* <FormControl className={classes.formControl}>
             <Select
-              alue={statusFilter}
-              onChange={(e)=>{handleSelectedStatus(e.target.value)}}
+              defaultValue="Active"
+              onChange={(e) => {
+                handleSelectedStatus(e.target.value);
+              }}
               displayEmpty
               className={classes.selectEmpty}
-              inputProps={{ 'aria-label': 'Without label' }}
-            >             
+              inputProps={{ "aria-label": "Without label" }}
+            >
               <MenuItem value="Active">Active</MenuItem>
               <MenuItem value="Pending">Pending</MenuItem>
               <MenuItem value="Submitted">Submitted</MenuItem>
@@ -264,11 +247,7 @@ function CompleteTable({ data }) {
               <MenuItem value="Deleted">Deleted</MenuItem>
               <MenuItem value="All Project">All Projects</MenuItem>
             </Select>
-          </FormControl> */}
-
-
-
-
+          </FormControl>
         </div>
       </div>
 
@@ -347,7 +326,7 @@ function CompleteTable({ data }) {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th {...column.getHeaderProps(column.getSortByToggleProps({ title: undefined }))}>
                     {column.render("Header")}
                     <span>
                       {column.isSorted
@@ -399,7 +378,7 @@ function CompleteTable({ data }) {
           onChange={(e) => setPageSize(Number(e.target.value))}
           className="pageNum"
         >
-          {[8, 15, 25, 50, 100].map((pageSize) => (
+          {[7, 15, 25, 50, 100].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>
