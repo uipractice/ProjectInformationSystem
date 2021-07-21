@@ -89,18 +89,17 @@ function ClientForm() {
 
   function SubmitButton() {
     if (
-      // 5 === 5
-      state.projectName &&
-      state.securityMeasure &&
-      state.informIT &&
-      state.workStationSelected &&
-      state.devTypeSelected &&
-      state.allowedWebsite &&
-      state.isNDAsigned &&
-      state.isGDPRcompliance &&
-      state.isCyberSecConducted &&
-      state.securityBreach &&
-      state.isDLPreq &&
+      // state.projectName &&
+      // state.securityMeasure &&
+      // state.informIT &&
+      // state.workStationSelected &&
+      // state.devTypeSelected &&
+      // state.allowedWebsite &&
+      // state.isNDAsigned &&
+      // state.isGDPRcompliance &&
+      // state.isCyberSecConducted &&
+      // state.securityBreach &&
+      // state.isDLPreq &&
       state.isClientEmailProvided
     ) {
       return (
@@ -137,19 +136,10 @@ function ClientForm() {
     }
   }
 
-  function uploadFileHandler(e) {
-    e.preventDefault();
-    const data = new FormData();
-    data.append("fileName", fileData);
-    axios
-      .post(`http://localhost:5000/multiple/`, data)
-      .then((res) => {
-        console.log("Data has been . ", res);
-        console.log("File saved successfully : ", res.fileData);
-      })
-      .catch((err) => {
-        console.log("Failed to save Files : ", err.response);
-      });
+  function handleClearFiles(){
+    setFileData("");
+    document.getElementById('emptyMe').value= null;
+    document.getElementById('emptyMe').value= "";
   }
 
   function handleSubmitForm(e) {
@@ -178,34 +168,27 @@ function ClientForm() {
     axios
       .post(`http://localhost:5000/clientInfo/mailAndUpdate/${id}`, postObj)
       .then((res) => {
-        console.log("Data has been saved successfully. ", postObj);
-        console.log("response from backend : ", res.postObj);
+        console.log("Form saved successfully : ", res.data);
       })
       .catch((err) => {
-        console.log("Data has NOT saved. ", postObj);
-        console.log(
-          "response from backend after Failed to post request. ",
-          err.response
-        );
+        console.log("Failed to Save Form : ", err.response);
       });
 
-    const formData = new FormData();
-    // data.append("postObj", ...postObj);
-    formData.append("fileName", fileData);
-
-    axios
-      .post(`http://localhost:5000/multiple`, formData)
-      .then((res) => {
-        console.log("Data has been saved successfully. ", formData);
-        console.log("Data has been saved successfully. ", res.response);
-      })
-      .catch((err) => {
-        console.log("Data has NOT saved. ", formData);
-        console.log("Data has NOT saved. ", err.response);
-      });
+    if(fileData){
+      const formData = new FormData();
+      formData.append("fileName", fileData);
+      axios
+        .post(`http://localhost:5000/multiple/${id}`, formData)
+        .then((res) => {
+          console.log("Files Uploaded : ", res.data);
+        })
+        .catch((err) => {
+          console.log("Error in Upload : ", err);
+        });
+    }
+  
   }
 
-  
 
   function handlePlainText(e) {
     setState({
@@ -411,10 +394,7 @@ function ClientForm() {
     }
   }
 
-  function handleClearFiles(e){
-    // e.preventDefault();
-    setFileData("");
-  }
+
 
   return (
     <div>
@@ -445,12 +425,13 @@ function ClientForm() {
                       <input
                         type="file"
                         name="fileName"
+                        id="emptyMe"
                         accept="*.*"
                         multiple
                         onChange={(e) => setFileData(e.target.files[0])}
                       />
-                      <button onClick={handleClearFiles}> Clear Files</button> {" "}
-                      <button onClick={uploadFileHandler}> Upload files</button>
+                      <Button onClick={handleClearFiles}> Clear Files</Button> {" "}
+                    
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: "40px" }}>
