@@ -21,7 +21,7 @@ export default function Footer(){
             <div className="footer">
                 <ul>
                     <li><p>Evoke Technologies Pvt Ltd © 2021 All Rights Reserved</p></li>
-                    <li><a href="/#" onClick={handleClickOpen}>Provide Feedback</a></li>
+                    <li><a onClick={handleClickOpen}>Provide Feedback</a></li>
                     <Dialog
                         open={open}
                         onClose={handleClose}

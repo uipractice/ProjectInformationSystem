@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "../admin/NavBar";
 
-
 toast.configure();
 
 function EditViewForm() {
@@ -506,6 +505,17 @@ function EditViewForm() {
     }
   }
 
+  function handleDownload(){
+    axios
+      .get(`http://localhost:5000/download`)
+      .then((res) => {
+        console.log("Get the data: ", res);
+        window.open('/download');
+      })
+      .catch((err) => {
+        console.log("Failed to get the data: ", err.response);
+      });
+  }
 
   return (
     
@@ -534,6 +544,13 @@ function EditViewForm() {
                 </button>
                 
                 <Form>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>Download the attachments </Form.Label>
+                    <br></br>
+                    <Button onClick={handleDownload}>Download files</Button>
+                    
+                  </Form.Group>
 
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Name of the project or client</Form.Label>
