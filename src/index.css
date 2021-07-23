@@ -622,6 +622,7 @@ select.form-control:focus, select.form-control:active, select.form-control:-inte
 }
 .filter-row .MuiFormControl-root, .filter-row .MuiInput-root{
     margin: 0;
+    height: 44px;
 }
 .filter-row .MuiFormControl-root{
     margin-left: 15px;
@@ -826,7 +827,7 @@ select.form-control:focus, select.form-control:active, select.form-control:-inte
 }
 .nav-item>div{
     top: 10px !important;
-    left: 0 !important;
+    left:-58px !important;
 }
 .header_nav .navbar-nav .MuiPaper-root::before{
     content: "";

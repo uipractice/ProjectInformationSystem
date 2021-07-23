@@ -21,7 +21,7 @@ export default function Footer(){
             <div className="footer">
                 <ul>
                     <li><p>Evoke Technologies Pvt Ltd © 2021 All Rights Reserved</p></li>
-                    <li><a onClick={handleClickOpen}>Provide Feedback</a></li>
+                    <li><a href="#/" onClick={handleClickOpen}>Provide Feedback</a></li>
                     <Dialog
                         open={open}
                         onClose={handleClose}
@@ -38,7 +38,7 @@ export default function Footer(){
                         <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             <h3>Hello Friends</h3>
-                            <p>Your review will help us go give you the better experience</p>
+                            <span>Your review will help us go give you the better experience</span>
                             <textarea
                             type="text"
                             autoFocus={true}
