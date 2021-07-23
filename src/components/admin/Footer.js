@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -21,7 +21,7 @@ export default function Footer(){
             <div className="footer">
                 <ul>
                     <li><p>Evoke Technologies Pvt Ltd © 2021 All Rights Reserved</p></li>
-                    <li><a href="/#" onClick={handleClickOpen}>Provide Feedback</a></li>
+                    <li><a href="#" onClick={handleClickOpen}>Provide Feedback</a></li>
                     <Dialog
                         open={open}
                         onClose={handleClose}
