@@ -820,7 +820,7 @@ select.form-control:focus, select.form-control:active, select.form-control:-inte
     background-position: -25px;
 }
 .header_nav .navbar-nav .MuiPaper-root li.feedback{
-    background: url('./assets/images/news_icon.svg') no-repeat left #fff;
+    background: url('./assets/images/feedback.svg') no-repeat left #fff;
     background-size: 13px;
     background-origin: content-box;
     background-position: -25px;
