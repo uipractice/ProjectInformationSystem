@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "../admin/NavBar";
 
+import download from 'js-file-download';
+
 toast.configure();
 
 function EditViewForm() {
@@ -505,17 +507,23 @@ function EditViewForm() {
     }
   }
 
-  function handleDownload(){
-    axios
-      .get(`http://localhost:5000/download`)
-      .then((res) => {
-        console.log("Get the data: ", res);
-        window.open('/download');
-      })
-      .catch((err) => {
-        console.log("Failed to get the data: ", err.response);
-      });
-  }
+  
+  // function download(url: "string", filename: "string") {
+  //   axios.get(url, {
+  //     responseType: 'blob',
+  //   }).then(res => {
+  //     download(res.data, filename);
+  //   });
+  // }
+
+  
+  const downloadFile = (habbits) => {
+      axios.get("http://localhost:5000/clientInfo/getfile")
+        .then(resp => {
+               download(resp.data, habbits.pdf);
+        });
+   }
+
 
   return (
     
@@ -548,7 +556,7 @@ function EditViewForm() {
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Download the attachments </Form.Label>
                     <br></br>
-                    <Button onClick={handleDownload}>Download files</Button>
+                    <Button onClick={downloadFile}>Download files</Button>
                     
                   </Form.Group>
 
