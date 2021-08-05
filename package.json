@@ -12,7 +12,9 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "date-fns": "^2.22.1",
+    "env-cmd": "^10.1.0",
     "focus-trap-react": "^8.5.1",
+    "js-file-download": "^0.4.12",
     "material-table": "^1.69.3",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
@@ -27,8 +29,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -e local react-scripts start",
+    "start-prod": "env-cmd -e prod react-scripts start",
+    
+    "build-prod": "env-cmd -e prod react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "../admin/NavBar";
 
+import download from 'js-file-download';
 
 toast.configure();
 
@@ -506,6 +507,23 @@ function EditViewForm() {
     }
   }
 
+  
+  // function download(url: "string", filename: "string") {
+  //   axios.get(url, {
+  //     responseType: 'blob',
+  //   }).then(res => {
+  //     download(res.data, filename);
+  //   });
+  // }
+
+  
+  const downloadFile = (habbits) => {
+      axios.get("http://localhost:5000/clientInfo/getfile")
+        .then(resp => {
+               download(resp.data, habbits.pdf);
+        });
+   }
+
 
   return (
     
@@ -534,6 +552,13 @@ function EditViewForm() {
                 </button>
                 
                 <Form>
+
+                  <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Label>Download the attachments </Form.Label>
+                    <br></br>
+                    <Button onClick={downloadFile}>Download files</Button>
+                    
+                  </Form.Group>
 
                   <Form.Group style={{ marginBottom: "40px" }}>
                     <Form.Label>Name of the project or client</Form.Label>

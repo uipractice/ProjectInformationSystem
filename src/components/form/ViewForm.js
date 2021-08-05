@@ -12,6 +12,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "../admin/NavBar";
+import jsFileDown from "js-file-download";
 toast.configure();
 
 
@@ -141,6 +142,21 @@ function ViewForm() {
     // }, 2000);
   };
 
+  const handleDownload = () => {
+    // axios("http://localhost:5000/clientInfo/download/" + id)
+    const file = axios("http://localhost:5000/clientInfo/download/", {
+      responseType: "blob"
+    })
+      .then((res) => {
+        console.log("res data value is : ", res.data);
+        jsFileDown(file, res.data.fileName ); 
+        // jsFileDown(res.data, name); 
+      })
+      .catch((err) => console.log(err.response))
+
+   
+  }
+
   const handleReshare = (e) => {
     e.preventDefault();
     totalState.status = "Pending";
@@ -180,8 +196,8 @@ function ViewForm() {
 
 
   return (
-    <div >
-      <NavBar/>
+    <div>
+      <NavBar />
       <div>
         <Modal
           isOpen={isRestoreModalOpen}
@@ -202,15 +218,18 @@ function ViewForm() {
             </svg>
           </button>
           <form>
-            <p >Please enter why you want to restore the record.</p>
+            <p>Please enter why you want to restore the record.</p>
             <textarea
               type="text"
               autoFocus={true}
-              style={{ color: "black", marginTop: "20px", marginBottom: "60px" }}
+              style={{
+                color: "black",
+                marginTop: "20px",
+                marginBottom: "60px",
+              }}
               onChange={restoreReasonInput}
               name="restoreReason"
             />
-            
 
             <div className="row">
               <div className="col-md-6 text-right padding0">
@@ -264,15 +283,19 @@ function ViewForm() {
             </svg>
           </button>
           <form>
-            <p >Please enter the which data is incompleted.</p>
+            <p>Please enter the which data is incompleted.</p>
             <textarea
               type="text"
               autoFocus={true}
-              style={{ color: "black", marginTop: "20px", marginBottom: "60px" }}
+              style={{
+                color: "black",
+                marginTop: "20px",
+                marginBottom: "60px",
+              }}
               onChange={reshareReasonInput}
               name="reshareReason"
             />
-            
+
             <div className="row">
               <div className="col-md-6 text-right padding0">
                 <button
@@ -306,304 +329,311 @@ function ViewForm() {
         </Modal>
       </div>
       <div className="custom-scroll">
-      <Container>
-        <Row>
-          <Col md={{ span: 8, offset: 2 }}>
-            <div
-              style={{ width: "700px" }}
-              className="project-details-form formView"
-            >
-              <h2> Project Details </h2>
-
-              <button 
-                className="edit-button"
-                onClick={() => {
-                  handleEditViewForm();
-                }}
-                >
-                <img src={editIcon} alt="edit icon"/>
-              </button>
-              <button
-                className="modal-closeBtn"
-                onClick={() => history.push("/admin")}
+        <Container>
+          <Row>
+            <Col md={{ span: 8, offset: 2 }}>
+              <div
+                style={{ width: "700px" }}
+                className="project-details-form formView"
               >
-                <svg className="_modal-close-icon" viewBox="0 0 40 40">
-                  <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
-                </svg>
-              </button>
+                <h2> Project Details </h2>
 
-              {status !== "Pending" ? (
-                <Form>
-                  <Form.Group style={{ marginBottom: "0" }}>
-                    {totalState.deleteReason && (
-                      <div>
-                        <Form.Label style={{ color: "red", marginTop: "20px" }}>
-                          This project has been Deleted bacause
-                        </Form.Label>
+                <button
+                  className="edit-button"
+                  onClick={() => {
+                    handleEditViewForm();
+                  }}
+                >
+                  <img src={editIcon} alt="edit icon" />
+                </button>
+                <button
+                  className="modal-closeBtn"
+                  onClick={() => history.push("/admin")}
+                >
+                  <svg className="_modal-close-icon" viewBox="0 0 40 40">
+                    <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                  </svg>
+                </button>
 
-                        <Form.Control
-                          type="text"
-                          value={deleteReason}
-                          readOnly
+                {status !== "Pending" ? (
+                  <Form>
+                    <Form.Group style={{ marginBottom: "0" }}>
+                      {totalState.deleteReason && (
+                        <div>
+                          <Form.Label
+                            style={{ color: "red", marginTop: "20px" }}
+                          >
+                            This project has been Deleted bacause
+                          </Form.Label>
 
-                        />
-                      </div>
-                    )}
+                          <Form.Control
+                            type="text"
+                            value={deleteReason}
+                            readOnly
+                          />
+                        </div>
+                      )}
 
-                    {totalState.restoreReason && (
-                      <div>
-                        <Form.Label style={{ color: "blue", marginTop: "40px" }}>
-                          This project has been Restored back bacause
-                        </Form.Label>
+                      {totalState.restoreReason && (
+                        <div>
+                          <Form.Label
+                            style={{ color: "blue", marginTop: "40px" }}
+                          >
+                            This project has been Restored back bacause
+                          </Form.Label>
 
-                        <Form.Control
-                          type="text"
-                          value={totalState.restoreReason}
-                          readOnly
-                        />
-                      </div>
-                    )}
-                  </Form.Group>
+                          <Form.Control
+                            type="text"
+                            value={totalState.restoreReason}
+                            readOnly
+                          />
+                        </div>
+                      )}
+                    </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>Name of the project or client</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={totalState.projectNameByIT}
-                      readOnly
-                    />
-                  </Form.Group>
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>Name of the project or client</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={totalState.projectNameByIT}
+                        readOnly
+                      />
+                    </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>Security measures from client side</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={totalState.securityMeasure}
-                      readOnly
-                    />
-                  </Form.Group>
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label> Download the Files attached </Form.Label>
+                      <Button onClick={handleDownload}> Download</Button>
+                    </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      Information to IT at the time of project kick-off
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={totalState.informIT}
-                      readOnly
-                    />
-                  </Form.Group>
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        Security measures from client side
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={totalState.securityMeasure}
+                        readOnly
+                      />
+                    </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      Work stations type provided in Evoke{" "}
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        Information to IT at the time of project kick-off
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={totalState.informIT}
+                        readOnly
+                      />
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        Work stations type provided in Evoke{" "}
+                      </Form.Label>
+                      <Form.Group style={{ marginBottom: "30px" }}>
+                        <Button
+                          size="sm"
+                          style={{ width: "100px" }}
+                          ref={inputRef}
+                        >
+                          {workStationSelected}
+                        </Button>
+                      </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label> Development type </Form.Label>
+                      <Form.Group style={{ marginBottom: "30px" }}>
+                        <Button
+                          size="sm"
+                          style={{ width: "auto" }}
+                          className="dev-btn"
+                        >
+                          {devTypeSelected}
+                        </Button>
+                      </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>Websites need to be allowed</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={allowedWebsite}
+                        readOnly={true}
+                      />
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        NDA/DPA (Data Privacy Agreement) signed ?{" "}
+                      </Form.Label>
+                      <Form.Group style={{ marginBottom: "30px" }}>
+                        <Button size="sm" style={{ width: "80px" }}>
+                          {isNDAsigned}
+                        </Button>
+                      </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        Did all the project related documents (security, GDPR
+                        complaiance and MSA) are collected from client ?{" "}
+                      </Form.Label>
+                      <Form.Group style={{ marginBottom: "30px" }}>
+                        <Button size="sm" style={{ width: "80px" }}>
+                          {isGDPRcompliance}
+                        </Button>
+                      </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        Cyber security induction meeting conducted with client
+                        as well as in house (importance of data security to
+                        followed by all users) ?{" "}
+                      </Form.Label>
+                      <Form.Group style={{ marginBottom: "30px" }}>
+                        <Button size="sm" style={{ width: "80px" }}>
+                          {isCyberSecConducted}
+                        </Button>
+                      </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        Any project risks identified in the course of interims
+                        of security breach or calamities ?
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={securityBreach}
+                        readOnly={true}
+                      />
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        Insurance coverage in case of disater issues ?{" "}
+                      </Form.Label>
+                      <Form.Group style={{ marginBottom: "30px" }}>
+                        <Button
+                          size="sm"
+                          style={{
+                            width: "80px",
+                            marginBottom: "20px",
+                          }}
+                        >
+                          {isDisasterInsuCovered}
+                        </Button>
+
+                        {showInsuranceDetails === "true" ? (
+                          <div>
+                            <Form.Text>
+                              {" "}
+                              Details for insurance company coverage terms and
+                              insurance company spoc
+                            </Form.Text>
+                            <Form.Control
+                              type="text"
+                              value={disasterDetails}
+                              readOnly={true}
+                            />
+                          </div>
+                        ) : null}
+                      </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        {" "}
+                        Does client need any isolated environment requirement ?{" "}
+                      </Form.Label>
+                      <Form.Group style={{ marginBottom: "30px" }}>
+                        <Button
+                          size="sm"
+                          style={{ width: "80px", marginBottom: "20px" }}
+                        >
+                          {isIsolatedEnvReq}
+                        </Button>
+
+                        {showIsolatedDetails === "true" ? (
+                          <div>
+                            <Form.Text>
+                              {" "}
+                              Details of physical isolation of network, physical
+                              isolation for workspace, DLP etc
+                            </Form.Text>
+                            <Form.Control
+                              type="text"
+                              value={isolationDetails}
+                              readOnly={true}
+                            />
+                          </div>
+                        ) : null}
+                      </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "40px" }}>
+                      <Form.Label>
+                        Does client require DLP/Encryption enabled laptops for
+                        their users ?{" "}
+                      </Form.Label>
+                      <Form.Group style={{ marginBottom: "30px" }}>
+                        <Button size="sm" style={{ width: "80px" }}>
+                          {isDLPreq}
+                        </Button>
+                      </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: "0px" }}>
+                      <Form.Label>
+                        Is client providing Email services to user for regular
+                        business communication ?{" "}
+                      </Form.Label>
+                      <Form.Group style={{ marginBottom: "20px" }}>
+                        <Button size="sm" style={{ width: "80px" }}>
+                          {isClientEmailProvided}
+                        </Button>
+                      </Form.Group>
+                    </Form.Group>
+                    {status === "Submitted" ? (
                       <Button
-                        size="sm"
-                        style={{ width: "100px" }}
-                        ref={inputRef}
-                      >
-                        {workStationSelected}
-                      </Button>
-                    </Form.Group>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label> Development type </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button
-                        size="sm"
-                        style={{ width: "auto" }}
-                        className="dev-btn"
-                      >
-                        {devTypeSelected}
-                      </Button>
-                    </Form.Group>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>Websites need to be allowed</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={allowedWebsite}
-                      readOnly={true}
-                    />
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      NDA/DPA (Data Privacy Agreement) signed ?{" "}
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button size="sm" style={{ width: "80px" }}>
-                        {isNDAsigned}
-                      </Button>
-                    </Form.Group>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      Did all the project related documents (security, GDPR
-                      complaiance and MSA) are collected from client ?{" "}
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button size="sm" style={{ width: "80px" }}>
-                        {isGDPRcompliance}
-                      </Button>
-                    </Form.Group>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      Cyber security induction meeting conducted with client as
-                      well as in house (importance of data security to followed
-                      by all users) ?{" "}
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button size="sm" style={{ width: "80px" }}>
-                        {isCyberSecConducted}
-                      </Button>
-                    </Form.Group>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      Any project risks identified in the course of interims of
-                      security breach or calamities ?
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={securityBreach}
-                      readOnly={true}
-                    />
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      Insurance coverage in case of disater issues ?{" "}
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button
-                        size="sm"
+                        onClick={() => {
+                          setIsModalOpen(true);
+                        }}
+                        className="reshare"
                         style={{
-                          width: "80px",
                           marginBottom: "20px",
+                          marginTop: "20px",
+                          marginRight: "15px",
+                          width: "130px",
                         }}
                       >
-                        {isDisasterInsuCovered}
+                        {" "}
+                        Reshare
                       </Button>
+                    ) : null}
 
-                      {showInsuranceDetails === "true" ? (
-                        <div>
-                          <Form.Text>
-                            {" "}
-                            Details for insurance company coverage terms and
-                            insurance company spoc
-                          </Form.Text>
-                          <Form.Control
-                            type="text"
-                            value={disasterDetails}
-                            readOnly={true}
-                          />
-                        </div>
-                      ) : null}
-                    </Form.Group>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      {" "}
-                      Does client need any isolated environment requirement ?{" "}
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    {status === "Submitted" ? (
                       <Button
-                        size="sm"
-                        style={{ width: "80px", marginBottom: "20px" }}
+                        variant="primary"
+                        onClick={() => {
+                          handleApprove();
+                        }}
+                        className="approve"
+                        style={{
+                          marginBottom: "20px",
+                          marginTop: "20px",
+                          marginRight: "15px",
+                          width: "130px",
+                        }}
                       >
-                        {isIsolatedEnvReq}
+                        {" "}
+                        Approve
                       </Button>
+                    ) : null}
 
-                      {showIsolatedDetails === "true" ? (
-                        <div>
-                          <Form.Text>
-                            {" "}
-                            Details of physical isolation of network, physical
-                            isolation for workspace, DLP etc
-                          </Form.Text>
-                          <Form.Control
-                            type="text"
-                            value={isolationDetails}
-                            readOnly={true}
-                          />
-                        </div>
-                      ) : null}
-                    </Form.Group>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "40px" }}>
-                    <Form.Label>
-                      Does client require DLP/Encryption enabled laptops for
-                      their users ?{" "}
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
-                      <Button size="sm" style={{ width: "80px" }}>
-                        {isDLPreq}
-                      </Button>
-                    </Form.Group>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: "0px" }}>
-                    <Form.Label>
-                      Is client providing Email services to user for regular
-                      business communication ?{" "}
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "20px" }}>
-                      <Button size="sm" style={{ width: "80px" }}>
-                        {isClientEmailProvided}
-                      </Button>
-                    </Form.Group>
-                  </Form.Group>
-                  {status === "Submitted" ? (
-                    <Button
-                      onClick={() => {
-                        
-                        setIsModalOpen(true);
-
-                      }}
-                      className="reshare"
-                      style={{
-                        marginBottom: "20px",
-                        marginTop: "20px",
-                        marginRight: "15px",
-                        width: "130px",
-                      }}
-                    >
-                      {" "}
-                      Reshare
-                    </Button>
-                  ) : null}
-
-                  {status === "Submitted" ? (
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        handleApprove();
-                      }}
-                      className="approve"
-                      style={{
-                        marginBottom: "20px",
-                        marginTop: "20px",
-                        marginRight: "15px",
-                        width: "130px",
-                      }}
-                    >
-                      {" "}
-                      Approve
-                    </Button>
-                  ) : null}
-
-                
                     {/* <Button
                       variant="primary"
                       onClick={() => {
@@ -619,17 +649,74 @@ function ViewForm() {
                     >
                       Edit
                     </Button> */}
-                
 
+                    {status === "Deleted" ? (
+                      <Button
+                        className="reshare"
+                        onClick={() => history.push("/admin")}
+                        ref={inputRef}
+                        style={{
+                          marginBottom: "20px",
+                          marginTop: "20px",
+                          marginRight: "15px",
+                          width: "130px",
+                        }}
+                      >
+                        {" "}
+                        Close
+                      </Button>
+                    ) : null}
 
-                  {status === "Deleted" ? (
+                    {status === "Deleted" ? (
+                      <Button
+                        className="approve"
+                        onClick={() => setRestoreIsModalOpen(true)}
+                        style={{
+                          marginBottom: "20px",
+                          marginTop: "20px",
+                          width: "130px",
+                        }}
+                      >
+                        {" "}
+                        Restore
+                      </Button>
+                    ) : null}
+
+                    {status === "Approved" ? (
+                      <Button
+                        className="reshare"
+                        onClick={() => history.push("/admin")}
+                        ref={inputRef}
+                        style={{
+                          marginBottom: "20px",
+                          marginTop: "20px",
+                          marginRight: "15px",
+                          width: "130px",
+                        }}
+                      >
+                        {" "}
+                        Close
+                      </Button>
+                    ) : null}
+                  </Form>
+                ) : (
+                  <span>
+                    <Form.Group style={{ marginTop: "120px" }}>
+                      <Form.Label>
+                        The project details has not been Submitted by the{" "}
+                        <b> {projectManager} </b> yet. <br />
+                        <br />
+                        Would you like to send a gentel reminder?
+                      </Form.Label>
+                    </Form.Group>
+
                     <Button
                       className="reshare"
                       onClick={() => history.push("/admin")}
                       ref={inputRef}
                       style={{
-                        marginBottom: "20px",
-                        marginTop: "20px",
+                        marginBottom: "90px",
+                        marginTop: "80px",
                         marginRight: "15px",
                         width: "130px",
                       }}
@@ -637,94 +724,33 @@ function ViewForm() {
                       {" "}
                       Close
                     </Button>
-                  ) : null}
 
-                  {status === "Deleted" ? (
-                    <Button
-                      className="approve"
-                      onClick={() => setRestoreIsModalOpen(true)}
-                      style={{
-                        marginBottom: "20px",
-                        marginTop: "20px",
-                        width: "130px",
-                      }}
-                    >
-                      {" "}
-                      Restore
-                    </Button>
-                  ) : null}
-
-                  {status === "Approved" ? (
                     <Button
                       className="reshare"
-                      onClick={() => history.push("/admin")}
                       ref={inputRef}
                       style={{
-                        marginBottom: "20px",
-                        marginTop: "20px",
+                        marginBottom: "90px",
+                        marginTop: "80px",
                         marginRight: "15px",
                         width: "130px",
                       }}
+                      onClick={() => {
+                        handleReminder();
+                      }}
                     >
                       {" "}
-                      Close
+                      Reminder
                     </Button>
-                  ) : null}
-                </Form>
-              ) : (
-                <span>
-                  <Form.Group style={{ marginTop: "120px" }}>
-                    <Form.Label>
-                      The project details has not been Submitted by the{" "}
-                      <b> {projectManager} </b> yet. <br />
-                      <br />
-                      Would you like to send a gentel reminder?
-                    </Form.Label>
-                  </Form.Group>
+                  </span>
+                )}
 
-                  <Button
-                    className="reshare"
-                    onClick={() => history.push("/admin")}
-                    ref={inputRef}
-                    style={{
-                      marginBottom: "90px",
-                      marginTop: "80px",
-                      marginRight: "15px",
-                      width: "130px",
-                    }}
-                  >
-                    {" "}
-                    Close
-                  </Button>
-
-                  <Button
-                    className="reshare"
-                    ref={inputRef}
-                    style={{
-                      marginBottom: "90px",
-                      marginTop: "80px",
-                      marginRight: "15px",
-                      width: "130px",
-                    }}
-                    onClick={() => {
-                      handleReminder();
-                    }}
-                  >
-                    {" "}
-                    Reminder
-                  </Button>
-                </span>
-              )}
-
-              
-
-              {/* {status === "Hidden" ? (
+                {/* {status === "Hidden" ? (
                 <input ref={inputRef} type="text" />
               ) : null} */}
-            </div>
-          </Col>
-        </Row>
-      </Container>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
       <Footer />
     </div>
