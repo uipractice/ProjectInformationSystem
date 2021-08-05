@@ -77,7 +77,7 @@ function CompleteTable({ data }) {
     rowOriginal.status = "Deleted";
     const id = rowOriginal._id;
     axios
-      .post("http://localhost:5000/clientInfo/deleteStatus/" + id, rowOriginal)
+      .post(`${process.env.REACT_APP_BASE_API_ROUTE}/deleteStatus/` + id, rowOriginal)
       .then((res) => {
         toast.warn("Record has been marked DELETED !", {
           autoClose: 2900,

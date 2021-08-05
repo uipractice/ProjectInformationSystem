@@ -645,11 +645,8 @@ select.form-control:focus, select.form-control:active, select.form-control:-inte
 .filter-row .MuiInput-underline:before, .MuiInput-underline:hover:not(.Mui-disabled):before, .MuiInput-underline:after{
     border-bottom: 0 !important;
 }
-#menu- .MuiPaper-root{
+/* .MuiPaper-root{
     top:290px !important;
-}
-/* .feedback-modal .MuiPaper-root{
-
 } */
 .feedback-close{
     position: absolute !important;
