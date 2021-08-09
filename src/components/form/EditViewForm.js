@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import axios from "axios";
-import { useParams, useHistory  } from "react-router-dom";
-import Footer from "../admin/Footer";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import NavBar from "../admin/NavBar";
+import React, { useState, useEffect } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import axios from 'axios';
+import { useParams, useHistory } from 'react-router-dom';
+import Footer from '../admin/Footer';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import NavBar from '../admin/NavBar';
 
 import download from 'js-file-download';
+import { getApiUrl } from '../utils/helper';
 
 toast.configure();
 
@@ -22,63 +23,65 @@ function EditViewForm() {
 
   const history = useHistory();
 
-  const [status, setStatus] = useState("");
-  const [projectNameByIT, setProjectNameByIT] = useState("");
-  const [securityMeasure, setSecurityMeasure] = useState("");
-  const [informIT, setInformIT] = useState("");
-  const [securityBreach, setSecurityBreach] = useState("");
-  const [allowedWebsite, setAllowedWebsite] = useState("");
-  const [disasterDetails, setDisasterDetails] = useState("");
-  const [isolationDetails, setIsolationDetails] = useState("");
+  const [status, setStatus] = useState('');
+  const [projectNameByIT, setProjectNameByIT] = useState('');
+  const [securityMeasure, setSecurityMeasure] = useState('');
+  const [informIT, setInformIT] = useState('');
+  const [securityBreach, setSecurityBreach] = useState('');
+  const [allowedWebsite, setAllowedWebsite] = useState('');
+  const [disasterDetails, setDisasterDetails] = useState('');
+  const [isolationDetails, setIsolationDetails] = useState('');
 
-  const [isNDAsigned, setIsNDAsigned] = useState("");
-  const [NDAsigned, setNDAsigned] = useState(""); //REPLACE ORIGINAL VALUE WTTH THIS VALUE FROM BACKEND. CREATE EDIT API.
-  const [NDAsignedFirst, setNDAsignedFirst] = useState("outline-info");
-  const [NDAsignedSecond, setNDAsignedSecond] = useState("outline-info");
+  const [isNDAsigned, setIsNDAsigned] = useState('');
+  const [NDAsigned, setNDAsigned] = useState(''); //REPLACE ORIGINAL VALUE WTTH THIS VALUE FROM BACKEND. CREATE EDIT API.
+  const [NDAsignedFirst, setNDAsignedFirst] = useState('outline-info');
+  const [NDAsignedSecond, setNDAsignedSecond] = useState('outline-info');
 
-  const [isGDPRcompliance, setIsGDPRcompliance] = useState("");
-  const [GDPRcompliance, setGDPRcompliance] = useState("");
-  const [GDPRcomplianceFirst, setGDPRcomplianceFirst] = useState("");
-  const [GDPRcomplianceSecond, setGDPRcomplianceSecond] = useState("");
+  const [isGDPRcompliance, setIsGDPRcompliance] = useState('');
+  const [GDPRcompliance, setGDPRcompliance] = useState('');
+  const [GDPRcomplianceFirst, setGDPRcomplianceFirst] = useState('');
+  const [GDPRcomplianceSecond, setGDPRcomplianceSecond] = useState('');
 
-  const [isCyberSecConducted, setIsCyberSecConducted] = useState("");
-  const [CyberSecConducted, setCyberSecConducted] = useState("");
-  const [CyberSecConductedFirst, setCyberSecConductedFirst] = useState("");
-  const [CyberSecConductedSecond, setCyberSecConductedSecond] = useState("");
+  const [isCyberSecConducted, setIsCyberSecConducted] = useState('');
+  const [CyberSecConducted, setCyberSecConducted] = useState('');
+  const [CyberSecConductedFirst, setCyberSecConductedFirst] = useState('');
+  const [CyberSecConductedSecond, setCyberSecConductedSecond] = useState('');
 
-  const [isIsolatedEnvReq, setIsIsolatedEnvReq] = useState("");
-  const [IsolatedEnvReq, setIsolatedEnvReq] = useState("");
-  const [IsolatedEnvReqFirst, setIsolatedEnvReqFirst] = useState("");
-  const [IsolatedEnvReqSecond, setIsolatedEnvReqSecond] = useState("");
-  const [showIsolatedDetails, setShowIsolatedDetails] = useState("");
+  const [isIsolatedEnvReq, setIsIsolatedEnvReq] = useState('');
+  const [IsolatedEnvReq, setIsolatedEnvReq] = useState('');
+  const [IsolatedEnvReqFirst, setIsolatedEnvReqFirst] = useState('');
+  const [IsolatedEnvReqSecond, setIsolatedEnvReqSecond] = useState('');
+  const [showIsolatedDetails, setShowIsolatedDetails] = useState('');
 
-  const [isDisasterInsuCovered, setIsDisasterInsuCovered] = useState("");
-  const [DisasterInsuCovered, setDisasterInsuCovered] = useState("");
-  const [DisasterInsuCoveredFirst, setDisasterInsuCoveredFirst] = useState("");
-  const [DisasterInsuCoveredSecond, setDisasterInsuCoveredSecond]=useState("");
-  const [showInsuranceDetails, setShowInsuranceDetails] = useState("");
+  const [isDisasterInsuCovered, setIsDisasterInsuCovered] = useState('');
+  const [DisasterInsuCovered, setDisasterInsuCovered] = useState('');
+  const [DisasterInsuCoveredFirst, setDisasterInsuCoveredFirst] = useState('');
+  const [DisasterInsuCoveredSecond, setDisasterInsuCoveredSecond] =
+    useState('');
+  const [showInsuranceDetails, setShowInsuranceDetails] = useState('');
 
-  const [isDLPreq, setIsDLPreq] = useState("");
-  const [DLPreq, setDLPreq] = useState("");
-  const [DLPreqFirst, setDLPreqFirst] = useState("");
-  const [DLPreqSecond, setDLPreqSecond] = useState("");
+  const [isDLPreq, setIsDLPreq] = useState('');
+  const [DLPreq, setDLPreq] = useState('');
+  const [DLPreqFirst, setDLPreqFirst] = useState('');
+  const [DLPreqSecond, setDLPreqSecond] = useState('');
 
-  const [isClientEmailProvided, setIsClientEmailProvided] = useState("");
-  const [ClientEmailProvided, setClientEmailProvided] = useState("");
-  const [ClientEmailProvidedFirst, setClientEmailProvidedFirst] = useState("");
-  const [ClientEmailProvidedSecond, setClientEmailProvidedSecond]=useState("");
+  const [isClientEmailProvided, setIsClientEmailProvided] = useState('');
+  const [ClientEmailProvided, setClientEmailProvided] = useState('');
+  const [ClientEmailProvidedFirst, setClientEmailProvidedFirst] = useState('');
+  const [ClientEmailProvidedSecond, setClientEmailProvidedSecond] =
+    useState('');
 
-  const [workStationSelected, setWorkStationSelected] = useState("");
-  const [workStationValue, setWorkStationValue] = useState("");
-  const [workStationFirstBtn, setWorkStationFirstBtn] = useState("");
-  const [workStationSecondBtn, setWorkStationSecondBtn] = useState("");
-  const [workStationThirdBtn, setWorkStationThirdBtn] = useState("");
+  const [workStationSelected, setWorkStationSelected] = useState('');
+  const [workStationValue, setWorkStationValue] = useState('');
+  const [workStationFirstBtn, setWorkStationFirstBtn] = useState('');
+  const [workStationSecondBtn, setWorkStationSecondBtn] = useState('');
+  const [workStationThirdBtn, setWorkStationThirdBtn] = useState('');
 
-  const [devTypeSelected, setDevTypeSelected] = useState("");
-  const [devTypeValue, setDevTypeValue] = useState("");
-  const [devTypeFirstBtn, setDevTypeFirstBtn] = useState("");
-  const [devTypeSecondBtn, setDevTypeSecondBtn] = useState("");
-  const [devTypeThirdBtn, setDevTypeThirdBtn] = useState("");
+  const [devTypeSelected, setDevTypeSelected] = useState('');
+  const [devTypeValue, setDevTypeValue] = useState('');
+  const [devTypeFirstBtn, setDevTypeFirstBtn] = useState('');
+  const [devTypeSecondBtn, setDevTypeSecondBtn] = useState('');
+  const [devTypeThirdBtn, setDevTypeThirdBtn] = useState('');
 
   // const [deleteReason, setDeleteReason] = useState("");
   // const [reshareReason, setReshareReason] = useState("");
@@ -86,7 +89,7 @@ function EditViewForm() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/clientInfo/${id}`)
+      .get(getApiUrl(`clientInfo/${id}`))
       .then((res) => {
         // console.log("Entire get API : ", res.data);
 
@@ -110,151 +113,150 @@ function EditViewForm() {
         setWorkStationSelected(res.data.workStationSelected);
         setDevTypeSelected(res.data.devTypeSelected);
 
-        setStatus("Submitted");
-        
-        if (isNDAsigned === "Yes") {
-          setNDAsignedFirst("info");
-          setNDAsignedSecond("outline-info");
-          setNDAsigned("Yes");
-        } else if (isNDAsigned === "No"){
-          setNDAsignedFirst("outline-info");
-          setNDAsignedSecond("info");
-          setNDAsigned("No");
+        setStatus('Submitted');
+
+        if (isNDAsigned === 'Yes') {
+          setNDAsignedFirst('info');
+          setNDAsignedSecond('outline-info');
+          setNDAsigned('Yes');
+        } else if (isNDAsigned === 'No') {
+          setNDAsignedFirst('outline-info');
+          setNDAsignedSecond('info');
+          setNDAsigned('No');
         } else {
-          setNDAsignedFirst("outline-info");
-          setNDAsignedSecond("outline-info");
+          setNDAsignedFirst('outline-info');
+          setNDAsignedSecond('outline-info');
         }
 
-        if (isGDPRcompliance === "Yes") {
-          setGDPRcomplianceFirst("info");
-          setGDPRcomplianceSecond("outline-info");
-          setGDPRcompliance("Yes");
-        } else if (isGDPRcompliance === "No"){
-          setGDPRcomplianceFirst("outline-info");
-          setGDPRcomplianceSecond("info");
-          setGDPRcompliance("No");
+        if (isGDPRcompliance === 'Yes') {
+          setGDPRcomplianceFirst('info');
+          setGDPRcomplianceSecond('outline-info');
+          setGDPRcompliance('Yes');
+        } else if (isGDPRcompliance === 'No') {
+          setGDPRcomplianceFirst('outline-info');
+          setGDPRcomplianceSecond('info');
+          setGDPRcompliance('No');
         } else {
-          setGDPRcomplianceFirst("outline-info");
-          setGDPRcomplianceSecond("outline-info");
+          setGDPRcomplianceFirst('outline-info');
+          setGDPRcomplianceSecond('outline-info');
         }
 
-        if (isCyberSecConducted === "Yes") {
-          setCyberSecConductedFirst("info");
-          setCyberSecConductedSecond("outline-info");
-          setCyberSecConducted("Yes");
-        } else if (isCyberSecConducted === "No") {
-          setCyberSecConductedFirst("outline-info");
-          setCyberSecConductedSecond("info");
-          setCyberSecConducted("No");
-        }else {
-          setCyberSecConductedFirst("outline-info");
-          setCyberSecConductedSecond("outline-info");
+        if (isCyberSecConducted === 'Yes') {
+          setCyberSecConductedFirst('info');
+          setCyberSecConductedSecond('outline-info');
+          setCyberSecConducted('Yes');
+        } else if (isCyberSecConducted === 'No') {
+          setCyberSecConductedFirst('outline-info');
+          setCyberSecConductedSecond('info');
+          setCyberSecConducted('No');
+        } else {
+          setCyberSecConductedFirst('outline-info');
+          setCyberSecConductedSecond('outline-info');
         }
 
-        if (isIsolatedEnvReq === "Yes") {
-          setIsolatedEnvReqFirst("info");
-          setIsolatedEnvReqSecond("outline-info");
-          setIsolatedEnvReq("Yes");
+        if (isIsolatedEnvReq === 'Yes') {
+          setIsolatedEnvReqFirst('info');
+          setIsolatedEnvReqSecond('outline-info');
+          setIsolatedEnvReq('Yes');
           setShowIsolatedDetails(true);
-        } else if (isIsolatedEnvReq === "No") {
-          setIsolatedEnvReqFirst("outline-info");
-          setIsolatedEnvReqSecond("info");
-          setIsolatedEnvReq("No");
+        } else if (isIsolatedEnvReq === 'No') {
+          setIsolatedEnvReqFirst('outline-info');
+          setIsolatedEnvReqSecond('info');
+          setIsolatedEnvReq('No');
           setShowIsolatedDetails(false);
-        }else {
-          setIsolatedEnvReqFirst("outline-info");
-          setIsolatedEnvReqSecond("outline-info");
-          setShowIsolatedDetails(false);
-        }
-
-        if (isDisasterInsuCovered === "Yes") {
-          setDisasterInsuCoveredFirst("info");
-          setDisasterInsuCoveredSecond("outline-info");
-          setDisasterInsuCovered("Yes");
-          setShowInsuranceDetails(true);
-        } else if (isDisasterInsuCovered === "No")  {
-          setDisasterInsuCoveredFirst("outline-info");
-          setDisasterInsuCoveredSecond("info");
-          setDisasterInsuCovered("No");
-          setShowInsuranceDetails(false);
-        }else {
-          setDisasterInsuCoveredFirst("outline-info");
-          setDisasterInsuCoveredSecond("outline-info");
-          setShowInsuranceDetails(false);
-        }
-
-        if (isDLPreq === "Yes") {
-          setDLPreqFirst("info");
-          setDLPreqSecond("outline-info");
-          setDLPreq("Yes");
-        } else if (isDLPreq === "No"){
-          setDLPreqFirst("outline-info");
-          setDLPreqSecond("info");
-          setDLPreq("No");
         } else {
-          setDLPreqFirst("outline-info");
-          setDLPreqSecond("outline-info");
+          setIsolatedEnvReqFirst('outline-info');
+          setIsolatedEnvReqSecond('outline-info');
+          setShowIsolatedDetails(false);
         }
 
-        if (isClientEmailProvided === "Yes") {
-          setClientEmailProvidedFirst("info");
-          setClientEmailProvidedSecond("outline-info");
-          setClientEmailProvided("Yes");
-        } else if (isClientEmailProvided === "No") {
-          setClientEmailProvidedFirst("outline-info");
-          setClientEmailProvidedSecond("info");
-          setClientEmailProvided("No");
-        } else{
-          setClientEmailProvidedFirst("outline-info");
-          setClientEmailProvidedSecond("outline-info");
+        if (isDisasterInsuCovered === 'Yes') {
+          setDisasterInsuCoveredFirst('info');
+          setDisasterInsuCoveredSecond('outline-info');
+          setDisasterInsuCovered('Yes');
+          setShowInsuranceDetails(true);
+        } else if (isDisasterInsuCovered === 'No') {
+          setDisasterInsuCoveredFirst('outline-info');
+          setDisasterInsuCoveredSecond('info');
+          setDisasterInsuCovered('No');
+          setShowInsuranceDetails(false);
+        } else {
+          setDisasterInsuCoveredFirst('outline-info');
+          setDisasterInsuCoveredSecond('outline-info');
+          setShowInsuranceDetails(false);
         }
 
-        if (workStationSelected === "Laptop") {
-          setWorkStationFirstBtn("info");
-          setWorkStationSecondBtn("outline-info");
-          setWorkStationThirdBtn("outline-info");
-          setWorkStationValue("Laptop");
-        } else if (workStationSelected === "VM") {
-          setWorkStationFirstBtn("outline-info");
-          setWorkStationSecondBtn("info");
-          setWorkStationThirdBtn("outline-info");
-          setWorkStationValue("VM");
-        } else if (workStationSelected === "Cloud") {
-          setWorkStationFirstBtn("outline-info");
-          setWorkStationSecondBtn("outline-info");
-          setWorkStationThirdBtn("info");
-          setWorkStationValue("Cloud");
-        }else {
-          setWorkStationFirstBtn("outline-info");
-          setWorkStationSecondBtn("outline-info");
-          setWorkStationThirdBtn("outline-info");
+        if (isDLPreq === 'Yes') {
+          setDLPreqFirst('info');
+          setDLPreqSecond('outline-info');
+          setDLPreq('Yes');
+        } else if (isDLPreq === 'No') {
+          setDLPreqFirst('outline-info');
+          setDLPreqSecond('info');
+          setDLPreq('No');
+        } else {
+          setDLPreqFirst('outline-info');
+          setDLPreqSecond('outline-info');
         }
 
-        if (devTypeSelected === "Local") {
-          setDevTypeFirstBtn("info");
-          setDevTypeSecondBtn("outline-info");
-          setDevTypeThirdBtn("outline-info");
-          setDevTypeValue("Local");
-        } else if (devTypeSelected === "Cloud Plateform") {
-          setDevTypeFirstBtn("outline-info");
-          setDevTypeSecondBtn("info");
-          setDevTypeThirdBtn("outline-info");
-          setDevTypeValue("Cloud Plateform");
-        }else if (devTypeSelected === "Client Plateform") {
-            setDevTypeFirstBtn("outline-info");
-            setDevTypeSecondBtn("outline-info");
-            setDevTypeThirdBtn("info");
-            setDevTypeValue("Client Plateform");
-          } 
-        else {
-          setDevTypeFirstBtn("outline-info");
-          setDevTypeSecondBtn("outline-info");
-          setDevTypeThirdBtn("outline-info");
+        if (isClientEmailProvided === 'Yes') {
+          setClientEmailProvidedFirst('info');
+          setClientEmailProvidedSecond('outline-info');
+          setClientEmailProvided('Yes');
+        } else if (isClientEmailProvided === 'No') {
+          setClientEmailProvidedFirst('outline-info');
+          setClientEmailProvidedSecond('info');
+          setClientEmailProvided('No');
+        } else {
+          setClientEmailProvidedFirst('outline-info');
+          setClientEmailProvidedSecond('outline-info');
+        }
+
+        if (workStationSelected === 'Laptop') {
+          setWorkStationFirstBtn('info');
+          setWorkStationSecondBtn('outline-info');
+          setWorkStationThirdBtn('outline-info');
+          setWorkStationValue('Laptop');
+        } else if (workStationSelected === 'VM') {
+          setWorkStationFirstBtn('outline-info');
+          setWorkStationSecondBtn('info');
+          setWorkStationThirdBtn('outline-info');
+          setWorkStationValue('VM');
+        } else if (workStationSelected === 'Cloud') {
+          setWorkStationFirstBtn('outline-info');
+          setWorkStationSecondBtn('outline-info');
+          setWorkStationThirdBtn('info');
+          setWorkStationValue('Cloud');
+        } else {
+          setWorkStationFirstBtn('outline-info');
+          setWorkStationSecondBtn('outline-info');
+          setWorkStationThirdBtn('outline-info');
+        }
+
+        if (devTypeSelected === 'Local') {
+          setDevTypeFirstBtn('info');
+          setDevTypeSecondBtn('outline-info');
+          setDevTypeThirdBtn('outline-info');
+          setDevTypeValue('Local');
+        } else if (devTypeSelected === 'Cloud Plateform') {
+          setDevTypeFirstBtn('outline-info');
+          setDevTypeSecondBtn('info');
+          setDevTypeThirdBtn('outline-info');
+          setDevTypeValue('Cloud Plateform');
+        } else if (devTypeSelected === 'Client Plateform') {
+          setDevTypeFirstBtn('outline-info');
+          setDevTypeSecondBtn('outline-info');
+          setDevTypeThirdBtn('info');
+          setDevTypeValue('Client Plateform');
+        } else {
+          setDevTypeFirstBtn('outline-info');
+          setDevTypeSecondBtn('outline-info');
+          setDevTypeThirdBtn('outline-info');
         }
       })
 
       .catch((err) => {
-        console.log("Failed to get the data: ", err.response);
+        console.log('Failed to get the data: ', err.response);
       });
   }, [
     id,
@@ -271,80 +273,80 @@ function EditViewForm() {
 
   function handleDevType(evt) {
     const val = evt.target.name;
-    if (val === "Local") {
-      setDevTypeFirstBtn("info");
-      setDevTypeSecondBtn("outline-info");
-      setDevTypeThirdBtn("outline-info");
+    if (val === 'Local') {
+      setDevTypeFirstBtn('info');
+      setDevTypeSecondBtn('outline-info');
+      setDevTypeThirdBtn('outline-info');
       setDevTypeValue(val);
-    } else if (val === "Cloud Plateform") {
-      setDevTypeFirstBtn("outline-info");
-      setDevTypeSecondBtn("info");
-      setDevTypeThirdBtn("outline-info");
+    } else if (val === 'Cloud Plateform') {
+      setDevTypeFirstBtn('outline-info');
+      setDevTypeSecondBtn('info');
+      setDevTypeThirdBtn('outline-info');
       setDevTypeValue(val);
-    } else if (val === "Client Plateform") {
-      setDevTypeFirstBtn("outline-info");
-      setDevTypeSecondBtn("outline-info");
-      setDevTypeThirdBtn("info");
+    } else if (val === 'Client Plateform') {
+      setDevTypeFirstBtn('outline-info');
+      setDevTypeSecondBtn('outline-info');
+      setDevTypeThirdBtn('info');
       setDevTypeValue(val);
     }
   }
 
   function handleWorkStation(e) {
     const val = e.target.name;
-    if (val === "Laptop") {
-      setWorkStationFirstBtn("info");
-      setWorkStationSecondBtn("outline-info");
-      setWorkStationThirdBtn("outline-info");
+    if (val === 'Laptop') {
+      setWorkStationFirstBtn('info');
+      setWorkStationSecondBtn('outline-info');
+      setWorkStationThirdBtn('outline-info');
       setWorkStationValue(val);
-    } else if (val === "VM") {
-      setWorkStationFirstBtn("outline-info");
-      setWorkStationSecondBtn("info");
-      setWorkStationThirdBtn("outline-info");
+    } else if (val === 'VM') {
+      setWorkStationFirstBtn('outline-info');
+      setWorkStationSecondBtn('info');
+      setWorkStationThirdBtn('outline-info');
       setWorkStationValue(val);
-    } else if (val === "Cloud") {
-      setWorkStationFirstBtn("outline-info");
-      setWorkStationSecondBtn("outline-info");
-      setWorkStationThirdBtn("info");
+    } else if (val === 'Cloud') {
+      setWorkStationFirstBtn('outline-info');
+      setWorkStationSecondBtn('outline-info');
+      setWorkStationThirdBtn('info');
       setWorkStationValue(val);
     }
   }
 
   function handleClientEmailProvided(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
-      setClientEmailProvidedFirst("info");
-      setClientEmailProvidedSecond("outline-info");
+    if (val === 'Yes') {
+      setClientEmailProvidedFirst('info');
+      setClientEmailProvidedSecond('outline-info');
       setClientEmailProvided(val);
     } else {
-      setClientEmailProvidedFirst("outline-info");
-      setClientEmailProvidedSecond("info");
+      setClientEmailProvidedFirst('outline-info');
+      setClientEmailProvidedSecond('info');
       setClientEmailProvided(val);
     }
   }
 
   function handleDLPreq(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
-      setDLPreqFirst("info");
-      setDLPreqSecond("outline-info");
+    if (val === 'Yes') {
+      setDLPreqFirst('info');
+      setDLPreqSecond('outline-info');
       setDLPreq(val);
     } else {
-      setDLPreqFirst("outline-info");
-      setDLPreqSecond("info");
+      setDLPreqFirst('outline-info');
+      setDLPreqSecond('info');
       setDLPreq(val);
     }
   }
 
   function handleIsolatedEnvReq(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
-      setIsolatedEnvReqFirst("info");
-      setIsolatedEnvReqSecond("outline-info");
+    if (val === 'Yes') {
+      setIsolatedEnvReqFirst('info');
+      setIsolatedEnvReqSecond('outline-info');
       setIsolatedEnvReq(val);
       setShowIsolatedDetails(true);
     } else {
-      setIsolatedEnvReqFirst("outline-info");
-      setIsolatedEnvReqSecond("info");
+      setIsolatedEnvReqFirst('outline-info');
+      setIsolatedEnvReqSecond('info');
       setIsolatedEnvReq(val);
       setShowIsolatedDetails(false);
     }
@@ -352,14 +354,14 @@ function EditViewForm() {
 
   function handleDisasterInsuCovered(e) {
     const val = e.target.name;
-    if (val === "Yes") {
-      setDisasterInsuCoveredFirst("info");
-      setDisasterInsuCoveredSecond("outline-info");
+    if (val === 'Yes') {
+      setDisasterInsuCoveredFirst('info');
+      setDisasterInsuCoveredSecond('outline-info');
       setDisasterInsuCovered(val);
       setShowInsuranceDetails(true);
     } else {
-      setDisasterInsuCoveredFirst("outline-info");
-      setDisasterInsuCoveredSecond("info");
+      setDisasterInsuCoveredFirst('outline-info');
+      setDisasterInsuCoveredSecond('info');
       setDisasterInsuCovered(val);
       setShowInsuranceDetails(false);
     }
@@ -367,45 +369,44 @@ function EditViewForm() {
 
   function handleCyberSecConducted(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setCyberSecConducted(val);
-      setCyberSecConductedFirst("info");
-      setCyberSecConductedSecond("outline-info");
+      setCyberSecConductedFirst('info');
+      setCyberSecConductedSecond('outline-info');
     } else {
-      setCyberSecConductedFirst("outline-info");
-      setCyberSecConductedSecond("info");
+      setCyberSecConductedFirst('outline-info');
+      setCyberSecConductedSecond('info');
       setCyberSecConducted(val);
     }
   }
 
   function handleNDAsigned(e) {
     const val = e.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setNDAsigned(val);
-      setNDAsignedFirst("info");
-      setNDAsignedSecond("outline-info");
+      setNDAsignedFirst('info');
+      setNDAsignedSecond('outline-info');
     } else {
       setNDAsigned(val);
-      setNDAsignedFirst("outline-info");
-      setNDAsignedSecond("info");
+      setNDAsignedFirst('outline-info');
+      setNDAsignedSecond('info');
     }
   }
 
   function handleGDPRcompliance(e) {
     const val = e.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setGDPRcompliance(val);
-      setGDPRcomplianceFirst("info");
-      setGDPRcomplianceSecond("outline-info");
+      setGDPRcomplianceFirst('info');
+      setGDPRcomplianceSecond('outline-info');
     } else {
       setGDPRcompliance(val);
-      setGDPRcomplianceFirst("outline-info");
-      setGDPRcomplianceSecond("info");
+      setGDPRcomplianceFirst('outline-info');
+      setGDPRcomplianceSecond('info');
     }
   }
 
   function handleSubmitForm() {
-   
     const postObj = {
       projectNameByIT,
       securityMeasure,
@@ -427,14 +428,14 @@ function EditViewForm() {
       workStationValue,
       devTypeValue,
     };
-  
+
     axios
-      .post(`http://localhost:5000/clientInfo/editAndUpdate/${id}`, postObj)
+      .post(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
 
       .then((res) => {
         // console.log("Data has been saved successfully. ", postObj);
         // console.log("response from backend : ", res.postObj);
-        toast.success("Form sumbitted successfully !", {
+        toast.success('Form sumbitted successfully !', {
           autoClose: 1900,
         });
         // setTimeout(() => {
@@ -447,19 +448,17 @@ function EditViewForm() {
         //   "response from backend after Failed to post request. ",
         //   err.response
         // );
-        toast.error("Failed to save the data !", {
+        toast.error('Failed to save the data !', {
           autoClose: 3000,
         });
-        
       });
 
-      toast.success("Form sumbitted successfully !", {
-        autoClose: 1900,
-      });
-      setTimeout(() => {
-        history.push("/admin");
-      }, 2000);
-
+    toast.success('Form sumbitted successfully !', {
+      autoClose: 1900,
+    });
+    setTimeout(() => {
+      history.push('/admin');
+    }, 2000);
   }
 
   function SubmitButton() {
@@ -476,13 +475,13 @@ function EditViewForm() {
     ) {
       return (
         <Button
-          variant="primary"
-          className="submit-btn"
+          variant='primary'
+          className='submit-btn'
           onClick={() => handleSubmitForm()}
           style={{
-            marginTop: "20px",
-            marginBottom: "20px",
-            width: "130px",
+            marginTop: '20px',
+            marginBottom: '20px',
+            width: '130px',
           }}
         >
           Update
@@ -492,22 +491,21 @@ function EditViewForm() {
       return (
         <Button
           disabled
-          variant="primary"
-          className="submit-btn"
+          variant='primary'
+          className='submit-btn'
           style={{
-            marginTop: "20px",
-            marginBottom: "20px",
-            width: "130px",
+            marginTop: '20px',
+            marginBottom: '20px',
+            width: '130px',
           }}
         >
-          {" "}
+          {' '}
           Update
         </Button>
       );
     }
   }
 
-  
   // function download(url: "string", filename: "string") {
   //   axios.get(url, {
   //     responseType: 'blob',
@@ -516,62 +514,49 @@ function EditViewForm() {
   //   });
   // }
 
-  
   const downloadFile = (habbits) => {
-      axios.get("http://localhost:5000/clientInfo/getfile")
-        .then(resp => {
-               download(resp.data, habbits.pdf);
-        });
-   }
-
+    axios.get(getApiUrl(`clientInfo/getfile`)).then((resp) => {
+      download(resp.data, habbits.pdf);
+    });
+  };
 
   return (
-    
     <div>
+      <NavBar validate={true} />
 
-      <NavBar validate={true}/>
-
-      <div className="custom-scroll">
-        
+      <div className='custom-scroll'>
         <Container>
-          
           <Row>
-            
             <Col md={{ span: 8, offset: 2 }}>
-              
-              <div style={{ width: "700px" }} className="project-details-form">
-                
+              <div style={{ width: '700px' }} className='project-details-form'>
                 <h2> Project Details </h2>
                 <button
-                  className="modal-closeBtn"
-                  onClick={() => history.push("/admin")}
+                  className='modal-closeBtn'
+                  onClick={() => history.push('/admin')}
                 >
-                  <svg className="_modal-close-icon" viewBox="0 0 40 40">
-                    <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                  <svg className='_modal-close-icon' viewBox='0 0 40 40'>
+                    <path d='M 10,10 L 30,30 M 30,10 L 10,30' />
                   </svg>
                 </button>
-                
-                <Form>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                <Form>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>Download the attachments </Form.Label>
                     <br></br>
                     <Button onClick={downloadFile}>Download files</Button>
-                    
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>Name of the project or client</Form.Label>
                     <Form.Control
                       onChange={(e) => {
                         setProjectNameByIT(e.target.value);
                       }}
                       value={projectNameByIT}
-                      
                     />
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>Security measures from client side</Form.Label>
                     <Form.Control
                       onChange={(e) => {
@@ -582,7 +567,7 @@ function EditViewForm() {
                     />
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Information to IT at the time of project kick-off
                     </Form.Label>
@@ -594,85 +579,85 @@ function EditViewForm() {
                     />
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Work stations type provided in Evoke
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
-                        size="sm"
-                        className="btn-padding"
+                        size='sm'
+                        className='btn-padding'
                         variant={workStationFirstBtn}
                         onClick={handleWorkStation}
-                        name="Laptop"
-                        style={{ marginRight: "15px", width: "100px" }}
+                        name='Laptop'
+                        style={{ marginRight: '15px', width: '100px' }}
                       >
-                        {" "}
+                        {' '}
                         Laptop
                       </Button>
 
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={workStationSecondBtn}
                         onClick={handleWorkStation}
-                        name="VM"
-                        style={{ marginRight: "15px", width: "80px" }}
+                        name='VM'
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         VM
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={workStationThirdBtn}
                         onClick={handleWorkStation}
-                        name="Cloud"
-                        style={{ marginRight: "15px", width: "90px" }}
+                        name='Cloud'
+                        style={{ marginRight: '15px', width: '90px' }}
                       >
-                        {" "}
+                        {' '}
                         Cloud
                       </Button>
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label> Development type </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={devTypeFirstBtn}
                         onClick={handleDevType}
-                        name="Local"
-                        style={{ marginRight: "15px", width: "90px" }}
+                        name='Local'
+                        style={{ marginRight: '15px', width: '90px' }}
                       >
-                        {" "}
+                        {' '}
                         Local
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={devTypeSecondBtn}
                         onClick={handleDevType}
-                        name="Cloud Plateform"
-                        style={{ marginRight: "15px", width: "150px" }}
-                        className="btn-padding"
+                        name='Cloud Plateform'
+                        style={{ marginRight: '15px', width: '150px' }}
+                        className='btn-padding'
                       >
-                        {" "}
+                        {' '}
                         Cloud Plateform
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={devTypeThirdBtn}
                         onClick={handleDevType}
-                        name="Client Plateform"
-                        style={{ marginRight: "15px", width: "150px" }}
-                        className="btn-padding"
+                        name='Client Plateform'
+                        style={{ marginRight: '15px', width: '150px' }}
+                        className='btn-padding'
                       >
-                        {" "}
+                        {' '}
                         Client Plateform
                       </Button>
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>Website(s) need to be allowed</Form.Label>
                     <Form.Control
                       onChange={(e) => {
@@ -680,107 +665,107 @@ function EditViewForm() {
                       }}
                       value={allowedWebsite}
                     />
-                    <Form.Text className="text-muted">
-                      {" "}
+                    <Form.Text className='text-muted'>
+                      {' '}
                       Use comma(,) to saperate multiple URLs, eg-
-                      https://www.evoketechnologies.com/, 2nd URL{" "}
+                      https://www.evoketechnologies.com/, 2nd URL{' '}
                     </Form.Text>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       NDA/DPA (Data Privacy Agreement) signed ?
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={NDAsignedFirst}
-                        name="Yes"
+                        name='Yes'
                         onClick={handleNDAsigned}
                         value={NDAsignedFirst}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         Yes
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={NDAsignedSecond}
-                        name="No"
+                        name='No'
                         onClick={handleNDAsigned}
                         value={NDAsignedSecond}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         No
                       </Button>
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Did all the project related documents (security, GDPR
-                      complaiance and MSA) are collected from client ?{" "}
+                      complaiance and MSA) are collected from client ?{' '}
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={GDPRcomplianceFirst}
-                        name="Yes"
+                        name='Yes'
                         onClick={handleGDPRcompliance}
                         value={GDPRcomplianceFirst}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         Yes
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={GDPRcomplianceSecond}
-                        name="No"
+                        name='No'
                         onClick={handleGDPRcompliance}
                         value={GDPRcomplianceSecond}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         No
                       </Button>
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Cyber security induction meeting conducted with client as
                       well as in house (importance of data security to followed
-                      by all users) ?{" "}
+                      by all users) ?{' '}
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={CyberSecConductedFirst}
-                        name="Yes"
+                        name='Yes'
                         onClick={handleCyberSecConducted}
                         value={CyberSecConductedFirst}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         Yes
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={CyberSecConductedSecond}
-                        name="No"
+                        name='No'
                         onClick={handleCyberSecConducted}
                         value={CyberSecConductedSecond}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         No
                       </Button>
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Any project risks identified in the course of interims of
                       security breach or calamities ?
@@ -793,41 +778,41 @@ function EditViewForm() {
                     />
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
-                      Insurance coverage in case of disater issues ?{" "}
+                      Insurance coverage in case of disater issues ?{' '}
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={DisasterInsuCoveredFirst}
-                        name="Yes"
+                        name='Yes'
                         onClick={handleDisasterInsuCovered}
                         value={DisasterInsuCoveredFirst}
                         style={{
-                          marginRight: "15px",
-                          marginBottom: "15px",
-                          width: "80px",
+                          marginRight: '15px',
+                          marginBottom: '15px',
+                          width: '80px',
                         }}
                       >
-                        {" "}
+                        {' '}
                         Yes
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={DisasterInsuCoveredSecond}
-                        name="No"
+                        name='No'
                         onClick={handleDisasterInsuCovered}
                         value={DisasterInsuCoveredSecond}
-                        style={{ marginBottom: "15px", width: "80px" }}
+                        style={{ marginBottom: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         No
                       </Button>
                       {showInsuranceDetails && (
                         <div>
                           <Form.Label>
-                            {" "}
+                            {' '}
                             Details for insurance company coverage terms and
                             insurance company spoc
                           </Form.Label>
@@ -843,47 +828,47 @@ function EditViewForm() {
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
-                      {" "}
-                      Does client need any isolated environment requirement ?{" "}
+                      {' '}
+                      Does client need any isolated environment requirement ?{' '}
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={IsolatedEnvReqFirst}
-                        name="Yes"
+                        name='Yes'
                         onClick={handleIsolatedEnvReq}
                         value={IsolatedEnvReqFirst}
                         style={{
-                          marginRight: "15px",
-                          marginBottom: "15px",
-                          width: "80px",
+                          marginRight: '15px',
+                          marginBottom: '15px',
+                          width: '80px',
                         }}
                       >
-                        {" "}
+                        {' '}
                         Yes
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={IsolatedEnvReqSecond}
-                        name="No"
+                        name='No'
                         onClick={handleIsolatedEnvReq}
                         value={IsolatedEnvReqSecond}
                         style={{
-                          marginRight: "15px",
-                          marginBottom: "15px",
-                          width: "80px",
+                          marginRight: '15px',
+                          marginBottom: '15px',
+                          width: '80px',
                         }}
                       >
-                        {" "}
+                        {' '}
                         No
                       </Button>
 
                       {showIsolatedDetails && (
                         <div>
                           <Form.Label>
-                            {" "}
+                            {' '}
                             Details of physical isolation of network, physical
                             isolation for workspace, DLP etc
                           </Form.Label>
@@ -899,32 +884,32 @@ function EditViewForm() {
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: "40px" }}>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Does client require DLP/Encryption enabled laptops for
-                      their users ?{" "}
+                      their users ?{' '}
                     </Form.Label>
-                    <Form.Group style={{ marginBottom: "30px" }}>
+                    <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={DLPreqFirst}
-                        name="Yes"
+                        name='Yes'
                         onClick={handleDLPreq}
                         value={DLPreqFirst}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         Yes
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={DLPreqSecond}
-                        name="No"
+                        name='No'
                         onClick={handleDLPreq}
                         value={DLPreqSecond}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         No
                       </Button>
                     </Form.Group>
@@ -933,29 +918,29 @@ function EditViewForm() {
                   <Form.Group>
                     <Form.Label>
                       Is client providing Email services to user for regular
-                      business communication ?{" "}
+                      business communication ?{' '}
                     </Form.Label>
                     <Form.Group>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={ClientEmailProvidedFirst}
-                        name="Yes"
+                        name='Yes'
                         onClick={handleClientEmailProvided}
                         value={ClientEmailProvidedFirst}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         Yes
                       </Button>
                       <Button
-                        size="sm"
+                        size='sm'
                         variant={ClientEmailProvidedSecond}
-                        name="No"
+                        name='No'
                         onClick={handleClientEmailProvided}
                         value={ClientEmailProvidedSecond}
-                        style={{ marginRight: "15px", width: "80px" }}
+                        style={{ marginRight: '15px', width: '80px' }}
                       >
-                        {" "}
+                        {' '}
                         No
                       </Button>
                     </Form.Group>
@@ -963,36 +948,28 @@ function EditViewForm() {
 
                   <Button
                     onClick={() => window.location.reload()}
-                    className="reshare"
+                    className='reshare'
                     style={{
-                      marginTop: "20px",
-                      marginBottom: "20px",
-                      marginRight: "15px",
-                      width: "130px",
+                      marginTop: '20px',
+                      marginBottom: '20px',
+                      marginRight: '15px',
+                      width: '130px',
                     }}
                   >
-                    {" "}
+                    {' '}
                     Reset
                   </Button>
 
                   <SubmitButton />
-
                 </Form>
-
               </div>
-
             </Col>
-
           </Row>
-
         </Container>
-
       </div>
 
       <Footer />
-
     </div>
-
   );
 }
 
