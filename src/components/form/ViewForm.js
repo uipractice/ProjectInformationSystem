@@ -6,33 +6,30 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Modal from "react-modal"; //why you removed this one?
 import Footer from "../admin/Footer";
-import editIcon from "../../assets/images/edit-icon.svg" ;
+import editIcon from "../../assets/images/edit-icon.svg";
 import axios from "axios";
 import { useLocation, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "../admin/NavBar";
-import jsFileDown from "js-file-download";
 toast.configure();
 
-
 function ViewForm() {
-
   const history = useHistory();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRestoreModalOpen, setRestoreIsModalOpen] = useState(false);
 
   const handleEditViewForm = () => {
-    history.push("/edit/"+id);
-  }
+    history.push("/edit/" + id);
+  };
 
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
-  const location = useLocation(); 
+  const location = useLocation();
   const {
     projectNameByIT,
     projectManager,
@@ -61,7 +58,7 @@ function ViewForm() {
     isClientEmailProvided,
   } = location.state;
 
-  const[totalState, setTotalState] = useState({
+  const [totalState, setTotalState] = useState({
     projectNameByIT,
     projectManager,
     email,
@@ -86,8 +83,8 @@ function ViewForm() {
     showIsolatedDetails,
     isDLPreq,
     isClientEmailProvided,
-    reshareReason
-  })
+    reshareReason,
+  });
 
   function reshareReasonInput(evt) {
     setTotalState({
@@ -102,8 +99,6 @@ function ViewForm() {
       restoreReason: evt.target.value,
     });
   }
-
- 
 
   const handleApprove = () => {
     totalState.status = "Approved";
@@ -121,7 +116,6 @@ function ViewForm() {
       history.push("/admin");
     }, 2000);
   };
-
 
   const handleRestore = (e) => {
     e.preventDefault();
@@ -143,19 +137,8 @@ function ViewForm() {
   };
 
   const handleDownload = () => {
-    // axios("http://localhost:5000/clientInfo/download/" + id)
-    const file = axios("http://localhost:5000/clientInfo/download/", {
-      responseType: "blob"
-    })
-      .then((res) => {
-        console.log("res data value is : ", res.data);
-        jsFileDown(file, res.data.fileName ); 
-        // jsFileDown(res.data, name); 
-      })
-      .catch((err) => console.log(err.response))
-
-   
-  }
+    window.open("http://localhost:5000/clientInfo/download/" + id);
+  };
 
   const handleReshare = (e) => {
     e.preventDefault();
@@ -187,13 +170,10 @@ function ViewForm() {
       })
       .catch((err) => console.log(err.response));
 
-      setTimeout(() => {
-        history.push("/admin");
-      }, 2000);
+    setTimeout(() => {
+      history.push("/admin");
+    }, 2000);
   };
-
-
-
 
   return (
     <div>
