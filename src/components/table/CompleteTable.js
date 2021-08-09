@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from "react";
-import DeleteImg from "../../assets/images/delete.svg";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import Modal from "react-modal";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from 'react';
+import DeleteImg from '../../assets/images/delete.svg';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Modal from 'react-modal';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import { Input } from 'reactstrap';
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination,
-} from "react-table";
-import { format } from "date-fns";
-import "./table.css";
-import GlobalFilter from "./GlobalFilter";
+} from 'react-table';
+import { format } from 'date-fns';
+import './table.css';
+import GlobalFilter from './GlobalFilter';
 
-import rightIcon from "../../assets/images/right-icon.svg";
-import leftIcon from "../../assets/images/left-icon.svg";
+import rightIcon from '../../assets/images/right-icon.svg';
+import leftIcon from '../../assets/images/left-icon.svg';
 
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getApiUrl } from '../utils/helper';
 
 toast.configure();
 
-Modal.setAppElement("#root");
+Modal.setAppElement('#root');
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -36,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function CompleteTable({ data }) {
-
   const [filteredData, setFilteredData] = useState([]);
 
   const [rowOriginal, setRowOriginal] = useState({});
@@ -46,18 +47,18 @@ function CompleteTable({ data }) {
   const classes = useStyles();
 
   useEffect(() => {
-    let filterResult = data.filter((row) => row.status !== "Deleted");
+    let filterResult = data.filter((row) => row.status !== 'Deleted');
     setFilteredData(filterResult);
   }, [data]);
 
   function handleSelectedStatus(selectedState) {
-    console.log("SelectedState value: ", selectedState);
-    console.log("Data dot status value: ", data.status);
-    console.log("Data value: ", data);
-    if (selectedState === "Active") {
-      let filterResult = data.filter((row) => row.status !== "Deleted");
+    console.log('SelectedState value: ', selectedState);
+    console.log('Data dot status value: ', data.status);
+    console.log('Data value: ', data);
+    if (selectedState === 'Active') {
+      let filterResult = data.filter((row) => row.status !== 'Deleted');
       setFilteredData(filterResult);
-    } else if (selectedState === "All Project") {
+    } else if (selectedState === 'All Project') {
       setFilteredData(data);
     } else {
       let filterResult = data.filter((row) => row.status === selectedState);
@@ -74,12 +75,12 @@ function CompleteTable({ data }) {
 
   const handleUpdateStatus = (e) => {
     e.preventDefault();
-    rowOriginal.status = "Deleted";
+    rowOriginal.status = 'Deleted';
     const id = rowOriginal._id;
     axios
-      .post(`${process.env.REACT_APP_BASE_API_ROUTE}/deleteStatus/` + id, rowOriginal)
+      .post(getApiUrl(`clientInfo/deleteStatus/${id}`), rowOriginal)
       .then((res) => {
-        toast.warn("Record has been marked DELETED !", {
+        toast.warn('Record has been marked DELETED !', {
           autoClose: 2900,
         });
         setIsModalOpen(false);
@@ -98,14 +99,14 @@ function CompleteTable({ data }) {
   const columns = React.useMemo(
     () => [
       {
-        Header: "SL.NO",
-        accessor: "serial",
+        Header: 'SL.NO',
+        accessor: 'serial',
         // filterable: false,
       },
 
       {
-        Header: "PROJECT NAME",
-        accessor: "projectNameByIT",
+        Header: 'PROJECT NAME',
+        accessor: 'projectNameByIT',
         Cell: ({ row }) => {
           return (
             <Link
@@ -146,52 +147,52 @@ function CompleteTable({ data }) {
             </Link>
           );
         },
-        sticky: "left",
+        sticky: 'left',
       },
       {
-        Header: "PROJECT MANAGER",
-        accessor: "projectManager",
-        sticky: "left",
+        Header: 'PROJECT MANAGER',
+        accessor: 'projectManager',
+        sticky: 'left',
       },
       {
-        Header: "PRACTICE NAME",
-        accessor: "practice",
-        sticky: "left",
+        Header: 'PRACTICE NAME',
+        accessor: 'practice',
+        sticky: 'left',
       },
       {
-        Header: "ASSIGN DATE",
-        accessor: "createdAt",
+        Header: 'ASSIGN DATE',
+        accessor: 'createdAt',
         Cell: ({ value }) => {
-          return format(new Date(value), "dd/MM/yyyy");
+          return format(new Date(value), 'dd/MM/yyyy');
         },
         maxWidth: 200,
         minWidth: 80,
         width: 100,
       },
       {
-        Header: "UPDATED DATE",
-        accessor: "updatedAt",
+        Header: 'UPDATED DATE',
+        accessor: 'updatedAt',
         Cell: ({ value }) => {
-          return format(new Date(value), "dd/MM/yyyy");
+          return format(new Date(value), 'dd/MM/yyyy');
         },
       },
       {
-        Header: "STATUS",
-        accessor: "status",
+        Header: 'STATUS',
+        accessor: 'status',
       },
       {
-        Header: "ACTION",
+        Header: 'ACTION',
         Cell: ({ row }) => (
           <a
-            {...(row.original.status === "Deleted"
-              ? { className: "delete-icon disableDeleteBtn" }
-              : { className: "delete-icon " })}
+            {...(row.original.status === 'Deleted'
+              ? { className: 'delete-icon disableDeleteBtn' }
+              : { className: 'delete-icon ' })}
             onClick={(e) => {
               setRowOriginal(row.original);
               setIsModalOpen(true);
             }}
           >
-            <img src={DeleteImg} alt="Evoke Technologies" />
+            <img src={DeleteImg} alt='Evoke Technologies' />
           </a>
         ),
       },
@@ -225,27 +226,27 @@ function CompleteTable({ data }) {
   return (
     <>
       <br></br>
-      <div className="filter-row">
+      <div className='filter-row'>
         <h5>PROJECTS DETAILS</h5>
         <div>
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
           <FormControl className={classes.formControl}>
             <Select
-              defaultValue="Active"
+              defaultValue='Active'
               onChange={(e) => {
                 handleSelectedStatus(e.target.value);
               }}
               displayEmpty
               className={classes.selectEmpty}
-              inputProps={{ "aria-label": "Without label" }}
+              inputProps={{ 'aria-label': 'Without label' }}
             >
-              <MenuItem value="Active">Active</MenuItem>
-              <MenuItem value="Pending">Pending</MenuItem>
-              <MenuItem value="Submitted">Submitted</MenuItem>
-              <MenuItem value="Approved">Approved</MenuItem>
-              <MenuItem value="Deleted">Deleted</MenuItem>
-              <MenuItem value="All Project">All Projects</MenuItem>
+              <MenuItem value='Active'>Active</MenuItem>
+              <MenuItem value='Pending'>Pending</MenuItem>
+              <MenuItem value='Submitted'>Submitted</MenuItem>
+              <MenuItem value='Approved'>Approved</MenuItem>
+              <MenuItem value='Deleted'>Deleted</MenuItem>
+              <MenuItem value='All Project'>All Projects</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -257,40 +258,40 @@ function CompleteTable({ data }) {
           onRequestClose={() => {
             setIsModalOpen(false);
           }}
-          className="modalDesign deleteModal"
+          className='modalDesign deleteModal'
         >
           <h2>Are you sure?</h2>
           <button
-            className="_modal-close"
+            className='_modal-close'
             onClick={() => {
               setIsModalOpen(false);
             }}
           >
-            <svg className="_modal-close-icon" viewBox="0 0 40 40">
-              <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+            <svg className='_modal-close-icon' viewBox='0 0 40 40'>
+              <path d='M 10,10 L 30,30 M 30,10 L 10,30' />
             </svg>
           </button>
           <form>
             <p>Please enter the reason to delete the record.</p>
             <textarea
-              type="text"
+              type='text'
               autoFocus={true}
-              style={{ color: "black" }}
+              style={{ color: 'black' }}
               onChange={handleInputChange}
-              name="deleteReason"
+              name='deleteReason'
             />
             <br></br>
-            <p className="descr">
-              {" "}
+            <p className='descr'>
+              {' '}
               Do you really want to delete the records? This process cannot be
               undone.
             </p>
             <br></br>
 
-            <div className="row">
-              <div className="col-md-6 text-right padding0">
+            <div className='row'>
+              <div className='col-md-6 text-right padding0'>
                 <button
-                  className="form-control btn btn-primary"
+                  className='form-control btn btn-primary'
                   onClick={() => {
                     setIsModalOpen(false);
                   }}
@@ -298,17 +299,17 @@ function CompleteTable({ data }) {
                   Cancel
                 </button>
               </div>
-              <div className="col-md-6">
+              <div className='col-md-6'>
                 {rowOriginal.deleteReason ? (
                   <button
                     onClick={handleUpdateStatus}
-                    className="form-control btn btn-primary delete-btn"
+                    className='form-control btn btn-primary delete-btn'
                   >
                     Delete
                   </button>
                 ) : (
                   <button
-                    className="form-control btn btn-primary delete-btn"
+                    className='form-control btn btn-primary delete-btn'
                     disabled
                   >
                     Delete
@@ -320,20 +321,20 @@ function CompleteTable({ data }) {
         </Modal>
       </div>
 
-      <div className="table-responsive grid tableFixHead">
-        <table {...getTableProps()} className="table table-striped ">
+      <div className='table-responsive grid tableFixHead'>
+        <table {...getTableProps()} className='table table-striped '>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps({ title: undefined }))}>
-                    {column.render("Header")}
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render('Header')}
                     <span>
                       {column.isSorted
                         ? column.isSortedDesc
-                          ? " 🔽"
-                          : " 🔼"
-                        : ""}
+                          ? ' 🔽'
+                          : ' 🔼'
+                        : ''}
                     </span>
                   </th>
                 ))}
@@ -347,21 +348,21 @@ function CompleteTable({ data }) {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     let style = {};
-                    style = { textAlign: "left" };
-                    if (cell.column.id === "status") {
-                      if (cell.value === "Pending") {
-                        style = { color: "#F16A21", textAlign: "left" };
-                      } else if (cell.value === "Submitted") {
-                        style = { color: "#0066FF", textAlign: "left" };
-                      } else if (cell.value === "Completed") {
-                        style = { color: "#13BC86", textAlign: "left" };
-                      } else if (cell.value === "Approved") {
-                        style = { color: "green", textAlign: "left" };
+                    style = { textAlign: 'left' };
+                    if (cell.column.id === 'status') {
+                      if (cell.value === 'Pending') {
+                        style = { color: '#F16A21', textAlign: 'left' };
+                      } else if (cell.value === 'Submitted') {
+                        style = { color: '#0066FF', textAlign: 'left' };
+                      } else if (cell.value === 'Completed') {
+                        style = { color: '#13BC86', textAlign: 'left' };
+                      } else if (cell.value === 'Approved') {
+                        style = { color: 'green', textAlign: 'left' };
                       }
                     }
                     return (
                       <td {...cell.getCellProps({ style })}>
-                        {cell.render("Cell")}
+                        {cell.render('Cell')}
                       </td>
                     );
                   })}
@@ -371,12 +372,12 @@ function CompleteTable({ data }) {
           </tbody>
         </table>
       </div>
-      <div className="table-pagination">
+      <div className='table-pagination'>
         <label>Rows per page:</label>
         <select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
-          className="pageNum"
+          className='pageNum'
         >
           {[7, 15, 25, 50, 100].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
@@ -385,18 +386,18 @@ function CompleteTable({ data }) {
           ))}
         </select>
         <span>
-          Page{" "}
+          Page{' '}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
+          </strong>{' '}
         </span>
-        <div className="prev-next">
+        <div className='prev-next'>
           <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <img src={leftIcon} alt="prev" />
-          </button>{" "}
+            <img src={leftIcon} alt='prev' />
+          </button>{' '}
           <button onClick={() => nextPage()} disabled={!canNextPage}>
-            <img src={rightIcon} alt="next" />
-          </button>{" "}
+            <img src={rightIcon} alt='next' />
+          </button>{' '}
         </div>
       </div>
     </>
