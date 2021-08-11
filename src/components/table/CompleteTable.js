@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
+import UpDownImg from '../../assets/images/sorting.svg';
 import {
   useTable,
   useSortBy,
@@ -101,11 +102,13 @@ function CompleteTable({ data }) {
         Header: 'SL.NO',
         accessor: 'serial',
         // filterable: false,
+        width: 102,
       },
 
       {
         Header: 'PROJECT NAME',
         accessor: 'projectNameByIT',
+        width: 231,
         Cell: ({ row }) => {
           return (
             <Link
@@ -151,26 +154,30 @@ function CompleteTable({ data }) {
       {
         Header: 'PROJECT MANAGER',
         accessor: 'projectManager',
+        width: 230,
         sticky: 'left',
       },
       {
         Header: 'PRACTICE NAME',
         accessor: 'practice',
         sticky: 'left',
+        width: 200,
       },
       {
         Header: 'ASSIGN DATE',
         accessor: 'createdAt',
+        width: 167,
         Cell: ({ value }) => {
           return format(new Date(value), 'dd/MM/yyyy');
         },
-        maxWidth: 200,
-        minWidth: 80,
-        width: 100,
+        // maxWidth: 200,
+        // minWidth: 80,
+        // width: 100,
       },
       {
         Header: 'UPDATED DATE',
         accessor: 'updatedAt',
+        width: 187,
         Cell: ({ value }) => {
           return format(new Date(value), 'dd/MM/yyyy');
         },
@@ -178,9 +185,11 @@ function CompleteTable({ data }) {
       {
         Header: 'STATUS',
         accessor: 'status',
+        width: 150,
       },
       {
         Header: 'ACTION',
+        width: 120,
         Cell: ({ row }) => (
           <a
             {...(row.original.status === 'Deleted'
@@ -326,14 +335,25 @@ function CompleteTable({ data }) {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th
+                    {...column.getHeaderProps(
+                      column.getSortByToggleProps({
+                        title: undefined,
+                        style: {
+                          minWidth: column.minWidth,
+                          width: column.width,
+                        },
+                      })
+                    )}
+                  >
                     {column.render('Header')}
                     <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
+                      {column.isSorted &&
+                        (column.isSortedDesc ? (
+                          <img src={UpDownImg} alt='up' />
+                        ) : (
+                          <img src={UpDownImg} alt='down' />
+                        ))}
                     </span>
                   </th>
                 ))}
