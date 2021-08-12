@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import "./Container.css";
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import './Container.css';
 
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getApiUrl } from '../../utils/helper';
 
 toast.configure();
 
@@ -14,16 +15,16 @@ function Form({ closeModal }) {
     inputRef.current.focus();
   }, []);
 
-  const [newPractice, setNewPractice] = useState("")
+  const [newPractice, setNewPractice] = useState('');
   const [state, setState] = useState({
-    projectNameByIT: "",
-    projectManager: "",
-    email: "",
-    practice: "",
-    status: "Pending",
-    deleteReason: "",
-    restoreReason: "",
-    reshareReason: "",
+    projectNameByIT: '',
+    projectManager: '',
+    email: '',
+    practice: '',
+    status: 'Pending',
+    deleteReason: '',
+    restoreReason: '',
+    reshareReason: '',
   });
 
   function handleOnChange(e) {
@@ -33,31 +34,30 @@ function Form({ closeModal }) {
     });
   }
 
-  function handleOtherPractice(e){
+  function handleOtherPractice(e) {
     setNewPractice(e.target.value);
   }
 
   const handleReset = (e) => {
     e.preventDefault();
     setState({
-      projectNameByIT: "",
-      projectManager: "",
-      email: "",
-      practice: "",
+      projectNameByIT: '',
+      projectManager: '',
+      email: '',
+      practice: '',
     });
-    setNewPractice("");
+    setNewPractice('');
   };
 
   function ValidateEmail(inputText) {
-    
     const mailformat = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-    
+
     // const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com$/;
 
     if (inputText.match(mailformat)) {
       return true;
     } else {
-      toast.error("Invalid email ID !", {
+      toast.error('Invalid email ID !', {
         autoClose: 1800,
       });
       return false;
@@ -68,15 +68,15 @@ function Form({ closeModal }) {
     e.preventDefault();
 
     if (ValidateEmail(state.email)) {
-      if (state.practice === "Other") {
+      if (state.practice === 'Other') {
         state.practice = newPractice;
       }
       axios
-        .post("http://localhost:5000/clientInfo/email", state)
+        .post(getApiUrl(`clientInfo/email`), state)
         .then((res) => {
-          if (res.data === "success") {
+          if (res.data === 'success') {
             closeModal();
-            toast.success("Data Saved Successfully !", {
+            toast.success('Data Saved Successfully !', {
               autoClose: 2000,
             });
             console.log(state);
@@ -85,7 +85,7 @@ function Form({ closeModal }) {
               window.location.reload();
             }, 2000);
           } else {
-            toast.error("Data Saved FAILED !", {
+            toast.error('Data Saved FAILED !', {
               autoClose: 2000,
             });
             console.log(state);
@@ -98,64 +98,64 @@ function Form({ closeModal }) {
 
   return (
     <form>
-      <div className="row">
-        <div className="form-group col-md-6">
-          <label htmlFor="projectNameByIT">Project Name</label>
+      <div className='row'>
+        <div className='form-group col-md-6'>
+          <label htmlFor='projectNameByIT'>Project Name</label>
           <input
-            type="text"
+            type='text'
             ref={inputRef}
-            className="form-control"
+            className='form-control'
             onChange={handleOnChange}
-            name="projectNameByIT"
+            name='projectNameByIT'
             value={state.projectNameByIT}
           />
         </div>
 
-        <div className="form-group col-md-6">
-          <label htmlFor="projectManager">Project Manager</label>
+        <div className='form-group col-md-6'>
+          <label htmlFor='projectManager'>Project Manager</label>
           <input
-            type="text"
-            className="form-control"
+            type='text'
+            className='form-control'
             onChange={handleOnChange}
-            name="projectManager"
+            name='projectManager'
             value={state.projectManager}
           />
         </div>
       </div>
 
-      <div className="form-group col-md-12">
+      <div className='form-group col-md-12'>
         <label>Email address</label>
         <input
-          type="email"
-          className="form-control"
+          type='email'
+          className='form-control'
           onChange={handleOnChange}
-          name="email"
+          name='email'
           value={state.email}
         />
       </div>
-      <div className="row">
-        <div className="form-group col-md-6">
+      <div className='row'>
+        <div className='form-group col-md-6'>
           <label>Practice Name </label>
           <select
-            className="form-control"
+            className='form-control'
             onChange={handleOnChange}
-            name="practice"
+            name='practice'
             value={state.practice}
           >
-            <option value=""></option>
-            <option value="QA Practice">QA Practice</option>
-            <option value="Oracle Practice">Oracle Practice</option>
-            <option value="Java Practice">Java Practice</option>
-            <option value="Microsoft Practice">Microsoft Practice</option>
-            <option value="Other">Other Practice</option>
+            <option value=''></option>
+            <option value='QA Practice'>QA Practice</option>
+            <option value='Oracle Practice'>Oracle Practice</option>
+            <option value='Java Practice'>Java Practice</option>
+            <option value='Microsoft Practice'>Microsoft Practice</option>
+            <option value='Other'>Other Practice</option>
           </select>
         </div>
-        {state.practice === "Other" && (
-          <div className="form-group col-md-6">
-            <label htmlFor="projectManager">Practice / Project name</label>
+        {state.practice === 'Other' && (
+          <div className='form-group col-md-6'>
+            <label htmlFor='projectManager'>Practice / Project name</label>
             <input
-              type="text"
-              className="form-control"
+              type='text'
+              className='form-control'
               value={newPractice}
               onChange={handleOtherPractice}
               autoFocus
@@ -164,11 +164,11 @@ function Form({ closeModal }) {
         )}
       </div>
 
-      <div className="form-group row share">
-        <div className="col-md-6"></div>
-        <div className="col-md-6 text-right">
+      <div className='form-group row share'>
+        <div className='col-md-6'></div>
+        <div className='col-md-6 text-right'>
           <button
-            className="form-control btn btn-primary"
+            className='form-control btn btn-primary'
             onClick={handleReset}
           >
             Reset
@@ -178,17 +178,17 @@ function Form({ closeModal }) {
           state.projectManager &&
           state.email &&
           state.practice &&
-          (state.practice !== "Other" ||
-            (state.practice === "Other" && newPractice)) ? (
+          (state.practice !== 'Other' ||
+            (state.practice === 'Other' && newPractice)) ? (
             <button
-              className="form-control btn btn-primary share-btn"
+              className='form-control btn btn-primary share-btn'
               onClick={handleSubmit}
             >
               Share
             </button>
           ) : (
             <button
-              className="form-control btn btn-primary share-btn"
+              className='form-control btn btn-primary share-btn'
               onClick={handleSubmit}
               disabled
             >
