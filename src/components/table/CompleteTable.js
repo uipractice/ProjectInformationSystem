@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function CompleteTable({ data }) {
   const [filteredData, setFilteredData] = useState([]);
+  const [searchValue, setSearchValue] = useState();
 
   const [rowOriginal, setRowOriginal] = useState({});
 
@@ -47,23 +48,34 @@ function CompleteTable({ data }) {
   const classes = useStyles();
 
   useEffect(() => {
-    let filterResult = data.filter((row) => row.status !== 'Deleted');
-    setFilteredData(filterResult);
+    setDefaultFilterData(data);
   }, [data]);
+
+  const setDefaultFilterData = (data) => {
+    if (data?.length) {
+      let filterResult = data.filter((row) => row.status !== 'Deleted');
+      setFilteredData(addSerialNo(filterResult));
+    }
+  };
+
+  const addSerialNo = (dataArr = [], tableFilter = false) => {
+    return dataArr?.map((value, index) => ({
+      ...(tableFilter ? value.original : value),
+      serial: index + 1,
+    }));
+  };
 
   function handleSelectedStatus(selectedState) {
     console.log('SelectedState value: ', selectedState);
     console.log('Data dot status value: ', data.status);
     console.log('Data value: ', data);
-    if (selectedState === 'Active') {
-      let filterResult = data.filter((row) => row.status !== 'Deleted');
-      setFilteredData(filterResult);
-    } else if (selectedState === 'All Project') {
-      setFilteredData(data);
-    } else {
-      let filterResult = data.filter((row) => row.status === selectedState);
-      setFilteredData(filterResult);
-    }
+    let filterResult = data;
+    if (selectedState === 'Active')
+      filterResult = data.filter((row) => row.status !== 'Deleted');
+    else if (selectedState === 'All Project') filterResult = data;
+    else filterResult = data.filter((row) => row.status === selectedState);
+
+    setFilteredData(addSerialNo(filterResult));
   }
 
   function handleInputChange(evt) {
@@ -91,10 +103,6 @@ function CompleteTable({ data }) {
       })
       .catch((err) => console.log(err.response));
   };
-
-  filteredData.forEach((value, index) => {
-    value.serial = index + 1;
-  });
 
   const columns = React.useMemo(
     () => [
@@ -222,6 +230,7 @@ function CompleteTable({ data }) {
     prepareRow,
     state,
     setGlobalFilter,
+    rows: filteredTableData,
   } = useTable(
     { columns, data: filteredData, initialState: { pageSize: 7 } },
     useGlobalFilter,
@@ -231,13 +240,24 @@ function CompleteTable({ data }) {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
+  useEffect(() => {
+    if (filteredTableData?.length && globalFilter && searchValue)
+      setFilteredData(addSerialNo(filteredTableData, true));
+    else if (searchValue === '') setFilteredData(addSerialNo(data));
+  }, [searchValue]);
+
   return (
     <>
       <br></br>
       <div className='filter-row'>
         <h5>PROJECTS DETAILS</h5>
         <div>
-          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          <GlobalFilter
+            setFilter={(value) => {
+              setGlobalFilter(value);
+              setSearchValue(value);
+            }}
+          />
 
           <FormControl className={classes.formControl}>
             <Select
