@@ -382,7 +382,17 @@ function ViewForm() {
 
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label> Download the Files attached </Form.Label>
-                      <Button onClick={handleDownload}> Download</Button>
+                      <Button
+                        style={{
+                          width: '120px',
+                          fontSize: '14px',
+                          lineHeight: '19px',
+                          marginLeft: '10px',
+                        }}
+                        onClick={handleDownload}
+                      >
+                        Download
+                      </Button>
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: '40px' }}>
