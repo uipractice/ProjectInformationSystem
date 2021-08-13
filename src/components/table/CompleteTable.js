@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DeleteImg from '../../assets/images/delete.svg';
+import DeleteImg from '../../assets/images/Delete.svg';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -235,7 +235,7 @@ function CompleteTable({ data }) {
     <>
       <br></br>
       <div className='filter-row'>
-        <h5>PROJECTS DETAILS</h5>
+        <h5>PROJECT DETAILS</h5>
         <div>
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
