@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
 
 function GlobalFilter({ setFilter }) {
+  const [searchText, setSearchText] = useState();
   const onChange = useAsyncDebounce((value) => {
     setFilter(value);
   }, 1000);
@@ -9,11 +10,12 @@ function GlobalFilter({ setFilter }) {
     <span>
       <input
         onChange={(e) => {
+          setSearchText(e.target.value);
           onChange(e.target.value);
         }}
         type='search'
         placeholder='Search'
-        className={value ? 'searchClose' : ''}
+        className={searchText ? 'searchClose' : ''}
       />
       <button
         type='reset'

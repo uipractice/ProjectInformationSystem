@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DeleteImg from '../../assets/images/Delete.svg';
+import DeleteImg from '../../assets/images/delete.svg';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
