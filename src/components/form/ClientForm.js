@@ -1,90 +1,91 @@
-import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import Footer from "../admin/Footer";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import NavBar from "../admin/NavBar";
+import React, { useState, useEffect } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import Footer from '../admin/Footer';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import NavBar from '../admin/NavBar';
+import { getApiUrl } from '../utils/helper';
 toast.configure();
 
 function ClientForm() {
   const { id } = useParams();
-  const [prevStatus, setPrevStatus] = useState("");
-  const [prevProjectName, setPrevProjectName] = useState("");
+  const [prevStatus, setPrevStatus] = useState('');
+  const [prevProjectName, setPrevProjectName] = useState('');
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/clientInfo/${id}`)
+      .get(getApiUrl(`clientInfo/${id}`))
       .then((res) => {
         setPrevStatus(res.data.status); // Don't allow form submittion for Pending or Deleted Project
         setPrevProjectName(res.data.projectNameByIT);
       })
       .catch((err) => {
-        console.log("Failed to get the status: ", err.response);
+        console.log('Failed to get the status: ', err.response);
       });
   }, [id, prevProjectName, prevStatus]);
 
-  const [fileData, setFileData] = useState("");
+  const [fileData, setFileData] = useState('');
 
   const [state, setState] = useState({
-    projectName: "",
+    projectName: '',
 
-    securityMeasure: "",
+    securityMeasure: '',
 
-    informIT: "",
+    informIT: '',
 
-    workStationValue: ["laptop", "VM", "cloud"],
-    workStationFirstBtn: "outline-info",
-    workStationSecondBtn: "outline-info",
-    workStationThirdBtn: "outline-info",
-    workStationSelected: "",
+    workStationValue: ['laptop', 'VM', 'cloud'],
+    workStationFirstBtn: 'outline-info',
+    workStationSecondBtn: 'outline-info',
+    workStationThirdBtn: 'outline-info',
+    workStationSelected: '',
 
-    devTypeValue: ["Local", "Cloud Plateform", "Client Plateform"],
-    devTypeFirstBtn: "outline-info",
-    devTypeSecondBtn: "outline-info",
-    devTypeThirdBtn: "outline-info",
-    devTypeSelected: "",
+    devTypeValue: ['Local', 'Cloud Plateform', 'Client Plateform'],
+    devTypeFirstBtn: 'outline-info',
+    devTypeSecondBtn: 'outline-info',
+    devTypeThirdBtn: 'outline-info',
+    devTypeSelected: '',
 
-    allowedWebsite: "",
+    allowedWebsite: '',
 
-    isNDAsigned: "",
-    NDAsignedFirst: "outline-info",
-    NDAsignedSecond: "outline-info",
+    isNDAsigned: '',
+    NDAsignedFirst: 'outline-info',
+    NDAsignedSecond: 'outline-info',
 
-    isGDPRcompliance: "",
-    GDPRcomplianceFirst: "outline-info",
-    GDPRcomplianceSecond: "outline-info",
+    isGDPRcompliance: '',
+    GDPRcomplianceFirst: 'outline-info',
+    GDPRcomplianceSecond: 'outline-info',
 
-    isCyberSecConducted: "",
-    CyberSecConductedFirst: "outline-info",
-    CyberSecConductedSecond: "outline-info",
+    isCyberSecConducted: '',
+    CyberSecConductedFirst: 'outline-info',
+    CyberSecConductedSecond: 'outline-info',
 
-    securityBreach: "",
+    securityBreach: '',
 
-    isDisasterInsuCovered: "",
-    DisasterInsuCoveredFirst: "outline-info",
-    DisasterInsuCoveredSecond: "outline-info",
-    disasterDetails: "",
+    isDisasterInsuCovered: '',
+    DisasterInsuCoveredFirst: 'outline-info',
+    DisasterInsuCoveredSecond: 'outline-info',
+    disasterDetails: '',
     showInsuranceDetails: false,
 
-    isIsolatedEnvReq: "",
-    IsolatedEnvReqFirst: "outline-info",
-    IsolatedEnvReqSecond: "outline-info",
-    isolationDetails: "",
+    isIsolatedEnvReq: '',
+    IsolatedEnvReqFirst: 'outline-info',
+    IsolatedEnvReqSecond: 'outline-info',
+    isolationDetails: '',
     showIsolatedDetails: false,
 
-    isDLPreq: "",
-    DLPreqFirst: "outline-info",
-    DLPreqSecond: "outline-info",
+    isDLPreq: '',
+    DLPreqFirst: 'outline-info',
+    DLPreqSecond: 'outline-info',
 
-    isClientEmailProvided: "",
-    ClientEmailProvidedFirst: "outline-info",
-    ClientEmailProvidedSecond: "outline-info",
+    isClientEmailProvided: '',
+    ClientEmailProvidedFirst: 'outline-info',
+    ClientEmailProvidedSecond: 'outline-info',
   });
 
   function SubmitButton() {
@@ -104,42 +105,42 @@ function ClientForm() {
     ) {
       return (
         <Button
-          variant="primary"
-          className="submit-btn"
+          variant='primary'
+          className='submit-btn'
           onClick={(e) => handleSubmitForm(e)}
           style={{
-            marginTop: "20px",
-            marginBottom: "20px",
-            width: "130px",
+            marginTop: '20px',
+            marginBottom: '20px',
+            width: '130px',
           }}
         >
-          {" "}
-          Submit{" "}
+          {' '}
+          Submit{' '}
         </Button>
       );
     } else {
       return (
         <Button
           disabled
-          variant="primary"
-          className="submit-btn"
+          variant='primary'
+          className='submit-btn'
           style={{
-            marginTop: "20px",
-            marginBottom: "20px",
-            width: "130px",
+            marginTop: '20px',
+            marginBottom: '20px',
+            width: '130px',
           }}
         >
-          {" "}
-          Submit{" "}
+          {' '}
+          Submit{' '}
         </Button>
       );
     }
   }
 
-  function handleClearFiles(){
-    setFileData("");
-    document.getElementById('emptyMe').value= null;
-    document.getElementById('emptyMe').value= "";
+  function handleClearFiles() {
+    setFileData('');
+    document.getElementById('emptyMe').value = null;
+    document.getElementById('emptyMe').value = '';
   }
 
   function handleSubmitForm(e) {
@@ -163,32 +164,30 @@ function ClientForm() {
       showIsolatedDetails: state.showIsolatedDetails,
       isDLPreq: state.isDLPreq,
       isClientEmailProvided: state.isClientEmailProvided,
-    }; 
+    };
 
     axios
-      .post(`http://localhost:5000/clientInfo/mailAndUpdate/${id}`, postObj)
+      .post(getApiUrl(`clientInfo/mailAndUpdate/${id}`), postObj)
       .then((res) => {
-        console.log("Form saved successfully : ", res.data);
+        console.log('Form saved successfully : ', res.data);
       })
       .catch((err) => {
-        console.log("Failed to Save Form : ", err.response);
+        console.log('Failed to Save Form : ', err.response);
       });
 
-    if(fileData){
+    if (fileData) {
       const formData = new FormData();
-      formData.append("fileName", fileData);
+      formData.append('fileName', fileData);
       axios
-        .post(`http://localhost:5000/multiple/${id}`, formData)
+        .post(getApiUrl(`multiple/${id}`), formData)
         .then((res) => {
-          console.log("Files Uploaded : ", res.data);
+          console.log('Files Uploaded : ', res.data);
         })
         .catch((err) => {
-          console.log("Error in Upload : ", err);
+          console.log('Error in Upload : ', err);
         });
     }
-  
   }
-
 
   function handlePlainText(e) {
     setState({
@@ -199,18 +198,18 @@ function ClientForm() {
 
   function handleClientEmailProvided(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setState({
         ...state,
-        ClientEmailProvidedFirst: "info",
-        ClientEmailProvidedSecond: "outline-info",
+        ClientEmailProvidedFirst: 'info',
+        ClientEmailProvidedSecond: 'outline-info',
         isClientEmailProvided: val,
       });
-    } else if (val === "No") {
+    } else if (val === 'No') {
       setState({
         ...state,
-        ClientEmailProvidedFirst: "outline-info",
-        ClientEmailProvidedSecond: "info",
+        ClientEmailProvidedFirst: 'outline-info',
+        ClientEmailProvidedSecond: 'info',
         isClientEmailProvided: val,
       });
     }
@@ -218,18 +217,18 @@ function ClientForm() {
 
   function handleDLPreq(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setState({
         ...state,
-        DLPreqFirst: "info",
-        DLPreqSecond: "outline-info",
+        DLPreqFirst: 'info',
+        DLPreqSecond: 'outline-info',
         isDLPreq: val,
       });
-    } else if (val === "No") {
+    } else if (val === 'No') {
       setState({
         ...state,
-        DLPreqFirst: "outline-info",
-        DLPreqSecond: "info",
+        DLPreqFirst: 'outline-info',
+        DLPreqSecond: 'info',
         isDLPreq: val,
       });
     }
@@ -237,19 +236,19 @@ function ClientForm() {
 
   function handleIsolatedEnvReq(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setState({
         ...state,
-        IsolatedEnvReqFirst: "info",
-        IsolatedEnvReqSecond: "outline-info",
+        IsolatedEnvReqFirst: 'info',
+        IsolatedEnvReqSecond: 'outline-info',
         isIsolatedEnvReq: val,
         showIsolatedDetails: true,
       });
-    } else if (val === "No") {
+    } else if (val === 'No') {
       setState({
         ...state,
-        IsolatedEnvReqFirst: "outline-info",
-        IsolatedEnvReqSecond: "info",
+        IsolatedEnvReqFirst: 'outline-info',
+        IsolatedEnvReqSecond: 'info',
         isIsolatedEnvReq: val,
         showIsolatedDetails: false,
       });
@@ -258,19 +257,19 @@ function ClientForm() {
 
   function handleDisasterInsuCovered(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setState({
         ...state,
-        DisasterInsuCoveredFirst: "info",
-        DisasterInsuCoveredSecond: "outline-info",
+        DisasterInsuCoveredFirst: 'info',
+        DisasterInsuCoveredSecond: 'outline-info',
         isDisasterInsuCovered: val,
         showInsuranceDetails: true,
       });
-    } else if (val === "No") {
+    } else if (val === 'No') {
       setState({
         ...state,
-        DisasterInsuCoveredFirst: "outline-info",
-        DisasterInsuCoveredSecond: "info",
+        DisasterInsuCoveredFirst: 'outline-info',
+        DisasterInsuCoveredSecond: 'info',
         isDisasterInsuCovered: val,
         showInsuranceDetails: false,
       });
@@ -279,18 +278,18 @@ function ClientForm() {
 
   function handleCyberSecConducted(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setState({
         ...state,
-        CyberSecConductedFirst: "info",
-        CyberSecConductedSecond: "outline-info",
+        CyberSecConductedFirst: 'info',
+        CyberSecConductedSecond: 'outline-info',
         isCyberSecConducted: val,
       });
-    } else if (val === "No") {
+    } else if (val === 'No') {
       setState({
         ...state,
-        CyberSecConductedFirst: "outline-info",
-        CyberSecConductedSecond: "info",
+        CyberSecConductedFirst: 'outline-info',
+        CyberSecConductedSecond: 'info',
         isCyberSecConducted: val,
       });
     }
@@ -299,28 +298,28 @@ function ClientForm() {
   function handleWorkStation(evt) {
     const val = evt.target.value;
 
-    if (val === "laptop") {
+    if (val === 'laptop') {
       setState({
         ...state,
-        workStationFirstBtn: "info",
-        workStationSecondBtn: "outline-info",
-        workStationThirdBtn: "outline-info",
+        workStationFirstBtn: 'info',
+        workStationSecondBtn: 'outline-info',
+        workStationThirdBtn: 'outline-info',
         workStationSelected: val,
       });
-    } else if (val === "VM") {
+    } else if (val === 'VM') {
       setState({
         ...state,
-        workStationFirstBtn: "outline-info",
-        workStationSecondBtn: "info",
-        workStationThirdBtn: "outline-info",
+        workStationFirstBtn: 'outline-info',
+        workStationSecondBtn: 'info',
+        workStationThirdBtn: 'outline-info',
         workStationSelected: val,
       });
-    } else if (val === "cloud") {
+    } else if (val === 'cloud') {
       setState({
         ...state,
-        workStationFirstBtn: "outline-info",
-        workStationSecondBtn: "outline-info",
-        workStationThirdBtn: "info",
+        workStationFirstBtn: 'outline-info',
+        workStationSecondBtn: 'outline-info',
+        workStationThirdBtn: 'info',
         workStationSelected: val,
       });
     }
@@ -328,37 +327,37 @@ function ClientForm() {
 
   function handleNDAsigned(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setState({
         ...state,
-        NDAsignedFirst: "info",
-        NDAsignedSecond: "outline-info",
-        isNDAsigned: "Yes",
+        NDAsignedFirst: 'info',
+        NDAsignedSecond: 'outline-info',
+        isNDAsigned: 'Yes',
       });
-    } else if (val === "No") {
+    } else if (val === 'No') {
       setState({
         ...state,
-        NDAsignedFirst: "outline-info",
-        NDAsignedSecond: "info",
-        isNDAsigned: "No",
+        NDAsignedFirst: 'outline-info',
+        NDAsignedSecond: 'info',
+        isNDAsigned: 'No',
       });
     }
   }
 
   function handleGDPRcompliance(evt) {
     const val = evt.target.name;
-    if (val === "Yes") {
+    if (val === 'Yes') {
       setState({
         ...state,
-        GDPRcomplianceFirst: "info",
-        GDPRcomplianceSecond: "outline-info",
+        GDPRcomplianceFirst: 'info',
+        GDPRcomplianceSecond: 'outline-info',
         isGDPRcompliance: val,
       });
-    } else if (val === "No") {
+    } else if (val === 'No') {
       setState({
         ...state,
-        GDPRcomplianceFirst: "outline-info",
-        GDPRcomplianceSecond: "info",
+        GDPRcomplianceFirst: 'outline-info',
+        GDPRcomplianceSecond: 'info',
         isGDPRcompliance: val,
       });
     }
@@ -367,330 +366,325 @@ function ClientForm() {
   function handleDevType(evt) {
     const val = evt.target.value;
 
-    if (val === "Local") {
+    if (val === 'Local') {
       setState({
         ...state,
-        devTypeFirstBtn: "info",
-        devTypeSecondBtn: "outline-info",
-        devTypeThirdBtn: "outline-info",
+        devTypeFirstBtn: 'info',
+        devTypeSecondBtn: 'outline-info',
+        devTypeThirdBtn: 'outline-info',
         devTypeSelected: val,
       });
-    } else if (val === "Cloud Plateform") {
+    } else if (val === 'Cloud Plateform') {
       setState({
         ...state,
-        devTypeFirstBtn: "outline-info",
-        devTypeSecondBtn: "info",
-        devTypeThirdBtn: "outline-info",
+        devTypeFirstBtn: 'outline-info',
+        devTypeSecondBtn: 'info',
+        devTypeThirdBtn: 'outline-info',
         devTypeSelected: val,
       });
-    } else if (val === "Client Plateform") {
+    } else if (val === 'Client Plateform') {
       setState({
         ...state,
-        devTypeFirstBtn: "outline-info",
-        devTypeSecondBtn: "outline-info",
-        devTypeThirdBtn: "info",
+        devTypeFirstBtn: 'outline-info',
+        devTypeSecondBtn: 'outline-info',
+        devTypeThirdBtn: 'info',
         devTypeSelected: val,
       });
     }
   }
 
-
-
   return (
     <div>
       <NavBar validate={false} />
 
-      <div className="custom-scroll">
+      <div className='custom-scroll'>
         <Container>
           <Row>
             <Col md={{ span: 6, offset: 2 }}>
-              <div style={{ width: "700px" }} className="project-details-form">
+              <div style={{ width: '700px' }} className='project-details-form'>
                 <h2> Project Details </h2>
-                {prevStatus === "Pending" && prevStatus !== "deleted" ? (
-                  
+                {prevStatus === 'Pending' && prevStatus !== 'deleted' ? (
                   <Form>
-
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Name of the project or client</Form.Label>
                       <Form.Control
-                        name="prevProjectName"
+                        name='prevProjectName'
                         value={prevProjectName}
                         onChange={(e) => setPrevProjectName(e.target.value)}
                       />
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Choose files to upload </Form.Label>
                       <br></br>
                       <input
-                        type="file"
-                        name="fileName"
-                        id="emptyMe"
-                        accept="*.*"
+                        type='file'
+                        name='fileName'
+                        id='emptyMe'
+                        accept='*.*'
                         multiple
                         onChange={(e) => setFileData(e.target.files[0])}
                       />
-                      <Button onClick={handleClearFiles}> Clear Files</Button> {" "}
-                    
+                      <Button onClick={handleClearFiles}> Clear Files</Button>{' '}
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Security measures from client side
                       </Form.Label>
                       <Form.Control
-                        name="securityMeasure"
+                        name='securityMeasure'
                         onChange={handlePlainText}
                         autoFocus={true}
                       />
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Information to IT at the time of project kick-off
                       </Form.Label>
                       <Form.Control
-                        name="informIT"
+                        name='informIT'
                         onChange={handlePlainText}
                       />
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
-                        Work stations type provided in Evoke{" "}
+                        Work stations type provided in Evoke{' '}
                       </Form.Label>
-                      <Form.Group style={{ marginBottom: "30px" }}>
+                      <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
-                          size="sm"
-                          className="btn-padding"
+                          size='sm'
+                          className='btn-padding'
                           variant={state.workStationFirstBtn}
                           onClick={handleWorkStation}
                           value={state.workStationValue[0]}
-                          style={{ marginRight: "15px", width: "100px" }}
+                          style={{ marginRight: '15px', width: '100px' }}
                         >
-                          {" "}
+                          {' '}
                           Laptop
                         </Button>
 
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.workStationSecondBtn}
                           onClick={handleWorkStation}
                           value={state.workStationValue[1]}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           VM
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.workStationThirdBtn}
                           onClick={handleWorkStation}
                           value={state.workStationValue[2]}
-                          style={{ marginRight: "15px", width: "90px" }}
+                          style={{ marginRight: '15px', width: '90px' }}
                         >
-                          {" "}
+                          {' '}
                           Cloud
                         </Button>
                       </Form.Group>
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label> Development type </Form.Label>
-                      <Form.Group style={{ marginBottom: "30px" }}>
+                      <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.devTypeFirstBtn}
                           onClick={handleDevType}
                           value={state.devTypeValue[0]}
-                          style={{ marginRight: "15px", width: "90px" }}
+                          style={{ marginRight: '15px', width: '90px' }}
                         >
-                          {" "}
+                          {' '}
                           Local
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.devTypeSecondBtn}
                           onClick={handleDevType}
                           value={state.devTypeValue[1]}
-                          style={{ marginRight: "15px", width: "150px" }}
-                          className="btn-padding"
+                          style={{ marginRight: '15px', width: '150px' }}
+                          className='btn-padding'
                         >
-                          {" "}
+                          {' '}
                           Cloud Plateform
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.devTypeThirdBtn}
                           onClick={handleDevType}
                           value={state.devTypeValue[2]}
-                          style={{ marginRight: "15px", width: "150px" }}
-                          className="btn-padding"
+                          style={{ marginRight: '15px', width: '150px' }}
+                          className='btn-padding'
                         >
-                          {" "}
+                          {' '}
                           Client Plateform
                         </Button>
                       </Form.Group>
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Website(s) need to be allowed</Form.Label>
                       <Form.Control
-                        name="allowedWebsite"
+                        name='allowedWebsite'
                         onChange={handlePlainText}
                       />
-                      <Form.Text className="text-muted">
-                        {" "}
+                      <Form.Text className='text-muted'>
+                        {' '}
                         Use comma(,) to saperate multiple URLs, eg-
-                        https://www.evoketechnologies.com/, 2nd URL{" "}
+                        https://www.evoketechnologies.com/, 2nd URL{' '}
                       </Form.Text>
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
-                        NDA/DPA (Data Privacy Agreement) signed ?{" "}
+                        NDA/DPA (Data Privacy Agreement) signed ?{' '}
                       </Form.Label>
-                      <Form.Group style={{ marginBottom: "30px" }}>
+                      <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.NDAsignedFirst}
-                          name="Yes"
+                          name='Yes'
                           onClick={handleNDAsigned}
                           value={state.NDAsignedFirst}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           Yes
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.NDAsignedSecond}
-                          name="No"
+                          name='No'
                           onClick={handleNDAsigned}
                           value={state.NDAsignedSecond}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           No
                         </Button>
                       </Form.Group>
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Did all the project related documents (security, GDPR
-                        complaiance and MSA) are collected from client ?{" "}
+                        complaiance and MSA) are collected from client ?{' '}
                       </Form.Label>
-                      <Form.Group style={{ marginBottom: "30px" }}>
+                      <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.GDPRcomplianceFirst}
-                          name="Yes"
+                          name='Yes'
                           onClick={handleGDPRcompliance}
                           value={state.GDPRcomplianceFirst}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           Yes
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.GDPRcomplianceSecond}
-                          name="No"
+                          name='No'
                           onClick={handleGDPRcompliance}
                           value={state.GDPRcomplianceSecond}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           No
                         </Button>
                       </Form.Group>
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Cyber security induction meeting conducted with client
                         as well as in house (importance of data security to
-                        followed by all users) ?{" "}
+                        followed by all users) ?{' '}
                       </Form.Label>
-                      <Form.Group style={{ marginBottom: "30px" }}>
+                      <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.CyberSecConductedFirst}
-                          name="Yes"
+                          name='Yes'
                           onClick={handleCyberSecConducted}
                           value={state.CyberSecConductedFirst}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           Yes
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.CyberSecConductedSecond}
-                          name="No"
+                          name='No'
                           onClick={handleCyberSecConducted}
                           value={state.CyberSecConductedSecond}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           No
                         </Button>
                       </Form.Group>
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Any project risks identified in the course of interims
                         of security breach or calamities ?
                       </Form.Label>
                       <Form.Control
-                        name="securityBreach"
+                        name='securityBreach'
                         onChange={handlePlainText}
                       />
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
-                        Insurance coverage in case of disater issues ?{" "}
+                        Insurance coverage in case of disater issues ?{' '}
                       </Form.Label>
-                      <Form.Group style={{ marginBottom: "30px" }}>
+                      <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.DisasterInsuCoveredFirst}
-                          name="Yes"
+                          name='Yes'
                           onClick={handleDisasterInsuCovered}
                           value={state.DisasterInsuCoveredFirst}
                           style={{
-                            marginRight: "15px",
-                            marginBottom: "15px",
-                            width: "80px",
+                            marginRight: '15px',
+                            marginBottom: '15px',
+                            width: '80px',
                           }}
                         >
-                          {" "}
+                          {' '}
                           Yes
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.DisasterInsuCoveredSecond}
-                          name="No"
+                          name='No'
                           onClick={handleDisasterInsuCovered}
                           value={state.DisasterInsuCoveredSecond}
-                          style={{ marginBottom: "15px", width: "80px" }}
+                          style={{ marginBottom: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           No
                         </Button>
                         {state.showInsuranceDetails && (
                           <div>
                             <Form.Label>
-                              {" "}
+                              {' '}
                               Details for insurance company coverage terms and
                               insurance company spoc
                             </Form.Label>
 
                             <Form.Control
-                              name="disasterDetails"
+                              name='disasterDetails'
                               onChange={handlePlainText}
                             />
                           </div>
@@ -698,53 +692,53 @@ function ClientForm() {
                       </Form.Group>
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
-                        {" "}
-                        Does client need any isolated environment requirement ?{" "}
+                        {' '}
+                        Does client need any isolated environment requirement ?{' '}
                       </Form.Label>
-                      <Form.Group style={{ marginBottom: "30px" }}>
+                      <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.IsolatedEnvReqFirst}
-                          name="Yes"
+                          name='Yes'
                           onClick={handleIsolatedEnvReq}
                           value={state.IsolatedEnvReqFirst}
                           style={{
-                            marginRight: "15px",
-                            marginBottom: "15px",
-                            width: "80px",
+                            marginRight: '15px',
+                            marginBottom: '15px',
+                            width: '80px',
                           }}
                         >
-                          {" "}
+                          {' '}
                           Yes
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.IsolatedEnvReqSecond}
-                          name="No"
+                          name='No'
                           onClick={handleIsolatedEnvReq}
                           value={state.IsolatedEnvReqSecond}
                           style={{
-                            marginRight: "15px",
-                            marginBottom: "15px",
-                            width: "80px",
+                            marginRight: '15px',
+                            marginBottom: '15px',
+                            width: '80px',
                           }}
                         >
-                          {" "}
+                          {' '}
                           No
                         </Button>
 
                         {state.showIsolatedDetails && (
                           <div>
                             <Form.Label>
-                              {" "}
+                              {' '}
                               Details of physical isolation of network, physical
                               isolation for workspace, DLP etc
                             </Form.Label>
 
                             <Form.Control
-                              name="isolationDetails"
+                              name='isolationDetails'
                               onChange={handlePlainText}
                             />
                           </div>
@@ -752,32 +746,32 @@ function ClientForm() {
                       </Form.Group>
                     </Form.Group>
 
-                    <Form.Group style={{ marginBottom: "40px" }}>
+                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Does client require DLP/Encryption enabled laptops for
-                        their users ?{" "}
+                        their users ?{' '}
                       </Form.Label>
-                      <Form.Group style={{ marginBottom: "30px" }}>
+                      <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.DLPreqFirst}
-                          name="Yes"
+                          name='Yes'
                           onClick={handleDLPreq}
                           value={state.DLPreqFirst}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           Yes
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.DLPreqSecond}
-                          name="No"
+                          name='No'
                           onClick={handleDLPreq}
                           value={state.DLPreqSecond}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           No
                         </Button>
                       </Form.Group>
@@ -786,29 +780,29 @@ function ClientForm() {
                     <Form.Group>
                       <Form.Label>
                         Is client providing Email services to user for regular
-                        business communication ?{" "}
+                        business communication ?{' '}
                       </Form.Label>
                       <Form.Group>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.ClientEmailProvidedFirst}
-                          name="Yes"
+                          name='Yes'
                           onClick={handleClientEmailProvided}
                           value={state.ClientEmailProvidedFirst}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           Yes
                         </Button>
                         <Button
-                          size="sm"
+                          size='sm'
                           variant={state.ClientEmailProvidedSecond}
-                          name="No"
+                          name='No'
                           onClick={handleClientEmailProvided}
                           value={state.ClientEmailProvidedSecond}
-                          style={{ marginRight: "15px", width: "80px" }}
+                          style={{ marginRight: '15px', width: '80px' }}
                         >
-                          {" "}
+                          {' '}
                           No
                         </Button>
                       </Form.Group>
@@ -816,15 +810,15 @@ function ClientForm() {
 
                     <Button
                       onClick={() => window.location.reload()}
-                      className="reshare"
+                      className='reshare'
                       style={{
-                        marginTop: "20px",
-                        marginBottom: "20px",
-                        marginRight: "15px",
-                        width: "130px",
+                        marginTop: '20px',
+                        marginBottom: '20px',
+                        marginRight: '15px',
+                        width: '130px',
                       }}
                     >
-                      {" "}
+                      {' '}
                       Reset
                     </Button>
                     <SubmitButton />
@@ -833,7 +827,7 @@ function ClientForm() {
                 ) : (
                   <div
                     style={{
-                      padding: "140px",
+                      padding: '140px',
                     }}
                   >
                     Thank you for your time ! <br />

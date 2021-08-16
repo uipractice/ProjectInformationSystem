@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from "react";
-import DeleteImg from "../../assets/images/delete.svg";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import Modal from "react-modal";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from 'react';
+import DeleteImg from '../../assets/images/delete.svg';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Modal from 'react-modal';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import UpDownImg from '../../assets/images/sorting.svg';
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination,
-} from "react-table";
-import { format } from "date-fns";
-import "./table.css";
-import GlobalFilter from "./GlobalFilter";
+} from 'react-table';
+import { format } from 'date-fns';
+import './table.css';
+import GlobalFilter from './GlobalFilter';
 
-import rightIcon from "../../assets/images/right-icon.svg";
-import leftIcon from "../../assets/images/left-icon.svg";
+import rightIcon from '../../assets/images/right-icon.svg';
+import leftIcon from '../../assets/images/left-icon.svg';
 
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getApiUrl } from '../utils/helper';
 
 toast.configure();
 
-Modal.setAppElement("#root");
+Modal.setAppElement('#root');
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -36,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function CompleteTable({ data }) {
-
   const [filteredData, setFilteredData] = useState([]);
+  const [searchValue, setSearchValue] = useState();
 
   const [rowOriginal, setRowOriginal] = useState({});
 
@@ -46,23 +48,34 @@ function CompleteTable({ data }) {
   const classes = useStyles();
 
   useEffect(() => {
-    let filterResult = data.filter((row) => row.status !== "Deleted");
-    setFilteredData(filterResult);
+    setDefaultFilterData(data);
   }, [data]);
 
-  function handleSelectedStatus(selectedState) {
-    console.log("SelectedState value: ", selectedState);
-    console.log("Data dot status value: ", data.status);
-    console.log("Data value: ", data);
-    if (selectedState === "Active") {
-      let filterResult = data.filter((row) => row.status !== "Deleted");
-      setFilteredData(filterResult);
-    } else if (selectedState === "All Project") {
-      setFilteredData(data);
-    } else {
-      let filterResult = data.filter((row) => row.status === selectedState);
-      setFilteredData(filterResult);
+  const setDefaultFilterData = (data) => {
+    if (data?.length) {
+      let filterResult = data.filter((row) => row.status !== 'Deleted');
+      setFilteredData(addSerialNo(filterResult));
     }
+  };
+
+  const addSerialNo = (dataArr = [], tableFilter = false) => {
+    return dataArr?.map((value, index) => ({
+      ...(tableFilter ? value.original : value),
+      serial: index + 1,
+    }));
+  };
+
+  function handleSelectedStatus(selectedState) {
+    console.log('SelectedState value: ', selectedState);
+    console.log('Data dot status value: ', data.status);
+    console.log('Data value: ', data);
+    let filterResult = data;
+    if (selectedState === 'Active')
+      filterResult = data.filter((row) => row.status !== 'Deleted');
+    else if (selectedState === 'All Project') filterResult = data;
+    else filterResult = data.filter((row) => row.status === selectedState);
+
+    setFilteredData(addSerialNo(filterResult));
   }
 
   function handleInputChange(evt) {
@@ -77,12 +90,9 @@ function CompleteTable({ data }) {
     rowOriginal.status = 'Deleted';
     const id = rowOriginal._id;
     axios
-      .post(
-        `${process.env.REACT_APP_BASE_API_ROUTE}/deleteStatus/` + id,
-        rowOriginal
-      )
+      .post(getApiUrl(`clientInfo/deleteStatus/${id}`), rowOriginal)
       .then((res) => {
-        toast.warn('Record has been deleted successfully', {
+        toast.warn('Record has been marked DELETED !', {
           autoClose: 2900,
         });
         setIsModalOpen(false);
@@ -94,21 +104,19 @@ function CompleteTable({ data }) {
       .catch((err) => console.log(err.response));
   };
 
-  filteredData.forEach((value, index) => {
-    value.serial = index + 1;
-  });
-
   const columns = React.useMemo(
     () => [
       {
         Header: 'SL.NO',
         accessor: 'serial',
         // filterable: false,
+        width: 102,
       },
 
       {
         Header: 'PROJECT NAME',
         accessor: 'projectNameByIT',
+        width: 231,
         Cell: ({ row }) => {
           return (
             <Link
@@ -154,26 +162,30 @@ function CompleteTable({ data }) {
       {
         Header: 'PROJECT MANAGER',
         accessor: 'projectManager',
+        width: 230,
         sticky: 'left',
       },
       {
         Header: 'PRACTICE NAME',
         accessor: 'practice',
         sticky: 'left',
+        width: 200,
       },
       {
         Header: 'ASSIGN DATE',
         accessor: 'createdAt',
+        width: 167,
         Cell: ({ value }) => {
           return format(new Date(value), 'dd/MM/yyyy');
         },
-        maxWidth: 200,
-        minWidth: 80,
-        width: 100,
+        // maxWidth: 200,
+        // minWidth: 80,
+        // width: 100,
       },
       {
         Header: 'UPDATED DATE',
         accessor: 'updatedAt',
+        width: 187,
         Cell: ({ value }) => {
           return format(new Date(value), 'dd/MM/yyyy');
         },
@@ -181,9 +193,11 @@ function CompleteTable({ data }) {
       {
         Header: 'STATUS',
         accessor: 'status',
+        width: 150,
       },
       {
         Header: 'ACTION',
+        width: 120,
         Cell: ({ row }) => (
           <a
             {...(row.original.status === 'Deleted'
@@ -216,6 +230,7 @@ function CompleteTable({ data }) {
     prepareRow,
     state,
     setGlobalFilter,
+    rows: filteredTableData,
   } = useTable(
     { columns, data: filteredData, initialState: { pageSize: 7 } },
     useGlobalFilter,
@@ -225,13 +240,24 @@ function CompleteTable({ data }) {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
+  useEffect(() => {
+    if (filteredTableData?.length && globalFilter && searchValue)
+      setFilteredData(addSerialNo(filteredTableData, true));
+    else if (searchValue === '') setFilteredData(addSerialNo(data));
+  }, [searchValue]);
+
   return (
     <>
       <br></br>
       <div className='filter-row'>
-        <h5>PROJECTS DETAILS</h5>
+        <h5>PROJECT DETAILS</h5>
         <div>
-          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          <GlobalFilter
+            setFilter={(value) => {
+              setGlobalFilter(value);
+              setSearchValue(value);
+            }}
+          />
 
           <FormControl className={classes.formControl}>
             <Select
@@ -331,16 +357,23 @@ function CompleteTable({ data }) {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps(
-                      column.getSortByToggleProps({ title: undefined })
+                      column.getSortByToggleProps({
+                        title: undefined,
+                        style: {
+                          minWidth: column.minWidth,
+                          width: column.width,
+                        },
+                      })
                     )}
                   >
                     {column.render('Header')}
                     <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
+                      {column.isSorted &&
+                        (column.isSortedDesc ? (
+                          <img src={UpDownImg} alt='up' />
+                        ) : (
+                          <img src={UpDownImg} alt='down' />
+                        ))}
                     </span>
                   </th>
                 ))}
