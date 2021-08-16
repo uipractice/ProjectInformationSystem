@@ -50,10 +50,7 @@ function Form({ closeModal }) {
   };
 
   function ValidateEmail(inputText) {
-    const mailformat = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-
-    // const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com$/;
-
+     const mailformat = /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
     if (inputText.match(mailformat)) {
       return true;
     } else {
@@ -131,6 +128,7 @@ function Form({ closeModal }) {
           onChange={handleOnChange}
           name='email'
           value={state.email}
+          multiple
         />
       </div>
       <div className='row'>
