@@ -1,6 +1,6 @@
-import React from "react";
-import Logo from "../../assets/images/eoke_logo.svg";
-import { Redirect, useHistory } from "react-router-dom";
+import React from 'react';
+import Logo from '../../assets/images/eoke_logo.svg';
+import { Redirect, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -14,28 +14,28 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const NavBar = ({validate}) => {
+const NavBar = ({ validate }) => {
   function handleLogout() {
-    sessionStorage.removeItem("auth-token");
+    sessionStorage.removeItem('auth-token');
     checkAuth();
   }
 
   const history = useHistory();
 
   const checkAuth = () => {
-    if (!sessionStorage.getItem("auth-token")) {
-      history.push("/");
+    if (!sessionStorage.getItem('auth-token')) {
+      history.push('/');
     } else {
-      const authToken = "123456abcdef";
-      if (sessionStorage.getItem("auth-token") === authToken) {
-        return <Redirect to="/admin_dashboard" />;
+      const authToken = '123456abcdef';
+      if (sessionStorage.getItem('auth-token') === authToken) {
+        return <Redirect to='/admin_dashboard' />;
       } else {
-        history.push("/");
+        history.push('/');
       }
     }
   };
 
-  if(validate){
+  if (validate) {
     checkAuth();
   }
 
@@ -80,73 +80,108 @@ const NavBar = ({validate}) => {
     prevOpen.current = open;
   }, [open]);
 
-
   return (
     <div>
-      <div className="navbar navbar-dark sticky-top  p-0 shadow header_nav">
-        <div className="row">
-          <a className="navbar-brand col-md-6 px-4" href="/admin">
-            <img src={Logo} alt="Evoke Technologies" />
+      <div className='navbar navbar-dark sticky-top  p-0 shadow header_nav'>
+        <div className='row'>
+          <a className='navbar-brand col-md-6 px-4' href='/admin'>
+            <img src={Logo} alt='Evoke Technologies' />
           </a>
           <h3>Project Information System </h3>
         </div>
 
-        <ul className="navbar-nav px-3">
-          <li className="nav-item text-nowrap">
+        <ul className='navbar-nav px-3'>
+          <li className='nav-item text-nowrap'>
             <Button
               ref={anchorRef}
               aria-controls={open ? 'menu-list-grow' : undefined}
-              aria-haspopup="true"
+              aria-haspopup='true'
               onClick={handleToggle}
+            ></Button>
+            <Popper
+              open={open}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
             >
-            </Button>
-            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
               {({ TransitionProps, placement }) => (
                 <Grow
                   {...TransitionProps}
-                  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                  style={{
+                    transformOrigin:
+                      placement === 'bottom' ? 'center top' : 'center bottom',
+                  }}
                 >
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
-                      <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                      <MenuItem className="myprofile">My profile</MenuItem>
-                      <MenuItem className="feedback" onClick={handleClickOpen}>Provide Feedback</MenuItem>
-                      <Dialog
-                        open={feedback}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                        className="feedback-modal"
-                    >
-                        <DialogTitle id="alert-dialog-title">{"Feedback"}</DialogTitle>
-                        <Button onClick={handleClose} color="primary" className="feedback-close">
-                            <svg className="_modal-close-icon" viewBox="0 0 40 40">
-                                <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                      <MenuList
+                        autoFocusItem={open}
+                        id='menu-list-grow'
+                        onKeyDown={handleListKeyDown}
+                      >
+                        {/* <MenuItem className="myprofile">My profile</MenuItem> */}
+                        <MenuItem
+                          className='feedback'
+                          onClick={handleClickOpen}
+                        >
+                          Provide Feedback
+                        </MenuItem>
+                        <Dialog
+                          open={feedback}
+                          onClose={handleClose}
+                          aria-labelledby='alert-dialog-title'
+                          aria-describedby='alert-dialog-description'
+                          className='feedback-modal'
+                        >
+                          <DialogTitle id='alert-dialog-title'>
+                            {'Feedback'}
+                          </DialogTitle>
+                          <Button
+                            onClick={handleClose}
+                            color='primary'
+                            className='feedback-close'
+                          >
+                            <svg
+                              className='_modal-close-icon'
+                              viewBox='0 0 40 40'
+                            >
+                              <path d='M 10,10 L 30,30 M 30,10 L 10,30' />
                             </svg>
-                        </Button>
-                        <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            <h3>Hello Friends</h3>
-                            <p>Your review will help us go give you the better experience</p>
-                            <textarea
-                            type="text"
-                            autoFocus={true}
-                            style={{ color: "black" }}
-                            // onChange={handleInputChange}
-                            name="feedbackReason"
-                            />
-                        </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                        {/* <Button onClick={handleClose} color="primary">
+                          </Button>
+                          <DialogContent>
+                            <DialogContentText id='alert-dialog-description'>
+                              <h3>Hello Friends</h3>
+                              <p>
+                                Your review will help us go give you the better
+                                experience
+                              </p>
+                              <textarea
+                                type='text'
+                                autoFocus={true}
+                                style={{ color: 'black' }}
+                                // onChange={handleInputChange}
+                                name='feedbackReason'
+                              />
+                            </DialogContentText>
+                          </DialogContent>
+                          <DialogActions>
+                            {/* <Button onClick={handleClose} color="primary">
                             Disagree
                         </Button> */}
-                        <Button onClick={handleClose} color="primary" autoFocus className="feedback-submit">
-                            Submit
-                        </Button>
-                        </DialogActions>
-                    </Dialog>
-                        <MenuItem className="logout" onClick={handleLogout}>Logout</MenuItem>
+                            <Button
+                              onClick={handleClose}
+                              color='primary'
+                              autoFocus
+                              className='feedback-submit'
+                            >
+                              Submit
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
+                        <MenuItem className='logout' onClick={handleLogout}>
+                          Logout
+                        </MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
@@ -158,6 +193,6 @@ const NavBar = ({validate}) => {
       </div>
     </div>
   );
-}
+};
 
 export default NavBar;
