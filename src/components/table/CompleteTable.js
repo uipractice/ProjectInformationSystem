@@ -311,8 +311,8 @@ function CompleteTable({ data }) {
             <br></br>
             <p className='descr'>
               {' '}
-              Do you really want to delete the records? This process cannot be
-              undone.
+              Take a deep breath! <br />
+              Because if deleted once, it is gone forever.
             </p>
             <br></br>
 
