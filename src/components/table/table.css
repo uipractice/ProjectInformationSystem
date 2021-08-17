@@ -75,8 +75,8 @@
   width: 115px;
 }
 .modalDesign.deleteModal .delete-btn {
-  background: #209ec5;
-  color: #fff;
+  background: #209ec5 !important;
+  color: #fff !important;
 }
 .modalDesign.deleteModal .btn-primary:not(:disabled):not(.disabled).active,
 .modalDesign.deleteModal .btn-primary:not(:disabled):not(.disabled):active,
@@ -142,11 +142,33 @@ table th {
   color: #757575;
   height: 44px;
   padding: 0 10px;
-  /* background: #fff url("../../assets/images/search.svg") no-repeat 95%; */
+  background: #fff url('../../assets/images/search.svg') no-repeat 95%;
   box-shadow: 0px 0px 2px rgb(0 0 0 / 35%);
   border-radius: 2px;
   border: 1px solid transparent;
   width: 253px;
+}
+.filter-row input.searchClose {
+  background: none;
+}
+.filter-row input[type='search']::-webkit-search-cancel-button,
+.filter-row input[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url('../../assets/images/clear.svg') no-repeat 95%;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+}
+.filter-row form {
+  display: inline;
+  position: relative;
+}
+.filter-row input:focus,
+.filter-row input:active {
+  border-color: #209ec5;
+  background-color: rgba(32, 158, 197, 0.05) !important;
 }
 .filter-row select {
   font-size: 14px;
@@ -266,4 +288,27 @@ tfoot td {
   position: absolute;
   top: 2px;
   left: 5px;
+}
+
+.close-icon {
+  border: 1px solid transparent;
+  background-color: transparent;
+  display: inline-block;
+  vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 3px;
+}
+.close-icon:after {
+  content: '';
+  display: block;
+  background: url('../../assets/images/clear.svg') no-repeat 100%;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+}
+.filter-row input:not(:valid) ~ .close-icon {
+  display: none;
 }

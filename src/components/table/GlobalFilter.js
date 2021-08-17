@@ -1,48 +1,29 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useAsyncDebounce } from 'react-table'
-// import searchIcon from "../../assets/images/search.svg";
+import React, { useState } from 'react';
+import { useAsyncDebounce } from 'react-table';
 
-function GlobalFilter({ filter, setFilter }){
-
-  const inputRef = useRef(null)
-  useEffect(()=>{
-    inputRef.current.focus()
-  }, [])
-
-  const [value, setValue] = useState(filter)
-  const onChange = useAsyncDebounce(value => {
-    setFilter(value || undefined)
-
-  }, 1000)
+function GlobalFilter({ setFilter }) {
+  const [searchText, setSearchText] = useState();
+  const onChange = useAsyncDebounce((value) => {
+    setFilter(value);
+  }, 1000);
   return (
     <span>
-      {value ? (
       <input
-        ref={inputRef}
-        value={value || ""}
         onChange={(e) => {
-          setValue(e.target.value);
+          setSearchText(e.target.value);
           onChange(e.target.value);
         }}
-        type="search"  
-        placeholder="Search"
+        type='search'
+        placeholder='Search'
+        className={searchText ? 'searchClose' : ''}
       />
-      ):(
-    <input
-        ref={inputRef}
-        value={value || ""}
-        onChange={(e) => {
-          setValue(e.target.value);
-          onChange(e.target.value);
-        }}
-        type="search"  
-        placeholder="Search"
-      />
-      )
-    }
-      
+      <button
+        type='reset'
+        className='close-icon'
+        onClick={() => onChange('')}
+      ></button>
     </span>
   );
 }
 
-export default GlobalFilter
+export default GlobalFilter;
