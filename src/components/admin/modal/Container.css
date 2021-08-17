@@ -27,7 +27,10 @@
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+<<<<<<< Updated upstream
   border-radius: 4px;
+=======
+>>>>>>> Stashed changes
 }
 .modal-area h3 {
   font-family: Lato;
@@ -132,7 +135,11 @@
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.01em;
+<<<<<<< Updated upstream
   color: #929292;
+=======
+  color: #626364;
+>>>>>>> Stashed changes
 }
 .formView .form-group label,
 .formView .form-group select {
@@ -148,6 +155,9 @@
 .form-group select {
   appearance: none;
   position: relative;
+<<<<<<< Updated upstream
   color: #626364 !important;
+=======
+>>>>>>> Stashed changes
   background: url('../../../assets/images/down-arrow.svg') no-repeat 96%;
 }
