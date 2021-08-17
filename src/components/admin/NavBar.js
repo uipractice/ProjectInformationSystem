@@ -1,6 +1,8 @@
+// common imports
 import React from 'react';
-import Logo from '../../assets/images/eoke_logo.svg';
 import { Redirect, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -8,11 +10,20 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Logo from '../../assets/images/eoke_logo.svg';
+// components
+import FeedBackModal from '../utils/FeedBackModal';
+// helpers
+import { getApiUrl } from '../utils/helper';
+
+toast.configure();
+
+/**
+ * NavBar component
+ *
+ * @param {Boolean} validate contains boolean to validate.
+ * @return {null}
+ */
 
 const NavBar = ({ validate }) => {
   function handleLogout() {
@@ -22,6 +33,10 @@ const NavBar = ({ validate }) => {
 
   const history = useHistory();
 
+  /**
+   * Checking the authentication
+   * @return {null}
+   */
   const checkAuth = () => {
     if (!sessionStorage.getItem('auth-token')) {
       history.push('/');
@@ -44,12 +59,35 @@ const NavBar = ({ validate }) => {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-  const handleClose = (event) => {
+
+  /**
+   * Setting modal close state and call api to send the mail.
+   *
+   * @param {Object} event current event object.
+   * @param {Boolean} closeClick contains boolean to defined the close click.
+   * @return {null}
+   */
+  const handleClose = (event, closeClick) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
     setOpen(false);
     setFeedback(false);
+    if (!closeClick) {
+      axios
+        .post(getApiUrl(`clientInfo/feebackMail`))
+        .then((res) => {
+          console.log(res.data);
+          toast.success('A Reminder mail has been triggered !', {
+            autoClose: 1800,
+          });
+        })
+        .catch((err) => console.log(err.response));
+
+      setTimeout(() => {
+        history.push('/admin');
+      }, 2000);
+    }
   };
 
   const [feedback, setFeedback] = React.useState(false);
@@ -120,65 +158,19 @@ const NavBar = ({ validate }) => {
                         id='menu-list-grow'
                         onKeyDown={handleListKeyDown}
                       >
-                        {/* <MenuItem className="myprofile">My profile</MenuItem> */}
+                        <MenuItem className='myprofile'>My profile</MenuItem>
                         <MenuItem
                           className='feedback'
                           onClick={handleClickOpen}
                         >
                           Provide Feedback
                         </MenuItem>
-                        <Dialog
+                        <FeedBackModal
                           open={feedback}
-                          onClose={handleClose}
-                          aria-labelledby='alert-dialog-title'
-                          aria-describedby='alert-dialog-description'
-                          className='feedback-modal'
-                        >
-                          <DialogTitle id='alert-dialog-title'>
-                            {'Feedback'}
-                          </DialogTitle>
-                          <Button
-                            onClick={handleClose}
-                            color='primary'
-                            className='feedback-close'
-                          >
-                            <svg
-                              className='_modal-close-icon'
-                              viewBox='0 0 40 40'
-                            >
-                              <path d='M 10,10 L 30,30 M 30,10 L 10,30' />
-                            </svg>
-                          </Button>
-                          <DialogContent>
-                            <DialogContentText id='alert-dialog-description'>
-                              <h3>Hello Friends</h3>
-                              <p>
-                                Your review will help us go give you the better
-                                experience
-                              </p>
-                              <textarea
-                                type='text'
-                                autoFocus={true}
-                                style={{ color: 'black' }}
-                                // onChange={handleInputChange}
-                                name='feedbackReason'
-                              />
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            {/* <Button onClick={handleClose} color="primary">
-                            Disagree
-                        </Button> */}
-                            <Button
-                              onClick={handleClose}
-                              color='primary'
-                              autoFocus
-                              className='feedback-submit'
-                            >
-                              Submit
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
+                          closeHandler={(e, closeClick) =>
+                            handleClose(e, closeClick)
+                          }
+                        />
                         <MenuItem className='logout' onClick={handleLogout}>
                           Logout
                         </MenuItem>

@@ -129,7 +129,6 @@ function CompleteTable({ data }) {
                   practice: row.original.practice,
                   status: row.original.status,
                   id: row.original._id,
-
                   projectName: row.original.projectName,
                   securityMeasure: row.original.securityMeasure,
                   informIT: row.original.informIT,

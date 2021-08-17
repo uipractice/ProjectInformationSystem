@@ -6,6 +6,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getApiUrl } from '../../utils/helper';
 
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 toast.configure();
 
 function Form({ closeModal }) {
@@ -25,12 +28,34 @@ function Form({ closeModal }) {
     deleteReason: '',
     restoreReason: '',
     reshareReason: '',
+    autoFill: false,
   });
 
-  function handleOnChange(e) {
+  function handleOnChange(e, email) {
+    if (e.key === '@' && !state.autoFill && email) {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value + '@evoketechnologies.com',
+        autoFill: true,
+      });
+    } else if (!state.autoFill) {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+        autoFill: false,
+      });
+    } else {
+      setState({
+        ...state,
+        autoFill: false,
+      });
+    }
+  }
+
+  function handleOnDropdownChange(e) {
     setState({
       ...state,
-      [e.target.name]: e.target.value,
+      practice: e && e.label ? e.label : '',
     });
   }
 
@@ -50,10 +75,8 @@ function Form({ closeModal }) {
   };
 
   function ValidateEmail(inputText) {
-    const mailformat = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-
-    // const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com$/;
-
+    const mailformat =
+      /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
     if (inputText.match(mailformat)) {
       return true;
     } else {
@@ -123,32 +146,51 @@ function Form({ closeModal }) {
         </div>
       </div>
 
-      <div className='form-group col-md-12'>
+      <div className='form-group row' style={{ margin: 'auto' }}>
         <label>Email address</label>
-        <input
-          type='email'
+        <textarea
+          type='textarea'
           className='form-control'
-          onChange={handleOnChange}
+          onChange={(e) => handleOnChange(e, true)}
+          onKeyDown={(e) => handleOnChange(e, true)}
           name='email'
           value={state.email}
+          rows='3'
+          cols='50'
         />
       </div>
       <div className='row'>
         <div className='form-group col-md-6'>
           <label>Practice Name </label>
-          <select
-            className='form-control'
-            onChange={handleOnChange}
-            name='practice'
-            value={state.practice}
-          >
-            <option value=''></option>
-            <option value='QA Practice'>QA Practice</option>
-            <option value='Oracle Practice'>Oracle Practice</option>
-            <option value='Java Practice'>Java Practice</option>
-            <option value='Microsoft Practice'>Microsoft Practice</option>
-            <option value='Other'>Other Practice</option>
-          </select>
+          <Autocomplete
+            options={[
+              { label: 'BI Practice', value: 1 },
+              { label: 'Big Data Practice', value: 2 },
+              { label: 'Block Chain Practice', value: 3 },
+              { label: 'BPM Practice', value: 4 },
+              { label: 'BPO Practice', value: 5 },
+              { label: 'Data Science Practice', value: 6 },
+              { label: 'Delivery Practice', value: 7 },
+              { label: 'Java Practice', value: 8 },
+              { label: 'Microsoft Practice', value: 9 },
+              { label: 'Mobility Practice', value: 10 },
+              { label: 'Open Source Practice', value: 11 },
+              { label: 'Oracle Practice', value: 12 },
+              { label: 'Pega Practice', value: 13 },
+              { label: 'QA Practice', value: 14 },
+              { label: 'RPA Practice', value: 15 },
+              { label: 'Sales Force Practice', value: 16 },
+              { label: 'Service Now Practice', value: 17 },
+              { label: 'Support Practice', value: 18 },
+              { label: 'UI Practice', value: 19 },
+              { label: 'Other', value: 20 },
+            ]}
+            getOptionLabel={(option) => option.label}
+            onChange={(event, value) => handleOnDropdownChange(value)}
+            renderInput={(params) => (
+              <TextField {...params} variant='outlined' />
+            )}
+          />
         </div>
         {state.practice === 'Other' && (
           <div className='form-group col-md-6'>
