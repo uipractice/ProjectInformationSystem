@@ -54,7 +54,7 @@ export default function AdminDashboard() {
   return (
     <div>
       <NavBar validate={true} />
-
+      <h1>Hello</h1>
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-12 ms-sm-auto col-lg-12 custom-scroll'>
