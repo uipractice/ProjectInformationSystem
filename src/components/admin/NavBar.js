@@ -120,11 +120,7 @@ const NavBar = ({ validate }) => {
                         id='menu-list-grow'
                         onKeyDown={handleListKeyDown}
                       >
-<<<<<<< Updated upstream
                         {/* <MenuItem className="myprofile">My profile</MenuItem> */}
-=======
-                        <MenuItem className='myprofile'>My profile</MenuItem>
->>>>>>> Stashed changes
                         <MenuItem
                           className='feedback'
                           onClick={handleClickOpen}
