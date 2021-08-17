@@ -1,81 +1,72 @@
-import React from "react";
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+// common imorts
+import React from 'react';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+// components
+import FeedBackModal from '../utils/FeedBackModal';
+// helpers
+import { getApiUrl } from '../utils/helper';
 
-export default function Footer(){
-    const [open, setOpen] = React.useState(false);
+toast.configure();
 
+// Footer component
+const Footer = () => {
+  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
+
+  /**
+   * settign modal open state.
+   * @return {null}.
+   */
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  /**
+   * Setting modal close state and call api to send the mail.
+   *
+   * @param {Object} event current event object.
+   * @param {Boolean} closeClick contains boolean to defined the close click.
+   * @return {null}
+   */
+
+  const handleClose = (event, closeClick) => {
     setOpen(false);
+    if (!closeClick) {
+      axios
+        .post(getApiUrl(`clientInfo/feebackMail`))
+        .then((res) => {
+          console.log(res.data);
+          toast.success('A Reminder mail has been triggered !', {
+            autoClose: 1800,
+          });
+        })
+        .catch((err) => console.log(err.response));
+
+      setTimeout(() => {
+        history.push('/admin');
+      }, 2000);
+    }
   };
 
-        return (
-          <div className="footer">
-            <ul>
-              <li>
-                <p>Evoke Technologies Pvt Ltd © 2021 All Rights Reserved</p>
-              </li>
-              <li>
-                <a href="#/" onClick={handleClickOpen}>
-                  Provide Feedback
-                </a>
-              </li>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                className="feedback-modal"
-              >
-                <DialogTitle id="alert-dialog-title">{"Feedback"}</DialogTitle>
-                <Button
-                  onClick={handleClose}
-                  color="primary"
-                  className="feedback-close"
-                >
-                  <svg className="_modal-close-icon" viewBox="0 0 40 40">
-                    <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
-                  </svg>
-                </Button>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    <h3>Hello Friends</h3>
-                    <p>
-                      Your review will help us go give you the better experience
-                    </p>
-                    <textarea
-                      type="text"
-                      autoFocus={true}
-                      style={{ color: "black" }}
-                      // onChange={handleInputChange}
-                      name="deleteReason"
-                    />
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  {/* <Button onClick={handleClose} color="primary">
-                            Disagree
-                        </Button> */}
-                  <Button
-                    onClick={handleClose}
-                    color="primary"
-                    autoFocus
-                    className="feedback-submit"
-                  >
-                    Submit
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </ul>
-          </div>
-        );
-
-}
+  return (
+    <div className='footer'>
+      <ul>
+        <li>
+          <p>Evoke Technologies Pvt Ltd © 2021 All Rights Reserved</p>
+        </li>
+        <li>
+          <a href='#/' onClick={handleClickOpen}>
+            Provide Feedback
+          </a>
+        </li>
+        <FeedBackModal
+          open={open}
+          closeHandler={(value, closeClick) => handleClose(value, closeClick)}
+        />
+      </ul>
+    </div>
+  );
+};
+export default Footer;
