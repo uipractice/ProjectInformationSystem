@@ -150,6 +150,7 @@ function CompleteTable({ data }) {
                   isClientEmailProvided: row.original.isClientEmailProvided,
                   deleteReason: row.original.deleteReason,
                   reshareReason: row.original.reshareReason,
+                  uploadedFiles: row.original.uploadedFiles,
                 },
               }}
             >
@@ -243,7 +244,10 @@ function CompleteTable({ data }) {
   useEffect(() => {
     if (filteredTableData?.length && globalFilter && searchValue)
       setFilteredData(addSerialNo(filteredTableData, true));
-    else if (searchValue === '') setFilteredData(addSerialNo(data));
+    else if (searchValue === '')
+      setFilteredData(
+        addSerialNo(data.filter((item) => item.status !== 'Deleted'))
+      );
   }, [searchValue]);
 
   return (
