@@ -25,13 +25,28 @@ function Form({ closeModal }) {
     deleteReason: '',
     restoreReason: '',
     reshareReason: '',
+    autoFill: false,
   });
 
-  function handleOnChange(e) {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+  function handleOnChange(e, email) {
+    if (e.key === '@' && !state.autoFill && email) {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value + '@evoketechnologies.com',
+        autoFill: true,
+      });
+    } else if (!state.autoFill) {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+        autoFill: false,
+      });
+    } else {
+      setState({
+        ...state,
+        autoFill: false,
+      });
+    }
   }
 
   function handleOtherPractice(e) {
@@ -50,7 +65,8 @@ function Form({ closeModal }) {
   };
 
   function ValidateEmail(inputText) {
-     const mailformat = /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
+    const mailformat =
+      /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
     if (inputText.match(mailformat)) {
       return true;
     } else {
@@ -122,13 +138,15 @@ function Form({ closeModal }) {
 
       <div className='form-group col-md-12'>
         <label>Email address</label>
-        <input
-          type='email'
+        <textarea
+          type='textarea'
           className='form-control'
-          onChange={handleOnChange}
+          onChange={(e) => handleOnChange(e, true)}
+          onKeyDown={(e) => handleOnChange(e, true)}
           name='email'
           value={state.email}
-          multiple
+          rows='3'
+          cols='50'
         />
       </div>
       <div className='row'>
