@@ -861,6 +861,11 @@ select.form-control:-internal-autofill-selected {
   border-style: solid;
   border-color: transparent transparent #f8f8fb transparent;
 }
+
+.share-modal .MuiDialog-paperWidthSm {
+  max-width: 770px;
+  width: 770px;
+}
 @media (max-width: 448px) {
   .footer {
     height: 60px;

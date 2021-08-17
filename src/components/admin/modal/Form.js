@@ -6,6 +6,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getApiUrl } from '../../utils/helper';
 
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 toast.configure();
 
 function Form({ closeModal }) {
@@ -31,6 +34,13 @@ function Form({ closeModal }) {
     setState({
       ...state,
       [e.target.name]: e.target.value,
+    });
+  }
+
+  function handleOnDropdownChange(e) {
+    setState({
+      ...state,
+      practice: e && e.label ? e.label : '',
     });
   }
 
@@ -123,7 +133,7 @@ function Form({ closeModal }) {
         </div>
       </div>
 
-      <div className='form-group col-md-12'>
+      <div className='form-group row' style={{ margin: 'auto' }}>
         <label>Email address</label>
         <input
           type='email'
@@ -136,19 +146,35 @@ function Form({ closeModal }) {
       <div className='row'>
         <div className='form-group col-md-6'>
           <label>Practice Name </label>
-          <select
-            className='form-control'
-            onChange={handleOnChange}
-            name='practice'
-            value={state.practice}
-          >
-            <option value=''></option>
-            <option value='QA Practice'>QA Practice</option>
-            <option value='Oracle Practice'>Oracle Practice</option>
-            <option value='Java Practice'>Java Practice</option>
-            <option value='Microsoft Practice'>Microsoft Practice</option>
-            <option value='Other'>Other Practice</option>
-          </select>
+          <Autocomplete
+            options={[
+              { label: 'BI Practice', value: 1 },
+              { label: 'Big Data Practice', value: 2 },
+              { label: 'Block Chain Practice', value: 3 },
+              { label: 'BPM Practice', value: 4 },
+              { label: 'BPO Practice', value: 5 },
+              { label: 'Data Science Practice', value: 6 },
+              { label: 'Delivery Practice', value: 7 },
+              { label: 'Java Practice', value: 8 },
+              { label: 'Microsoft Practice', value: 9 },
+              { label: 'Mobility Practice', value: 10 },
+              { label: 'Open Source Practice', value: 11 },
+              { label: 'Oracle Practice', value: 12 },
+              { label: 'Pega Practice', value: 13 },
+              { label: 'QA Practice', value: 14 },
+              { label: 'RPA Practice', value: 15 },
+              { label: 'Sales Force Practice', value: 16 },
+              { label: 'Service Now Practice', value: 17 },
+              { label: 'Support Practice', value: 18 },
+              { label: 'UI Practice', value: 19 },
+              { label: 'Other', value: 20 },
+            ]}
+            getOptionLabel={(option) => option.label}
+            onChange={(event, value) => handleOnDropdownChange(value)}
+            renderInput={(params) => (
+              <TextField {...params} variant='outlined' />
+            )}
+          />
         </div>
         {state.practice === 'Other' && (
           <div className='form-group col-md-6'>
