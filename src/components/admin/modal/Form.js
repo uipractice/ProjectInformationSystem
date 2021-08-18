@@ -146,7 +146,7 @@ function Form({ closeModal }) {
         </div>
       </div>
 
-      <div className='form-group row' style={{ margin: 'auto' }}>
+      <div className='form-group row' style={{ margin: '0 auto 1rem' }}>
         <label>Email address</label>
         <textarea
           type='textarea'

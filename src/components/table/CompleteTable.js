@@ -255,13 +255,6 @@ function CompleteTable({ data }) {
       <div className='filter-row'>
         <h5>PROJECT DETAILS</h5>
         <div>
-          <GlobalFilter
-            setFilter={(value) => {
-              setGlobalFilter(value);
-              setSearchValue(value);
-            }}
-          />
-
           <FormControl className={classes.formControl}>
             <Select
               defaultValue='Active'
@@ -280,6 +273,12 @@ function CompleteTable({ data }) {
               <MenuItem value='All Project'>All Projects</MenuItem>
             </Select>
           </FormControl>
+          <GlobalFilter
+            setFilter={(value) => {
+              setGlobalFilter(value);
+              setSearchValue(value);
+            }}
+          />
         </div>
       </div>
 
