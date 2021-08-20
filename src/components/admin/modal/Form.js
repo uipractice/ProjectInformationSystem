@@ -154,7 +154,7 @@ function Form({ closeModal }) {
           onChange={(e) => handleOnChange(e, true)}
           onKeyDown={(e) => handleOnChange(e, true)}
           name='email'
-          value={state.email}
+          value={state.email && state.email.toLowerCase()}
           rows='3'
           cols='50'
         />

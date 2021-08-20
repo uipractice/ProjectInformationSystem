@@ -91,6 +91,7 @@ const NavBar = ({ validate }) => {
   };
 
   const [feedback, setFeedback] = React.useState(false);
+  const [feedbackText, setFeedbackText] = React.useState('');
   const handleClickOpen = () => {
     setFeedback(!feedback);
     // setFeedback("");
@@ -117,6 +118,10 @@ const NavBar = ({ validate }) => {
     }
     prevOpen.current = open;
   }, [open]);
+
+  const handleInputChange = (e) => {
+    setFeedbackText(e.target.value);
+  }
 
   return (
     <div>
@@ -170,6 +175,8 @@ const NavBar = ({ validate }) => {
                           closeHandler={(e, closeClick) =>
                             handleClose(e, closeClick)
                           }
+                          handleInputChange={(e) => handleInputChange(e)}
+                          feedbackText={feedbackText}
                         />
                         <MenuItem className='logout' onClick={handleLogout}>
                           Logout

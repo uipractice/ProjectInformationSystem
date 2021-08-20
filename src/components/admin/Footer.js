@@ -13,6 +13,7 @@ toast.configure();
 // Footer component
 const Footer = () => {
   const [open, setOpen] = React.useState(false);
+  const [feedbackText, setFeedbackText] = React.useState('');
   const history = useHistory();
 
   /**
@@ -49,7 +50,9 @@ const Footer = () => {
       }, 2000);
     }
   };
-
+const handleInputChange = (e) => {
+  setFeedbackText(e.target.value);
+}
   return (
     <div className='footer'>
       <ul>
@@ -57,13 +60,15 @@ const Footer = () => {
           <p>Evoke Technologies Pvt Ltd © 2021 All Rights Reserved</p>
         </li>
         <li>
-          <a href='#/' onClick={handleClickOpen}>
+          <button onClick={handleClickOpen}>
             Provide Feedback
-          </a>
+          </button>
         </li>
         <FeedBackModal
           open={open}
-          closeHandler={(value, closeClick) => handleClose(value, closeClick)}
+          closeHandler={(value, closeClick) => handleClose(value, closeClick)} 
+          handleInputChange={(e) => handleInputChange(e)}
+          feedbackText={feedbackText}
         />
       </ul>
     </div>

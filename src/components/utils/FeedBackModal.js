@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FeedBackModal = (props) => {
+  console.log(props,'props');
   return (
     <Dialog
       open={props.open}
@@ -33,7 +34,7 @@ const FeedBackModal = (props) => {
             type='text'
             autoFocus={true}
             style={{ color: 'black' }}
-            // onChange={handleInputChange}
+            onChange={(e) => props.handleInputChange(e)}
             name='deleteReason'
           />
         </DialogContentText>
@@ -47,8 +48,9 @@ const FeedBackModal = (props) => {
           color='primary'
           autoFocus
           className='feedback-submit'
+          disabled={props.feedbackText === ''}
         >
-          Submit
+          Send
         </Button>
       </DialogActions>
     </Dialog>

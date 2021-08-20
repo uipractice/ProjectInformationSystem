@@ -711,6 +711,10 @@ select.form-control:-internal-autofill-selected {
   background: #209ec5 !important;
   color: #ffffff;
 }
+.feedback-modal button.feedback-submit:disabled {
+  pointer-events: none;
+  opacity: 30%;
+}
 .feedback-modal h3 {
   font-size: 18px;
   line-height: 22px;
