@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Footer from '../admin/Footer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +14,7 @@ import { getApiUrl } from '../utils/helper';
 toast.configure();
 
 function ClientForm() {
+  const history = useHistory();
   const { id } = useParams();
   const [prevStatus, setPrevStatus] = useState('');
   const [prevProjectName, setPrevProjectName] = useState('');
@@ -170,14 +171,18 @@ function ClientForm() {
       .post(getApiUrl(`clientInfo/mailAndUpdate/${id}`), postObj)
       .then((res) => {
         console.log('Form saved successfully : ', res.data);
+        toast.success('Form Saved Successfully!');
+        history.push('/admin');
       })
       .catch((err) => {
         console.log('Failed to Save Form : ', err.response);
       });
 
-    if (fileData) {
+    if (fileData?.length) {
       const formData = new FormData();
-      formData.append('fileName', fileData);
+      for (let file of fileData) {
+        formData.append('fileName', file);
+      }
       axios
         .post(getApiUrl(`multiple/${id}`), formData)
         .then((res) => {
@@ -423,7 +428,7 @@ function ClientForm() {
                         id='emptyMe'
                         accept='*.*'
                         multiple
-                        onChange={(e) => setFileData(e.target.files[0])}
+                        onChange={(e) => setFileData(e.target.files)}
                       />
                       <Button onClick={handleClearFiles}> Clear Files</Button>{' '}
                     </Form.Group>
