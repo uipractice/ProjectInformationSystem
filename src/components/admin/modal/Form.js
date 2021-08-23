@@ -146,7 +146,7 @@ function Form({ closeModal }) {
         </div>
       </div>
 
-      <div className='form-group row' style={{ margin: 'auto' }}>
+      <div className='form-group row' style={{ margin: '0 auto 1rem' }}>
         <label>Email address</label>
         <textarea
           type='textarea'
@@ -154,7 +154,7 @@ function Form({ closeModal }) {
           onChange={(e) => handleOnChange(e, true)}
           onKeyDown={(e) => handleOnChange(e, true)}
           name='email'
-          value={state.email}
+          value={state.email && state.email.toLowerCase()}
           rows='3'
           cols='50'
         />

@@ -57,6 +57,7 @@ function ViewForm() {
     showIsolatedDetails,
     isDLPreq,
     isClientEmailProvided,
+    uploadedFiles,
   } = location.state;
 
   const [totalState, setTotalState] = useState({
@@ -136,8 +137,27 @@ function ViewForm() {
     // }, 2000);
   };
 
+  const downloadFiles = (files) => {
+    let index = 0;
+    for (let file of files) {
+      const link = document.createElement('a');
+      link.href = file;
+      link.target = '_blank';
+      link.setAttribute('id', 'downloadFile');
+      link.setAttribute('download', uploadedFiles[index]);
+      document.body.appendChild(link);
+      link.click();
+      index += 1;
+      document.getElementById('downloadFile')?.remove();
+    }
+  };
+
   const handleDownload = () => {
-    window.open('http://localhost:5000/clientInfo/download/' + id);
+    axios.get(getApiUrl(`clientInfo/download/${id}`)).then((res) => {
+      const files = res.data;
+      downloadFiles(files);
+    });
+    // window.open(`http://localhost:5000/clientInfo/download/${id}`);
   };
 
   const handleReshare = (e) => {
