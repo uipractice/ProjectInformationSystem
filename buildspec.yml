@@ -1,13 +1,5 @@
 version: 0.2
-
 phases:
-  install:
-    # runtime-version:
-    #   nodejs:10
-    commands:
-      - echo installing Node 12 on Ubantu OS...
-      - curl -sL https://deb.nodesource.com/setup_12.x | bash -
-      - apt install -y nodejs
   pre_build:
     commands:
       - echo installing application dependencies...
@@ -16,17 +8,7 @@ phases:
     commands:
       - echo creating a build bundle...
       - npm run build
-      # - echo Run tests...
-      # - CI=true yarn test
-
 artifacts:
   files:
     - '**/*'
-  type: zip
-  paths:
-    - './build/**/*'
-    # - './cicd/**/*'
-
-cache:
-  paths:
-    - './node_modules/**/*'
+  base-directory: 'build'
