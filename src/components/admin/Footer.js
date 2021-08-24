@@ -50,9 +50,9 @@ const Footer = () => {
       }, 2000);
     }
   };
-const handleInputChange = (e) => {
-  setFeedbackText(e.target.value);
-}
+  const handleInputChange = (e) => {
+    setFeedbackText(e.target.value);
+  };
   return (
     <div className='footer'>
       <ul>
@@ -60,13 +60,13 @@ const handleInputChange = (e) => {
           <p>Evoke Technologies Pvt Ltd © 2021 All Rights Reserved</p>
         </li>
         <li>
-          <button onClick={handleClickOpen}>
+          <button onClick={handleClickOpen} className='link-btn'>
             Provide Feedback
           </button>
         </li>
         <FeedBackModal
           open={open}
-          closeHandler={(value, closeClick) => handleClose(value, closeClick)} 
+          closeHandler={(value, closeClick) => handleClose(value, closeClick)}
           handleInputChange={(e) => handleInputChange(e)}
           feedbackText={feedbackText}
         />
