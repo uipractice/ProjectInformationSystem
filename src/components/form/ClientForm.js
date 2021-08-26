@@ -425,12 +425,41 @@ function ClientForm() {
                       <input
                         type='file'
                         name='fileName'
-                        id='emptyMe'
+                        id='file'
                         accept='*.*'
                         multiple
-                        onChange={(e) => setFileData(e.target.files)}
+                        onChange={(e) => {
+                          setFileData(e.target.files);
+                        }}
+                        style={{ display: 'none' }}
                       />
-                      <Button onClick={handleClearFiles}> Clear Files</Button>{' '}
+                      <input
+                        type='button'
+                        value='Choose File'
+                        onClick={(e) =>
+                          document.getElementById('file')?.click()
+                        }
+                      />
+
+                      <div>
+                        {fileData &&
+                          Object.keys(fileData)?.map((key) => (
+                            <div>
+                              <span
+                                key={fileData[key].name}
+                                className='file-close-icon'
+                                onClick={() => {
+                                  const fileState = { ...fileData };
+                                  delete fileState[key];
+                                  setFileData(fileState);
+                                }}
+                              >
+                                {fileData[key].name}
+                                &nbsp;&nbsp;
+                              </span>
+                            </div>
+                          ))}
+                      </div>
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: '40px' }}>

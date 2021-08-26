@@ -59,6 +59,7 @@ const NavBar = ({ validate }) => {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
+  const [feedbackText, setFeedbackText] = React.useState('');
 
   /**
    * Setting modal close state and call api to send the mail.
@@ -74,8 +75,11 @@ const NavBar = ({ validate }) => {
     setOpen(false);
     setFeedback(false);
     if (!closeClick) {
+      const feedback = {
+        feedbackText
+      }
       axios
-        .post(getApiUrl(`clientInfo/feebackMail`))
+        .post(getApiUrl(`clientInfo/feebackMail`), feedback)
         .then((res) => {
           console.log(res.data);
           toast.success('A Reminder mail has been triggered !', {
@@ -91,7 +95,6 @@ const NavBar = ({ validate }) => {
   };
 
   const [feedback, setFeedback] = React.useState(false);
-  const [feedbackText, setFeedbackText] = React.useState('');
   const handleClickOpen = () => {
     setFeedback(!feedback);
     // setFeedback("");
