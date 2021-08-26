@@ -40,6 +40,17 @@ a:focus {
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background: #afaeae;
 }
+.file-close-icon {
+  display: inline-flex;
+}
+.file-close-icon::after {
+  content: '';
+  display: block;
+  background: url('../src//assets//images/clear.svg') no-repeat 100%;
+  width: 10px;
+  cursor: pointer;
+  padding: 10px;
+}
 .header_nav {
   background: #023047;
   padding: 8px 0 !important;
