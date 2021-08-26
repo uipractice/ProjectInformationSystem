@@ -33,10 +33,13 @@ const Footer = () => {
    */
 
   const handleClose = (event, closeClick) => {
+    const feedback = {
+      feedbackText,
+    };
     setOpen(false);
     if (!closeClick) {
       axios
-        .post(getApiUrl(`clientInfo/feebackMail`))
+        .post(getApiUrl(`clientInfo/feebackMail`), feedback)
         .then((res) => {
           console.log(res.data);
           toast.success('A Reminder mail has been triggered !', {
