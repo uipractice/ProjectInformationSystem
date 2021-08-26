@@ -63,7 +63,7 @@ const handleInputChange = (e) => {
           <p>Evoke Technologies Pvt Ltd © 2021 All Rights Reserved</p>
         </li>
         <li>
-          <button onClick={handleClickOpen}>
+          <button className='link-btn' onClick={handleClickOpen}>
             Provide Feedback
           </button>
         </li>
