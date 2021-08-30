@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FeedBackModal = (props) => {
-  const feedBackText = /^[a-zA-Z]+$/;
+  const feedBackText = /^[a-zA-z]+([\s][a-zA-Z]+)*$/;
   return (
     <Dialog
       open={props.open}
