@@ -148,27 +148,10 @@ table th {
   border: 1px solid transparent;
   width: 253px;
 }
-.filter-row input.searchClose {
-  background: none;
-}
-.filter-row input[type='search']::-webkit-search-cancel-button,
-.filter-row input[type='search']::-webkit-search-decoration {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: url('../../assets/images/clear.svg') no-repeat 95%;
-  width: 10px;
-  height: 10px;
-  cursor: pointer;
-}
-.filter-row form {
-  display: inline;
-  position: relative;
-}
 .filter-row input:focus,
 .filter-row input:active {
   border-color: #209ec5;
-  background-color: rgba(32, 158, 197, 0.05) !important;
+  /* background-color: rgba(32, 158, 197, 0.05) !important; */
 }
 .filter-row select {
   font-size: 14px;
@@ -289,7 +272,19 @@ tfoot td {
   top: 2px;
   left: 5px;
 }
-
+.filter-row input.searchClose {
+  background: none;
+}
+.filter-row input[type='search']::-webkit-search-cancel-button,
+.filter-row input[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.filter-row form {
+  display: inline;
+  position: relative;
+}
 .close-icon {
   border: 1px solid transparent;
   background-color: transparent;
@@ -309,6 +304,18 @@ tfoot td {
   height: 10px;
   cursor: pointer;
 }
-.filter-row input:not(:valid) ~ .close-icon {
+.filter-row input ~ .close-icon {
   display: none;
+}
+.filter-row input.searchClose ~ .close-icon {
+  display: block;
+}
+.form-group .form-control,
+.share-modal .MuiInputBase-input {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #57565c;
 }

@@ -33,7 +33,7 @@ const FeedBackModal = (props) => {
             type='text'
             autoFocus={true}
             style={{ color: 'black' }}
-            // onChange={handleInputChange}
+            onChange={(e) => props.handleInputChange(e)}
             name='deleteReason'
           />
         </DialogContentText>
@@ -47,8 +47,9 @@ const FeedBackModal = (props) => {
           color='primary'
           autoFocus
           className='feedback-submit'
+          disabled={props.feedbackText === ''}
         >
-          Submit
+          Send
         </Button>
       </DialogActions>
     </Dialog>

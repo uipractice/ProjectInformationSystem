@@ -7,7 +7,7 @@ function GlobalFilter({ setFilter }) {
     setFilter(value);
   }, 1000);
   return (
-    <span>
+    <form>
       <input
         onChange={(e) => {
           setSearchText(e.target.value);
@@ -20,9 +20,12 @@ function GlobalFilter({ setFilter }) {
       <button
         type='reset'
         className='close-icon'
-        onClick={() => onChange('')}
+        onClick={() => {
+          setSearchText('');
+          onChange('');
+        }}
       ></button>
-    </span>
+    </form>
   );
 }
 
