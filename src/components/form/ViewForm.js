@@ -89,10 +89,17 @@ function ViewForm() {
   });
 
   function reshareReasonInput(evt) {
-    setTotalState({
-      ...totalState,
-      reshareReason: evt.target.value,
-    });
+    if (evt.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
+      setTotalState({
+        ...totalState,
+        reshareReason: evt.target.value,
+      });
+    } else {
+      setTotalState({
+        ...totalState,
+        reshareReason: '',
+      });
+    }
   }
 
   function restoreReasonInput(evt) {
@@ -716,7 +723,7 @@ function ViewForm() {
                         The project details has not been Submitted by the{' '}
                         <b> {projectManager} </b> yet. <br />
                         <br />
-                        Would you like to send a gentel reminder?
+                        Would you like to send a gentle reminder?
                       </Form.Label>
                     </Form.Group>
 

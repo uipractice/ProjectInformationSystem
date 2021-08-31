@@ -46,7 +46,7 @@ function ClientForm() {
     workStationThirdBtn: 'outline-info',
     workStationSelected: '',
 
-    devTypeValue: ['Local', 'Cloud Plateform', 'Client Plateform'],
+    devTypeValue: ['Local', 'Cloud Platform', 'Client Platform'],
     devTypeFirstBtn: 'outline-info',
     devTypeSecondBtn: 'outline-info',
     devTypeThirdBtn: 'outline-info',
@@ -379,7 +379,7 @@ function ClientForm() {
         devTypeThirdBtn: 'outline-info',
         devTypeSelected: val,
       });
-    } else if (val === 'Cloud Plateform') {
+    } else if (val === 'Cloud Platform') {
       setState({
         ...state,
         devTypeFirstBtn: 'outline-info',
@@ -387,7 +387,7 @@ function ClientForm() {
         devTypeThirdBtn: 'outline-info',
         devTypeSelected: val,
       });
-    } else if (val === 'Client Plateform') {
+    } else if (val === 'Client Platform') {
       setState({
         ...state,
         devTypeFirstBtn: 'outline-info',
@@ -545,7 +545,7 @@ function ClientForm() {
                           className='btn-padding'
                         >
                           {' '}
-                          Cloud Plateform
+                          Cloud Platform
                         </Button>
                         <Button
                           size='sm'
@@ -556,7 +556,7 @@ function ClientForm() {
                           className='btn-padding'
                         >
                           {' '}
-                          Client Plateform
+                          Client Platform
                         </Button>
                       </Form.Group>
                     </Form.Group>
