@@ -242,12 +242,12 @@ function EditViewForm() {
           setDevTypeFirstBtn('outline-info');
           setDevTypeSecondBtn('info');
           setDevTypeThirdBtn('outline-info');
-          setDevTypeValue('Cloud Plateform');
+          setDevTypeValue('Cloud Platform');
         } else if (devTypeSelected === 'Client Plateform') {
           setDevTypeFirstBtn('outline-info');
           setDevTypeSecondBtn('outline-info');
           setDevTypeThirdBtn('info');
-          setDevTypeValue('Client Plateform');
+          setDevTypeValue('Client Platform');
         } else {
           setDevTypeFirstBtn('outline-info');
           setDevTypeSecondBtn('outline-info');
@@ -641,7 +641,7 @@ function EditViewForm() {
                         className='btn-padding'
                       >
                         {' '}
-                        Cloud Plateform
+                        Cloud Platform
                       </Button>
                       <Button
                         size='sm'
@@ -652,7 +652,7 @@ function EditViewForm() {
                         className='btn-padding'
                       >
                         {' '}
-                        Client Plateform
+                        Client Platform
                       </Button>
                     </Form.Group>
                   </Form.Group>
