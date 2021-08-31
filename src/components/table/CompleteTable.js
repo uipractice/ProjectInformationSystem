@@ -106,12 +106,12 @@ function CompleteTable({ data }) {
 
   const columns = React.useMemo(
     () => [
-      {
-        Header: 'SL.NO',
-        accessor: 'serial',
-        // filterable: false,
-        width: 102,
-      },
+      // {
+      //   Header: 'SL.NO',
+      //   accessor: 'serial',
+      //   // filterable: false,
+      //   width: 102,
+      // },
 
       {
         Header: 'PROJECT NAME',
@@ -232,13 +232,26 @@ function CompleteTable({ data }) {
     setGlobalFilter,
     rows: filteredTableData,
   } = useTable(
-    { columns, data: filteredData, initialState: { pageSize: 7 } },
+    { columns, data: filteredData, initialState: { pageSize: 10 } },
     useGlobalFilter,
     useSortBy,
     usePagination
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
+
+  var start, end;
+  if (pageIndex === 0) {
+    start = 1;
+    end = filteredData.length > pageSize ? pageSize : filteredData.length;
+  } else {
+    start = pageIndex * pageSize + 1;
+    // end = (pageIndex + 1) * pageSize;
+    end =
+      filteredData.length >= (pageIndex + 1) * pageSize
+        ? (pageIndex + 1) * pageSize
+        : filteredData.length;
+  }
 
   useEffect(() => {
     if (filteredTableData?.length && globalFilter && searchValue)
@@ -414,7 +427,10 @@ function CompleteTable({ data }) {
         </table>
       </div>
       <div className='table-pagination'>
-        <label>Rows per page:</label>
+        <span className='paginate'>
+          <b>{start}</b> to <b>{end}</b> of <b>{filteredData.length}</b>
+        </span>
+        {/* <label>Rows per page:</label>
         <select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
@@ -425,7 +441,7 @@ function CompleteTable({ data }) {
               {pageSize}
             </option>
           ))}
-        </select>
+        </select> */}
         <span>
           Page{' '}
           <strong>
