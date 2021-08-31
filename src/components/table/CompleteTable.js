@@ -81,7 +81,7 @@ function CompleteTable({ data }) {
   function handleInputChange(evt) {
     setRowOriginal({
       ...rowOriginal,
-      deleteReason: evt.target.value.match(/^[a-zA-z]+([\s][a-zA-Z]+)*$/),
+      deleteReason: evt.target.value.match(/[a-zA-z]+([\s]+)*$/),
     });
   }
 
@@ -311,6 +311,7 @@ function CompleteTable({ data }) {
               name='deleteReason'
             />
             <br></br>
+            <span style={{fontSize: '10px'}}>Note: *Allows only alphabetics</span>
             <p className='descr'>
               {' '}
               Take a deep breath! <br />
