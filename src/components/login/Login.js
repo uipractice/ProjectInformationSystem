@@ -44,7 +44,6 @@ function Login() {
     } else {
       setState({
         ...state,
-        enteredUserName: '',
         enteredPassword:''
       })
       toast.error("Invalid Credential !!", {
