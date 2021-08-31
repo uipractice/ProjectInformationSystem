@@ -42,7 +42,7 @@ const Footer = () => {
         .post(getApiUrl(`clientInfo/feebackMail`), feedback)
         .then((res) => {
           console.log(res.data);
-          toast.success('A Reminder mail has been triggered !', {
+          toast.success('A feedback mail has been triggered !', {
             autoClose: 1800,
           });
         })
