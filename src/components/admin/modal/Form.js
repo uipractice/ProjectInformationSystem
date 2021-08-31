@@ -60,7 +60,7 @@ function Form({ closeModal }) {
   }
 
   function handleOtherPractice(e) {
-    setNewPractice(e.target.value);
+    setNewPractice(e.target.value.match(/^[a-zA-Z]+$/));
   }
 
   const handleReset = (e) => {
@@ -118,7 +118,6 @@ function Form({ closeModal }) {
         .catch((err) => console.log(err.response));
     }
   }
-
   return (
     <form>
       <div className='row'>
@@ -154,7 +153,7 @@ function Form({ closeModal }) {
           onChange={(e) => handleOnChange(e, true)}
           onKeyDown={(e) => handleOnChange(e, true)}
           name='email'
-          value={state.email && state.email.toLowerCase()}
+          value={state && state.email && state.email.toLowerCase()}
           rows='3'
           cols='50'
         />

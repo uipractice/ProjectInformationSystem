@@ -81,7 +81,7 @@ function CompleteTable({ data }) {
   function handleInputChange(evt) {
     setRowOriginal({
       ...rowOriginal,
-      deleteReason: evt.target.value,
+      deleteReason: evt.target.value.match(/^[a-zA-z]+([\s][a-zA-Z]+)*$/),
     });
   }
 

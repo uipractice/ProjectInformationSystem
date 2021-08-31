@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FeedBackModal = (props) => {
+  const feedBackText = /^[a-zA-z]+([\s][a-zA-Z]+)*$/;
   return (
     <Dialog
       open={props.open}
@@ -47,7 +48,7 @@ const FeedBackModal = (props) => {
           color='primary'
           autoFocus
           className='feedback-submit'
-          disabled={props.feedbackText === ''}
+          disabled={!props.feedbackText.match(feedBackText)}
         >
           Send
         </Button>
