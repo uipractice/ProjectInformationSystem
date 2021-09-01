@@ -40,6 +40,12 @@ function Form({ closeModal }) {
         [e.target.name]: e.target.value,
         autoFill: false,
       });
+    }else {
+      setState({
+        ...state,
+        [e.target.name]: '',
+        autoFill: false,
+      });
     }
   }
   function handleEmailChange(e, email) {
