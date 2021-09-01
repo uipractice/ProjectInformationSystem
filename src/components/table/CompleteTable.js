@@ -79,10 +79,18 @@ function CompleteTable({ data }) {
   }
 
   function handleInputChange(evt) {
-    setRowOriginal({
-      ...rowOriginal,
-      deleteReason: evt.target.value.match(/[a-zA-z]+([\s]+)*$/),
-    });
+    if(evt.target.value.match(/[a-zA-z]+([\s]+)*$/)){
+      setRowOriginal({
+        ...rowOriginal,
+        deleteReason: evt.target.value,
+      });
+    }else {
+      setRowOriginal({
+        ...rowOriginal,
+        deleteReason: '',
+      });
+    }
+    
   }
 
   const handleUpdateStatus = (e) => {
