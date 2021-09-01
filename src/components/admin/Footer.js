@@ -69,7 +69,10 @@ const Footer = () => {
         </li>
         <FeedBackModal
           open={open}
-          closeHandler={(value, closeClick) => handleClose(value, closeClick)}
+          closeHandler={(value, closeClick) => {
+            setFeedbackText('');
+            handleClose(value, closeClick);
+          }}
           handleInputChange={(e) => handleInputChange(e)}
           feedbackText={feedbackText}
         />
