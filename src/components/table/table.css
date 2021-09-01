@@ -255,13 +255,17 @@ tfoot td {
   top: 0;
   z-index: 1;
 }
-.tableFixHead thead th:first-child,
-.tableFixHead thead th:last-child {
+.tableFixHead thead th:first-child {
   text-align: left;
 }
-.tableFixHead tr td:first-child,
-.tableFixHead tr td:last-child {
+.tableFixHead thead th:last-child {
+  text-align: center;
+}
+.tableFixHead tr td:first-child {
   text-align: left !important;
+}
+.tableFixHead tr td:last-child {
+  text-align: center !important;
 }
 .table-pagination .pageNum:focus-visible {
   outline: none !important;
