@@ -102,7 +102,11 @@ function ClientForm() {
       state.isCyberSecConducted &&
       state.securityBreach &&
       state.isDLPreq &&
-      state.isClientEmailProvided
+      state.isClientEmailProvided &&
+      ((state.showInsuranceDetails === true && state.isDisasterInsuCovered) ||
+        state.showInsuranceDetails === false) &&
+      ((state.showIsolatedDetails === true && state.isIsolatedEnvReq) ||
+        state.showIsolatedDetails === false)
     ) {
       return (
         <Button
@@ -421,6 +425,7 @@ function ClientForm() {
 
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Choose files to upload </Form.Label>
+
                       <br></br>
                       <input
                         type='file'
@@ -440,7 +445,9 @@ function ClientForm() {
                           document.getElementById('file')?.click()
                         }
                       />
-
+                      <Form.Label style={{marginLeft: '10px'}}>
+                        *For uploading multiple files, select all required files at once.
+                      </Form.Label>
                       <div>
                         {fileData &&
                           Object.keys(fileData)?.map((key) => (
