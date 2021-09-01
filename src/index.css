@@ -871,14 +871,14 @@ select.form-control:-internal-autofill-selected {
 }
 .nav-item > div {
   top: 10px !important;
-  left: -58px !important;
+  left: 0px !important;
 }
 .header_nav .navbar-nav .MuiPaper-root::before {
   content: '';
   position: absolute;
-  top: -20%;
+  top: -14%;
   left: auto;
-  right: 18px;
+  right: 17px;
   margin-left: 43px;
   border-width: 10px;
   border-bottom: 10px solid #f8f8fb;
