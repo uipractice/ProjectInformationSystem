@@ -91,17 +91,17 @@ function ClientForm() {
 
   function SubmitButton() {
     if (
-      // state.projectName &&
-      // state.securityMeasure &&
-      // state.informIT &&
-      // state.workStationSelected &&
-      // state.devTypeSelected &&
-      // state.allowedWebsite &&
-      // state.isNDAsigned &&
-      // state.isGDPRcompliance &&
-      // state.isCyberSecConducted &&
-      // state.securityBreach &&
-      // state.isDLPreq &&
+      state.projectName &&
+      state.securityMeasure &&
+      state.informIT &&
+      state.workStationSelected &&
+      state.devTypeSelected &&
+      state.allowedWebsite &&
+      state.isNDAsigned &&
+      state.isGDPRcompliance &&
+      state.isCyberSecConducted &&
+      state.securityBreach &&
+      state.isDLPreq &&
       state.isClientEmailProvided
     ) {
       return (
