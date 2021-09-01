@@ -212,7 +212,10 @@ function CompleteTable({ data }) {
               ? { className: 'delete-icon disableDeleteBtn' }
               : { className: 'delete-icon ' })}
             onClick={(e) => {
-              setRowOriginal(row.original);
+              setRowOriginal({
+                ...row.original,
+                deleteReason: '' ,
+              });
               setIsModalOpen(true);
             }}
           >
