@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FeedBackModal = (props) => {
-  const feedBackText = /^[a-zA-z]+([\s][a-zA-Z]+)*$/;
+  const feedBackText = /[a-zA-z]+([\s]+)*$/;
   return (
     <Dialog
       open={props.open}
@@ -37,6 +37,7 @@ const FeedBackModal = (props) => {
             onChange={(e) => props.handleInputChange(e)}
             name='deleteReason'
           />
+          <span style={{fontSize: '10px'}}>Note: *Allows only alphabetics</span>
         </DialogContentText>
       </DialogContent>
       <DialogActions>

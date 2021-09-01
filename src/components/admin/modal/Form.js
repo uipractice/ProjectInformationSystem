@@ -32,22 +32,33 @@ function Form({ closeModal }) {
   });
 
   function handleOnChange(e, email) {
+    if (email) {
+      handleEmailChange(e, email);
+    } else if (e.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+        autoFill: false,
+      });
+    }
+  }
+  function handleEmailChange(e, email) {
     if (e.key === '@' && !state.autoFill && email) {
       setState({
         ...state,
         [e.target.name]: e.target.value + '@evoketechnologies.com',
         autoFill: true,
       });
-    } else if (!state.autoFill) {
+    } else if(!state.autoFill){
       setState({
         ...state,
         [e.target.name]: e.target.value,
-        autoFill: false,
+        autoFill: false
       });
     } else {
       setState({
         ...state,
-        autoFill: false,
+        autoFill: false
       });
     }
   }
@@ -60,7 +71,11 @@ function Form({ closeModal }) {
   }
 
   function handleOtherPractice(e) {
-    setNewPractice(e.target.value.match(/^[a-zA-Z]+$/));
+    if (e.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
+      setNewPractice(e.target.value);
+    } else {
+      setNewPractice('');
+    }
   }
 
   const handleReset = (e) => {
