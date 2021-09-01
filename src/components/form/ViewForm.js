@@ -136,6 +136,7 @@ function ViewForm() {
           autoClose: 1800,
         });
         setRestoreIsModalOpen(false);
+        setTotalState({ ...totalState, deleteReason: false});
       })
       .catch((err) => console.log(err.response));
 
