@@ -76,8 +76,8 @@ const NavBar = ({ validate }) => {
     setFeedback(false);
     if (!closeClick) {
       const feedback = {
-        feedbackText
-      }
+        feedbackText,
+      };
       axios
         .post(getApiUrl(`clientInfo/feebackMail`), feedback)
         .then((res) => {
@@ -124,7 +124,7 @@ const NavBar = ({ validate }) => {
 
   const handleInputChange = (e) => {
     setFeedbackText(e.target.value);
-  }
+  };
 
   return (
     <div>
@@ -175,9 +175,10 @@ const NavBar = ({ validate }) => {
                         </MenuItem>
                         <FeedBackModal
                           open={feedback}
-                          closeHandler={(e, closeClick) =>
-                            handleClose(e, closeClick)
-                          }
+                          closeHandler={(e, closeClick) => {
+                            setFeedbackText('');
+                            handleClose(e, closeClick);
+                          }}
                           handleInputChange={(e) => handleInputChange(e)}
                           feedbackText={feedbackText}
                         />
