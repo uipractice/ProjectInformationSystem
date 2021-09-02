@@ -172,9 +172,6 @@ table th {
   box-shadow: 0 0 0 0 !important;
   background-color: transparent !important;
 }
-/* table tr:nth-child(even) {
-  background-color: #fafafa;
-} */
 
 table tr:hover {
   background-color: #ddd;
@@ -193,7 +190,6 @@ tfoot td {
   padding: 10px 15px;
   background: #fff;
   border: 1px solid #dee2e6;
-  /* border-top: 0; */
 }
 .table-pagination .pageNum {
   border: 0;
