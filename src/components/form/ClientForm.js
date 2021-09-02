@@ -91,7 +91,8 @@ function ClientForm() {
 
   function SubmitButton() {
     if (
-      state.projectName &&
+      // state.projectName &&
+      prevProjectName &&
       state.securityMeasure &&
       state.informIT &&
       state.workStationSelected &&
@@ -103,9 +104,9 @@ function ClientForm() {
       state.securityBreach &&
       state.isDLPreq &&
       state.isClientEmailProvided &&
-      ((state.showInsuranceDetails === true && state.isDisasterInsuCovered) ||
+      ((state.showInsuranceDetails === true && state.disasterDetails) ||
         state.showInsuranceDetails === false) &&
-      ((state.showIsolatedDetails === true && state.isIsolatedEnvReq) ||
+      ((state.showIsolatedDetails === true && state.isolationDetails) ||
         state.showIsolatedDetails === false)
     ) {
       return (
@@ -421,52 +422,6 @@ function ClientForm() {
                         value={prevProjectName}
                         onChange={(e) => setPrevProjectName(e.target.value)}
                       />
-                    </Form.Group>
-
-                    <Form.Group style={{ marginBottom: '40px' }}>
-                      <Form.Label>Choose files to upload </Form.Label>
-
-                      <br></br>
-                      <input
-                        type='file'
-                        name='fileName'
-                        id='file'
-                        accept='*.*'
-                        multiple
-                        onChange={(e) => {
-                          setFileData(e.target.files);
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                      <input
-                        type='button'
-                        value='Choose File'
-                        onClick={(e) =>
-                          document.getElementById('file')?.click()
-                        }
-                      />
-                      <Form.Label style={{marginLeft: '10px'}}>
-                        *For uploading multiple files, select all required files at once.
-                      </Form.Label>
-                      <div>
-                        {fileData &&
-                          Object.keys(fileData)?.map((key) => (
-                            <div>
-                              <span
-                                key={fileData[key].name}
-                                className='file-close-icon'
-                                onClick={() => {
-                                  const fileState = { ...fileData };
-                                  delete fileState[key];
-                                  setFileData(fileState);
-                                }}
-                              >
-                                {fileData[key].name}
-                                &nbsp;&nbsp;
-                              </span>
-                            </div>
-                          ))}
-                      </div>
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: '40px' }}>
@@ -847,6 +802,53 @@ function ClientForm() {
                           No
                         </Button>
                       </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: '40px' }}>
+                      <Form.Label>Choose files to upload </Form.Label>
+
+                      <br></br>
+                      <input
+                        type='file'
+                        name='fileName'
+                        id='file'
+                        accept='*.*'
+                        multiple
+                        onChange={(e) => {
+                          setFileData(e.target.files);
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                      <input
+                        type='button'
+                        value='Choose File'
+                        onClick={(e) =>
+                          document.getElementById('file')?.click()
+                        }
+                      />
+                      <Form.Label style={{ marginLeft: '10px' }}>
+                        *For uploading multiple files, select all required files
+                        at once.
+                      </Form.Label>
+                      <div>
+                        {fileData &&
+                          Object.keys(fileData)?.map((key) => (
+                            <div>
+                              <span
+                                key={fileData[key].name}
+                                className='file-close-icon'
+                                onClick={() => {
+                                  const fileState = { ...fileData };
+                                  delete fileState[key];
+                                  setFileData(fileState);
+                                }}
+                              >
+                                {fileData[key].name}
+                                &nbsp;&nbsp;
+                              </span>
+                            </div>
+                          ))}
+                      </div>
                     </Form.Group>
 
                     <Button
