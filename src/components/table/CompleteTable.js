@@ -79,18 +79,17 @@ function CompleteTable({ data }) {
   }
 
   function handleInputChange(evt) {
-    if(evt.target.value.match(/[a-zA-z]+([\s]+)*$/)){
+    if (evt.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
       setRowOriginal({
         ...rowOriginal,
         deleteReason: evt.target.value,
       });
-    }else {
+    } else {
       setRowOriginal({
         ...rowOriginal,
         deleteReason: '',
       });
     }
-    
   }
 
   const handleUpdateStatus = (e) => {
@@ -160,6 +159,7 @@ function CompleteTable({ data }) {
                   uploadedFiles: row.original.uploadedFiles,
                 },
               }}
+              title={row.original.projectNameByIT}
             >
               {row.original.projectNameByIT}
             </Link>
@@ -214,7 +214,7 @@ function CompleteTable({ data }) {
             onClick={(e) => {
               setRowOriginal({
                 ...row.original,
-                deleteReason: '' ,
+                deleteReason: '',
               });
               setIsModalOpen(true);
             }}
@@ -243,7 +243,7 @@ function CompleteTable({ data }) {
     setGlobalFilter,
     rows: filteredTableData,
   } = useTable(
-    { columns, data: filteredData, initialState: { pageSize: 10 } },
+    { columns, data: filteredData, initialState: { pageSize: 5 } },
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -335,7 +335,9 @@ function CompleteTable({ data }) {
               name='deleteReason'
             />
             <br></br>
-            <span style={{fontSize: '10px'}}>Note: *Allows only alphabetics</span>
+            <span style={{ fontSize: '10px' }}>
+              Note: *Allows only alphabetics
+            </span>
             <p className='descr'>
               {' '}
               Take a deep breath! <br />

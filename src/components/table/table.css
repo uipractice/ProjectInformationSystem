@@ -97,6 +97,7 @@ table {
   width: 100%;
   border: 1px solid #ddd;
   margin-bottom: 0 !important;
+  background: #fff;
 }
 
 table td,
@@ -171,9 +172,9 @@ table th {
   box-shadow: 0 0 0 0 !important;
   background-color: transparent !important;
 }
-table tr:nth-child(even) {
+/* table tr:nth-child(even) {
   background-color: #fafafa;
-}
+} */
 
 table tr:hover {
   background-color: #ddd;
@@ -192,7 +193,7 @@ tfoot td {
   padding: 10px 15px;
   background: #fff;
   border: 1px solid #dee2e6;
-  border-top: 0;
+  /* border-top: 0; */
 }
 .table-pagination .pageNum {
   border: 0;
@@ -281,7 +282,7 @@ tfoot td {
   left: 5px;
 }
 .filter-row input.searchClose {
-  background: none;
+  background: #fff;
 }
 .filter-row input[type='search']::-webkit-search-cancel-button,
 .filter-row input[type='search']::-webkit-search-decoration {
@@ -326,4 +327,19 @@ tfoot td {
   font-size: 14px;
   line-height: 17px;
   color: #57565c;
+}
+textarea:focus-visible {
+  box-shadow: 0 0 0;
+  border-color: #209ec5 !important;
+  background-color: rgba(32, 158, 197, 0.05) !important;
+}
+textarea:focus-visible {
+  outline: none;
+}
+.tableFixHead tr td:first-child a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 221px;
+  display: block;
 }

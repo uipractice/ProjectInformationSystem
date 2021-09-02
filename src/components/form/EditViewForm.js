@@ -909,7 +909,7 @@ function EditViewForm() {
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group>
+                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Is client providing Email services to user for regular
                       business communication ?{' '}
@@ -940,10 +940,11 @@ function EditViewForm() {
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group style={{ marginBottom: '40px' }}>
+                  <Form.Group>
                     <Form.Label>Download the attachments </Form.Label>
-                    <br></br>
-                    <Button onClick={downloadFile}>Download files</Button>
+                    <Button onClick={downloadFile} className='downloadFile'>
+                      Download files
+                    </Button>
                   </Form.Group>
 
                   <Button
