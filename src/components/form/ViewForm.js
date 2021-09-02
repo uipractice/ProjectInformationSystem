@@ -366,7 +366,7 @@ function ViewForm() {
                 {status !== 'Pending' ? (
                   <Form>
                     <Form.Group style={{ marginBottom: '0' }}>
-                      {totalState.deleteReason && (
+                      {totalState.deleteReason && totalState.status !== 'Submitted' && (
                         <div>
                           <Form.Label
                             style={{ color: 'red', marginTop: '20px' }}
