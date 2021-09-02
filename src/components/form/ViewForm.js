@@ -366,12 +366,12 @@ function ViewForm() {
                 {status !== 'Pending' ? (
                   <Form>
                     <Form.Group style={{ marginBottom: '0' }}>
-                      {totalState.deleteReason && (
+                      {totalState.deleteReason && totalState.status !== 'Submitted' && (
                         <div>
                           <Form.Label
                             style={{ color: 'red', marginTop: '20px' }}
                           >
-                            This project has been Deleted bacause
+                            This project has been Deleted because
                           </Form.Label>
 
                           <Form.Control
@@ -387,7 +387,7 @@ function ViewForm() {
                           <Form.Label
                             style={{ color: 'blue', marginTop: '40px' }}
                           >
-                            This project has been Restored back bacause
+                            This project has been Restored back because
                           </Form.Label>
 
                           <Form.Control
