@@ -136,7 +136,7 @@ function ViewForm() {
           autoClose: 1800,
         });
         setRestoreIsModalOpen(false);
-        setTotalState({ ...totalState, deleteReason: false});
+        setTotalState({ ...totalState, deleteReason: false });
       })
       .catch((err) => console.log(err.response));
 
@@ -409,21 +409,6 @@ function ViewForm() {
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: '40px' }}>
-                      <Form.Label> Download the Files attached </Form.Label>
-                      <Button
-                        style={{
-                          width: '120px',
-                          fontSize: '14px',
-                          lineHeight: '19px',
-                          marginLeft: '10px',
-                        }}
-                        onClick={handleDownload}
-                      >
-                        Download
-                      </Button>
-                    </Form.Group>
-
-                    <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Security measures from client side
                       </Form.Label>
@@ -614,6 +599,21 @@ function ViewForm() {
                           {isClientEmailProvided}
                         </Button>
                       </Form.Group>
+                    </Form.Group>
+
+                    <Form.Group style={{ marginBottom: '40px' }}>
+                      <Form.Label> Download the Files attached </Form.Label>
+                      <Button
+                        style={{
+                          width: '120px',
+                          fontSize: '14px',
+                          lineHeight: '19px',
+                          marginLeft: '10px',
+                        }}
+                        onClick={handleDownload}
+                      >
+                        Download
+                      </Button>
                     </Form.Group>
                     {status === 'Submitted' ? (
                       <Button

@@ -541,12 +541,6 @@ function EditViewForm() {
 
                 <Form>
                   <Form.Group style={{ marginBottom: '40px' }}>
-                    <Form.Label>Download the attachments </Form.Label>
-                    <br></br>
-                    <Button onClick={downloadFile}>Download files</Button>
-                  </Form.Group>
-
-                  <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>Name of the project or client</Form.Label>
                     <Form.Control
                       onChange={(e) => {
@@ -944,6 +938,12 @@ function EditViewForm() {
                         No
                       </Button>
                     </Form.Group>
+                  </Form.Group>
+
+                  <Form.Group style={{ marginBottom: '40px' }}>
+                    <Form.Label>Download the attachments </Form.Label>
+                    <br></br>
+                    <Button onClick={downloadFile}>Download files</Button>
                   </Form.Group>
 
                   <Button
