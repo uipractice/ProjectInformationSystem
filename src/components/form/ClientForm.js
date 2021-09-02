@@ -102,7 +102,11 @@ function ClientForm() {
       state.isCyberSecConducted &&
       state.securityBreach &&
       state.isDLPreq &&
-      state.isClientEmailProvided
+      state.isClientEmailProvided &&
+      ((state.showInsuranceDetails === true && state.isDisasterInsuCovered) ||
+        state.showInsuranceDetails === false) &&
+      ((state.showIsolatedDetails === true && state.isIsolatedEnvReq) ||
+        state.showIsolatedDetails === false)
     ) {
       return (
         <Button
