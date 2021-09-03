@@ -32,12 +32,13 @@ function Form({ closeModal }) {
   });
 
   function handleOnChange(e, email) {
+    const value = e.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
     if (email) {
       handleEmailChange(e, email);
-    } else if (e.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
+    } else if (value.match(/[a-zA-z]+([\s]+)*$/)) {
       setState({
         ...state,
-        [e.target.name]: e.target.value,
+        [e.target.name]: value,
         autoFill: false,
       });
     }else {
@@ -77,8 +78,9 @@ function Form({ closeModal }) {
   }
 
   function handleOtherPractice(e) {
-    if (e.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
-      setNewPractice(e.target.value);
+    const value = e.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
+    if (value.match(/[a-zA-z]+([\s]+)*$/)) {
+      setNewPractice(value);
     } else {
       setNewPractice('');
     }

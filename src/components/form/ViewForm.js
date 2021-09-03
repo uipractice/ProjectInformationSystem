@@ -89,10 +89,11 @@ function ViewForm() {
   });
 
   function reshareReasonInput(evt) {
-    if (evt.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
+    const value = evt.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
+    if (value.match(/[a-zA-z]+([\s]+)*$/)) {
       setTotalState({
         ...totalState,
-        reshareReason: evt.target.value,
+        reshareReason: value,
       });
     } else {
       setTotalState({
@@ -481,7 +482,7 @@ function ViewForm() {
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Did all the project related documents (security, GDPR
-                        complaiance and MSA) are collected from client ?{' '}
+                        compliance and MSA) are collected from client ?{' '}
                       </Form.Label>
                       <Form.Group style={{ marginBottom: '30px' }}>
                         <Button size='sm' style={{ width: '80px' }}>
@@ -517,7 +518,7 @@ function ViewForm() {
 
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
-                        Insurance coverage in case of disater issues ?{' '}
+                        Insurance coverage in case of disaster issues ?{' '}
                       </Form.Label>
                       <Form.Group style={{ marginBottom: '30px' }}>
                         <Button

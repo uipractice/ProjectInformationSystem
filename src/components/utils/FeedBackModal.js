@@ -29,7 +29,7 @@ const FeedBackModal = (props) => {
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
           <h3>Hello Friends</h3>
-          <p>Your review will help us go give you the better experience</p>
+          <p>Your review will help us to provide you better experience</p>
           <textarea
             type='text'
             autoFocus={true}

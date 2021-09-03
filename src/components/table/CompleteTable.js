@@ -79,10 +79,11 @@ function CompleteTable({ data }) {
   }
 
   function handleInputChange(evt) {
-    if (evt.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
+    const value = evt.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
+    if (value.match(/[a-zA-z]+([\s]+)*$/)) {
       setRowOriginal({
         ...rowOriginal,
-        deleteReason: evt.target.value,
+        deleteReason: value,
       });
     } else {
       setRowOriginal({
