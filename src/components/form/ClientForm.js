@@ -200,8 +200,8 @@ function ClientForm() {
   }
 
   function handlePlainText(e) {
-    const value = e.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
-    if (value.match(/[a-zA-z]+([\s]+)*$/)) {
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setState({
         ...state,
         [e.target.name]: value,
@@ -215,8 +215,8 @@ function ClientForm() {
   }
 
   function handleProjectName(e) {
-    const value = e.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
-    if (value.match(/[a-zA-z]+([\s]+)*$/)) {
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setPrevProjectName(value);
     } else {
       setPrevProjectName('');

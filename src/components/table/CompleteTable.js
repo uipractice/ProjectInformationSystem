@@ -79,8 +79,8 @@ function CompleteTable({ data }) {
   }
 
   function handleInputChange(evt) {
-    const value = evt.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
-    if (value.match(/[a-zA-z]+([\s]+)*$/)) {
+    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setRowOriginal({
         ...rowOriginal,
         deleteReason: value,
@@ -334,10 +334,11 @@ function CompleteTable({ data }) {
               style={{ color: 'black' }}
               onChange={handleInputChange}
               name='deleteReason'
+              value={rowOriginal.deleteReason}
             />
             <br></br>
             <span style={{ fontSize: '10px' }}>
-              Note: *Allows only alphabetics
+              Note: *Allows only alphabetics and numerics
             </span>
             <p className='descr'>
               {' '}

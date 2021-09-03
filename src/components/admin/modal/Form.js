@@ -32,10 +32,10 @@ function Form({ closeModal }) {
   });
 
   function handleOnChange(e, email) {
-    const value = e.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
+    const value = e.target.value.replace(/[^a-zA-Z ]/g,'');
     if (email) {
       handleEmailChange(e, email);
-    } else if (value.match(/[a-zA-z]+([\s]+)*$/)) {
+    } else if (value.match(/[a-zA-Z]+([\s]+)*$/)) {
       setState({
         ...state,
         [e.target.name]: value,
@@ -78,8 +78,8 @@ function Form({ closeModal }) {
   }
 
   function handleOtherPractice(e) {
-    const value = e.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
-    if (value.match(/[a-zA-z]+([\s]+)*$/)) {
+    const value = e.target.value.replace(/[^a-zA-Z ]/g,'');
+    if (value.match(/[a-zA-Z]+([\s]+)*$/)) {
       setNewPractice(value);
     } else {
       setNewPractice('');

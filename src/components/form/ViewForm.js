@@ -89,8 +89,8 @@ function ViewForm() {
   });
 
   function reshareReasonInput(evt) {
-    const value = evt.target.value.replace(/[0-9.!@#$%&'*+/=?^_`{|}~-]/,'');
-    if (value.match(/[a-zA-z]+([\s]+)*$/)) {
+    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setTotalState({
         ...totalState,
         reshareReason: value,

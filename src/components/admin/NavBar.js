@@ -123,7 +123,8 @@ const NavBar = ({ validate }) => {
   }, [open]);
 
   const handleInputChange = (e) => {
-    setFeedbackText(e.target.value);
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    setFeedbackText(value);
   };
 
   return (
