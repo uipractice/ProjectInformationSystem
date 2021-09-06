@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FeedBackModal = (props) => {
-  const feedBackText = /[a-zA-z]+([\s]+)*$/;
+  const feedBackText = /[a-zA-Z0-9]+([\s]+)*$/;
   return (
     <Dialog
       open={props.open}
@@ -29,15 +29,16 @@ const FeedBackModal = (props) => {
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
           <h3>Hello Friends</h3>
-          <p>Your review will help us go give you the better experience</p>
+          <p>Your review will help us to provide you better experience</p>
           <textarea
             type='text'
             autoFocus={true}
             style={{ color: 'black' }}
             onChange={(e) => props.handleInputChange(e)}
             name='deleteReason'
+            value={props.feedbackText}
           />
-          <span style={{fontSize: '10px'}}>Note: *Allows only alphabetics</span>
+          <span style={{fontSize: '10px'}}>Note: *Allows only alphabetics and Numerics</span>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
