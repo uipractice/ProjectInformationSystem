@@ -177,7 +177,8 @@ function ClientForm() {
       .then((res) => {
         console.log('Form saved successfully : ', res.data);
         toast.success('Form Saved Successfully!');
-        history.push('/admin');
+        window.close();
+        // history.push('/#/admin');
       })
       .catch((err) => {
         console.log('Failed to Save Form : ', err.response);
@@ -896,7 +897,7 @@ function ClientForm() {
                     }}
                   >
                     Thank you for your time ! <br />
-                    Form has been submitted or NOT required anymore. <br />
+                    Form has been submitted successfully. <br />
                     We will let you know, if any further information is
                     required. <br />
                   </div>
