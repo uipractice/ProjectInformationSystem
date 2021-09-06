@@ -201,10 +201,27 @@ function ClientForm() {
   }
 
   function handlePlainText(e) {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+      setState({
+        ...state,
+        [e.target.name]: value,
+      });
+    } else {
+      setState((previousState) => ({
+        ...state,
+        [e.target.name]: '',
+      }));
+    }
+  }
+
+  function handleProjectName(e) {
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+      setPrevProjectName(value);
+    } else {
+      setPrevProjectName('');
+    }
   }
 
   function handleClientEmailProvided(evt) {
@@ -421,7 +438,7 @@ function ClientForm() {
                       <Form.Control
                         name='prevProjectName'
                         value={prevProjectName}
-                        onChange={(e) => setPrevProjectName(e.target.value)}
+                        onChange={(e) => handleProjectName(e)}
                       />
                     </Form.Group>
 
@@ -433,6 +450,7 @@ function ClientForm() {
                         name='securityMeasure'
                         onChange={handlePlainText}
                         autoFocus={true}
+                        value={state.securityMeasure}
                       />
                     </Form.Group>
 
@@ -443,6 +461,7 @@ function ClientForm() {
                       <Form.Control
                         name='informIT'
                         onChange={handlePlainText}
+                        value={state.informIT}
                       />
                     </Form.Group>
 
@@ -529,10 +548,11 @@ function ClientForm() {
                       <Form.Control
                         name='allowedWebsite'
                         onChange={handlePlainText}
+                        value={state.allowedWebsite}
                       />
                       <Form.Text className='text-muted'>
                         {' '}
-                        Use comma(,) to saperate multiple URLs, eg-
+                        Use comma(,) to separate multiple URLs, eg-
                         https://www.evoketechnologies.com/, 2nd URL{' '}
                       </Form.Text>
                     </Form.Group>
@@ -570,7 +590,7 @@ function ClientForm() {
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Did all the project related documents (security, GDPR
-                        complaiance and MSA) are collected from client ?{' '}
+                        compliance and MSA) are collected from client ?{' '}
                       </Form.Label>
                       <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
@@ -638,12 +658,13 @@ function ClientForm() {
                       <Form.Control
                         name='securityBreach'
                         onChange={handlePlainText}
+                        value={state.securityBreach}
                       />
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
-                        Insurance coverage in case of disater issues ?{' '}
+                        Insurance coverage in case of disaster issues ?{' '}
                       </Form.Label>
                       <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
@@ -683,6 +704,7 @@ function ClientForm() {
                             <Form.Control
                               name='disasterDetails'
                               onChange={handlePlainText}
+                              value={state.disasterDetails}
                             />
                           </div>
                         )}
@@ -737,6 +759,7 @@ function ClientForm() {
                             <Form.Control
                               name='isolationDetails'
                               onChange={handlePlainText}
+                              value={state.isolationDetails}
                             />
                           </div>
                         )}
@@ -828,8 +851,7 @@ function ClientForm() {
                         }
                       />
                       <Form.Label style={{ marginLeft: '10px' }}>
-                        *For uploading multiple files, select all required files
-                        at once.
+                        *Select all files at a time.
                       </Form.Label>
                       <div>
                         {fileData &&
