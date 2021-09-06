@@ -12,6 +12,7 @@ const FeedBackModal = (props) => {
     <Dialog
       open={props.open}
       onClose={props.closeHandler}
+      disableBackdropClick={true}
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
       className='feedback-modal'
@@ -29,7 +30,7 @@ const FeedBackModal = (props) => {
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
           <h3>Hello Friends</h3>
-          <p>Your review will help us go give you the better experience</p>
+          <p>Your review will help us to provide you better experience</p>
           <textarea
             type='text'
             autoFocus={true}
@@ -37,7 +38,9 @@ const FeedBackModal = (props) => {
             onChange={(e) => props.handleInputChange(e)}
             name='deleteReason'
           />
-          <span style={{fontSize: '10px'}}>Note: *Allows only alphabetics</span>
+          <span style={{ fontSize: '10px' }}>
+            Note: *Allows only alphabetics
+          </span>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
