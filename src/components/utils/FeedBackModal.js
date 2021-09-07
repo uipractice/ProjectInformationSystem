@@ -12,6 +12,7 @@ const FeedBackModal = (props) => {
     <Dialog
       open={props.open}
       onClose={props.closeHandler}
+      disableBackdropClick={true}
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
       className='feedback-modal'
@@ -38,7 +39,9 @@ const FeedBackModal = (props) => {
             name='deleteReason'
             value={props.feedbackText}
           />
-          <span style={{fontSize: '10px'}}>Note: *Allows only alphabetics and Numerics</span>
+          <span style={{ fontSize: '10px' }}>
+            Note: *Allows only alphabetics and Numerics
+          </span>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
