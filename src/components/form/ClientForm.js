@@ -18,6 +18,7 @@ function ClientForm() {
   const { id } = useParams();
   const [prevStatus, setPrevStatus] = useState('');
   const [prevProjectName, setPrevProjectName] = useState('');
+  const [clientFormSubmitted, setClientFormSubmitted] = useState(false);
 
   useEffect(() => {
     axios
@@ -121,7 +122,7 @@ function ClientForm() {
           }}
         >
           {' '}
-          Submit{' '}
+          {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
         </Button>
       );
     } else {
@@ -171,18 +172,28 @@ function ClientForm() {
       isDLPreq: state.isDLPreq,
       isClientEmailProvided: state.isClientEmailProvided,
     };
-
-    axios
-      .post(getApiUrl(`clientInfo/mailAndUpdate/${id}`), postObj)
-      .then((res) => {
-        console.log('Form saved successfully : ', res.data);
-        toast.success('Form Saved Successfully!');
-        window.close();
-        // history.push('/#/admin');
-      })
-      .catch((err) => {
-        console.log('Failed to Save Form : ', err.response);
-      });
+    if (!clientFormSubmitted) {
+      axios
+        .post(getApiUrl(`clientInfo/mailAndUpdate/${id}`), postObj)
+        .then((res) => {
+          console.log(
+            'Form saved successfully : ',
+            window.location.hash.indexOf('client-form') !== -1,
+            res.data
+          );
+          if (window.location.hash.indexOf('client-form') !== -1) {
+            setClientFormSubmitted(true);
+          } else {
+            history.push('/#/admin');
+          }
+          toast.success('Form Saved Successfully!');
+        })
+        .catch((err) => {
+          console.log('Failed to Save Form : ', err.response);
+        });
+    } else {
+      window.close();
+    }
 
     if (fileData?.length) {
       const formData = new FormData();
@@ -201,7 +212,7 @@ function ClientForm() {
   }
 
   function handlePlainText(e) {
-    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setState({
         ...state,
@@ -216,7 +227,7 @@ function ClientForm() {
   }
 
   function handleProjectName(e) {
-    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setPrevProjectName(value);
     } else {
@@ -423,7 +434,7 @@ function ClientForm() {
 
   return (
     <div>
-      <NavBar validate={false} />
+      <NavBar validate={false} clientFormSubmitted={clientFormSubmitted} />
 
       <div className='custom-scroll'>
         <Container>
@@ -883,6 +894,7 @@ function ClientForm() {
                         marginRight: '15px',
                         width: '130px',
                       }}
+                      disabled={clientFormSubmitted}
                     >
                       {' '}
                       Reset

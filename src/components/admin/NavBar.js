@@ -25,7 +25,7 @@ toast.configure();
  * @return {null}
  */
 
-const NavBar = ({ validate }) => {
+const NavBar = ({ validate, clientFormSubmitted }) => {
   function handleLogout() {
     sessionStorage.removeItem('auth-token');
     checkAuth();
@@ -123,7 +123,7 @@ const NavBar = ({ validate }) => {
   }, [open]);
 
   const handleInputChange = (e) => {
-    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     setFeedbackText(value);
   };
 
@@ -137,63 +137,65 @@ const NavBar = ({ validate }) => {
           <h3>Project Information System </h3>
         </div>
 
-        <ul className='navbar-nav px-3'>
-          <li className='nav-item text-nowrap'>
-            <Button
-              ref={anchorRef}
-              aria-controls={open ? 'menu-list-grow' : undefined}
-              aria-haspopup='true'
-              onClick={handleToggle}
-            ></Button>
-            <Popper
-              open={open}
-              anchorEl={anchorRef.current}
-              role={undefined}
-              transition
-              disablePortal
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === 'bottom' ? 'center top' : 'center bottom',
-                  }}
-                >
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleClose}>
-                      <MenuList
-                        autoFocusItem={open}
-                        id='menu-list-grow'
-                        onKeyDown={handleListKeyDown}
-                      >
-                        <MenuItem className='myprofile'>My profile</MenuItem>
-                        <MenuItem
-                          className='feedback'
-                          onClick={handleClickOpen}
+        {!clientFormSubmitted && (
+          <ul className='navbar-nav px-3'>
+            <li className='nav-item text-nowrap'>
+              <Button
+                ref={anchorRef}
+                aria-controls={open ? 'menu-list-grow' : undefined}
+                aria-haspopup='true'
+                onClick={handleToggle}
+              ></Button>
+              <Popper
+                open={open}
+                anchorEl={anchorRef.current}
+                role={undefined}
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin:
+                        placement === 'bottom' ? 'center top' : 'center bottom',
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList
+                          autoFocusItem={open}
+                          id='menu-list-grow'
+                          onKeyDown={handleListKeyDown}
                         >
-                          Provide Feedback
-                        </MenuItem>
-                        <FeedBackModal
-                          open={feedback}
-                          closeHandler={(e, closeClick) => {
-                            setFeedbackText('');
-                            handleClose(e, closeClick);
-                          }}
-                          handleInputChange={(e) => handleInputChange(e)}
-                          feedbackText={feedbackText}
-                        />
-                        <MenuItem className='logout' onClick={handleLogout}>
-                          Logout
-                        </MenuItem>
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </li>
-        </ul>
+                          <MenuItem className='myprofile'>My profile</MenuItem>
+                          <MenuItem
+                            className='feedback'
+                            onClick={handleClickOpen}
+                          >
+                            Provide Feedback
+                          </MenuItem>
+                          <FeedBackModal
+                            open={feedback}
+                            closeHandler={(e, closeClick) => {
+                              setFeedbackText('');
+                              handleClose(e, closeClick);
+                            }}
+                            handleInputChange={(e) => handleInputChange(e)}
+                            feedbackText={feedbackText}
+                          />
+                          <MenuItem className='logout' onClick={handleLogout}>
+                            Logout
+                          </MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </li>
+          </ul>
+        )}
       </div>
     </div>
   );
