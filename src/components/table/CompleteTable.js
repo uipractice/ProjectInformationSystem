@@ -79,7 +79,7 @@ function CompleteTable({ data }) {
   }
 
   function handleInputChange(evt) {
-    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setRowOriginal({
         ...rowOriginal,
@@ -310,6 +310,7 @@ function CompleteTable({ data }) {
       <div>
         <Modal
           isOpen={isModalOpen}
+          shouldCloseOnOverlayClick={false}
           onRequestClose={() => {
             setIsModalOpen(false);
           }}
