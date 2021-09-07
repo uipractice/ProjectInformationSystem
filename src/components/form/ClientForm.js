@@ -122,7 +122,7 @@ function ClientForm() {
           }}
         >
           {' '}
-          {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
+         {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
         </Button>
       );
     } else {
@@ -442,7 +442,7 @@ function ClientForm() {
             <Col md={{ span: 6, offset: 2 }}>
               <div style={{ width: '700px' }} className='project-details-form'>
                 <h2> Project Details </h2>
-                {prevStatus === 'Pending' && prevStatus !== 'deleted' ? (
+                {prevStatus === 'Pending' && prevStatus !== 'deleted' && !clientFormSubmitted ? (
                   <Form>
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Name of the project or client</Form.Label>
@@ -912,6 +912,7 @@ function ClientForm() {
                     Form has been submitted successfully. <br />
                     We will let you know, if any further information is
                     required. <br />
+                     <SubmitButton />
                   </div>
                 )}
               </div>
