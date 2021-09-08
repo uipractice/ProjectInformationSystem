@@ -25,7 +25,7 @@ toast.configure();
  * @return {null}
  */
 
-const NavBar = ({ validate, clientFormSubmitted }) => {
+const NavBar = ({ validate, clientForm }) => {
   function handleLogout() {
     sessionStorage.removeItem('auth-token');
     checkAuth();
@@ -126,7 +126,6 @@ const NavBar = ({ validate, clientFormSubmitted }) => {
     const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     setFeedbackText(value);
   };
-
   return (
     <div>
       <div className='navbar navbar-dark sticky-top  p-0 shadow header_nav'>
@@ -137,7 +136,7 @@ const NavBar = ({ validate, clientFormSubmitted }) => {
           <h3>Project Information System </h3>
         </div>
 
-        {!clientFormSubmitted && (
+        {!clientForm && (
           <ul className='navbar-nav px-3'>
             <li className='nav-item text-nowrap'>
               <Button
