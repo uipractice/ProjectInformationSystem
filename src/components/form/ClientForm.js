@@ -234,6 +234,21 @@ function ClientForm() {
     }
   }
 
+  function handlePlainTextWebsite(e) {
+    const value = e.target.value.replace(/[^a-zA-Z0-9./:, ]/g, '');
+    if (value.match(/[a-zA-Z0-9./:,]+([\s]+)*$/)) {
+      setState({
+        ...state,
+        [e.target.name]: value,
+      });
+    } else {
+      setState((previousState) => ({
+        ...state,
+        [e.target.name]: '',
+      }));
+    }
+  }
+
   function handleProjectName(e) {
     const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
@@ -565,7 +580,7 @@ function ClientForm() {
                       <Form.Label>Website(s) need to be allowed</Form.Label>
                       <Form.Control
                         name='allowedWebsite'
-                        onChange={handlePlainText}
+                        onChange={handlePlainTextWebsite}
                         value={state.allowedWebsite}
                       />
                       <Form.Text className='text-muted'>
