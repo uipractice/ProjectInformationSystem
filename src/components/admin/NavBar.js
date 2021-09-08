@@ -130,7 +130,10 @@ const NavBar = ({ validate, clientForm }) => {
     <div>
       <div className='navbar navbar-dark sticky-top  p-0 shadow header_nav'>
         <div className='row'>
-          <a className='navbar-brand col-md-6 px-4' href='/#/admin'>
+          <a
+            className='navbar-brand col-md-6 px-4'
+            // href='/#/admin'
+          >
             <img src={Logo} alt='Evoke Technologies' />
           </a>
           <h3>Project Information System </h3>
