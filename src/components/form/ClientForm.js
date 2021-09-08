@@ -30,6 +30,13 @@ function ClientForm() {
       .catch((err) => {
         console.log('Failed to get the status: ', err.response);
       });
+    setClientFormSubmitted(
+      prevStatus !== 'Pending' &&
+        prevStatus !== 'deleted' &&
+        window.location.hash.indexOf('client-form') !== -1
+        ? true
+        : false
+    );
   }, [id, prevProjectName, prevStatus]);
 
   const [fileData, setFileData] = useState('');
@@ -122,13 +129,13 @@ function ClientForm() {
           }}
         >
           {' '}
-         {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
+          {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
         </Button>
       );
     } else {
       return (
         <Button
-          disabled
+          disabled={!clientFormSubmitted}
           variant='primary'
           className='submit-btn'
           style={{
@@ -136,9 +143,10 @@ function ClientForm() {
             marginBottom: '20px',
             width: '130px',
           }}
+          onClick={(e) => handleSubmitForm(e)}
         >
           {' '}
-          Submit{' '}
+          {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
         </Button>
       );
     }
@@ -431,10 +439,9 @@ function ClientForm() {
       });
     }
   }
-
   return (
     <div>
-      <NavBar validate={false} clientFormSubmitted={clientFormSubmitted} />
+      <NavBar validate={false} clientForm={clientFormSubmitted} />
 
       <div className='custom-scroll'>
         <Container>
@@ -894,7 +901,6 @@ function ClientForm() {
                         marginRight: '15px',
                         width: '130px',
                       }}
-                      disabled={clientFormSubmitted}
                     >
                       {' '}
                       Reset
@@ -903,17 +909,19 @@ function ClientForm() {
                     {/* <button>Save temp</button> */}
                   </Form>
                 ) : (
-                  <div
-                    style={{
-                      padding: '140px',
-                    }}
-                  >
-                    Thank you for your time ! <br />
-                    Form has been submitted successfully. <br />
-                    We will let you know, if any further information is
-                    required. <br />
-                     <SubmitButton />
-                  </div>
+                  clientFormSubmitted && (
+                    <div
+                      style={{
+                        padding: '140px',
+                      }}
+                    >
+                      Thank you for your time ! <br />
+                      Form has been submitted successfully. <br />
+                      We will let you know, if any further information is
+                      required. <br />
+                      <SubmitButton />
+                    </div>
+                  )
                 )}
               </div>
             </Col>
