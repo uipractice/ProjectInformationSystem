@@ -875,7 +875,7 @@ select.form-control:-internal-autofill-selected {
 .header_nav .navbar-nav .MuiPaper-root::before {
   content: '';
   position: absolute;
-  top: -14%;
+  top: -20%;
   left: auto;
   right: 17px;
   margin-left: 43px;
@@ -884,7 +884,11 @@ select.form-control:-internal-autofill-selected {
   border-style: solid;
   border-color: transparent transparent #f8f8fb transparent;
 }
-
+.MuiListItem-root.Mui-selected,
+.MuiListItem-root.Mui-selected:hover,
+.MuiListItem-button:hover {
+  background-color: #f2f6fa !important;
+}
 .share-modal .MuiDialog-paperWidthSm {
   max-width: 770px;
   width: 770px;
