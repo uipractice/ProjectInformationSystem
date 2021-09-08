@@ -441,7 +441,7 @@ function ClientForm() {
   }
   return (
     <div>
-      <NavBar validate={false} clientForm={clientFormSubmitted} />
+      <NavBar validate={false} clientForm={window.location.hash.indexOf('client-form') !== -1} />
 
       <div className='custom-scroll'>
         <Container>
