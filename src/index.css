@@ -545,8 +545,7 @@ a:focus {
   position: relative;
 }
 .form-control:focus,
-.form-control:active,
-.form-control:-internal-autofill-selected {
+.form-control:active {
   box-shadow: 0 0 0;
   border-color: #209ec5;
   background-color: rgba(32, 158, 197, 0.05) !important;
@@ -932,6 +931,14 @@ select.form-control:-internal-autofill-selected {
 }
 .downloadFile:hover {
   color: #fff !important;
+}
+.choose-btn {
+  background: #209ec5;
+  border: 1px solid #209ec5;
+  height: 34px;
+  color: #fff;
+  border-radius: 2px;
+  padding: 0 20px;
 }
 @media (max-width: 448px) {
   .footer {
