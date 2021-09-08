@@ -18,6 +18,7 @@ function ClientForm() {
   const { id } = useParams();
   const [prevStatus, setPrevStatus] = useState('');
   const [prevProjectName, setPrevProjectName] = useState('');
+  const [clientFormSubmitted, setClientFormSubmitted] = useState(false);
 
   useEffect(() => {
     axios
@@ -29,6 +30,13 @@ function ClientForm() {
       .catch((err) => {
         console.log('Failed to get the status: ', err.response);
       });
+    setClientFormSubmitted(
+      prevStatus !== 'Pending' &&
+        prevStatus !== 'deleted' &&
+        window.location.hash.indexOf('client-form') !== -1
+        ? true
+        : false
+    );
   }, [id, prevProjectName, prevStatus]);
 
   const [fileData, setFileData] = useState('');
@@ -121,13 +129,13 @@ function ClientForm() {
           }}
         >
           {' '}
-          Submit{' '}
+          {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
         </Button>
       );
     } else {
       return (
         <Button
-          disabled
+          disabled={!clientFormSubmitted}
           variant='primary'
           className='submit-btn'
           style={{
@@ -135,9 +143,10 @@ function ClientForm() {
             marginBottom: '20px',
             width: '130px',
           }}
+          onClick={(e) => handleSubmitForm(e)}
         >
           {' '}
-          Submit{' '}
+          {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
         </Button>
       );
     }
@@ -171,18 +180,28 @@ function ClientForm() {
       isDLPreq: state.isDLPreq,
       isClientEmailProvided: state.isClientEmailProvided,
     };
-
-    axios
-      .post(getApiUrl(`clientInfo/mailAndUpdate/${id}`), postObj)
-      .then((res) => {
-        console.log('Form saved successfully : ', res.data);
-        toast.success('Form Saved Successfully!');
-        window.close();
-        // history.push('/#/admin');
-      })
-      .catch((err) => {
-        console.log('Failed to Save Form : ', err.response);
-      });
+    if (!clientFormSubmitted) {
+      axios
+        .post(getApiUrl(`clientInfo/mailAndUpdate/${id}`), postObj)
+        .then((res) => {
+          console.log(
+            'Form saved successfully : ',
+            window.location.hash.indexOf('client-form') !== -1,
+            res.data
+          );
+          if (window.location.hash.indexOf('client-form') !== -1) {
+            setClientFormSubmitted(true);
+          } else {
+            history.push('/#/admin');
+          }
+          toast.success('Form Saved Successfully!');
+        })
+        .catch((err) => {
+          console.log('Failed to Save Form : ', err.response);
+        });
+    } else {
+      window.close();
+    }
 
     if (fileData?.length) {
       const formData = new FormData();
@@ -201,7 +220,7 @@ function ClientForm() {
   }
 
   function handlePlainText(e) {
-    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setState({
         ...state,
@@ -215,8 +234,23 @@ function ClientForm() {
     }
   }
 
+  function handlePlainTextWebsite(e) {
+    const value = e.target.value.replace(/[^a-zA-Z0-9./:, ]/g, '');
+    if (value.match(/[a-zA-Z0-9./:,]+([\s]+)*$/)) {
+      setState({
+        ...state,
+        [e.target.name]: value,
+      });
+    } else {
+      setState((previousState) => ({
+        ...state,
+        [e.target.name]: '',
+      }));
+    }
+  }
+
   function handleProjectName(e) {
-    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setPrevProjectName(value);
     } else {
@@ -420,10 +454,9 @@ function ClientForm() {
       });
     }
   }
-
   return (
     <div>
-      <NavBar validate={false} />
+      <NavBar validate={false} clientForm={clientFormSubmitted} />
 
       <div className='custom-scroll'>
         <Container>
@@ -431,7 +464,7 @@ function ClientForm() {
             <Col md={{ span: 6, offset: 2 }}>
               <div style={{ width: '700px' }} className='project-details-form'>
                 <h2> Project Details </h2>
-                {prevStatus === 'Pending' && prevStatus !== 'deleted' ? (
+                {prevStatus === 'Pending' && prevStatus !== 'deleted' && !clientFormSubmitted ? (
                   <Form>
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Name of the project or client</Form.Label>
@@ -547,7 +580,7 @@ function ClientForm() {
                       <Form.Label>Website(s) need to be allowed</Form.Label>
                       <Form.Control
                         name='allowedWebsite'
-                        onChange={handlePlainText}
+                        onChange={handlePlainTextWebsite}
                         value={state.allowedWebsite}
                       />
                       <Form.Text className='text-muted'>
@@ -891,16 +924,19 @@ function ClientForm() {
                     {/* <button>Save temp</button> */}
                   </Form>
                 ) : (
-                  <div
-                    style={{
-                      padding: '140px',
-                    }}
-                  >
-                    Thank you for your time ! <br />
-                    Form has been submitted successfully. <br />
-                    We will let you know, if any further information is
-                    required. <br />
-                  </div>
+                  clientFormSubmitted && (
+                    <div
+                      style={{
+                        padding: '140px',
+                      }}
+                    >
+                      Thank you for your time ! <br />
+                      Form has been submitted successfully. <br />
+                      We will let you know, if any further information is
+                      required. <br />
+                      <SubmitButton />
+                    </div>
+                  )
                 )}
               </div>
             </Col>

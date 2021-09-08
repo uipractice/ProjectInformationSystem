@@ -136,6 +136,8 @@ function Form({ closeModal }) {
             });
             console.log(state);
           }
+        }).then(()=>{
+          window.close();
         })
 
         .catch((err) => console.log(err.response));
