@@ -661,7 +661,7 @@ function EditViewForm() {
                     />
                     <Form.Text className='text-muted'>
                       {' '}
-                      Use comma(,) to saperate multiple URLs, eg-
+                      Use comma(,) to separate multiple URLs, eg-
                       https://www.evoketechnologies.com/, 2nd URL{' '}
                     </Form.Text>
                   </Form.Group>
@@ -699,7 +699,7 @@ function EditViewForm() {
                   <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Did all the project related documents (security, GDPR
-                      complaiance and MSA) are collected from client ?{' '}
+                     compliance and MSA) are collected from client ?{' '}
                     </Form.Label>
                     <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
@@ -774,7 +774,7 @@ function EditViewForm() {
 
                   <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
-                      Insurance coverage in case of disater issues ?{' '}
+                      Insurance coverage in case disaster issues ?{' '}
                     </Form.Label>
                     <Form.Group style={{ marginBottom: '30px' }}>
                       <Button

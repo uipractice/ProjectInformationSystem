@@ -79,10 +79,11 @@ function CompleteTable({ data }) {
   }
 
   function handleInputChange(evt) {
-    if (evt.target.value.match(/[a-zA-z]+([\s]+)*$/)) {
+    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setRowOriginal({
         ...rowOriginal,
-        deleteReason: evt.target.value,
+        deleteReason: value,
       });
     } else {
       setRowOriginal({
@@ -309,6 +310,7 @@ function CompleteTable({ data }) {
       <div>
         <Modal
           isOpen={isModalOpen}
+          shouldCloseOnOverlayClick={false}
           onRequestClose={() => {
             setIsModalOpen(false);
           }}
@@ -333,10 +335,11 @@ function CompleteTable({ data }) {
               style={{ color: 'black' }}
               onChange={handleInputChange}
               name='deleteReason'
+              value={rowOriginal.deleteReason}
             />
             <br></br>
             <span style={{ fontSize: '10px' }}>
-              Note: *Allows only alphabetics
+              Note: *Allows only alphabetics and numerics
             </span>
             <p className='descr'>
               {' '}

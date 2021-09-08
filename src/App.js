@@ -26,6 +26,9 @@ function App() {
           <Route path='/form/:id'>
             <ClientForm />
           </Route>
+          <Route path='/client-form/:id'>
+            <ClientForm />
+          </Route>
         </Switch>
       </Router>
     </div>

@@ -75,6 +75,7 @@ export class ShareModalContainer extends Component {
             <Dialog
               open={this.state.open}
               onClose={() => this.setState({ open: false })}
+              disableBackdropClick={true}
               aria-labelledby='alert-dialog-title'
               aria-describedby='alert-dialog-description'
               className='share-modal'

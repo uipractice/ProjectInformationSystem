@@ -321,7 +321,7 @@ tfoot td {
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 27px;
   color: #57565c;
 }
 textarea:focus-visible {
@@ -332,10 +332,18 @@ textarea:focus-visible {
 textarea:focus-visible {
   outline: none;
 }
-.tableFixHead tr td:first-child a {
+.tableFixHead tr td:first-child a,
+.tableFixHead tr td:first-child div {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 221px;
   display: block;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px white inset !important;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }

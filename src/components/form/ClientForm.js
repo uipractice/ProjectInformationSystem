@@ -18,6 +18,7 @@ function ClientForm() {
   const { id } = useParams();
   const [prevStatus, setPrevStatus] = useState('');
   const [prevProjectName, setPrevProjectName] = useState('');
+  const [clientFormSubmitted, setClientFormSubmitted] = useState(false);
 
   useEffect(() => {
     axios
@@ -29,6 +30,13 @@ function ClientForm() {
       .catch((err) => {
         console.log('Failed to get the status: ', err.response);
       });
+    setClientFormSubmitted(
+      prevStatus !== 'Pending' &&
+        prevStatus !== 'deleted' &&
+        window.location.hash.indexOf('client-form') !== -1
+        ? true
+        : false
+    );
   }, [id, prevProjectName, prevStatus]);
 
   const [fileData, setFileData] = useState('');
@@ -121,13 +129,13 @@ function ClientForm() {
           }}
         >
           {' '}
-          Submit{' '}
+          {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
         </Button>
       );
     } else {
       return (
         <Button
-          disabled
+          disabled={!clientFormSubmitted}
           variant='primary'
           className='submit-btn'
           style={{
@@ -135,9 +143,10 @@ function ClientForm() {
             marginBottom: '20px',
             width: '130px',
           }}
+          onClick={(e) => handleSubmitForm(e)}
         >
           {' '}
-          Submit{' '}
+          {clientFormSubmitted ? 'Close' : 'Submit'}{' '}
         </Button>
       );
     }
@@ -171,17 +180,28 @@ function ClientForm() {
       isDLPreq: state.isDLPreq,
       isClientEmailProvided: state.isClientEmailProvided,
     };
-
-    axios
-      .post(getApiUrl(`clientInfo/mailAndUpdate/${id}`), postObj)
-      .then((res) => {
-        console.log('Form saved successfully : ', res.data);
-        toast.success('Form Saved Successfully!');
-        history.push('/admin');
-      })
-      .catch((err) => {
-        console.log('Failed to Save Form : ', err.response);
-      });
+    if (!clientFormSubmitted) {
+      axios
+        .post(getApiUrl(`clientInfo/mailAndUpdate/${id}`), postObj)
+        .then((res) => {
+          console.log(
+            'Form saved successfully : ',
+            window.location.hash.indexOf('client-form') !== -1,
+            res.data
+          );
+          if (window.location.hash.indexOf('client-form') !== -1) {
+            setClientFormSubmitted(true);
+          } else {
+            history.push('/#/admin');
+          }
+          toast.success('Form Saved Successfully!');
+        })
+        .catch((err) => {
+          console.log('Failed to Save Form : ', err.response);
+        });
+    } else {
+      window.close();
+    }
 
     if (fileData?.length) {
       const formData = new FormData();
@@ -200,10 +220,42 @@ function ClientForm() {
   }
 
   function handlePlainText(e) {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+      setState({
+        ...state,
+        [e.target.name]: value,
+      });
+    } else {
+      setState((previousState) => ({
+        ...state,
+        [e.target.name]: '',
+      }));
+    }
+  }
+
+  function handlePlainTextWebsite(e) {
+    const value = e.target.value.replace(/[^a-zA-Z0-9./:, ]/g, '');
+    if (value.match(/[a-zA-Z0-9./:,]+([\s]+)*$/)) {
+      setState({
+        ...state,
+        [e.target.name]: value,
+      });
+    } else {
+      setState((previousState) => ({
+        ...state,
+        [e.target.name]: '',
+      }));
+    }
+  }
+
+  function handleProjectName(e) {
+    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
+    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+      setPrevProjectName(value);
+    } else {
+      setPrevProjectName('');
+    }
   }
 
   function handleClientEmailProvided(evt) {
@@ -402,25 +454,34 @@ function ClientForm() {
       });
     }
   }
-
   return (
     <div>
-      <NavBar validate={false} />
+      <NavBar validate={false} clientForm={window.location.hash.indexOf('client-form') !== -1} />
 
       <div className='custom-scroll'>
         <Container>
           <Row>
-            <Col md={{ span: 6, offset: 2 }}>
+            <Col md={{ span: 8, offset: 2 }}>
               <div style={{ width: '700px' }} className='project-details-form'>
                 <h2> Project Details </h2>
-                {prevStatus === 'Pending' && prevStatus !== 'deleted' ? (
+                <button
+                  className='modal-closeBtn'
+                  onClick={() => history.push('/admin')}
+                >
+                  <svg className='_modal-close-icon' viewBox='0 0 40 40'>
+                    <path d='M 10,10 L 30,30 M 30,10 L 10,30' />
+                  </svg>
+                </button>
+                {prevStatus === 'Pending' &&
+                prevStatus !== 'deleted' &&
+                !clientFormSubmitted ? (
                   <Form>
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Name of the project or client</Form.Label>
                       <Form.Control
                         name='prevProjectName'
                         value={prevProjectName}
-                        onChange={(e) => setPrevProjectName(e.target.value)}
+                        onChange={(e) => handleProjectName(e)}
                       />
                     </Form.Group>
 
@@ -432,6 +493,7 @@ function ClientForm() {
                         name='securityMeasure'
                         onChange={handlePlainText}
                         autoFocus={true}
+                        value={state.securityMeasure}
                       />
                     </Form.Group>
 
@@ -442,6 +504,7 @@ function ClientForm() {
                       <Form.Control
                         name='informIT'
                         onChange={handlePlainText}
+                        value={state.informIT}
                       />
                     </Form.Group>
 
@@ -527,11 +590,12 @@ function ClientForm() {
                       <Form.Label>Website(s) need to be allowed</Form.Label>
                       <Form.Control
                         name='allowedWebsite'
-                        onChange={handlePlainText}
+                        onChange={handlePlainTextWebsite}
+                        value={state.allowedWebsite}
                       />
                       <Form.Text className='text-muted'>
                         {' '}
-                        Use comma(,) to saperate multiple URLs, eg-
+                        Use comma(,) to separate multiple URLs, eg-
                         https://www.evoketechnologies.com/, 2nd URL{' '}
                       </Form.Text>
                     </Form.Group>
@@ -569,7 +633,7 @@ function ClientForm() {
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
                         Did all the project related documents (security, GDPR
-                        complaiance and MSA) are collected from client ?{' '}
+                        compliance and MSA) are collected from client ?{' '}
                       </Form.Label>
                       <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
@@ -637,12 +701,13 @@ function ClientForm() {
                       <Form.Control
                         name='securityBreach'
                         onChange={handlePlainText}
+                        value={state.securityBreach}
                       />
                     </Form.Group>
 
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>
-                        Insurance coverage in case of disater issues ?{' '}
+                        Insurance coverage in case of disaster issues ?{' '}
                       </Form.Label>
                       <Form.Group style={{ marginBottom: '30px' }}>
                         <Button
@@ -682,6 +747,7 @@ function ClientForm() {
                             <Form.Control
                               name='disasterDetails'
                               onChange={handlePlainText}
+                              value={state.disasterDetails}
                             />
                           </div>
                         )}
@@ -736,6 +802,7 @@ function ClientForm() {
                             <Form.Control
                               name='isolationDetails'
                               onChange={handlePlainText}
+                              value={state.isolationDetails}
                             />
                           </div>
                         )}
@@ -822,13 +889,13 @@ function ClientForm() {
                       <input
                         type='button'
                         value='Choose File'
+                        className='choose-btn'
                         onClick={(e) =>
                           document.getElementById('file')?.click()
                         }
                       />
                       <Form.Label style={{ marginLeft: '10px' }}>
-                        *For uploading multiple files, select all required files
-                        at once.
+                        *Select all files at a time.
                       </Form.Label>
                       <div>
                         {fileData &&
@@ -868,16 +935,19 @@ function ClientForm() {
                     {/* <button>Save temp</button> */}
                   </Form>
                 ) : (
-                  <div
-                    style={{
-                      padding: '140px',
-                    }}
-                  >
-                    Thank you for your time ! <br />
-                    Form has been submitted or NOT required anymore. <br />
-                    We will let you know, if any further information is
-                    required. <br />
-                  </div>
+                  clientFormSubmitted && (
+                    <div
+                      style={{
+                        padding: '140px',
+                      }}
+                    >
+                      Thank you for your time ! <br />
+                      Form has been submitted successfully. <br />
+                      We will let you know, if any further information is
+                      required. <br />
+                      <SubmitButton />
+                    </div>
+                  )
                 )}
               </div>
             </Col>
