@@ -70,10 +70,10 @@ function Form({ closeModal }) {
     }
   }
 
-  function handleOnDropdownChange(e) {
+  function handleOnDropdownChange(value) {
     setState({
       ...state,
-      practice: e && e.label ? e.label : '',
+      practice: value ? value : '',
     });
   }
 
@@ -112,9 +112,10 @@ function Form({ closeModal }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     if (ValidateEmail(state.email)) {
-      if (state.practice === 'Other') {
+      if (state.practice.label !== 'Other') {
+        state.practice = state.practice.label;
+      } else if (state.practice.label === 'Other') {
         state.practice = newPractice;
       }
       axios
@@ -136,7 +137,8 @@ function Form({ closeModal }) {
             });
             console.log(state);
           }
-        }).then(()=>{
+        })
+        .then(() => {
           window.close();
         })
 
@@ -144,7 +146,7 @@ function Form({ closeModal }) {
     }
   }
   const mailformat =
-  /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
+    /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
   return (
     <form>
       <div className='row'>
@@ -180,7 +182,12 @@ function Form({ closeModal }) {
           onChange={(e) => handleOnChange(e, true)}
           onKeyDown={(e) => handleOnChange(e, true)}
           name='email'
-          value={state && state.email && state.email.match(mailformat) && state.email.toLowerCase()}
+          value={
+            state &&
+            state.email &&
+            state.email.match(mailformat) &&
+            state.email.toLowerCase()
+          }
           rows='3'
           cols='50'
         />
@@ -211,6 +218,7 @@ function Form({ closeModal }) {
               { label: 'UI Practice', value: 19 },
               { label: 'Other', value: 20 },
             ]}
+            value={state.practice}
             getOptionLabel={(option) => option.label}
             onChange={(event, value) => handleOnDropdownChange(value)}
             renderInput={(params) => (
@@ -218,7 +226,7 @@ function Form({ closeModal }) {
             )}
           />
         </div>
-        {state.practice === 'Other' && (
+        {state.practice.label === 'Other' && (
           <div className='form-group col-md-6'>
             <label htmlFor='projectManager'>Practice / Project name</label>
             <input
