@@ -554,7 +554,15 @@ function EditViewForm() {
                     <Form.Label>Security measures from client side</Form.Label>
                     <Form.Control
                       onChange={(e) => {
-                        setSecurityMeasure(e.target.value);
+                        const value = e.target.value.replace(
+                          /[^a-zA-Z0-9 ]/g,
+                          ''
+                        );
+                        if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                          setSecurityMeasure(value);
+                        } else {
+                          setSecurityMeasure((previousState) => '');
+                        }
                       }}
                       value={securityMeasure}
                       autoFocus
@@ -568,7 +576,15 @@ function EditViewForm() {
                     <Form.Control
                       value={informIT}
                       onChange={(e) => {
-                        setInformIT(e.target.value);
+                        const value = e.target.value.replace(
+                          /[^a-zA-Z0-9 ]/g,
+                          ''
+                        );
+                        if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                          setInformIT(value);
+                        } else {
+                          setInformIT((previousState) => '');
+                        }
                       }}
                     />
                   </Form.Group>
@@ -655,7 +671,7 @@ function EditViewForm() {
                     <Form.Label>Website(s) need to be allowed</Form.Label>
                     <Form.Control
                       onChange={(e) => {
-                        setAllowedWebsite(e.target.value);
+                        setAllowedWebsite(e.target.value.trim());
                       }}
                       value={allowedWebsite}
                     />
@@ -699,7 +715,7 @@ function EditViewForm() {
                   <Form.Group style={{ marginBottom: '40px' }}>
                     <Form.Label>
                       Did all the project related documents (security, GDPR
-                     compliance and MSA) are collected from client ?{' '}
+                      compliance and MSA) are collected from client ?{' '}
                     </Form.Label>
                     <Form.Group style={{ marginBottom: '30px' }}>
                       <Button
@@ -766,7 +782,15 @@ function EditViewForm() {
                     </Form.Label>
                     <Form.Control
                       onChange={(e) => {
-                        setSecurityBreach(e.target.value);
+                        const value = e.target.value.replace(
+                          /[^a-zA-Z0-9 ]/g,
+                          ''
+                        );
+                        if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                          setSecurityBreach(value);
+                        } else {
+                          setSecurityBreach((previousState) => '');
+                        }
                       }}
                       value={securityBreach}
                     />
@@ -813,7 +837,15 @@ function EditViewForm() {
 
                           <Form.Control
                             onChange={(e) => {
-                              setDisasterDetails(e.target.value);
+                              const value = e.target.value.replace(
+                                /[^a-zA-Z0-9 ]/g,
+                                ''
+                              );
+                              if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                                setDisasterDetails(value);
+                              } else {
+                                setDisasterDetails((previousState) => '');
+                              }
                             }}
                             value={disasterDetails}
                           />
@@ -869,7 +901,15 @@ function EditViewForm() {
 
                           <Form.Control
                             onChange={(e) => {
-                              setIsolationDetails(e.target.value);
+                              const value = e.target.value.replace(
+                                /[^a-zA-Z0-9 ]/g,
+                                ''
+                              );
+                              if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                                setIsolationDetails(value);
+                              } else {
+                                setIsolationDetails((previousState) => '');
+                              }
                             }}
                             value={isolationDetails}
                           />
