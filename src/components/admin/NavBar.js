@@ -170,7 +170,7 @@ const NavBar = ({ validate, clientForm }) => {
                           id='menu-list-grow'
                           onKeyDown={handleListKeyDown}
                         >
-                          <MenuItem className='myprofile'>My profile</MenuItem>
+                          {/* <MenuItem className='myprofile'>My profile</MenuItem> */}
                           <MenuItem
                             className='feedback'
                             onClick={handleClickOpen}
