@@ -143,6 +143,8 @@ function Form({ closeModal }) {
         .catch((err) => console.log(err.response));
     }
   }
+  const mailformat =
+  /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
   return (
     <form>
       <div className='row'>
@@ -178,7 +180,7 @@ function Form({ closeModal }) {
           onChange={(e) => handleOnChange(e, true)}
           onKeyDown={(e) => handleOnChange(e, true)}
           name='email'
-          value={state && state.email && state.email.toLowerCase()}
+          value={state && state.email && state.email.match(mailformat) && state.email.toLowerCase()}
           rows='3'
           cols='50'
         />
