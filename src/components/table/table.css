@@ -3,7 +3,7 @@
   cursor: not-allowed;   
   display: none; */
   pointer-events: none;
-  opacity: 30%;
+  opacity: 0.3;
 }
 .modalDesign.deleteModal {
   width: 532px;

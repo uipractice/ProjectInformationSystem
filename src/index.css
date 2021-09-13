@@ -727,7 +727,7 @@ select.form-control:-internal-autofill-selected {
 }
 .feedback-modal button.feedback-submit:disabled {
   pointer-events: none;
-  opacity: 30%;
+  opacity: 0.3;
 }
 .feedback-modal h3 {
   font-size: 18px;
