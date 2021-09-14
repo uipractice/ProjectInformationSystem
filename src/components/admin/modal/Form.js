@@ -253,9 +253,9 @@ function Form({ closeModal }) {
           {state.projectNameByIT &&
           state.projectManager &&
           state.email &&
-          state.practice &&
-          (state.practice !== 'Other' ||
-            (state.practice === 'Other' && newPractice)) ? (
+          state.practice.label &&
+          (state.practice.label !== 'Other' ||
+            (state.practice.label === 'Other' && newPractice)) ? (
             <button
               className='form-control btn btn-primary share-btn'
               onClick={handleSubmit}
