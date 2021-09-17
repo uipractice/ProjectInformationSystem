@@ -151,3 +151,6 @@
   color: #626364 !important;
   background: url('../../../assets/images/down-arrow.svg') no-repeat 96%;
 }
+.textArea {
+  height: 65px !important;
+}

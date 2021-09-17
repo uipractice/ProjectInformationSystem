@@ -5,6 +5,7 @@ import EditViewForm from './components/form/EditViewForm';
 import Login from './components/login/Login';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import AdminDashboard from './components/admin/AdminDashboard';
+import InternalClient from './components/admin/InternalClient';
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route path='/admin'>
             <AdminDashboard />
+          </Route>
+          <Route path='/internal'>
+            <InternalClient />
           </Route>
           <Route path='/view/:id'>
             <ViewForm />

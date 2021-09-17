@@ -178,7 +178,7 @@ function Form({ closeModal }) {
         <label>Email address</label>
         <textarea
           type='textarea'
-          className='form-control'
+          className='form-control textArea'
           onChange={(e) => handleOnChange(e, true)}
           onKeyDown={(e) => handleOnChange(e, true)}
           name='email'
