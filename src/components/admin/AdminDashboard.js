@@ -11,6 +11,7 @@ import IconProjects from '../../assets/images/Icon_Projects.svg';
 import IconActive from '../../assets/images/active.svg';
 import NavBar from './NavBar';
 import { getApiUrl } from '../utils/helper';
+import InternalClient from './InternalClient';
 
 export default function AdminDashboard() {
   const [data, setData] = useState([]);
@@ -20,6 +21,8 @@ export default function AdminDashboard() {
   const [submittedCount, setSubmittedCount] = useState('');
   const [activeCount, setActiveCount] = useState('');
   const [deleteCount, setDeleteCount] = useState('');
+  const [showInternalProject, setShowInternalProject] = useState(false);
+  const [showClientProject, setShowClientProject] = useState(true);
 
   useEffect(() => {
     axios(getApiUrl(`clientInfo`))
@@ -49,51 +52,72 @@ export default function AdminDashboard() {
         );
       })
       .catch((err) => console.log(err));
-  }, [deleteCount]);
+  }, [deleteCount, showClientProject, showInternalProject]);
 
+  const showInternalContent = (client, internal) => {
+    if (client) {
+      console.log('Internal content:', client);
+      setShowClientProject(client);
+      setShowInternalProject(internal);
+    } else if (internal) {
+      console.log('Internal content:', internal);
+      setShowInternalProject(internal);
+      setShowClientProject(client);
+    }
+  };
+  console.log('state valuse:', showClientProject, showInternalProject);
   return (
     <div>
       <NavBar validate={true} />
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-12 ms-sm-auto col-lg-12 custom-scroll'>
-            <ShareButtonSection />
+            <ShareButtonSection
+              showInternalView={(client, internal) =>
+                showInternalContent(client, internal)
+              }
+              internal={showInternalProject}
+              client={showClientProject}
+            />
+            {showClientProject && !showInternalProject && (
+              <div className='row'>
+                <RowHeaderValue
+                  projectStatus='Projects'
+                  iconImg={IconProjects}
+                  className='totalCount'
+                  count={totalCount}
+                />
+                <RowHeaderValue
+                  projectStatus='Active'
+                  iconImg={IconActive}
+                  className='activeCount'
+                  count={activeCount}
+                />
 
-            <div className='row'>
-              <RowHeaderValue
-                projectStatus='Projects'
-                iconImg={IconProjects}
-                className='totalCount'
-                count={totalCount}
-              />
-              <RowHeaderValue
-                projectStatus='Active'
-                iconImg={IconActive}
-                className='activeCount'
-                count={activeCount}
-              />
-
-              <RowHeaderValue
-                projectStatus='Submitted'
-                iconImg={IconSubmitted}
-                className='submitCount'
-                count={submittedCount}
-              />
-              <RowHeaderValue
-                projectStatus='Approved'
-                iconImg={IconApproved}
-                className='completCount'
-                count={approvedCount}
-              />
-              <RowHeaderValue
-                projectStatus='Pending'
-                iconImg={IconPending}
-                className='pendingCount'
-                count={pendingCount}
-              />
-            </div>
-
-            <CompleteTable data={data} />
+                <RowHeaderValue
+                  projectStatus='Submitted'
+                  iconImg={IconSubmitted}
+                  className='submitCount'
+                  count={submittedCount}
+                />
+                <RowHeaderValue
+                  projectStatus='Approved'
+                  iconImg={IconApproved}
+                  className='completCount'
+                  count={approvedCount}
+                />
+                <RowHeaderValue
+                  projectStatus='Pending'
+                  iconImg={IconPending}
+                  className='pendingCount'
+                  count={pendingCount}
+                />
+              </div>
+            )}
+            {showClientProject && !showInternalProject && (
+              <CompleteTable data={data} />
+            )}
+            {showInternalProject && <InternalClient />}
           </div>
         </div>
       </div>
