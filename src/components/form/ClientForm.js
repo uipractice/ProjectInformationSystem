@@ -456,7 +456,10 @@ function ClientForm() {
   }
   return (
     <div>
-      <NavBar validate={false} clientForm={window.location.hash.indexOf('client-form') !== -1} />
+      <NavBar
+        validate={false}
+        clientForm={window.location.hash.indexOf('client-form') !== -1}
+      />
 
       <div className='custom-scroll'>
         <Container>
@@ -466,7 +469,7 @@ function ClientForm() {
                 <h2> Project Details </h2>
                 <button
                   className='modal-closeBtn'
-                  onClick={() => history.push('/admin')}
+                  onClick={() => window.close()}
                 >
                   <svg className='_modal-close-icon' viewBox='0 0 40 40'>
                     <path d='M 10,10 L 30,30 M 30,10 L 10,30' />

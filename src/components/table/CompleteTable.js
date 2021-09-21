@@ -112,7 +112,7 @@ function CompleteTable({ data }) {
       .catch((err) => console.log(err.response));
   };
   const customSorting = (c1, c2) => {
-    return c1.localeCompare(c2)
+    return c1.localeCompare(c2);
   };
   const columns = React.useMemo(
     () => [
@@ -124,8 +124,8 @@ function CompleteTable({ data }) {
       // },
 
       {
-        Header: "PROJECT NAME",
-        accessor: "projectNameByIT",
+        Header: 'PROJECT NAME',
+        accessor: 'projectNameByIT',
         width: 231,
         sortType: (a, b) => {
           return customSorting(
@@ -174,13 +174,13 @@ function CompleteTable({ data }) {
             </Link>
           );
         },
-        sticky: "left",
+        sticky: 'left',
       },
       {
-        Header: "PROJECT MANAGER",
-        accessor: "projectManager",
+        Header: 'PROJECT MANAGER',
+        accessor: 'projectManager',
         width: 230,
-        sticky: "left",
+        sticky: 'left',
         sortType: (a, b) => {
           return customSorting(
             a.original.projectManager,
@@ -189,82 +189,70 @@ function CompleteTable({ data }) {
         },
       },
       {
-        Header: "PRACTICE NAME",
-        accessor: "practice",
-        sticky: "left",
+        Header: 'PRACTICE NAME',
+        accessor: 'practice',
+        sticky: 'left',
         width: 200,
         sortType: (a, b) => {
-          return customSorting(
-            a.original.practice,
-            b.original.practice
-          );
+          return customSorting(a.original.practice, b.original.practice);
         },
       },
       {
-        Header: "ASSIGN DATE",
-        accessor: "createdAt",
+        Header: 'ASSIGN DATE',
+        accessor: 'createdAt',
         width: 167,
         sortType: (a, b) => {
-          return customSorting(
-            a.original.createdAt,
-            b.original.createdAt
-          );
+          return customSorting(a.original.createdAt, b.original.createdAt);
         },
         Cell: ({ value }) => {
-          return format(new Date(value), "dd/MM/yyyy");
+          return format(new Date(value), 'dd/MM/yyyy');
         },
         // maxWidth: 200,
         // minWidth: 80,
         // width: 100,
       },
       {
-        Header: "UPDATED DATE",
-        accessor: "updatedAt",
+        Header: 'UPDATED DATE',
+        accessor: 'updatedAt',
         width: 187,
         sortType: (a, b) => {
-          return customSorting(
-            a.original.updatedAt,
-            b.original.updatedAt
-          );
+          return customSorting(a.original.updatedAt, b.original.updatedAt);
         },
         Cell: ({ value }) => {
-          return format(new Date(value), "dd/MM/yyyy");
+          return format(new Date(value), 'dd/MM/yyyy');
         },
       },
       {
-        Header: "STATUS",
-        accessor: "status",
+        Header: 'STATUS',
+        accessor: 'status',
         width: 150,
         sortType: (a, b) => {
           if (a.original.status === undefined) {
-            a.original["status"] = "";
+            a.original['status'] = '';
           }
           if (b.original.status === undefined) {
-            b.original["status"] = "";
+            b.original['status'] = '';
           }
-          return customSorting(
-            a.original.status,
-            b.original.status
-          );
+          return customSorting(a.original.status, b.original.status);
         },
       },
       {
-        Header: "ACTION",
+        Header: 'ACTION',
         width: 120,
         Cell: ({ row }) => (
           <a
-            {...(row.original.status === "Deleted"
-              ? { className: "delete-icon disableDeleteBtn" }
-              : { className: "delete-icon " })}
+            {...(row.original.status === 'Deleted'
+              ? { className: 'delete-icon disableDeleteBtn' }
+              : { className: 'delete-icon ' })}
             onClick={(e) => {
               setRowOriginal({
                 ...row.original,
-                deleteReason: "",
+                deleteReason: '',
               });
               setIsModalOpen(true);
             }}
           >
-            <img src={DeleteImg} alt="Evoke Technologies" />
+            <img src={DeleteImg} alt='Evoke Technologies' />
           </a>
         ),
       },
@@ -288,11 +276,18 @@ function CompleteTable({ data }) {
     setGlobalFilter,
     rows: filteredTableData,
   } = useTable(
-    { columns, data: filteredData, initialState: { pageSize: 5, sortBy: [
-      {
-        id: "projectNameByIT",
+    {
+      columns,
+      data: filteredData,
+      initialState: {
+        pageSize: 5,
+        sortBy: [
+          {
+            id: 'projectNameByIT',
+          },
+        ],
       },
-    ] } },
+    },
     useGlobalFilter,
     useSortBy,
     usePagination

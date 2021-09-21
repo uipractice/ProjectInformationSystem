@@ -87,10 +87,6 @@ const NavBar = ({ validate, clientForm }) => {
           });
         })
         .catch((err) => console.log(err.response));
-
-      setTimeout(() => {
-        history.push('/admin');
-      }, 2000);
     }
   };
 

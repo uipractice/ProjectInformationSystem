@@ -944,6 +944,16 @@ select.form-control:-internal-autofill-selected {
   border-radius: 2px;
   padding: 0 20px;
 }
+.internal-sec {
+  background: #fff;
+  height: calc(100vh - 190px);
+  display: flex;
+  padding: 0;
+}
+.internal-sec img {
+  max-width: 300px;
+  margin: auto;
+}
 @media (max-width: 448px) {
   .footer {
     height: 60px;

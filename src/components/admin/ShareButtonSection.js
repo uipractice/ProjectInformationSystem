@@ -52,11 +52,17 @@ export class ShareModalContainer extends Component {
           <ToggleButton
             value='left'
             aria-label='left aligned'
-            className='Mui-selected'
+            onClick={() => this.props.showInternalView(true, false)}
+            className={this.props.client ? 'Mui-selected' : ''}
           >
             Client Project
           </ToggleButton>
-          <ToggleButton value='center' aria-label='centered'>
+          <ToggleButton
+            value='center'
+            aria-label='centered'
+            onClick={() => this.props.showInternalView(false, true)}
+            className={this.props.internal ? 'Mui-selected' : ''}
+          >
             Internal Project
           </ToggleButton>
         </ToggleButtonGroup>
