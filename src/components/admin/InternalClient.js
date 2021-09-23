@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from './Footer';
 import internalImage from '../../assets/images/internal-project.png';
 
-export default function InternalClient() {
+function InternalClient() {
   return (
     <div>
       <div className='container-fluid'>
@@ -16,3 +16,4 @@ export default function InternalClient() {
     </div>
   );
 }
+export default InternalClient;

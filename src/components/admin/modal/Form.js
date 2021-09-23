@@ -35,10 +35,10 @@ function Form({ closeModal }) {
     const value = e.target.value.replace(/[^a-zA-Z ]/g, '');
     if (email) {
       handleEmailChange(e, email);
-    } else if (value.match(/[a-zA-Z]+([\s]+)*$/)) {
+    } else if (value.match(/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+([\s]+)*$/)) {
       setState({
         ...state,
-        [e.target.name]: value,
+        [e.target.name]: e.target.value,
         autoFill: false,
       });
     } else {

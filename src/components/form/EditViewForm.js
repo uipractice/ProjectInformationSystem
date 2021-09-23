@@ -468,6 +468,16 @@ function EditViewForm() {
       informIT &&
       securityBreach &&
       allowedWebsite &&
+      DisasterInsuCovered &&
+      NDAsigned &&
+      GDPRcompliance &&
+      ClientEmailProvided &&
+      workStationValue &&
+      DLPreq&&
+      devTypeValue &&
+      status&&
+      CyberSecConducted&&
+      IsolatedEnvReq&&
       ((showInsuranceDetails === true && disasterDetails) ||
         showInsuranceDetails === false) &&
       ((showIsolatedDetails === true && isolationDetails) ||
