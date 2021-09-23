@@ -887,6 +887,7 @@ function ClientForm() {
                         onChange={(e) => {
                           setFileData(e.target.files);
                         }}
+                        onClick={(e)=>e.target.value=null}
                         style={{ display: 'none' }}
                       />
                       <input
