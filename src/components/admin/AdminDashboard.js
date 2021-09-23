@@ -56,16 +56,13 @@ export default function AdminDashboard() {
 
   const showInternalContent = (client, internal) => {
     if (client) {
-      console.log('Internal content:', client);
       setShowClientProject(client);
       setShowInternalProject(internal);
     } else if (internal) {
-      console.log('Internal content:', internal);
       setShowInternalProject(internal);
       setShowClientProject(client);
     }
   };
-  console.log('state valuse:', showClientProject, showInternalProject);
   return (
     <div>
       <NavBar validate={true} />

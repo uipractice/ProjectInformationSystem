@@ -283,7 +283,8 @@ function CompleteTable({ data }) {
         pageSize: 5,
         sortBy: [
           {
-            id: 'projectNameByIT',
+            id: 'updatedAt',
+            desc:true
           },
         ],
       },
