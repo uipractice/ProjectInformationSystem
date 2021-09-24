@@ -89,7 +89,7 @@ function ViewForm() {
   });
 
   function reshareReasonInput(evt) {
-    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setTotalState({
         ...totalState,
@@ -367,21 +367,22 @@ function ViewForm() {
                 {status !== 'Pending' ? (
                   <Form>
                     <Form.Group style={{ marginBottom: '0' }}>
-                      {totalState.deleteReason && totalState.status !== 'Submitted' && (
-                        <div>
-                          <Form.Label
-                            style={{ color: 'red', marginTop: '20px' }}
-                          >
-                            This project has been Deleted because
-                          </Form.Label>
+                      {totalState.deleteReason &&
+                        totalState.status !== 'Submitted' && (
+                          <div>
+                            <Form.Label
+                              style={{ color: 'red', marginTop: '20px' }}
+                            >
+                              This project has been Deleted because
+                            </Form.Label>
 
-                          <Form.Control
-                            type='text'
-                            value={deleteReason}
-                            readOnly
-                          />
-                        </div>
-                      )}
+                            <Form.Control
+                              type='text'
+                              value={deleteReason}
+                              readOnly
+                            />
+                          </div>
+                        )}
 
                       {totalState.restoreReason && (
                         <div>
@@ -612,6 +613,7 @@ function ViewForm() {
                           marginLeft: '10px',
                         }}
                         onClick={handleDownload}
+                        className='download-btn'
                       >
                         Download
                       </Button>

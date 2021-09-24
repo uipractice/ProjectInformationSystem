@@ -175,7 +175,7 @@ function Form({ closeModal }) {
       </div>
 
       <div className='form-group row' style={{ margin: '0 auto 1rem' }}>
-        <label>Email address</label>
+        <label>Email address</label><h4 className='email-help-text' > (To add multiple emails, please add seperator(,) after .com)</h4 >
         <textarea
           type='textarea'
           className='form-control textArea'
