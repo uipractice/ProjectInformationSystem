@@ -430,11 +430,8 @@ function EditViewForm() {
     };
 
     axios
-      .post(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
-
+      .put(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
       .then((res) => {
-        // console.log("Data has been saved successfully. ", postObj);
-        // console.log("response from backend : ", res.postObj);
         toast.success('Form sumbitted successfully !', {
           autoClose: 1900,
         });
@@ -443,16 +440,10 @@ function EditViewForm() {
         // }, 2000);
       })
       .catch((err) => {
-        // console.log("Data has NOT saved. ", postObj);
-        // console.log(
-        //   "response from backend after Failed to post request. ",
-        //   err.response
-        // );
         toast.error('Failed to save the data !', {
           autoClose: 3000,
         });
       });
-
     toast.success('Form sumbitted successfully !', {
       autoClose: 1900,
     });
