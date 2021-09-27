@@ -89,6 +89,7 @@ function Form({ closeModal }) {
   const handleReset = (e) => {
     e.preventDefault();
     setState({
+       ...state,
       projectNameByIT: '',
       projectManager: '',
       email: '',
