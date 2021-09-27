@@ -16,7 +16,7 @@ toast.configure();
 function ClientForm() {
   const history = useHistory();
   const { id } = useParams();
-  const [prevStatus, setPrevStatus] = useState('');
+  const [prevStatus, setPrevStatus] = useState('Pending');
   const [prevProjectName, setPrevProjectName] = useState('');
   const [clientFormSubmitted, setClientFormSubmitted] = useState(false);
 
