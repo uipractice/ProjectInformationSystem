@@ -30,13 +30,13 @@ function ClientForm() {
       .catch((err) => {
         console.log('Failed to get the status: ', err.response);
       });
-    setClientFormSubmitted(
-      prevStatus !== 'Pending' &&
-        prevStatus !== 'deleted' &&
-        window.location.hash.indexOf('client-form') !== -1
-        ? true
-        : false
-    );
+    // setClientFormSubmitted(
+    //   prevStatus !== 'Pending' &&
+    //     prevStatus !== 'deleted' &&
+    //     window.location.hash.indexOf('client-form') !== -1
+    //     ? true
+    //     : false
+    // );
   }, [id, prevProjectName, prevStatus]);
 
   const [fileData, setFileData] = useState('');
@@ -454,6 +454,9 @@ function ClientForm() {
       });
     }
   }
+  console.log(prevStatus === 'Pending' &&
+  prevStatus !== 'deleted' &&
+  !clientFormSubmitted, 'test');
   return (
     <div>
       <NavBar
