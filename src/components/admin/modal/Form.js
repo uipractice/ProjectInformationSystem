@@ -35,10 +35,10 @@ function Form({ closeModal }) {
     const value = e.target.value.replace(/[^a-zA-Z ]/g, '');
     if (email) {
       handleEmailChange(e, email);
-    } else if (value.match(/[a-zA-Z]+([\s]+)*$/)) {
+    } else if (value.match(/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+([\s]+)*$/)) {
       setState({
         ...state,
-        [e.target.name]: value,
+        [e.target.name]: e.target.value,
         autoFill: false,
       });
     } else {
@@ -89,6 +89,7 @@ function Form({ closeModal }) {
   const handleReset = (e) => {
     e.preventDefault();
     setState({
+       ...state,
       projectNameByIT: '',
       projectManager: '',
       email: '',
@@ -175,10 +176,10 @@ function Form({ closeModal }) {
       </div>
 
       <div className='form-group row' style={{ margin: '0 auto 1rem' }}>
-        <label>Email address</label>
+        <label>Email address</label><h4 className='email-help-text' > (Add multiple emails with (,) sepration)</h4 >
         <textarea
           type='textarea'
-          className='form-control'
+          className='form-control textArea'
           onChange={(e) => handleOnChange(e, true)}
           onKeyDown={(e) => handleOnChange(e, true)}
           name='email'

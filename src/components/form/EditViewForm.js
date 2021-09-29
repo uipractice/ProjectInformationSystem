@@ -406,6 +406,13 @@ function EditViewForm() {
     }
   }
 
+  function edit(postObj) {
+    return  axios.put(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
+    .then((res) => {
+      console.log(res);
+      return res
+    })
+  }
   function handleSubmitForm() {
     const postObj = {
       projectNameByIT,
@@ -428,37 +435,20 @@ function EditViewForm() {
       workStationValue,
       devTypeValue,
     };
-
-    axios
-      .post(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
-
+     edit(postObj)
       .then((res) => {
-        // console.log("Data has been saved successfully. ", postObj);
-        // console.log("response from backend : ", res.postObj);
         toast.success('Form sumbitted successfully !', {
           autoClose: 1900,
         });
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2000);
+        setTimeout(() => {
+            history.push('/admin');
+          }, 2000);
       })
       .catch((err) => {
-        // console.log("Data has NOT saved. ", postObj);
-        // console.log(
-        //   "response from backend after Failed to post request. ",
-        //   err.response
-        // );
         toast.error('Failed to save the data !', {
           autoClose: 3000,
         });
       });
-
-    toast.success('Form sumbitted successfully !', {
-      autoClose: 1900,
-    });
-    setTimeout(() => {
-      history.push('/admin');
-    }, 2000);
   }
 
   function SubmitButton() {
@@ -468,6 +458,16 @@ function EditViewForm() {
       informIT &&
       securityBreach &&
       allowedWebsite &&
+      DisasterInsuCovered &&
+      NDAsigned &&
+      GDPRcompliance &&
+      ClientEmailProvided &&
+      workStationValue &&
+      DLPreq&&
+      devTypeValue &&
+      status&&
+      CyberSecConducted&&
+      IsolatedEnvReq&&
       ((showInsuranceDetails === true && disasterDetails) ||
         showInsuranceDetails === false) &&
       ((showIsolatedDetails === true && isolationDetails) ||

@@ -10,12 +10,19 @@ function GlobalFilter({ setFilter }) {
     <form>
       <input
         onChange={(e) => {
-          setSearchText(e.target.value);
-          onChange(e.target.value);
+          const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
+          if(value.match(/[a-zA-Z0-9]+([\s]+)*$/)){
+          setSearchText(value);
+          onChange(value);
+          }else{
+            setSearchText('');
+          onChange(value);
+          }
         }}
         type='search'
         placeholder='Search'
         className={searchText ? 'searchClose' : ''}
+        value={searchText}
       />
       <button
         type='reset'
