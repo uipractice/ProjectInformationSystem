@@ -22,7 +22,7 @@ function EditViewForm() {
   // checkAuth();
 
   const history = useHistory();
-
+  const [fileData, setFileData] = useState('');
   const [status, setStatus] = useState('');
   const [projectNameByIT, setProjectNameByIT] = useState('');
   const [securityMeasure, setSecurityMeasure] = useState('');
@@ -444,12 +444,27 @@ function EditViewForm() {
           autoClose: 3000,
         });
       });
-    toast.success('Form sumbitted successfully !', {
-      autoClose: 1900,
-    });
+    // toast.success('Form sumbitted successfully !', {
+    //   autoClose: 1900,
+    // });
     setTimeout(() => {
       history.push('/admin');
     }, 2000);
+
+    if (fileData?.length) {
+      const formData = new FormData();
+      for (let file of fileData) {
+        formData.append('fileName', file);
+      }
+      axios
+        .post(getApiUrl(`multiple/${id}`), formData)
+        .then((res) => {
+          console.log('Files Uploaded : ', res.data);
+        })
+        .catch((err) => {
+          console.log('Error in Upload : ', err);
+        });
+    }
   }
 
   function SubmitButton() {
@@ -981,12 +996,53 @@ function EditViewForm() {
                     </Form.Group>
                   </Form.Group>
 
-                  <Form.Group>
-                    <Form.Label>Download the attachments </Form.Label>
-                    <Button onClick={downloadFile} className='downloadFile'>
-                      Download files
-                    </Button>
-                  </Form.Group>
+                  <Form.Group style={{ marginBottom: '40px' }}>
+                      <Form.Label>Choose files to upload </Form.Label>
+
+                      <br></br>
+                      <input
+                        type='file'
+                        name='fileName'
+                        id='file'
+                        accept='*.*'
+                        multiple
+                        onChange={(e) => {
+                          setFileData(e.target.files);
+                        }}
+                        onClick={(e) => e.target.value = null}
+                        style={{ display: 'none' }}
+                      />
+                      <input
+                        type='button'
+                        value='Choose File'
+                        className='choose-btn'
+                        onClick={(e) =>
+                          document.getElementById('file')?.click()
+                        }
+                      />
+                      <Form.Label style={{ marginLeft: '10px' }}>
+                        *Select all files at a time.
+                      </Form.Label>
+                      <div>
+                        {fileData &&
+                          Object.keys(fileData)?.map((key) => (
+                            <div>
+                              <span
+                                key={fileData[key].name}
+                                className='file-close-icon'
+                                onClick={() => {
+                                  const fileState = { ...fileData };
+                                  delete fileState[key];
+                                  setFileData(fileState);
+                                }}
+                              >
+                                {fileData[key].name}
+                                &nbsp;&nbsp;
+                              </span>
+                            </div>
+                          ))}
+                      </div>
+                    </Form.Group>
 
                   <Button
                     onClick={() => window.location.reload()}
