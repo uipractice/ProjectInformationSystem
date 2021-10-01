@@ -406,6 +406,13 @@ function EditViewForm() {
     }
   }
 
+  function edit(postObj) {
+    return  axios.put(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
+    .then((res) => {
+      console.log(res);
+      return res
+    })
+  }
   function handleSubmitForm() {
     const postObj = {
       projectNameByIT,
@@ -428,16 +435,14 @@ function EditViewForm() {
       workStationValue,
       devTypeValue,
     };
-
-    axios
-      .put(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
+     edit(postObj)
       .then((res) => {
         toast.success('Form sumbitted successfully !', {
           autoClose: 1900,
         });
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2000);
+        setTimeout(() => {
+            history.push('/admin');
+          }, 2000);
       })
       .catch((err) => {
         toast.error('Failed to save the data !', {
