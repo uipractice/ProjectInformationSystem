@@ -265,6 +265,7 @@ function CompleteTable({ data }) {
     getTableBodyProps,
     headerGroups,
     page,
+    gotoPage,
     nextPage,
     previousPage,
     canNextPage,
@@ -516,6 +517,11 @@ function CompleteTable({ data }) {
               <img src={rightIcon} alt='next' />
             </button>{' '}
           </div>
+          <input className='pagination-search'
+          type= 'number'
+           onChange={(e) => {const value= e.target.value-1;
+          gotoPage(value)} }
+          />
         </div>
       </div>
     </>
