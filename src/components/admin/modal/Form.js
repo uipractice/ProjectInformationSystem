@@ -89,6 +89,7 @@ function Form({ closeModal }) {
   const handleReset = (e) => {
     e.preventDefault();
     setState({
+       ...state,
       projectNameByIT: '',
       projectManager: '',
       email: '',
@@ -175,7 +176,7 @@ function Form({ closeModal }) {
       </div>
 
       <div className='form-group row' style={{ margin: '0 auto 1rem' }}>
-        <label>Email address</label>
+        <label>Email address</label><h4 className='email-help-text' > (Add multiple emails with (,) sepration)</h4 >
         <textarea
           type='textarea'
           className='form-control textArea'

@@ -954,6 +954,9 @@ select.form-control:-internal-autofill-selected {
   max-width: 300px;
   margin: auto;
 }
+.download-btn {
+  cursor: pointer !important;
+}
 @media (max-width: 448px) {
   .footer {
     height: 60px;

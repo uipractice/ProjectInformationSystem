@@ -68,7 +68,9 @@ export class ShareModalContainer extends Component {
         </ToggleButtonGroup>
 
         <div className='btn-toolbar mb-2 mb-md-0'>
-          <button
+          {
+            this.props.client && 
+            <button
             type='button'
             className='btn work_btn work_btn_blue center modal-button'
             ref={this.buttonRef}
@@ -76,6 +78,8 @@ export class ShareModalContainer extends Component {
           >
             SHARE PROJECT FORM
           </button>
+          }
+       
 
           {this.state.open ? (
             <Dialog

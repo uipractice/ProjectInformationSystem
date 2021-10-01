@@ -85,11 +85,11 @@ function ViewForm() {
     showIsolatedDetails,
     isDLPreq,
     isClientEmailProvided,
-    reshareReason,
+    reshareReason:'',
   });
 
   function reshareReasonInput(evt) {
-    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g,'');
+    const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
       setTotalState({
         ...totalState,
@@ -183,9 +183,9 @@ function ViewForm() {
       })
       .catch((err) => console.log(err.response));
 
-    // setTimeout(() => {
-    //   history.push("/admin");
-    // }, 2000);
+    setTimeout(() => {
+      history.push('/admin');
+    }, 2000);
   };
 
   const handleReminder = () => {
@@ -280,11 +280,15 @@ function ViewForm() {
           }}
           className='modalDesign deleteModal'
         >
-          <h2>Request the re-submit the form</h2>
+          <h2>Request to re-submit the form</h2>
           <button
             className='_modal-close'
             onClick={() => {
               setIsModalOpen(false);
+              setTotalState({
+                 ...totalState,
+                reshareReason: '',
+              });
             }}
           >
             <svg className='_modal-close-icon' viewBox='0 0 40 40'>
@@ -292,7 +296,7 @@ function ViewForm() {
             </svg>
           </button>
           <form>
-            <p>Please enter the which data is incompleted.</p>
+            <p>Please enter the data which is incomplete.</p>
             <textarea
               type='text'
               autoFocus={true}
@@ -311,6 +315,10 @@ function ViewForm() {
                   className='form-control btn btn-primary'
                   onClick={() => {
                     setIsModalOpen(false);
+                    setTotalState({
+                      ...totalState,
+                      reshareReason: '',
+                    });
                   }}
                 >
                   Cancel
@@ -367,21 +375,22 @@ function ViewForm() {
                 {status !== 'Pending' ? (
                   <Form>
                     <Form.Group style={{ marginBottom: '0' }}>
-                      {totalState.deleteReason && totalState.status !== 'Submitted' && (
-                        <div>
-                          <Form.Label
-                            style={{ color: 'red', marginTop: '20px' }}
-                          >
-                            This project has been Deleted because
-                          </Form.Label>
+                      {totalState.deleteReason &&
+                        totalState.status !== 'Submitted' && (
+                          <div>
+                            <Form.Label
+                              style={{ color: 'red', marginTop: '20px' }}
+                            >
+                              This project has been Deleted because
+                            </Form.Label>
 
-                          <Form.Control
-                            type='text'
-                            value={deleteReason}
-                            readOnly
-                          />
-                        </div>
-                      )}
+                            <Form.Control
+                              type='text'
+                              value={deleteReason}
+                              readOnly
+                            />
+                          </div>
+                        )}
 
                       {totalState.restoreReason && (
                         <div>
@@ -612,6 +621,7 @@ function ViewForm() {
                           marginLeft: '10px',
                         }}
                         onClick={handleDownload}
+                        className='download-btn'
                       >
                         Download
                       </Button>

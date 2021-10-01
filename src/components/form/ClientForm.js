@@ -26,18 +26,19 @@ function ClientForm() {
       .then((res) => {
         setPrevStatus(res.data.status); // Don't allow form submittion for Pending or Deleted Project
         setPrevProjectName(res.data.projectNameByIT);
+        setClientFormSubmitted(
+          res.data.status !== 'Pending' &&
+            prevStatus !== 'deleted' &&
+            window.location.hash.indexOf('client-form') !== -1
+            ? true
+            : false
+        );
       })
       .catch((err) => {
         console.log('Failed to get the status: ', err.response);
       });
-    setClientFormSubmitted(
-      prevStatus !== 'Pending' &&
-        prevStatus !== 'deleted' &&
-        window.location.hash.indexOf('client-form') !== -1
-        ? true
-        : false
-    );
-  }, [id, prevProjectName, prevStatus]);
+
+  }, [id, prevProjectName, prevStatus, clientFormSubmitted]);
 
   const [fileData, setFileData] = useState('');
 
@@ -465,7 +466,7 @@ function ClientForm() {
         <Container>
           <Row>
             <Col md={{ span: 8, offset: 2 }}>
-              <div style={{ width: '700px' }} className='project-details-form'>
+              {prevStatus && <div style={{ width: '700px' }} className='project-details-form'>
                 <h2> Project Details </h2>
                 <button
                   className='modal-closeBtn'
@@ -476,8 +477,8 @@ function ClientForm() {
                   </svg>
                 </button>
                 {prevStatus === 'Pending' &&
-                prevStatus !== 'deleted' &&
-                !clientFormSubmitted ? (
+                  prevStatus !== 'deleted' &&
+                  !clientFormSubmitted ? (
                   <Form>
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Name of the project or client</Form.Label>
@@ -887,6 +888,7 @@ function ClientForm() {
                         onChange={(e) => {
                           setFileData(e.target.files);
                         }}
+                        onClick={(e) => e.target.value = null}
                         style={{ display: 'none' }}
                       />
                       <input
@@ -937,7 +939,7 @@ function ClientForm() {
                     <SubmitButton />
                     {/* <button>Save temp</button> */}
                   </Form>
-                ) : (
+                ) :
                   clientFormSubmitted && (
                     <div
                       style={{
@@ -951,8 +953,8 @@ function ClientForm() {
                       <SubmitButton />
                     </div>
                   )
-                )}
-              </div>
+                }
+              </div>}
             </Col>
           </Row>
         </Container>

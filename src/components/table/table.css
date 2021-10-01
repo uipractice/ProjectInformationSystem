@@ -95,7 +95,7 @@ table {
   font-family: 'Lato', sans-serif;
   border-collapse: collapse;
   width: 100%;
-  border: 1px solid #ddd;
+  border: 0;
   margin-bottom: 0 !important;
   background: #fff;
   border-bottom: 0;
@@ -191,6 +191,11 @@ tfoot td {
   padding: 10px 15px;
   background: #fff;
   border: 1px solid #dee2e6;
+  border-top: 0;
+}
+.table td,
+.table th {
+  border-top: 0;
 }
 .table-pagination .pageNum {
   border: 0;
@@ -229,9 +234,17 @@ tfoot td {
 }
 .tableFixHead {
   overflow: auto;
-  height: calc(100vh - 400px);
+  height: calc(100vh - 355px);
   scrollbar-width: thin;
   scrollbar-color: #afaeae #e3e1e1;
+  border-top: 1px solid #dee2e6;
+  overflow-x: hidden;
+  border-bottom: 0;
+}
+.tableFixHead table {
+  background-color: #fff;
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
 }
 .tableFixHead::-webkit-scrollbar {
   width: 5px;

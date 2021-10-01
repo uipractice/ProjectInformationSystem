@@ -283,7 +283,8 @@ function CompleteTable({ data }) {
         pageSize: 5,
         sortBy: [
           {
-            id: 'projectNameByIT',
+            id: 'updatedAt',
+            desc:true
           },
         ],
       },
@@ -485,12 +486,11 @@ function CompleteTable({ data }) {
             })}
           </tbody>
         </table>
-      </div>
-      <div className='table-pagination'>
-        <span className='paginate'>
-          <b>{start}</b> to <b>{end}</b> of <b>{filteredData.length}</b>
-        </span>
-        {/* <label>Rows per page:</label>
+        <div className='table-pagination'>
+          <span className='paginate'>
+            <b>{start}</b> to <b>{end}</b> of <b>{filteredData.length}</b>
+          </span>
+          {/* <label>Rows per page:</label>
         <select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
@@ -502,19 +502,20 @@ function CompleteTable({ data }) {
             </option>
           ))}
         </select> */}
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <div className='prev-next'>
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <img src={leftIcon} alt='prev' />
-          </button>{' '}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            <img src={rightIcon} alt='next' />
-          </button>{' '}
+          <span>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{' '}
+          </span>
+          <div className='prev-next'>
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              <img src={leftIcon} alt='prev' />
+            </button>{' '}
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              <img src={rightIcon} alt='next' />
+            </button>{' '}
+          </div>
         </div>
       </div>
     </>
