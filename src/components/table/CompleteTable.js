@@ -45,6 +45,8 @@ function CompleteTable({ data }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [noRecords, setNoRecords] = useState(false);
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -458,7 +460,7 @@ function CompleteTable({ data }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {!noRecords ? page.map((row) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
@@ -484,7 +486,7 @@ function CompleteTable({ data }) {
                   })}
                 </tr>
               );
-            })}
+            }): <tr><span style={{textAlign: 'center'}}>No Records</span></tr>}
           </tbody>
         </table>
         <div className='table-pagination'>
@@ -520,7 +522,13 @@ function CompleteTable({ data }) {
           <input className='pagination-search'
           type= 'number'
            onChange={(e) => {const value= e.target.value-1;
-          gotoPage(value)} }
+            if(pageOptions.length > value){
+              gotoPage(value);
+              setNoRecords(false);
+            }else{
+              setNoRecords(true);
+            }
+          } }
           />
         </div>
       </div>
