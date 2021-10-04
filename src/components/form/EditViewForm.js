@@ -413,6 +413,16 @@ function EditViewForm() {
       return res
     })
   }
+
+  const addAttachment = (fileInput) => {
+    const files = [...fileData];
+    for (const file of fileInput.target.files) {
+      files.push(file);
+    }
+    console.log("files", files);
+    setFileData(files);
+  };
+
   function handleSubmitForm() {
     const postObj = {
       projectNameByIT,
@@ -1011,9 +1021,7 @@ function EditViewForm() {
                         id='file'
                         accept='*.*'
                         multiple
-                        onChange={(e) => {
-                          setFileData(e.target.files);
-                        }}
+                        onChange={(e) =>  addAttachment(e)}
                         onClick={(e) => e.target.value = null}
                         style={{ display: 'none' }}
                       />
@@ -1025,10 +1033,10 @@ function EditViewForm() {
                           document.getElementById('file')?.click()
                         }
                       />
-                      <Form.Label style={{ marginLeft: '10px' }}>
-                        *Select all files at a time.
-                      </Form.Label>
-                      <div>
+                    
+                      <div
+                       className={`${fileData.length <= 0 && "no-selected-items"}
+                       ${fileData.length > 0 && "selected-items"}`}>
                         {fileData &&
                           Object.keys(fileData)?.map((key) => (
                             <div>
@@ -1036,8 +1044,9 @@ function EditViewForm() {
                                 key={fileData[key].name}
                                 className='file-close-icon'
                                 onClick={() => {
-                                  const fileState = { ...fileData };
-                                  delete fileState[key];
+                                  const fileState = [...fileData ];
+                                  // delete fileState[key];
+                                  fileState.splice(key, 1);
                                   setFileData(fileState);
                                 }}
                               >
