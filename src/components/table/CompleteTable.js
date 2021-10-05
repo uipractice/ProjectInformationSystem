@@ -515,26 +515,8 @@ function CompleteTable({ data }) {
             <button onClick={() => nextPage()} disabled={!canNextPage}>
               <img src={rightIcon} alt='next' />
             </button>{' '}
-          </div>}
-          <input className='pagination-search'
-          type= 'number'
-           onChange={(e) => {
-            const value= e.target.value-1;
-            console.log(value, 'test');
-            if(pageOptions.length > value){
-              console.log(e.target.value.match(/^([1-9]\d*)?$/), 'if block');
-              gotoPage(value);
-              setEnteredValue(e.target.value.match(/^([1-9]\d*)?$/) ? e.target.value : '');
-              setNoRecords(false);
-            }else{
-              console.log(e.target.value.match(/^([1-9]\d*)?$/), 'else block');
-              setEnteredValue(e.target.value);
-              setNoRecords(true);
-            }
-          } }
-          value={enteredValue}
-          />
-          <h6>Success rajesh</h6>
+          </div>
+          <h5>Success Rajesh</h5>
         </div>
       </div>
     </>
