@@ -407,12 +407,11 @@ function EditViewForm() {
   }
 
   function edit(postObj) {
-    return axios
-      .put(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
-      .then((res) => {
-        console.log(res);
-        return res;
-      });
+    return  axios.put(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
+    .then((res) => {
+      console.log(res);
+      return res
+    })
   }
 
   const addAttachment = (fileInput) => {
@@ -420,7 +419,7 @@ function EditViewForm() {
     for (const file of fileInput.target.files) {
       files.push(file);
     }
-    console.log('files', files);
+    console.log("files", files);
     setFileData(files);
   };
 
@@ -446,14 +445,14 @@ function EditViewForm() {
       workStationValue,
       devTypeValue,
     };
-    edit(postObj)
+     edit(postObj)
       .then((res) => {
         toast.success('Form sumbitted successfully !', {
           autoClose: 1900,
         });
         setTimeout(() => {
-          history.push('/admin');
-        }, 2000);
+            history.push('/admin');
+          }, 2000);
       })
       .catch((err) => {
         toast.error('Failed to save the data !', {
@@ -495,11 +494,11 @@ function EditViewForm() {
       GDPRcompliance &&
       ClientEmailProvided &&
       workStationValue &&
-      DLPreq &&
+      DLPreq&&
       devTypeValue &&
-      status &&
-      CyberSecConducted &&
-      IsolatedEnvReq &&
+      status&&
+      CyberSecConducted&&
+      IsolatedEnvReq&&
       ((showInsuranceDetails === true && disasterDetails) ||
         showInsuranceDetails === false) &&
       ((showIsolatedDetails === true && isolationDetails) ||
@@ -1013,48 +1012,51 @@ function EditViewForm() {
                   </Form.Group>
 
                   <Form.Group style={{ marginBottom: '40px' }}>
-                    <Form.Label>Choose files to upload </Form.Label>
+                      <Form.Label>Choose files to upload </Form.Label>
 
-                    <br></br>
-                    <input
-                      type='file'
-                      name='fileName'
-                      id='file'
-                      accept='*.*'
-                      multiple
-                      onChange={(e) => addAttachment(e)}
-                      onClick={(e) => (e.target.value = null)}
-                      style={{ display: 'none' }}
-                    />
-                    <input
-                      type='button'
-                      value='Choose File'
-                      className='choose-btn'
-                      onClick={(e) => document.getElementById('file')?.click()}
-                    />
-
-                    <div
-                      className={`${fileData.length <= 0 && 'no-selected-items'}
-                       ${fileData.length > 0 && 'selected-items'}`}
-                    >
-                      {fileData &&
-                        Object.keys(fileData)?.map((key) => (
-                          <span
-                            key={fileData[key].name}
-                            className='file-close-icon'
-                            onClick={() => {
-                              const fileState = [...fileData];
-                              // delete fileState[key];
-                              fileState.splice(key, 1);
-                              setFileData(fileState);
-                            }}
-                          >
-                            {fileData[key].name}
-                            &nbsp;&nbsp;
-                          </span>
-                        ))}
-                    </div>
-                  </Form.Group>
+                      <br></br>
+                      <input
+                        type='file'
+                        name='fileName'
+                        id='file'
+                        accept='*.*'
+                        multiple
+                        onChange={(e) =>  addAttachment(e)}
+                        onClick={(e) => e.target.value = null}
+                        style={{ display: 'none' }}
+                      />
+                      <input
+                        type='button'
+                        value='Choose File'
+                        className='choose-btn'
+                        onClick={(e) =>
+                          document.getElementById('file')?.click()
+                        }
+                      />
+                    
+                      <div
+                       className={`${fileData.length <= 0 && "no-selected-items"}
+                       ${fileData.length > 0 && "selected-items"}`}>
+                        {fileData &&
+                          Object.keys(fileData)?.map((key) => (
+                            <div>
+                              <span
+                                key={fileData[key].name}
+                                className='file-close-icon'
+                                onClick={() => {
+                                  const fileState = [...fileData ];
+                                  // delete fileState[key];
+                                  fileState.splice(key, 1);
+                                  setFileData(fileState);
+                                }}
+                              >
+                                {fileData[key].name}
+                                &nbsp;&nbsp;
+                              </span>
+                            </div>
+                          ))}
+                      </div>
+                    </Form.Group>
 
                   <Button
                     onClick={() => window.location.reload()}
