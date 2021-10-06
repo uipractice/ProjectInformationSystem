@@ -516,6 +516,7 @@ function CompleteTable({ data }) {
               <img src={rightIcon} alt='next' />
             </button>{' '}
           </div>
+          <h5>Success Rajesh</h5>
         </div>
       </div>
     </>
