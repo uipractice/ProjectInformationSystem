@@ -284,7 +284,7 @@ function CompleteTable({ data }) {
         sortBy: [
           {
             id: 'updatedAt',
-            desc:true
+            desc: true,
           },
         ],
       },
@@ -516,7 +516,6 @@ function CompleteTable({ data }) {
               <img src={rightIcon} alt='next' />
             </button>{' '}
           </div>
-          <h5>Success Rajesh</h5>
         </div>
       </div>
     </>
