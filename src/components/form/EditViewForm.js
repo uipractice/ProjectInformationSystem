@@ -22,7 +22,7 @@ function EditViewForm() {
   // checkAuth();
 
   const history = useHistory();
-  const [fileData, setFileData] = useState('');
+  const [fileData, setFileData] = useState([]);
   const [status, setStatus] = useState('');
   const [projectNameByIT, setProjectNameByIT] = useState('');
   const [securityMeasure, setSecurityMeasure] = useState('');
@@ -1037,11 +1037,10 @@ function EditViewForm() {
                       <div
                        className={`${fileData.length <= 0 && "no-selected-items"}
                        ${fileData.length > 0 && "selected-items"}`}>
-                        {fileData &&
-                          Object.keys(fileData)?.map((key) => (
+                        {fileData.map((item, key) => (
                             <div>
                               <span
-                                key={fileData[key].name}
+                                key={key}
                                 className='file-close-icon'
                                 onClick={() => {
                                   const fileState = [...fileData ];
