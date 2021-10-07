@@ -42,14 +42,26 @@ a:focus {
 }
 .file-close-icon {
   display: inline-flex;
+  font-size: 13px;
+}
+.selected-items {
+  background: #f8f8f8;
+  padding: 10px;
+  min-height: 70px;
+  height: 70px;
+  overflow: auto;
+  margin: 10px 0;
+  border: 1px dashed #bdbdbd;
 }
 .file-close-icon::after {
   content: '';
   display: block;
-  background: url('../src//assets//images/clear.svg') no-repeat 100%;
+  background: url('../src//assets//images/clear.svg') no-repeat 100% 7px;
   width: 10px;
   cursor: pointer;
-  padding: 10px;
+  padding: 0px;
+  margin-right: 14px;
+  margin-left: 5px;
 }
 .header_nav {
   background: #023047;

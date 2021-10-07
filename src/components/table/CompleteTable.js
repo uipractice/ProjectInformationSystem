@@ -285,7 +285,7 @@ function CompleteTable({ data }) {
         sortBy: [
           {
             id: 'updatedAt',
-            desc:true
+            desc: true,
           },
         ],
       },
