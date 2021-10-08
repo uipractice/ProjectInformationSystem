@@ -1039,7 +1039,6 @@ function EditViewForm() {
                        className={`${fileData.length <= 0 && "no-selected-items"}
                        ${fileData.length > 0 && "selected-items"}`}>
                         {fileData.map((item, key) => (
-                            <div>
                               <span
                                 key={key}
                                 className='file-close-icon'
@@ -1053,7 +1052,6 @@ function EditViewForm() {
                                 {fileData[key].name}
                                 &nbsp;&nbsp;
                               </span>
-                            </div>
                           ))}
                       </div>
                     </Form.Group>
