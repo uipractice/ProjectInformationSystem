@@ -39,7 +39,7 @@ function ClientForm() {
       });
   }, [id, prevProjectName, prevStatus, clientFormSubmitted]);
 
-  const [fileData, setFileData] = useState('');
+  const [fileData, setFileData] = useState([]);
 
   const [state, setState] = useState({
     projectName: '',
@@ -917,9 +917,9 @@ function ClientForm() {
                        ${fileData.length > 0 && 'selected-items'}`}
                         >
                           {fileData &&
-                            Object.keys(fileData)?.map((key) => (
+                            fileData.map((item, key) => (
                               <span
-                                key={fileData[key].name}
+                                key={key}
                                 className='file-close-icon'
                                 onClick={() => {
                                   const fileState = [...fileData];
