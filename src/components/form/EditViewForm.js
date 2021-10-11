@@ -18,9 +18,6 @@ toast.configure();
 
 function EditViewForm() {
   const { id } = useParams();
-
-  // checkAuth();
-
   const history = useHistory();
   const [fileData, setFileData] = useState([]);
   const [status, setStatus] = useState('');
@@ -33,7 +30,7 @@ function EditViewForm() {
   const [isolationDetails, setIsolationDetails] = useState('');
 
   const [isNDAsigned, setIsNDAsigned] = useState('');
-  const [NDAsigned, setNDAsigned] = useState(''); //REPLACE ORIGINAL VALUE WTTH THIS VALUE FROM BACKEND. CREATE EDIT API.
+  const [NDAsigned, setNDAsigned] = useState('');
   const [NDAsignedFirst, setNDAsignedFirst] = useState('outline-info');
   const [NDAsignedSecond, setNDAsignedSecond] = useState('outline-info');
 
@@ -83,16 +80,10 @@ function EditViewForm() {
   const [devTypeSecondBtn, setDevTypeSecondBtn] = useState('');
   const [devTypeThirdBtn, setDevTypeThirdBtn] = useState('');
 
-  // const [deleteReason, setDeleteReason] = useState("");
-  // const [reshareReason, setReshareReason] = useState("");
-  // const [restoreReason, setRestoreReason] = useState("");
-
   useEffect(() => {
     axios
       .get(getApiUrl(`clientInfo/${id}`))
       .then((res) => {
-        // console.log("Entire get API : ", res.data);
-
         setProjectNameByIT(res.data.projectNameByIT);
         setSecurityMeasure(res.data.securityMeasure);
         setInformIT(res.data.informIT);
@@ -460,9 +451,6 @@ function EditViewForm() {
           autoClose: 3000,
         });
       });
-    // toast.success('Form sumbitted successfully !', {
-    //   autoClose: 1900,
-    // });
     setTimeout(() => {
       history.push('/admin');
     }, 2000);
@@ -538,13 +526,6 @@ function EditViewForm() {
     }
   }
 
-  // function download(url: "string", filename: "string") {
-  //   axios.get(url, {
-  //     responseType: 'blob',
-  //   }).then(res => {
-  //     download(res.data, filename);
-  //   });
-  // }
 
   const downloadFile = (habbits) => {
     axios.get(getApiUrl(`clientInfo/getfile`)).then((resp) => {
@@ -1044,7 +1025,6 @@ function EditViewForm() {
                                 className='file-close-icon'
                                 onClick={() => {
                                   const fileState = [...fileData ];
-                                  // delete fileState[key];
                                   fileState.splice(key, 1);
                                   setFileData(fileState);
                                 }}

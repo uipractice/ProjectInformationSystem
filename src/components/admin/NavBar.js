@@ -93,7 +93,6 @@ const NavBar = ({ validate, clientForm }) => {
   const [feedback, setFeedback] = React.useState(false);
   const handleClickOpen = () => {
     setFeedback(!feedback);
-    // setFeedback("");
   };
   const prevOpenfeedback = React.useRef(feedback);
   React.useEffect(() => {
@@ -128,7 +127,6 @@ const NavBar = ({ validate, clientForm }) => {
         <div className='row'>
           <a
             className='navbar-brand col-md-6 px-4'
-            // href='/#/admin'
           >
             <img src={Logo} alt='Evoke Technologies' />
           </a>

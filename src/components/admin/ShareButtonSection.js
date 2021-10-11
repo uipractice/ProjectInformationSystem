@@ -3,7 +3,6 @@ import './modal/Container.css';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button } from '@material-ui/core';
@@ -13,7 +12,6 @@ export class ShareModalContainer extends Component {
   state = { isShown: false, open: false };
   showModal = () => {
     this.setState({ isShown: true }, () => {
-      // this.closeButton.focus();
     });
     this.toggleScrollLock();
   };
@@ -35,18 +33,11 @@ export class ShareModalContainer extends Component {
     document.querySelector('html').classList.toggle('scroll-lock');
   };
 
-  // const [alignment, setAlignment] = React.useState('left');
-  //   const handleAlignment = (event, newAlignment) => {
-  //       setAlignment(newAlignment);
-  //   };
-
   render() {
     return (
       <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3'>
         <ToggleButtonGroup
-          // value={alignment}
           exclusive
-          // onChange={handleAlignment}
           aria-label='text alignment'
         >
           <ToggleButton

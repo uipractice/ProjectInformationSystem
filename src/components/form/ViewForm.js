@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Modal from 'react-modal'; //why you removed this one?
+import Modal from 'react-modal';
 import Footer from '../admin/Footer';
 import editIcon from '../../assets/images/edit-icon.svg';
 import axios from 'axios';
@@ -39,7 +39,6 @@ function ViewForm() {
     status,
     id,
     deleteReason,
-    reshareReason,
     securityMeasure,
     informIT,
     workStationSelected,
@@ -140,10 +139,6 @@ function ViewForm() {
         setTotalState({ ...totalState, deleteReason: false });
       })
       .catch((err) => console.log(err.response));
-
-    // setTimeout(() => {
-    //   history.push("/admin");
-    // }, 2000);
   };
 
   const downloadFiles = (files) => {
@@ -166,7 +161,6 @@ function ViewForm() {
       const files = res.data;
       downloadFiles(files);
     });
-    // window.open(`http://localhost:5000/clientInfo/download/${id}`);
   };
 
   const handleReshare = (e) => {
