@@ -11,21 +11,26 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "core-js": "^3.18.2",
     "date-fns": "^2.22.1",
     "env-cmd": "^10.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.2",
     "focus-trap-react": "^8.5.1",
     "js-file-download": "^0.4.12",
-    "material-table": "^1.69.3",
+    "material-table": "^1.63.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.9.0",
     "react-modal": "^3.14.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^0.9.5",
     "react-table": "^7.7.0",
+    "react-test-renderer": "^17.0.2",
     "react-toastify": "^7.0.4",
     "reactstrap": "^8.9.0",
+    "regenerator-runtime": "^0.13.9",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -53,6 +58,21 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "enzyme-adapter-react-17-updated": "^1.0.2"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ],
+    "coverageReporters": [
+      "text"
     ]
   }
 }

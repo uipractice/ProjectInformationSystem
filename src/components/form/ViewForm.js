@@ -157,7 +157,7 @@ function ViewForm() {
       document.body.appendChild(link);
       link.click();
       index += 1;
-      document.getElementById('downloadFile')?.remove();
+      document.getElementById('downloadFile').remove();
     }
   };
 

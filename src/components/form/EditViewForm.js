@@ -467,7 +467,7 @@ function EditViewForm() {
       history.push('/admin');
     }, 2000);
 
-    if (fileData?.length) {
+    if (fileData.length) {
       const formData = new FormData();
       for (let file of fileData) {
         formData.append('fileName', file);
@@ -1031,7 +1031,7 @@ function EditViewForm() {
                         value='Choose File'
                         className='choose-btn'
                         onClick={(e) =>
-                          document.getElementById('file')?.click()
+                          document.getElementById('file').click()
                         }
                       />
                     
