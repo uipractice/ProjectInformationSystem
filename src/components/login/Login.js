@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import "./Login.css";
 import "../../index.css";
-import AuthServices from "../../services/authentication";
+import AuthServices from "../../services/Authentication";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

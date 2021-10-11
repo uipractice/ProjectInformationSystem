@@ -342,8 +342,6 @@ textarea:focus-visible {
   box-shadow: 0 0 0;
   border-color: #209ec5 !important;
   background-color: rgba(32, 158, 197, 0.05) !important;
-}
-textarea:focus-visible {
   outline: none;
 }
 .tableFixHead tr td:first-child a,

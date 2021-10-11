@@ -51,7 +51,7 @@ function CompleteTable({ data }) {
     setDefaultFilterData(data);
   }, [data]);
 
-  const setDefaultFilterData = (data) => {
+  const setDefaultFilterData = () => {
     if (data.length) {
       let filterResult = data.filter((row) => row.status !== 'Deleted');
       setFilteredData(addSerialNo(filterResult));
@@ -69,7 +69,7 @@ function CompleteTable({ data }) {
     console.log('SelectedState value: ', selectedState);
     console.log('Data dot status value: ', data.status);
     console.log('Data value: ', data);
-    let filterResult = data;
+    let filterResult;
     if (selectedState === 'Active')
       filterResult = data.filter((row) => row.status !== 'Deleted');
     else if (selectedState === 'All Project') filterResult = data;
@@ -116,13 +116,6 @@ function CompleteTable({ data }) {
   };
   const columns = React.useMemo(
     () => [
-      // {
-      //   Header: 'SL.NO',
-      //   accessor: 'serial',
-      //   // filterable: false,
-      //   width: 102,
-      // },
-
       {
         Header: 'PROJECT NAME',
         accessor: 'projectNameByIT',
@@ -207,9 +200,6 @@ function CompleteTable({ data }) {
         Cell: ({ value }) => {
           return format(new Date(value), 'dd/MM/yyyy');
         },
-        // maxWidth: 200,
-        // minWidth: 80,
-        // width: 100,
       },
       {
         Header: 'UPDATED DATE',
@@ -270,7 +260,6 @@ function CompleteTable({ data }) {
     canNextPage,
     canPreviousPage,
     pageOptions,
-    setPageSize,
     prepareRow,
     state,
     setGlobalFilter,
@@ -302,7 +291,6 @@ function CompleteTable({ data }) {
     end = filteredData.length > pageSize ? pageSize : filteredData.length;
   } else {
     start = pageIndex * pageSize + 1;
-    // end = (pageIndex + 1) * pageSize;
     end =
       filteredData.length >= (pageIndex + 1) * pageSize
         ? (pageIndex + 1) * pageSize
