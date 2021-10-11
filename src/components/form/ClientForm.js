@@ -212,7 +212,7 @@ function ClientForm() {
       window.close();
     }
 
-    if (fileData?.length) {
+    if (fileData.length) {
       const formData = new FormData();
       for (let file of fileData) {
         formData.append('fileName', file);
@@ -907,7 +907,7 @@ function ClientForm() {
                           value='Choose File'
                           className='choose-btn'
                           onClick={(e) =>
-                            document.getElementById('file')?.click()
+                            document.getElementById('file').click()
                           }
                         />
                         <div
