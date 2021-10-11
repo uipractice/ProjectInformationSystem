@@ -1,6 +1,6 @@
 body {
   background: #f8f8fb;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   height: 100vh;
   overflow: hidden;
 }
@@ -74,7 +74,7 @@ a:focus {
 
 .work_area_title {
   color: #57565c;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -86,7 +86,7 @@ a:focus {
 
 .work_btn {
   min-width: 237px;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-size: 14px;
   font-weight: 400;
   border-radius: 2px;
@@ -126,7 +126,7 @@ a:focus {
 }
 
 .count {
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 32px;
@@ -135,7 +135,7 @@ a:focus {
 }
 
 .count_text {
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -207,7 +207,7 @@ a:focus {
 }
 
 .table_title {
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -269,11 +269,10 @@ a:focus {
 }
 
 .grid th {
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
-  line-height: 14px;
   color: #209ec5;
   border-bottom: 0 !important;
   background: #fff;
@@ -402,7 +401,7 @@ a:focus {
 
 #shareform .modal-footer button {
   width: 150px;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-size: 14px;
   font-weight: 400;
   border-radius: 2px;
@@ -453,7 +452,6 @@ a:focus {
   background: url('./assets/images/user.svg') no-repeat center center !important;
   height: 33px;
   width: 34px;
-  border: 0;
   vertical-align: middle;
   border: none !important;
 }
@@ -462,7 +460,7 @@ a:focus {
   min-width: auto;
 }
 .navbar h3 {
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-weight: 900;
   font-size: 20px;
   line-height: 24px;
@@ -486,7 +484,7 @@ a:focus {
   border-radius: 2px 0px 0px 2px !important;
 }
 .MuiToggleButton-label {
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-size: 14px;
   line-height: 18px;
   letter-spacing: 0.1px;
@@ -505,7 +503,7 @@ a:focus {
 .project-details-form h2 {
   padding: 10px 20px;
   margin: 0;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-weight: bold;
   font-size: 18px;
   line-height: 22px;
@@ -699,7 +697,7 @@ select.form-control:-internal-autofill-selected {
   border-radius: 4px 4px 0px 0px;
 }
 #alert-dialog-title h2 {
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-weight: bold;
   font-size: 18px;
   line-height: 22px;
@@ -746,7 +744,7 @@ select.form-control:-internal-autofill-selected {
   line-height: 22px;
   letter-spacing: 0.01em;
   color: #626364;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   margin-bottom: 30px;
 }
 .feedback-modal #alert-dialog-description p {
@@ -922,7 +920,7 @@ select.form-control:-internal-autofill-selected {
   height: auto;
 }
 .MuiAutocomplete-option {
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
