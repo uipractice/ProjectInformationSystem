@@ -48,7 +48,7 @@ function CompleteTable({ data }) {
   const classes = useStyles();
 
   useEffect(() => {
-    setDefaultFilterData(data);
+    setDefaultFilterData();
   }, [data]);
 
   const setDefaultFilterData = () => {
