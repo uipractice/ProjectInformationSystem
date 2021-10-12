@@ -31,7 +31,7 @@
 }
 
 .modal-area h3 {
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-weight: bold;
     font-size: 18px;
     line-height: 22px;
@@ -112,8 +112,8 @@
 }
 
 .modal-body {
-    padding-top: 0.25em !important;
     padding: 20px;
+    padding-top: 0.25em !important;
 }
 
 ._hide-visual {
@@ -135,7 +135,7 @@
 
 .form-group label,
 .form-group select {
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-weight: normal;
     font-size: 14px;
     line-height: 20px;
@@ -169,7 +169,7 @@
 }
 
 .email-help-text {
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-weight: normal;
     font-size: 14px;
     line-height: 20px;

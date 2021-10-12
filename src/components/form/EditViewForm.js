@@ -488,10 +488,10 @@ function EditViewForm() {
       status &&
       CyberSecConducted &&
       IsolatedEnvReq &&
-      ((showInsuranceDetails === true && disasterDetails) ||
-        showInsuranceDetails === false) &&
-      ((showIsolatedDetails === true && isolationDetails) ||
-        showIsolatedDetails === false)
+      ((showInsuranceDetails == true && disasterDetails) ||
+        showInsuranceDetails == false) &&
+      ((showIsolatedDetails == true && isolationDetails) ||
+        showIsolatedDetails == false)
     ) {
       return (
         <Button
