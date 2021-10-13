@@ -11,8 +11,7 @@ import Form from './modal/Form';
 export class ShareModalContainer extends Component {
   state = { isShown: false, open: false };
   showModal = () => {
-    this.setState({ isShown: true }, () => {
-    });
+    this.setState({ isShown: true });
     this.toggleScrollLock();
   };
   closeModal = () => {

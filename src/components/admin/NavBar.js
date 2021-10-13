@@ -57,7 +57,7 @@ const NavBar = ({ validate, clientForm }) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+    setOpen(() => !prevOpen);
   };
   const [feedbackText, setFeedbackText] = React.useState('');
 
@@ -75,9 +75,7 @@ const NavBar = ({ validate, clientForm }) => {
     setOpen(false);
     setFeedback(false);
     if (!closeClick) {
-      const feedback = {
-        feedbackText,
-      };
+
       axios
         .post(getApiUrl(`clientInfo/feebackMail`), feedback)
         .then((res) => {

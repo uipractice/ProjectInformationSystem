@@ -10,8 +10,6 @@ import Footer from '../admin/Footer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../admin/NavBar';
-
-import download from 'js-file-download';
 import { getApiUrl } from '../utils/helper';
 
 toast.configure();
