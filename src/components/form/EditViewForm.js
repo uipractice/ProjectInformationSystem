@@ -488,10 +488,10 @@ function EditViewForm() {
       status &&
       CyberSecConducted &&
       IsolatedEnvReq &&
-      ((showInsuranceDetails == true && disasterDetails) ||
-        showInsuranceDetails == false) &&
-      ((showIsolatedDetails == true && isolationDetails) ||
-        showIsolatedDetails == false)
+      ((showInsuranceDetails  && disasterDetails) ||
+        !showInsuranceDetails ) &&
+      ((showIsolatedDetails  && isolationDetails) ||
+        !showIsolatedDetails )
     ) {
       return (
         <Button
@@ -525,13 +525,6 @@ function EditViewForm() {
       );
     }
   }
-
-
-  const downloadFile = (habbits) => {
-    axios.get(getApiUrl(`clientInfo/getfile`)).then((resp) => {
-      download(resp.data, habbits.pdf);
-    });
-  };
 
   return (
     <div>

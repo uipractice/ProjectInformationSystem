@@ -657,22 +657,6 @@ function ViewForm() {
                       </Button>
                     ) : null}
 
-                    {/* <Button
-                      variant="primary"
-                      onClick={() => {
-                        handleEditViewForm();
-                      }}
-                      className="approve"
-                      style={{
-                        marginBottom: "30px",
-                        marginTop: "30px",
-                        marginRight: "15px",
-                        width: "130px",
-                      }}
-                    >
-                      Edit
-                    </Button> */}
-
                     {status === 'Deleted' ? (
                       <Button
                         className='reshare'
@@ -767,9 +751,6 @@ function ViewForm() {
                   </span>
                 )}
 
-                {/* {status === "Hidden" ? (
-                <input ref={inputRef} type="text" />
-              ) : null} */}
               </div>
             </Col>
           </Row>
