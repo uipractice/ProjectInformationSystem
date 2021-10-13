@@ -198,6 +198,128 @@ function ViewForm() {
     }, 2000);
   };
 
+  function showInsurance() {
+    return showInsuranceDetails === 'true' ? (
+      <div>
+        <Form.Text>
+          {' '}
+          Details for insurance company coverage terms and insurance company
+          spoc
+        </Form.Text>
+        <Form.Control type='text' value={disasterDetails} readOnly={true} />
+      </div>
+    ) : null;
+  }
+
+  function showIsolated() {
+    return showIsolatedDetails === 'true' ? (
+      <div>
+        <Form.Text>
+          {' '}
+          Details of physical isolation of network, physical isolation for
+          workspace, DLP etc
+        </Form.Text>
+        <Form.Control type='text' value={isolationDetails} readOnly={true} />
+      </div>
+    ) : null;
+  }
+
+  function statusSub() {
+    return status === 'Submitted' ? (
+      <Button
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className='reshare'
+        style={{
+          marginBottom: '20px',
+          marginTop: '20px',
+          marginRight: '15px',
+          width: '130px',
+        }}
+      >
+        {' '}
+        Reshare
+      </Button>
+    ) : null;
+  }
+
+  function statusSubmitted() {
+    return status === 'Submitted' ? (
+      <Button
+        variant='primary'
+        onClick={() => {
+          handleApprove();
+        }}
+        className='approve'
+        style={{
+          marginBottom: '20px',
+          marginTop: '20px',
+          marginRight: '15px',
+          width: '130px',
+        }}
+      >
+        {' '}
+        Approve
+      </Button>
+    ) : null;
+  }
+
+  function statusDel() {
+    return status === 'Deleted' ? (
+      <Button
+        className='reshare'
+        onClick={() => history.push('/admin')}
+        ref={inputRef}
+        style={{
+          marginBottom: '20px',
+          marginTop: '20px',
+          marginRight: '15px',
+          width: '130px',
+        }}
+      >
+        {' '}
+        Close
+      </Button>
+    ) : null;
+  }
+
+  function statusDeleted() {
+    return status === 'Deleted' ? (
+      <Button
+        className='approve'
+        onClick={() => setRestoreIsModalOpen(true)}
+        style={{
+          marginBottom: '20px',
+          marginTop: '20px',
+          width: '130px',
+        }}
+      >
+        {' '}
+        Restore
+      </Button>
+    ) : null;
+  }
+
+  function statusApproved() {
+    return status === 'Approved' ? (
+      <Button
+        className='reshare'
+        onClick={() => history.push('/admin')}
+        ref={inputRef}
+        style={{
+          marginBottom: '20px',
+          marginTop: '20px',
+          marginRight: '15px',
+          width: '130px',
+        }}
+      >
+        {' '}
+        Close
+      </Button>
+    ) : null;
+  }
+
   return (
     <div>
       <NavBar />
@@ -280,7 +402,7 @@ function ViewForm() {
             onClick={() => {
               setIsModalOpen(false);
               setTotalState({
-                 ...totalState,
+                ...totalState,
                 reshareReason: '',
               });
             }}
@@ -533,21 +655,7 @@ function ViewForm() {
                         >
                           {isDisasterInsuCovered}
                         </Button>
-
-                        {showInsuranceDetails === 'true' ? (
-                          <div>
-                            <Form.Text>
-                              {' '}
-                              Details for insurance company coverage terms and
-                              insurance company spoc
-                            </Form.Text>
-                            <Form.Control
-                              type='text'
-                              value={disasterDetails}
-                              readOnly={true}
-                            />
-                          </div>
-                        ) : null}
+                        {showInsurance()}
                       </Form.Group>
                     </Form.Group>
 
@@ -563,21 +671,7 @@ function ViewForm() {
                         >
                           {isIsolatedEnvReq}
                         </Button>
-
-                        {showIsolatedDetails === 'true' ? (
-                          <div>
-                            <Form.Text>
-                              {' '}
-                              Details of physical isolation of network, physical
-                              isolation for workspace, DLP etc
-                            </Form.Text>
-                            <Form.Control
-                              type='text'
-                              value={isolationDetails}
-                              readOnly={true}
-                            />
-                          </div>
-                        ) : null}
+                        {showIsolated()}
                       </Form.Group>
                     </Form.Group>
 
@@ -620,91 +714,15 @@ function ViewForm() {
                         Download
                       </Button>
                     </Form.Group>
-                    {status === 'Submitted' ? (
-                      <Button
-                        onClick={() => {
-                          setIsModalOpen(true);
-                        }}
-                        className='reshare'
-                        style={{
-                          marginBottom: '20px',
-                          marginTop: '20px',
-                          marginRight: '15px',
-                          width: '130px',
-                        }}
-                      >
-                        {' '}
-                        Reshare
-                      </Button>
-                    ) : null}
+                    {statusSub()}
 
-                    {status === 'Submitted' ? (
-                      <Button
-                        variant='primary'
-                        onClick={() => {
-                          handleApprove();
-                        }}
-                        className='approve'
-                        style={{
-                          marginBottom: '20px',
-                          marginTop: '20px',
-                          marginRight: '15px',
-                          width: '130px',
-                        }}
-                      >
-                        {' '}
-                        Approve
-                      </Button>
-                    ) : null}
+                    {statusSubmitted()}
 
-                    {status === 'Deleted' ? (
-                      <Button
-                        className='reshare'
-                        onClick={() => history.push('/admin')}
-                        ref={inputRef}
-                        style={{
-                          marginBottom: '20px',
-                          marginTop: '20px',
-                          marginRight: '15px',
-                          width: '130px',
-                        }}
-                      >
-                        {' '}
-                        Close
-                      </Button>
-                    ) : null}
+                    {statusDel()}
 
-                    {status === 'Deleted' ? (
-                      <Button
-                        className='approve'
-                        onClick={() => setRestoreIsModalOpen(true)}
-                        style={{
-                          marginBottom: '20px',
-                          marginTop: '20px',
-                          width: '130px',
-                        }}
-                      >
-                        {' '}
-                        Restore
-                      </Button>
-                    ) : null}
+                    {statusDeleted()}
 
-                    {status === 'Approved' ? (
-                      <Button
-                        className='reshare'
-                        onClick={() => history.push('/admin')}
-                        ref={inputRef}
-                        style={{
-                          marginBottom: '20px',
-                          marginTop: '20px',
-                          marginRight: '15px',
-                          width: '130px',
-                        }}
-                      >
-                        {' '}
-                        Close
-                      </Button>
-                    ) : null}
+                    {statusApproved()}
                   </Form>
                 ) : (
                   <span>
@@ -750,7 +768,7 @@ function ViewForm() {
                     </Button>
                   </span>
                 )}
-
+                
               </div>
             </Col>
           </Row>
