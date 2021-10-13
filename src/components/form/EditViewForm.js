@@ -78,6 +78,148 @@ function EditViewForm() {
   const [devTypeSecondBtn, setDevTypeSecondBtn] = useState('');
   const [devTypeThirdBtn, setDevTypeThirdBtn] = useState('');
 
+  const formData = () => {
+    if (isNDAsigned === 'Yes') {
+      setNDAsignedFirst('info');
+      setNDAsignedSecond('outline-info');
+      setNDAsigned('Yes');
+    } else if (isNDAsigned === 'No') {
+      setNDAsignedFirst('outline-info');
+      setNDAsignedSecond('info');
+      setNDAsigned('No');
+    } else {
+      setNDAsignedFirst('outline-info');
+      setNDAsignedSecond('outline-info');
+    }
+
+    if (isGDPRcompliance === 'Yes') {
+      setGDPRcomplianceFirst('info');
+      setGDPRcomplianceSecond('outline-info');
+      setGDPRcompliance('Yes');
+    } else if (isGDPRcompliance === 'No') {
+      setGDPRcomplianceFirst('outline-info');
+      setGDPRcomplianceSecond('info');
+      setGDPRcompliance('No');
+    } else {
+      setGDPRcomplianceFirst('outline-info');
+      setGDPRcomplianceSecond('outline-info');
+    }
+
+    if (isCyberSecConducted === 'Yes') {
+      setCyberSecConductedFirst('info');
+      setCyberSecConductedSecond('outline-info');
+      setCyberSecConducted('Yes');
+    } else if (isCyberSecConducted === 'No') {
+      setCyberSecConductedFirst('outline-info');
+      setCyberSecConductedSecond('info');
+      setCyberSecConducted('No');
+    } else {
+      setCyberSecConductedFirst('outline-info');
+      setCyberSecConductedSecond('outline-info');
+    }
+
+    if (isIsolatedEnvReq === 'Yes') {
+      setIsolatedEnvReqFirst('info');
+      setIsolatedEnvReqSecond('outline-info');
+      setIsolatedEnvReq('Yes');
+      setShowIsolatedDetails(true);
+    } else if (isIsolatedEnvReq === 'No') {
+      setIsolatedEnvReqFirst('outline-info');
+      setIsolatedEnvReqSecond('info');
+      setIsolatedEnvReq('No');
+      setShowIsolatedDetails(false);
+    } else {
+      setIsolatedEnvReqFirst('outline-info');
+      setIsolatedEnvReqSecond('outline-info');
+      setShowIsolatedDetails(false);
+    }
+
+    if (isDisasterInsuCovered === 'Yes') {
+      setDisasterInsuCoveredFirst('info');
+      setDisasterInsuCoveredSecond('outline-info');
+      setDisasterInsuCovered('Yes');
+      setShowInsuranceDetails(true);
+    } else if (isDisasterInsuCovered === 'No') {
+      setDisasterInsuCoveredFirst('outline-info');
+      setDisasterInsuCoveredSecond('info');
+      setDisasterInsuCovered('No');
+      setShowInsuranceDetails(false);
+    } else {
+      setDisasterInsuCoveredFirst('outline-info');
+      setDisasterInsuCoveredSecond('outline-info');
+      setShowInsuranceDetails(false);
+    }
+
+    if (isDLPreq === 'Yes') {
+      setDLPreqFirst('info');
+      setDLPreqSecond('outline-info');
+      setDLPreq('Yes');
+    } else if (isDLPreq === 'No') {
+      setDLPreqFirst('outline-info');
+      setDLPreqSecond('info');
+      setDLPreq('No');
+    } else {
+      setDLPreqFirst('outline-info');
+      setDLPreqSecond('outline-info');
+    }
+
+    if (isClientEmailProvided === 'Yes') {
+      setClientEmailProvidedFirst('info');
+      setClientEmailProvidedSecond('outline-info');
+      setClientEmailProvided('Yes');
+    } else if (isClientEmailProvided === 'No') {
+      setClientEmailProvidedFirst('outline-info');
+      setClientEmailProvidedSecond('info');
+      setClientEmailProvided('No');
+    } else {
+      setClientEmailProvidedFirst('outline-info');
+      setClientEmailProvidedSecond('outline-info');
+    }
+
+    if (workStationSelected === 'Laptop') {
+      setWorkStationFirstBtn('info');
+      setWorkStationSecondBtn('outline-info');
+      setWorkStationThirdBtn('outline-info');
+      setWorkStationValue('Laptop');
+    } else if (workStationSelected === 'VM') {
+      setWorkStationFirstBtn('outline-info');
+      setWorkStationSecondBtn('info');
+      setWorkStationThirdBtn('outline-info');
+      setWorkStationValue('VM');
+    } else if (workStationSelected === 'Cloud') {
+      setWorkStationFirstBtn('outline-info');
+      setWorkStationSecondBtn('outline-info');
+      setWorkStationThirdBtn('info');
+      setWorkStationValue('Cloud');
+    } else {
+      setWorkStationFirstBtn('outline-info');
+      setWorkStationSecondBtn('outline-info');
+      setWorkStationThirdBtn('outline-info');
+    }
+
+    if (devTypeSelected === 'Local') {
+      setDevTypeFirstBtn('info');
+      setDevTypeSecondBtn('outline-info');
+      setDevTypeThirdBtn('outline-info');
+      setDevTypeValue('Local');
+    } else if (devTypeSelected === 'Cloud Plateform') {
+      setDevTypeFirstBtn('outline-info');
+      setDevTypeSecondBtn('info');
+      setDevTypeThirdBtn('outline-info');
+      setDevTypeValue('Cloud Platform');
+    } else if (devTypeSelected === 'Client Plateform') {
+      setDevTypeFirstBtn('outline-info');
+      setDevTypeSecondBtn('outline-info');
+      setDevTypeThirdBtn('info');
+      setDevTypeValue('Client Platform');
+    } else {
+      setDevTypeFirstBtn('outline-info');
+      setDevTypeSecondBtn('outline-info');
+      setDevTypeThirdBtn('outline-info');
+    }
+    return null;
+  }
+
   useEffect(() => {
     axios
       .get(getApiUrl(`clientInfo/${id}`))
@@ -103,145 +245,7 @@ function EditViewForm() {
         setDevTypeSelected(res.data.devTypeSelected);
 
         setStatus('Submitted');
-
-        if (isNDAsigned === 'Yes') {
-          setNDAsignedFirst('info');
-          setNDAsignedSecond('outline-info');
-          setNDAsigned('Yes');
-        } else if (isNDAsigned === 'No') {
-          setNDAsignedFirst('outline-info');
-          setNDAsignedSecond('info');
-          setNDAsigned('No');
-        } else {
-          setNDAsignedFirst('outline-info');
-          setNDAsignedSecond('outline-info');
-        }
-
-        if (isGDPRcompliance === 'Yes') {
-          setGDPRcomplianceFirst('info');
-          setGDPRcomplianceSecond('outline-info');
-          setGDPRcompliance('Yes');
-        } else if (isGDPRcompliance === 'No') {
-          setGDPRcomplianceFirst('outline-info');
-          setGDPRcomplianceSecond('info');
-          setGDPRcompliance('No');
-        } else {
-          setGDPRcomplianceFirst('outline-info');
-          setGDPRcomplianceSecond('outline-info');
-        }
-
-        if (isCyberSecConducted === 'Yes') {
-          setCyberSecConductedFirst('info');
-          setCyberSecConductedSecond('outline-info');
-          setCyberSecConducted('Yes');
-        } else if (isCyberSecConducted === 'No') {
-          setCyberSecConductedFirst('outline-info');
-          setCyberSecConductedSecond('info');
-          setCyberSecConducted('No');
-        } else {
-          setCyberSecConductedFirst('outline-info');
-          setCyberSecConductedSecond('outline-info');
-        }
-
-        if (isIsolatedEnvReq === 'Yes') {
-          setIsolatedEnvReqFirst('info');
-          setIsolatedEnvReqSecond('outline-info');
-          setIsolatedEnvReq('Yes');
-          setShowIsolatedDetails(true);
-        } else if (isIsolatedEnvReq === 'No') {
-          setIsolatedEnvReqFirst('outline-info');
-          setIsolatedEnvReqSecond('info');
-          setIsolatedEnvReq('No');
-          setShowIsolatedDetails(false);
-        } else {
-          setIsolatedEnvReqFirst('outline-info');
-          setIsolatedEnvReqSecond('outline-info');
-          setShowIsolatedDetails(false);
-        }
-
-        if (isDisasterInsuCovered === 'Yes') {
-          setDisasterInsuCoveredFirst('info');
-          setDisasterInsuCoveredSecond('outline-info');
-          setDisasterInsuCovered('Yes');
-          setShowInsuranceDetails(true);
-        } else if (isDisasterInsuCovered === 'No') {
-          setDisasterInsuCoveredFirst('outline-info');
-          setDisasterInsuCoveredSecond('info');
-          setDisasterInsuCovered('No');
-          setShowInsuranceDetails(false);
-        } else {
-          setDisasterInsuCoveredFirst('outline-info');
-          setDisasterInsuCoveredSecond('outline-info');
-          setShowInsuranceDetails(false);
-        }
-
-        if (isDLPreq === 'Yes') {
-          setDLPreqFirst('info');
-          setDLPreqSecond('outline-info');
-          setDLPreq('Yes');
-        } else if (isDLPreq === 'No') {
-          setDLPreqFirst('outline-info');
-          setDLPreqSecond('info');
-          setDLPreq('No');
-        } else {
-          setDLPreqFirst('outline-info');
-          setDLPreqSecond('outline-info');
-        }
-
-        if (isClientEmailProvided === 'Yes') {
-          setClientEmailProvidedFirst('info');
-          setClientEmailProvidedSecond('outline-info');
-          setClientEmailProvided('Yes');
-        } else if (isClientEmailProvided === 'No') {
-          setClientEmailProvidedFirst('outline-info');
-          setClientEmailProvidedSecond('info');
-          setClientEmailProvided('No');
-        } else {
-          setClientEmailProvidedFirst('outline-info');
-          setClientEmailProvidedSecond('outline-info');
-        }
-
-        if (workStationSelected === 'Laptop') {
-          setWorkStationFirstBtn('info');
-          setWorkStationSecondBtn('outline-info');
-          setWorkStationThirdBtn('outline-info');
-          setWorkStationValue('Laptop');
-        } else if (workStationSelected === 'VM') {
-          setWorkStationFirstBtn('outline-info');
-          setWorkStationSecondBtn('info');
-          setWorkStationThirdBtn('outline-info');
-          setWorkStationValue('VM');
-        } else if (workStationSelected === 'Cloud') {
-          setWorkStationFirstBtn('outline-info');
-          setWorkStationSecondBtn('outline-info');
-          setWorkStationThirdBtn('info');
-          setWorkStationValue('Cloud');
-        } else {
-          setWorkStationFirstBtn('outline-info');
-          setWorkStationSecondBtn('outline-info');
-          setWorkStationThirdBtn('outline-info');
-        }
-
-        if (devTypeSelected === 'Local') {
-          setDevTypeFirstBtn('info');
-          setDevTypeSecondBtn('outline-info');
-          setDevTypeThirdBtn('outline-info');
-          setDevTypeValue('Local');
-        } else if (devTypeSelected === 'Cloud Plateform') {
-          setDevTypeFirstBtn('outline-info');
-          setDevTypeSecondBtn('info');
-          setDevTypeThirdBtn('outline-info');
-          setDevTypeValue('Cloud Platform');
-        } else if (devTypeSelected === 'Client Plateform') {
-          setDevTypeFirstBtn('outline-info');
-          setDevTypeSecondBtn('outline-info');
-          setDevTypeThirdBtn('info');
-          setDevTypeValue('Client Platform');
-        } else {
-          setDevTypeFirstBtn('outline-info');
-          setDevTypeSecondBtn('outline-info');
-          setDevTypeThirdBtn('outline-info');
-        }
+        formData();
       })
 
       .catch((err) => {
