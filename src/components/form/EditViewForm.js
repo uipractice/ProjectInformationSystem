@@ -78,7 +78,7 @@ function EditViewForm() {
   const [devTypeSecondBtn, setDevTypeSecondBtn] = useState('');
   const [devTypeThirdBtn, setDevTypeThirdBtn] = useState('');
 
-  const formData = () => {
+  const setIsNDAsignedMethod = () => {
     if (isNDAsigned === 'Yes') {
       setNDAsignedFirst('info');
       setNDAsignedSecond('outline-info');
@@ -91,7 +91,8 @@ function EditViewForm() {
       setNDAsignedFirst('outline-info');
       setNDAsignedSecond('outline-info');
     }
-
+  }
+  const isGDPRComplainceMethod = () => {
     if (isGDPRcompliance === 'Yes') {
       setGDPRcomplianceFirst('info');
       setGDPRcomplianceSecond('outline-info');
@@ -104,64 +105,77 @@ function EditViewForm() {
       setGDPRcomplianceFirst('outline-info');
       setGDPRcomplianceSecond('outline-info');
     }
+  }
+const isCyberSecConductedMethod = () => {
+  if (isCyberSecConducted === 'Yes') {
+    setCyberSecConductedFirst('info');
+    setCyberSecConductedSecond('outline-info');
+    setCyberSecConducted('Yes');
+  } else if (isCyberSecConducted === 'No') {
+    setCyberSecConductedFirst('outline-info');
+    setCyberSecConductedSecond('info');
+    setCyberSecConducted('No');
+  } else {
+    setCyberSecConductedFirst('outline-info');
+    setCyberSecConductedSecond('outline-info');
+  }
+}
+const isIsolatedEnvMethod = () => {
+  if (isIsolatedEnvReq === 'Yes') {
+    setIsolatedEnvReqFirst('info');
+    setIsolatedEnvReqSecond('outline-info');
+    setIsolatedEnvReq('Yes');
+    setShowIsolatedDetails(true);
+  } else if (isIsolatedEnvReq === 'No') {
+    setIsolatedEnvReqFirst('outline-info');
+    setIsolatedEnvReqSecond('info');
+    setIsolatedEnvReq('No');
+    setShowIsolatedDetails(false);
+  } else {
+    setIsolatedEnvReqFirst('outline-info');
+    setIsolatedEnvReqSecond('outline-info');
+    setShowIsolatedDetails(false);
+  }
+}
+const isDisasterInsuCoveredMethod = () => {
+  if (isDisasterInsuCovered === 'Yes') {
+    setDisasterInsuCoveredFirst('info');
+    setDisasterInsuCoveredSecond('outline-info');
+    setDisasterInsuCovered('Yes');
+    setShowInsuranceDetails(true);
+  } else if (isDisasterInsuCovered === 'No') {
+    setDisasterInsuCoveredFirst('outline-info');
+    setDisasterInsuCoveredSecond('info');
+    setDisasterInsuCovered('No');
+    setShowInsuranceDetails(false);
+  } else {
+    setDisasterInsuCoveredFirst('outline-info');
+    setDisasterInsuCoveredSecond('outline-info');
+    setShowInsuranceDetails(false);
+  }
+}
+const dlPreqMethod = () => {
+  if (isDLPreq === 'Yes') {
+    setDLPreqFirst('info');
+    setDLPreqSecond('outline-info');
+    setDLPreq('Yes');
+  } else if (isDLPreq === 'No') {
+    setDLPreqFirst('outline-info');
+    setDLPreqSecond('info');
+    setDLPreq('No');
+  } else {
+    setDLPreqFirst('outline-info');
+    setDLPreqSecond('outline-info');
+  }
 
-    if (isCyberSecConducted === 'Yes') {
-      setCyberSecConductedFirst('info');
-      setCyberSecConductedSecond('outline-info');
-      setCyberSecConducted('Yes');
-    } else if (isCyberSecConducted === 'No') {
-      setCyberSecConductedFirst('outline-info');
-      setCyberSecConductedSecond('info');
-      setCyberSecConducted('No');
-    } else {
-      setCyberSecConductedFirst('outline-info');
-      setCyberSecConductedSecond('outline-info');
-    }
-
-    if (isIsolatedEnvReq === 'Yes') {
-      setIsolatedEnvReqFirst('info');
-      setIsolatedEnvReqSecond('outline-info');
-      setIsolatedEnvReq('Yes');
-      setShowIsolatedDetails(true);
-    } else if (isIsolatedEnvReq === 'No') {
-      setIsolatedEnvReqFirst('outline-info');
-      setIsolatedEnvReqSecond('info');
-      setIsolatedEnvReq('No');
-      setShowIsolatedDetails(false);
-    } else {
-      setIsolatedEnvReqFirst('outline-info');
-      setIsolatedEnvReqSecond('outline-info');
-      setShowIsolatedDetails(false);
-    }
-
-    if (isDisasterInsuCovered === 'Yes') {
-      setDisasterInsuCoveredFirst('info');
-      setDisasterInsuCoveredSecond('outline-info');
-      setDisasterInsuCovered('Yes');
-      setShowInsuranceDetails(true);
-    } else if (isDisasterInsuCovered === 'No') {
-      setDisasterInsuCoveredFirst('outline-info');
-      setDisasterInsuCoveredSecond('info');
-      setDisasterInsuCovered('No');
-      setShowInsuranceDetails(false);
-    } else {
-      setDisasterInsuCoveredFirst('outline-info');
-      setDisasterInsuCoveredSecond('outline-info');
-      setShowInsuranceDetails(false);
-    }
-
-    if (isDLPreq === 'Yes') {
-      setDLPreqFirst('info');
-      setDLPreqSecond('outline-info');
-      setDLPreq('Yes');
-    } else if (isDLPreq === 'No') {
-      setDLPreqFirst('outline-info');
-      setDLPreqSecond('info');
-      setDLPreq('No');
-    } else {
-      setDLPreqFirst('outline-info');
-      setDLPreqSecond('outline-info');
-    }
+}
+  const clientInfoFormData = () => {
+    setIsNDAsignedMethod();
+    isGDPRComplainceMethod();
+    isCyberSecConductedMethod();
+    isIsolatedEnvMethod();
+    isDisasterInsuCoveredMethod();
+    dlPreqMethod();
 
     if (isClientEmailProvided === 'Yes') {
       setClientEmailProvidedFirst('info');
@@ -245,7 +259,7 @@ function EditViewForm() {
         setDevTypeSelected(res.data.devTypeSelected);
 
         setStatus('Submitted');
-        formData();
+        clientInfoFormData();
       })
 
       .catch((err) => {
