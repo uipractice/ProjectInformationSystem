@@ -45,6 +45,10 @@ function CompleteTable({ data }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [noRecords, setNoRecords] = useState(false);
+
+  const [enteredValue, setEnteredValue] = useState('');
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -255,6 +259,7 @@ function CompleteTable({ data }) {
     getTableBodyProps,
     headerGroups,
     page,
+    gotoPage,
     nextPage,
     previousPage,
     canNextPage,
@@ -445,7 +450,7 @@ function CompleteTable({ data }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {!noRecords ? page.map((row) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
@@ -471,13 +476,13 @@ function CompleteTable({ data }) {
                   })}
                 </tr>
               );
-            })}
+            }): <tr><span style={{textAlign: 'center'}}>No Records</span></tr>}
           </tbody>
         </table>
         <div className='table-pagination'>
-          <span className='paginate'>
+         {!noRecords && <span className='paginate'>
             <b>{start}</b> to <b>{end}</b> of <b>{filteredData.length}</b>
-          </span>
+          </span>}
           {/* <label>Rows per page:</label>
         <select
           value={pageSize}
@@ -490,20 +495,38 @@ function CompleteTable({ data }) {
             </option>
           ))}
         </select> */}
-          <span>
+         {!noRecords && <span>
             Page{' '}
             <strong>
               {pageIndex + 1} of {pageOptions.length}
             </strong>{' '}
-          </span>
-          <div className='prev-next'>
+          </span>}
+          {!noRecords && <div className='prev-next'>
             <button onClick={() => previousPage()} disabled={!canPreviousPage}>
               <img src={leftIcon} alt='prev' />
             </button>{' '}
             <button onClick={() => nextPage()} disabled={!canNextPage}>
               <img src={rightIcon} alt='next' />
             </button>{' '}
-          </div>
+          </div>}
+          <input className='pagination-search'
+          type= 'number'
+           onChange={(e) => {
+            const value= e.target.value-1;
+            console.log(value, 'test');
+            if(pageOptions.length > value){
+              console.log(e.target.value.match(/^([1-9]\d*)?$/), 'if block');
+              gotoPage(value);
+              setEnteredValue(e.target.value.match(/^([1-9]\d*)?$/) ? e.target.value : '');
+              setNoRecords(false);
+            }else{
+              console.log(e.target.value.match(/^([1-9]\d*)?$/), 'else block');
+              setEnteredValue(e.target.value);
+              setNoRecords(true);
+            }
+          } }
+          value={enteredValue}
+          />
         </div>
       </div>
     </div>
