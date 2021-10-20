@@ -1,6 +1,6 @@
 .totalCount {
     color:#A37EF1;
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 32px;
@@ -16,7 +16,7 @@
 }
 .submitCount {
     color: #0066FF;
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 32px;
@@ -24,7 +24,7 @@
 
 }
 .activeCount{
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-weight: bold;
     font-style: normal;
     font-size: 32px;
@@ -33,7 +33,7 @@
 }
 .completCount {
     color: #13BC86;
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 32px;
@@ -43,7 +43,7 @@
 
 .pendingCount {
     color: #F16A21;
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 32px;

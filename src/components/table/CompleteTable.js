@@ -45,13 +45,17 @@ function CompleteTable({ data }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [noRecords, setNoRecords] = useState(false);
+
+  const [enteredValue, setEnteredValue] = useState('');
+
   const classes = useStyles();
 
   useEffect(() => {
-    setDefaultFilterData(data);
+    setDefaultFilterData();
   }, [data]);
 
-  const setDefaultFilterData = (data) => {
+  const setDefaultFilterData = () => {
     if (data.length) {
       let filterResult = data.filter((row) => row.status !== 'Deleted');
       setFilteredData(addSerialNo(filterResult));
@@ -69,7 +73,7 @@ function CompleteTable({ data }) {
     console.log('SelectedState value: ', selectedState);
     console.log('Data dot status value: ', data.status);
     console.log('Data value: ', data);
-    let filterResult = data;
+    let filterResult;
     if (selectedState === 'Active')
       filterResult = data.filter((row) => row.status !== 'Deleted');
     else if (selectedState === 'All Project') filterResult = data;
@@ -116,13 +120,6 @@ function CompleteTable({ data }) {
   };
   const columns = React.useMemo(
     () => [
-      // {
-      //   Header: 'SL.NO',
-      //   accessor: 'serial',
-      //   // filterable: false,
-      //   width: 102,
-      // },
-
       {
         Header: 'PROJECT NAME',
         accessor: 'projectNameByIT',
@@ -207,9 +204,6 @@ function CompleteTable({ data }) {
         Cell: ({ value }) => {
           return format(new Date(value), 'dd/MM/yyyy');
         },
-        // maxWidth: 200,
-        // minWidth: 80,
-        // width: 100,
       },
       {
         Header: 'UPDATED DATE',
@@ -265,12 +259,12 @@ function CompleteTable({ data }) {
     getTableBodyProps,
     headerGroups,
     page,
+    gotoPage,
     nextPage,
     previousPage,
     canNextPage,
     canPreviousPage,
     pageOptions,
-    setPageSize,
     prepareRow,
     state,
     setGlobalFilter,
@@ -302,7 +296,6 @@ function CompleteTable({ data }) {
     end = filteredData.length > pageSize ? pageSize : filteredData.length;
   } else {
     start = pageIndex * pageSize + 1;
-    // end = (pageIndex + 1) * pageSize;
     end =
       filteredData.length >= (pageIndex + 1) * pageSize
         ? (pageIndex + 1) * pageSize
@@ -457,7 +450,7 @@ function CompleteTable({ data }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {!noRecords ? page.map((row) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
@@ -483,13 +476,13 @@ function CompleteTable({ data }) {
                   })}
                 </tr>
               );
-            })}
+            }): <tr><span style={{textAlign: 'center'}}>No Records</span></tr>}
           </tbody>
         </table>
         <div className='table-pagination'>
-          <span className='paginate'>
+         {!noRecords && <span className='paginate'>
             <b>{start}</b> to <b>{end}</b> of <b>{filteredData.length}</b>
-          </span>
+          </span>}
           {/* <label>Rows per page:</label>
         <select
           value={pageSize}
@@ -502,20 +495,38 @@ function CompleteTable({ data }) {
             </option>
           ))}
         </select> */}
-          <span>
+         {!noRecords && <span>
             Page{' '}
             <strong>
               {pageIndex + 1} of {pageOptions.length}
             </strong>{' '}
-          </span>
-          <div className='prev-next'>
+          </span>}
+          {!noRecords && <div className='prev-next'>
             <button onClick={() => previousPage()} disabled={!canPreviousPage}>
               <img src={leftIcon} alt='prev' />
             </button>{' '}
             <button onClick={() => nextPage()} disabled={!canNextPage}>
               <img src={rightIcon} alt='next' />
             </button>{' '}
-          </div>
+          </div>}
+          <input className='pagination-search'
+          type= 'number'
+           onChange={(e) => {
+            const value= e.target.value-1;
+            console.log(value, 'test');
+            if(pageOptions.length > value){
+              console.log(e.target.value.match(/^([1-9]\d*)?$/), 'if block');
+              gotoPage(value);
+              setEnteredValue(e.target.value.match(/^([1-9]\d*)?$/) ? e.target.value : '');
+              setNoRecords(false);
+            }else{
+              console.log(e.target.value.match(/^([1-9]\d*)?$/), 'else block');
+              setEnteredValue(e.target.value);
+              setNoRecords(true);
+            }
+          } }
+          value={enteredValue}
+          />
         </div>
       </div>
     </div>
