@@ -84,7 +84,7 @@ function ViewForm() {
     showIsolatedDetails,
     isDLPreq,
     isClientEmailProvided,
-    reshareReason:'',
+    reshareReason: '',
   });
 
   function reshareReasonInput(evt) {
@@ -320,6 +320,14 @@ function ViewForm() {
     ) : null;
   }
 
+  const modalClose = () => {
+    setIsModalOpen(false);
+    setTotalState({
+      ...totalState,
+      reshareReason: '',
+    });
+  }
+
   return (
     <div>
       <NavBar />
@@ -399,13 +407,7 @@ function ViewForm() {
           <h2>Request to re-submit the form</h2>
           <button
             className='_modal-close'
-            onClick={() => {
-              setIsModalOpen(false);
-              setTotalState({
-                ...totalState,
-                reshareReason: '',
-              });
-            }}
+            onClick={() => modalClose()}
           >
             <svg className='_modal-close-icon' viewBox='0 0 40 40'>
               <path d='M 10,10 L 30,30 M 30,10 L 10,30' />
@@ -429,13 +431,7 @@ function ViewForm() {
               <div className='col-md-6 text-right padding0'>
                 <button
                   className='form-control btn btn-primary'
-                  onClick={() => {
-                    setIsModalOpen(false);
-                    setTotalState({
-                      ...totalState,
-                      reshareReason: '',
-                    });
-                  }}
+                  onClick={() => modalClose()}
                 >
                   Cancel
                 </button>
@@ -768,7 +764,7 @@ function ViewForm() {
                     </Button>
                   </span>
                 )}
-                
+
               </div>
             </Col>
           </Row>
