@@ -57,7 +57,7 @@ const NavBar = ({ validate, clientForm }) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const handleToggle = () => {
-    setOpen(() => !prevOpen);
+    setOpen((prevOpen) => !prevOpen);
   };
   const [feedbackText, setFeedbackText] = React.useState('');
 
