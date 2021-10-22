@@ -80,7 +80,7 @@ const NavBar = ({ validate, clientForm }) => {
       }
 
       axios
-        .post(getApiUrl(`clientInfo/feebackMail`), feedbackText)
+        .post(getApiUrl(`clientInfo/feebackMail`), feedback)
         .then((res) => {
           console.log(res.data);
           toast.success('A feedback mail has been triggered !', {
