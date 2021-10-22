@@ -56,14 +56,14 @@ function CompleteTable({ data }) {
   }, [data]);
 
   const setDefaultFilterData = (data) => {
-    if (data?.length) {
+    if (data.length) {
       let filterResult = data.filter((row) => row.status !== 'Deleted');
       setFilteredData(addSerialNo(filterResult));
     }
   };
 
   const addSerialNo = (dataArr = [], tableFilter = false) => {
-    return dataArr?.map((value, index) => ({
+    return dataArr.map((value, index) => ({
       ...(tableFilter ? value.original : value),
       serial: index + 1,
     }));
@@ -289,7 +289,7 @@ function CompleteTable({ data }) {
         sortBy: [
           {
             id: 'updatedAt',
-            desc:true
+            desc: true,
           },
         ],
       },
@@ -315,7 +315,7 @@ function CompleteTable({ data }) {
   }
 
   useEffect(() => {
-    if (filteredTableData?.length && globalFilter && searchValue)
+    if (filteredTableData.length && globalFilter && searchValue)
       setFilteredData(addSerialNo(filteredTableData, true));
     else if (searchValue === '')
       setFilteredData(
@@ -324,7 +324,7 @@ function CompleteTable({ data }) {
   }, [searchValue]);
 
   return (
-    <>
+    <div>
       <br></br>
       <div className='filter-row'>
         <h5>PROJECT DETAILS</h5>
@@ -541,7 +541,7 @@ function CompleteTable({ data }) {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -22,7 +22,7 @@ function EditViewForm() {
   // checkAuth();
 
   const history = useHistory();
-  const [fileData, setFileData] = useState('');
+  const [fileData, setFileData] = useState([]);
   const [status, setStatus] = useState('');
   const [projectNameByIT, setProjectNameByIT] = useState('');
   const [securityMeasure, setSecurityMeasure] = useState('');
@@ -407,12 +407,23 @@ function EditViewForm() {
   }
 
   function edit(postObj) {
-    return  axios.put(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
-    .then((res) => {
-      console.log(res);
-      return res
-    })
+    return axios
+      .put(getApiUrl(`clientInfo/editAndUpdate/${id}`), postObj)
+      .then((res) => {
+        console.log(res);
+        return res;
+      });
   }
+
+  const addAttachment = (fileInput) => {
+    const files = [...fileData];
+    for (const file of fileInput.target.files) {
+      files.push(file);
+    }
+    console.log('files', files);
+    setFileData(files);
+  };
+
   function handleSubmitForm() {
     const postObj = {
       projectNameByIT,
@@ -435,14 +446,14 @@ function EditViewForm() {
       workStationValue,
       devTypeValue,
     };
-     edit(postObj)
+    edit(postObj)
       .then((res) => {
         toast.success('Form sumbitted successfully !', {
           autoClose: 1900,
         });
         setTimeout(() => {
-            history.push('/admin');
-          }, 2000);
+          history.push('/admin');
+        }, 2000);
       })
       .catch((err) => {
         toast.error('Failed to save the data !', {
@@ -456,7 +467,7 @@ function EditViewForm() {
       history.push('/admin');
     }, 2000);
 
-    if (fileData?.length) {
+    if (fileData.length) {
       const formData = new FormData();
       for (let file of fileData) {
         formData.append('fileName', file);
@@ -484,11 +495,11 @@ function EditViewForm() {
       GDPRcompliance &&
       ClientEmailProvided &&
       workStationValue &&
-      DLPreq&&
+      DLPreq &&
       devTypeValue &&
-      status&&
-      CyberSecConducted&&
-      IsolatedEnvReq&&
+      status &&
+      CyberSecConducted &&
+      IsolatedEnvReq &&
       ((showInsuranceDetails === true && disasterDetails) ||
         showInsuranceDetails === false) &&
       ((showIsolatedDetails === true && isolationDetails) ||
@@ -1011,9 +1022,7 @@ function EditViewForm() {
                         id='file'
                         accept='*.*'
                         multiple
-                        onChange={(e) => {
-                          setFileData(e.target.files);
-                        }}
+                        onChange={(e) =>  addAttachment(e)}
                         onClick={(e) => e.target.value = null}
                         style={{ display: 'none' }}
                       />
@@ -1022,29 +1031,27 @@ function EditViewForm() {
                         value='Choose File'
                         className='choose-btn'
                         onClick={(e) =>
-                          document.getElementById('file')?.click()
+                          document.getElementById('file').click()
                         }
                       />
-                      <Form.Label style={{ marginLeft: '10px' }}>
-                        *Select all files at a time.
-                      </Form.Label>
-                      <div>
-                        {fileData &&
-                          Object.keys(fileData)?.map((key) => (
-                            <div>
+                    
+                      <div
+                       className={`${fileData.length <= 0 && "no-selected-items"}
+                       ${fileData.length > 0 && "selected-items"}`}>
+                        {fileData.map((item, key) => (
                               <span
-                                key={fileData[key].name}
+                                key={key}
                                 className='file-close-icon'
                                 onClick={() => {
-                                  const fileState = { ...fileData };
-                                  delete fileState[key];
+                                  const fileState = [...fileData ];
+                                  // delete fileState[key];
+                                  fileState.splice(key, 1);
                                   setFileData(fileState);
                                 }}
                               >
                                 {fileData[key].name}
                                 &nbsp;&nbsp;
                               </span>
-                            </div>
                           ))}
                       </div>
                     </Form.Group>
