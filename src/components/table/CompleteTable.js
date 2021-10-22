@@ -488,7 +488,7 @@ function CompleteTable({ data }) {
                   })}
                 </tr>
               );
-            }): <tr><span style={{textAlign: 'center'}}>No Records</span></tr>}
+            }): <tr style={{textAlign: 'center'}}><span>No Records found</span></tr>}
           </tbody>
         </table>
         <div className='table-pagination'>
@@ -525,14 +525,12 @@ function CompleteTable({ data }) {
           type= 'number'
            onChange={(e) => {
             const value= e.target.value-1;
-            console.log(value, 'test');
+            const enteredValue = e.target.value.match(/^([1-9]\d*)?$/)['input'] ? e.target.value : ''; 
             if(pageOptions.length > value){
-              console.log(e.target.value.match(/^([1-9]\d*)?$/), 'if block');
               gotoPage(value);
-              setEnteredValue(e.target.value.match(/^([1-9]\d*)?$/) ? e.target.value : '');
+              setEnteredValue(enteredValue);
               setNoRecords(false);
             }else{
-              console.log(e.target.value.match(/^([1-9]\d*)?$/), 'else block');
               setEnteredValue(e.target.value);
               setNoRecords(true);
             }
