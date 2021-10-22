@@ -10,17 +10,12 @@ import Footer from '../admin/Footer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../admin/NavBar';
-
-import download from 'js-file-download';
 import { getApiUrl } from '../utils/helper';
 
 toast.configure();
 
 function EditViewForm() {
   const { id } = useParams();
-
-  // checkAuth();
-
   const history = useHistory();
   const [fileData, setFileData] = useState([]);
   const [status, setStatus] = useState('');
@@ -33,7 +28,7 @@ function EditViewForm() {
   const [isolationDetails, setIsolationDetails] = useState('');
 
   const [isNDAsigned, setIsNDAsigned] = useState('');
-  const [NDAsigned, setNDAsigned] = useState(''); //REPLACE ORIGINAL VALUE WTTH THIS VALUE FROM BACKEND. CREATE EDIT API.
+  const [NDAsigned, setNDAsigned] = useState('');
   const [NDAsignedFirst, setNDAsignedFirst] = useState('outline-info');
   const [NDAsignedSecond, setNDAsignedSecond] = useState('outline-info');
 
@@ -83,16 +78,166 @@ function EditViewForm() {
   const [devTypeSecondBtn, setDevTypeSecondBtn] = useState('');
   const [devTypeThirdBtn, setDevTypeThirdBtn] = useState('');
 
-  // const [deleteReason, setDeleteReason] = useState("");
-  // const [reshareReason, setReshareReason] = useState("");
-  // const [restoreReason, setRestoreReason] = useState("");
+  const setIsNDAsignedMethod = () => {
+    if (isNDAsigned === 'Yes') {
+      setNDAsignedFirst('info');
+      setNDAsignedSecond('outline-info');
+      setNDAsigned('Yes');
+    } else if (isNDAsigned === 'No') {
+      setNDAsignedFirst('outline-info');
+      setNDAsignedSecond('info');
+      setNDAsigned('No');
+    } else {
+      setNDAsignedFirst('outline-info');
+      setNDAsignedSecond('outline-info');
+    }
+  }
+  const isGDPRComplainceMethod = () => {
+    if (isGDPRcompliance === 'Yes') {
+      setGDPRcomplianceFirst('info');
+      setGDPRcomplianceSecond('outline-info');
+      setGDPRcompliance('Yes');
+    } else if (isGDPRcompliance === 'No') {
+      setGDPRcomplianceFirst('outline-info');
+      setGDPRcomplianceSecond('info');
+      setGDPRcompliance('No');
+    } else {
+      setGDPRcomplianceFirst('outline-info');
+      setGDPRcomplianceSecond('outline-info');
+    }
+  }
+const isCyberSecConductedMethod = () => {
+  if (isCyberSecConducted === 'Yes') {
+    setCyberSecConductedFirst('info');
+    setCyberSecConductedSecond('outline-info');
+    setCyberSecConducted('Yes');
+  } else if (isCyberSecConducted === 'No') {
+    setCyberSecConductedFirst('outline-info');
+    setCyberSecConductedSecond('info');
+    setCyberSecConducted('No');
+  } else {
+    setCyberSecConductedFirst('outline-info');
+    setCyberSecConductedSecond('outline-info');
+  }
+}
+const isIsolatedEnvMethod = () => {
+  if (isIsolatedEnvReq === 'Yes') {
+    setIsolatedEnvReqFirst('info');
+    setIsolatedEnvReqSecond('outline-info');
+    setIsolatedEnvReq('Yes');
+    setShowIsolatedDetails(true);
+  } else if (isIsolatedEnvReq === 'No') {
+    setIsolatedEnvReqFirst('outline-info');
+    setIsolatedEnvReqSecond('info');
+    setIsolatedEnvReq('No');
+    setShowIsolatedDetails(false);
+  } else {
+    setIsolatedEnvReqFirst('outline-info');
+    setIsolatedEnvReqSecond('outline-info');
+    setShowIsolatedDetails(false);
+  }
+}
+const isDisasterInsuCoveredMethod = () => {
+  if (isDisasterInsuCovered === 'Yes') {
+    setDisasterInsuCoveredFirst('info');
+    setDisasterInsuCoveredSecond('outline-info');
+    setDisasterInsuCovered('Yes');
+    setShowInsuranceDetails(true);
+  } else if (isDisasterInsuCovered === 'No') {
+    setDisasterInsuCoveredFirst('outline-info');
+    setDisasterInsuCoveredSecond('info');
+    setDisasterInsuCovered('No');
+    setShowInsuranceDetails(false);
+  } else {
+    setDisasterInsuCoveredFirst('outline-info');
+    setDisasterInsuCoveredSecond('outline-info');
+    setShowInsuranceDetails(false);
+  }
+}
+const dlPreqMethod = () => {
+  if (isDLPreq === 'Yes') {
+    setDLPreqFirst('info');
+    setDLPreqSecond('outline-info');
+    setDLPreq('Yes');
+  } else if (isDLPreq === 'No') {
+    setDLPreqFirst('outline-info');
+    setDLPreqSecond('info');
+    setDLPreq('No');
+  } else {
+    setDLPreqFirst('outline-info');
+    setDLPreqSecond('outline-info');
+  }
+
+}
+  const clientInfoFormData = () => {
+    setIsNDAsignedMethod();
+    isGDPRComplainceMethod();
+    isCyberSecConductedMethod();
+    isIsolatedEnvMethod();
+    isDisasterInsuCoveredMethod();
+    dlPreqMethod();
+
+    if (isClientEmailProvided === 'Yes') {
+      setClientEmailProvidedFirst('info');
+      setClientEmailProvidedSecond('outline-info');
+      setClientEmailProvided('Yes');
+    } else if (isClientEmailProvided === 'No') {
+      setClientEmailProvidedFirst('outline-info');
+      setClientEmailProvidedSecond('info');
+      setClientEmailProvided('No');
+    } else {
+      setClientEmailProvidedFirst('outline-info');
+      setClientEmailProvidedSecond('outline-info');
+    }
+
+    if (workStationSelected === 'Laptop') {
+      setWorkStationFirstBtn('info');
+      setWorkStationSecondBtn('outline-info');
+      setWorkStationThirdBtn('outline-info');
+      setWorkStationValue('Laptop');
+    } else if (workStationSelected === 'VM') {
+      setWorkStationFirstBtn('outline-info');
+      setWorkStationSecondBtn('info');
+      setWorkStationThirdBtn('outline-info');
+      setWorkStationValue('VM');
+    } else if (workStationSelected === 'Cloud') {
+      setWorkStationFirstBtn('outline-info');
+      setWorkStationSecondBtn('outline-info');
+      setWorkStationThirdBtn('info');
+      setWorkStationValue('Cloud');
+    } else {
+      setWorkStationFirstBtn('outline-info');
+      setWorkStationSecondBtn('outline-info');
+      setWorkStationThirdBtn('outline-info');
+    }
+
+    if (devTypeSelected === 'Local') {
+      setDevTypeFirstBtn('info');
+      setDevTypeSecondBtn('outline-info');
+      setDevTypeThirdBtn('outline-info');
+      setDevTypeValue('Local');
+    } else if (devTypeSelected === 'Cloud Plateform') {
+      setDevTypeFirstBtn('outline-info');
+      setDevTypeSecondBtn('info');
+      setDevTypeThirdBtn('outline-info');
+      setDevTypeValue('Cloud Platform');
+    } else if (devTypeSelected === 'Client Plateform') {
+      setDevTypeFirstBtn('outline-info');
+      setDevTypeSecondBtn('outline-info');
+      setDevTypeThirdBtn('info');
+      setDevTypeValue('Client Platform');
+    } else {
+      setDevTypeFirstBtn('outline-info');
+      setDevTypeSecondBtn('outline-info');
+      setDevTypeThirdBtn('outline-info');
+    }
+    return null;
+  }
 
   useEffect(() => {
     axios
       .get(getApiUrl(`clientInfo/${id}`))
       .then((res) => {
-        // console.log("Entire get API : ", res.data);
-
         setProjectNameByIT(res.data.projectNameByIT);
         setSecurityMeasure(res.data.securityMeasure);
         setInformIT(res.data.informIT);
@@ -114,145 +259,7 @@ function EditViewForm() {
         setDevTypeSelected(res.data.devTypeSelected);
 
         setStatus('Submitted');
-
-        if (isNDAsigned === 'Yes') {
-          setNDAsignedFirst('info');
-          setNDAsignedSecond('outline-info');
-          setNDAsigned('Yes');
-        } else if (isNDAsigned === 'No') {
-          setNDAsignedFirst('outline-info');
-          setNDAsignedSecond('info');
-          setNDAsigned('No');
-        } else {
-          setNDAsignedFirst('outline-info');
-          setNDAsignedSecond('outline-info');
-        }
-
-        if (isGDPRcompliance === 'Yes') {
-          setGDPRcomplianceFirst('info');
-          setGDPRcomplianceSecond('outline-info');
-          setGDPRcompliance('Yes');
-        } else if (isGDPRcompliance === 'No') {
-          setGDPRcomplianceFirst('outline-info');
-          setGDPRcomplianceSecond('info');
-          setGDPRcompliance('No');
-        } else {
-          setGDPRcomplianceFirst('outline-info');
-          setGDPRcomplianceSecond('outline-info');
-        }
-
-        if (isCyberSecConducted === 'Yes') {
-          setCyberSecConductedFirst('info');
-          setCyberSecConductedSecond('outline-info');
-          setCyberSecConducted('Yes');
-        } else if (isCyberSecConducted === 'No') {
-          setCyberSecConductedFirst('outline-info');
-          setCyberSecConductedSecond('info');
-          setCyberSecConducted('No');
-        } else {
-          setCyberSecConductedFirst('outline-info');
-          setCyberSecConductedSecond('outline-info');
-        }
-
-        if (isIsolatedEnvReq === 'Yes') {
-          setIsolatedEnvReqFirst('info');
-          setIsolatedEnvReqSecond('outline-info');
-          setIsolatedEnvReq('Yes');
-          setShowIsolatedDetails(true);
-        } else if (isIsolatedEnvReq === 'No') {
-          setIsolatedEnvReqFirst('outline-info');
-          setIsolatedEnvReqSecond('info');
-          setIsolatedEnvReq('No');
-          setShowIsolatedDetails(false);
-        } else {
-          setIsolatedEnvReqFirst('outline-info');
-          setIsolatedEnvReqSecond('outline-info');
-          setShowIsolatedDetails(false);
-        }
-
-        if (isDisasterInsuCovered === 'Yes') {
-          setDisasterInsuCoveredFirst('info');
-          setDisasterInsuCoveredSecond('outline-info');
-          setDisasterInsuCovered('Yes');
-          setShowInsuranceDetails(true);
-        } else if (isDisasterInsuCovered === 'No') {
-          setDisasterInsuCoveredFirst('outline-info');
-          setDisasterInsuCoveredSecond('info');
-          setDisasterInsuCovered('No');
-          setShowInsuranceDetails(false);
-        } else {
-          setDisasterInsuCoveredFirst('outline-info');
-          setDisasterInsuCoveredSecond('outline-info');
-          setShowInsuranceDetails(false);
-        }
-
-        if (isDLPreq === 'Yes') {
-          setDLPreqFirst('info');
-          setDLPreqSecond('outline-info');
-          setDLPreq('Yes');
-        } else if (isDLPreq === 'No') {
-          setDLPreqFirst('outline-info');
-          setDLPreqSecond('info');
-          setDLPreq('No');
-        } else {
-          setDLPreqFirst('outline-info');
-          setDLPreqSecond('outline-info');
-        }
-
-        if (isClientEmailProvided === 'Yes') {
-          setClientEmailProvidedFirst('info');
-          setClientEmailProvidedSecond('outline-info');
-          setClientEmailProvided('Yes');
-        } else if (isClientEmailProvided === 'No') {
-          setClientEmailProvidedFirst('outline-info');
-          setClientEmailProvidedSecond('info');
-          setClientEmailProvided('No');
-        } else {
-          setClientEmailProvidedFirst('outline-info');
-          setClientEmailProvidedSecond('outline-info');
-        }
-
-        if (workStationSelected === 'Laptop') {
-          setWorkStationFirstBtn('info');
-          setWorkStationSecondBtn('outline-info');
-          setWorkStationThirdBtn('outline-info');
-          setWorkStationValue('Laptop');
-        } else if (workStationSelected === 'VM') {
-          setWorkStationFirstBtn('outline-info');
-          setWorkStationSecondBtn('info');
-          setWorkStationThirdBtn('outline-info');
-          setWorkStationValue('VM');
-        } else if (workStationSelected === 'Cloud') {
-          setWorkStationFirstBtn('outline-info');
-          setWorkStationSecondBtn('outline-info');
-          setWorkStationThirdBtn('info');
-          setWorkStationValue('Cloud');
-        } else {
-          setWorkStationFirstBtn('outline-info');
-          setWorkStationSecondBtn('outline-info');
-          setWorkStationThirdBtn('outline-info');
-        }
-
-        if (devTypeSelected === 'Local') {
-          setDevTypeFirstBtn('info');
-          setDevTypeSecondBtn('outline-info');
-          setDevTypeThirdBtn('outline-info');
-          setDevTypeValue('Local');
-        } else if (devTypeSelected === 'Cloud Plateform') {
-          setDevTypeFirstBtn('outline-info');
-          setDevTypeSecondBtn('info');
-          setDevTypeThirdBtn('outline-info');
-          setDevTypeValue('Cloud Platform');
-        } else if (devTypeSelected === 'Client Plateform') {
-          setDevTypeFirstBtn('outline-info');
-          setDevTypeSecondBtn('outline-info');
-          setDevTypeThirdBtn('info');
-          setDevTypeValue('Client Platform');
-        } else {
-          setDevTypeFirstBtn('outline-info');
-          setDevTypeSecondBtn('outline-info');
-          setDevTypeThirdBtn('outline-info');
-        }
+        clientInfoFormData();
       })
 
       .catch((err) => {
@@ -460,9 +467,6 @@ function EditViewForm() {
           autoClose: 3000,
         });
       });
-    // toast.success('Form sumbitted successfully !', {
-    //   autoClose: 1900,
-    // });
     setTimeout(() => {
       history.push('/admin');
     }, 2000);
@@ -500,10 +504,10 @@ function EditViewForm() {
       status &&
       CyberSecConducted &&
       IsolatedEnvReq &&
-      ((showInsuranceDetails === true && disasterDetails) ||
-        showInsuranceDetails === false) &&
-      ((showIsolatedDetails === true && isolationDetails) ||
-        showIsolatedDetails === false)
+      ((showInsuranceDetails  && disasterDetails) ||
+        !showInsuranceDetails ) &&
+      ((showIsolatedDetails  && isolationDetails) ||
+        !showIsolatedDetails )
     ) {
       return (
         <Button
@@ -537,20 +541,6 @@ function EditViewForm() {
       );
     }
   }
-
-  // function download(url: "string", filename: "string") {
-  //   axios.get(url, {
-  //     responseType: 'blob',
-  //   }).then(res => {
-  //     download(res.data, filename);
-  //   });
-  // }
-
-  const downloadFile = (habbits) => {
-    axios.get(getApiUrl(`clientInfo/getfile`)).then((resp) => {
-      download(resp.data, habbits.pdf);
-    });
-  };
 
   return (
     <div>
@@ -1044,7 +1034,6 @@ function EditViewForm() {
                                 className='file-close-icon'
                                 onClick={() => {
                                   const fileState = [...fileData ];
-                                  // delete fileState[key];
                                   fileState.splice(key, 1);
                                   setFileData(fileState);
                                 }}

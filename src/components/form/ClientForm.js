@@ -99,7 +99,6 @@ function ClientForm() {
 
   function SubmitButton() {
     if (
-      // state.projectName &&
       prevProjectName &&
       state.securityMeasure &&
       state.informIT &&
@@ -150,12 +149,6 @@ function ClientForm() {
         </Button>
       );
     }
-  }
-
-  function handleClearFiles() {
-    setFileData('');
-    document.getElementById('emptyMe').value = null;
-    document.getElementById('emptyMe').value = '';
   }
 
   const addAttachment = (fileInput) => {
@@ -923,7 +916,6 @@ function ClientForm() {
                                 className='file-close-icon'
                                 onClick={() => {
                                   const fileState = [...fileData];
-                                  // delete fileState[key];
                                   fileState.splice(key, 1);
                                   setFileData(fileState);
                                 }}
