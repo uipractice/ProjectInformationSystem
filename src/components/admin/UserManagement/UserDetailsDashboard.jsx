@@ -1,5 +1,8 @@
 // common imports
 import React, { useState, useEffect } from 'react';
+import NavBar from '../NavBar';
+import Footer from '../Footer';
+import './UserDetails.css'
 const UserDetailsDashboard = () => {
     const sampleResponse = {
         "userDetails": {
@@ -28,7 +31,14 @@ const UserDetailsDashboard = () => {
  
   return (
     <div>
-        Test
+       <NavBar />
+       <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 userDetail'>
+           <h3>USER MANAGEMENT SYSTEM</h3>
+           <button
+            type='button'
+            className='btn work_btn work_btn_blue center modal-button'>Add User</button>
+       </div>
+       <Footer />
      </div>
   );
 };
