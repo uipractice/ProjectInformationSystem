@@ -56,8 +56,9 @@ const NavBar = ({ validate, clientForm }) => {
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const prevOpen = React.useRef(open);
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+    setOpen(!open);
   };
   const [feedbackText, setFeedbackText] = React.useState('');
 
@@ -75,11 +76,12 @@ const NavBar = ({ validate, clientForm }) => {
     setOpen(false);
     setFeedback(false);
     if (!closeClick) {
-      const feedback = {
-        feedbackText,
-      };
+      const feedbackDescription = {
+        feedbackText
+      }
+
       axios
-        .post(getApiUrl(`clientInfo/feebackMail`), feedback)
+        .post(getApiUrl(`clientInfo/feebackMail`), feedbackDescription)
         .then((res) => {
           console.log(res.data);
           toast.success('A feedback mail has been triggered !', {
@@ -93,7 +95,6 @@ const NavBar = ({ validate, clientForm }) => {
   const [feedback, setFeedback] = React.useState(false);
   const handleClickOpen = () => {
     setFeedback(!feedback);
-    // setFeedback("");
   };
   const prevOpenfeedback = React.useRef(feedback);
   React.useEffect(() => {
@@ -110,7 +111,6 @@ const NavBar = ({ validate, clientForm }) => {
     }
   }
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
@@ -128,7 +128,6 @@ const NavBar = ({ validate, clientForm }) => {
         <div className='row'>
           <a
             className='navbar-brand col-md-6 px-4'
-            // href='/#/admin'
           >
             <img src={Logo} alt='Evoke Technologies' />
           </a>

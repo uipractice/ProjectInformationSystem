@@ -39,7 +39,7 @@ function ClientForm() {
       });
   }, [id, prevProjectName, prevStatus, clientFormSubmitted]);
 
-  const [fileData, setFileData] = useState('');
+  const [fileData, setFileData] = useState([]);
 
   const [state, setState] = useState({
     projectName: '',
@@ -99,7 +99,6 @@ function ClientForm() {
 
   function SubmitButton() {
     if (
-      // state.projectName &&
       prevProjectName &&
       state.securityMeasure &&
       state.informIT &&
@@ -150,12 +149,6 @@ function ClientForm() {
         </Button>
       );
     }
-  }
-
-  function handleClearFiles() {
-    setFileData('');
-    document.getElementById('emptyMe').value = null;
-    document.getElementById('emptyMe').value = '';
   }
 
   const addAttachment = (fileInput) => {
@@ -212,7 +205,7 @@ function ClientForm() {
       window.close();
     }
 
-    if (fileData?.length) {
+    if (fileData.length) {
       const formData = new FormData();
       for (let file of fileData) {
         formData.append('fileName', file);
@@ -907,7 +900,7 @@ function ClientForm() {
                           value='Choose File'
                           className='choose-btn'
                           onClick={(e) =>
-                            document.getElementById('file')?.click()
+                            document.getElementById('file').click()
                           }
                         />
                         <div
@@ -917,13 +910,12 @@ function ClientForm() {
                        ${fileData.length > 0 && 'selected-items'}`}
                         >
                           {fileData &&
-                            Object.keys(fileData)?.map((key) => (
+                            fileData.map((item, key) => (
                               <span
-                                key={fileData[key].name}
+                                key={key}
                                 className='file-close-icon'
                                 onClick={() => {
                                   const fileState = [...fileData];
-                                  // delete fileState[key];
                                   fileState.splice(key, 1);
                                   setFileData(fileState);
                                 }}
