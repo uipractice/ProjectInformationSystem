@@ -6,6 +6,7 @@ import Login from './components/login/Login';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import AdminDashboard from './components/admin/AdminDashboard';
 import InternalClient from './components/admin/InternalClient';
+import UserDetailsDashboard from './components/admin/UserManagement/UserDetailsDashboard';
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path='/client-form/:id'>
             <ClientForm />
+          </Route>
+          <Route path='/user-details'>
+            <UserDetailsDashboard />
           </Route>
         </Switch>
       </Router>

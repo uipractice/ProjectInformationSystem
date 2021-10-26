@@ -122,6 +122,10 @@ const NavBar = ({ validate, clientForm }) => {
     const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
     setFeedbackText(value);
   };
+  const handleUserDetails = () => {
+    return history.push('/user-details');
+  }
+
   return (
     <div>
       <div className='navbar navbar-dark sticky-top  p-0 shadow header_nav'>
@@ -181,6 +185,9 @@ const NavBar = ({ validate, clientForm }) => {
                             handleInputChange={(e) => handleInputChange(e)}
                             feedbackText={feedbackText}
                           />
+                          <MenuItem className='logout' onClick={handleUserDetails}>
+                            User Details
+                          </MenuItem>
                           <MenuItem className='logout' onClick={handleLogout}>
                             Logout
                           </MenuItem>
