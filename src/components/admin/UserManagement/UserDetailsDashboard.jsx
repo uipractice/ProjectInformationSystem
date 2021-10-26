@@ -19,7 +19,7 @@ const UserDetailsDashboard = () => {
 
     const getUserDetails = () => {
         // commentd for future use-once api is created will integrated here
-    //     return axios.post(getApiUrl(`userDetails`))
+    //     return axios.get(getApiUrl(`userDetails`))
     // .then((res) => {
     //      return setUserDetails(res)
     // })
