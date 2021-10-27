@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../NavBar';
 import Footer from '../Footer';
+import UserTable from '../UserManagement/UserTable';
 import './UserDetails.css'
 const UserDetailsDashboard = () => {
     const sampleResponse = {
         "userDetails": {
             "userName": 'Rajesh',
             "email": "spaleti@evoketechnologies.com",
-            "userRole": 'Admin',
+            "role": 'Admin',
             "team": "developer",
             "dateCreated": "26-10-2021",
             "contactNumber": "7995638533",
@@ -39,6 +40,7 @@ const UserDetailsDashboard = () => {
             className='btn work_btn work_btn_blue center modal-button'>Add User</button>
        </div>
        <Footer />
+       <UserTable />
      </div>
   );
 };
