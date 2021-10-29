@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function CompleteTable({ data }) {
   const [filteredData, setFilteredData] = useState([]);
+  const [searchValue, setSearchValue] = useState();
 
   const [rowOriginal, setRowOriginal] = useState({});
 
@@ -44,6 +45,24 @@ function CompleteTable({ data }) {
   const [enteredValue, setEnteredValue] = useState('');
 
   const classes = useStyles();
+
+  useEffect(() => {
+    setDefaultFilterData();
+  }, [data]);
+
+  const setDefaultFilterData = () => {
+    if (data.length) {
+      let filterResult = data.filter((row) => row.status !== 'Deleted');
+      setFilteredData(addSerialNo(filterResult));
+    }
+  };
+
+  const addSerialNo = (dataArr = [], tableFilter = false) => {
+    return dataArr.map((value, index) => ({
+      ...(tableFilter ? value.original : value),
+      serial: index + 1,
+    }));
+  };
 
   function handleInputChange(evt) {
     const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
@@ -97,13 +116,13 @@ function CompleteTable({ data }) {
       },
       {
         Header: 'USER ID/EMAIL ADDRESS',
-        accessor: 'email',
+        accessor: 'emailId',
         width: 230,
         sticky: 'left',
         sortType: (a, b) => {
           return customSorting(
-            a.original.email,
-            b.original.email
+            a.original.emailId,
+            b.original.emailId
           );
         },
       },
@@ -125,35 +144,35 @@ function CompleteTable({ data }) {
           return customSorting(a.original.team, b.original.team);
         },
       },
+      // {
+      //   Header: 'DATE CREATED',
+      //   accessor: 'dateCreated',
+      //   width: 167,
+      //   sortType: (a, b) => {
+      //     return customSorting(a.original.dateCreated, b.original.dateCreated);
+      //   },
+      //   Cell: ({ value }) => {
+      //     return format(new Date(value), 'dd/MM/yyyy');
+      //   },
+      // },
+      // {
+      //   Header: 'UPDATED DATE',
+      //   accessor: 'updatedAt',
+      //   width: 187,
+      //   sortType: (a, b) => {
+      //     return customSorting(a.original.updatedAt, b.original.updatedAt);
+      //   },
+      //   Cell: ({ value }) => {
+      //     return format(new Date(value), 'dd/MM/yyyy');
+      //   },
+      // },
       {
-        Header: 'DATE CREATED',
-        accessor: 'dateCreated',
-        width: 167,
-        sortType: (a, b) => {
-          return customSorting(a.original.dateCreated, b.original.dateCreated);
-        },
-        Cell: ({ value }) => {
-          return format(new Date(value), 'dd/MM/yyyy');
-        },
-      },
-    //   {
-    //     Header: 'UPDATED DATE',
-    //     accessor: 'updatedAt',
-    //     width: 187,
-    //     sortType: (a, b) => {
-    //       return customSorting(a.original.updatedAt, b.original.updatedAt);
-    //     },
-    //     Cell: ({ value }) => {
-    //       return format(new Date(value), 'dd/MM/yyyy');
-    //     },
-    //   },
-    {
         Header: 'CONTACT NO',
         accessor: 'contactNumber',
         sticky: 'left',
         width: 200,
         // sortType: (a, b) => {
-        //   return customSorting(a.original.practice, b.original.practice);
+        //   return customSorting(a.original.contactNumber, b.original.contactNumber);
         // },
       },
       {
@@ -214,7 +233,7 @@ function CompleteTable({ data }) {
       columns,
       data: filteredData,
       initialState: {
-        pageSize: 5,
+        pageSize: 10,
         sortBy: [
           {
             id: 'updatedAt',
@@ -241,6 +260,15 @@ function CompleteTable({ data }) {
         ? (pageIndex + 1) * pageSize
         : filteredData.length;
   }
+
+  useEffect(() => {
+    if (filteredTableData.length && globalFilter && searchValue)
+      setFilteredData(addSerialNo(filteredTableData, true));
+    else if (searchValue === '')
+      setFilteredData(
+        addSerialNo(data.filter((item) => item.status !== 'Deleted'))
+      );
+  }, [searchValue]);
 
   return (
     <div>
