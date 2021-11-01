@@ -81,19 +81,17 @@ function CompleteTable({ data }) {
 
   const handleUpdateStatus = (e) => {
     e.preventDefault();
-    rowOriginal.status = 'Deleted';
     const id = rowOriginal._id;
     axios
-      .post(getApiUrl(`clientInfo/deleteStatus/${id}`), rowOriginal)
+      .delete(getApiUrl(`users/deleteUser/${id}`))
       .then((res) => {
-        toast.warn('Record has been marked DELETED !', {
+        toast.error('User has been marked DELETED !', {
           autoClose: 2900,
         });
         setIsModalOpen(false);
-        console.log(res.data);
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+         setTimeout(() => {
+          window.location.reload(false);
+         }, 3000);
       })
       .catch((err) => console.log(err.response));
   };
@@ -233,13 +231,13 @@ function CompleteTable({ data }) {
       columns,
       data: filteredData,
       initialState: {
-        pageSize: 10,
-        sortBy: [
-          {
-            id: 'updatedAt',
-            desc: true,
-          },
-        ],
+        pageSize: 5,
+        // sortBy: [
+        //   {
+        //     id: 'updatedAt',
+        //     desc: true,
+        //   },
+        // ],
       },
     },
     useGlobalFilter,
@@ -386,17 +384,7 @@ function CompleteTable({ data }) {
                   {row.cells.map((cell) => {
                     let style = {};
                     style = { textAlign: 'left' };
-                    if (cell.column.id === 'status') {
-                      if (cell.value === 'Pending') {
-                        style = { color: '#F16A21', textAlign: 'left' };
-                      } else if (cell.value === 'Submitted') {
-                        style = { color: '#0066FF', textAlign: 'left' };
-                      } else if (cell.value === 'Completed') {
-                        style = { color: '#13BC86', textAlign: 'left' };
-                      } else if (cell.value === 'Approved') {
-                        style = { color: 'green', textAlign: 'left' };
-                      }
-                    }
+                   
                     return (
                       <td {...cell.getCellProps({ style })}>
                         {cell.render('Cell')}
