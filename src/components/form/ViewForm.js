@@ -724,7 +724,7 @@ function ViewForm() {
                   <span>
                     <Form.Group style={{ marginTop: '120px' }}>
                       <Form.Label>
-                        The project details has not been Submitted by the{' '}
+                        The project details have not been submitted by the{' '}
                         <b> {projectManager} </b> yet. <br />
                         <br />
                         Would you like to send a gentle reminder?
