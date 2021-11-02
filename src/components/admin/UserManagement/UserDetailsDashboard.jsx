@@ -4,31 +4,23 @@ import NavBar from '../NavBar';
 import Footer from '../Footer';
 import UserTable from '../UserManagement/UserTable';
 import './UserDetails.css'
-const UserDetailsDashboard = () => {
-    const sampleResponse = {
-        "userDetails": {
-            "userName": 'Rajesh',
-            "email": "spaleti@evoketechnologies.com",
-            "role": 'Admin',
-            "team": "developer",
-            "dateCreated": "26-10-2021",
-            "contactNumber": "7995638533",
-            "status": "active"
-        }
-    };
-    const [userDetails, setUserDetails] = useState(sampleResponse);
-    useEffect(()=>{
-        getUserDetails();
-    }, []);
+import axios from 'axios';
+import { getApiUrl } from '../../utils/helper';
 
+const UserDetailsDashboard = () => {
+    const [userDetails, setUserDetails] = useState([]);
+ 
     const getUserDetails = () => {
-        // commentd for future use-once api is created will integrated here
-    //     return axios.get(getApiUrl(`userDetails`))
-    // .then((res) => {
-    //      return setUserDetails(res)
-    // })
-    // .catch((err) => err);
+      axios.get(getApiUrl(`users`))
+    .then((res) => {
+      setUserDetails(res)
+    })
+    .catch((err) => err);
    }
+
+   useEffect(()=>{
+    getUserDetails();
+}, []);
  
   return (
     <div>
@@ -40,7 +32,9 @@ const UserDetailsDashboard = () => {
             className='btn work_btn work_btn_blue center modal-button'>Add User</button>
        </div>
        <Footer />
-       <UserTable />
+       {userDetails && userDetails.data && userDetails.data.length > 0 &&  <UserTable 
+       data ={userDetails.data} />}
+      
      </div>
   );
 };
