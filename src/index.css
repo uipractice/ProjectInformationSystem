@@ -970,6 +970,9 @@ select.form-control:-internal-autofill-selected {
   padding: 140px;
   color:#626364
 }
+.toggle-btn{
+height: 60px;
+}
 @media (max-width: 448px) {
   .footer {
     height: 60px;
