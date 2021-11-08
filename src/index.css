@@ -639,6 +639,10 @@ select.form-control:-internal-autofill-selected {
   font-size: 14px;
   letter-spacing: 0.1px;
 }
+.project-details-form .reshare.active-reminder{
+  background:  #209ec5;
+  color:#ffffff;
+}
 .project-details-form.formView .approve,
 .project-details-form .submit-btn {
   background: #209ec5 !important;
@@ -961,6 +965,13 @@ select.form-control:-internal-autofill-selected {
 }
 .download-btn {
   cursor: pointer !important;
+}
+.thankyou-text{
+  padding: 140px;
+  color:#626364
+}
+.toggle-btn{
+height: 60px;
 }
 @media (max-width: 448px) {
   .footer {

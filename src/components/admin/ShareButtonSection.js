@@ -34,7 +34,7 @@ export class ShareModalContainer extends Component {
 
   render() {
     return (
-      <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3'>
+      <div className='d-flex toggle-btn justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3'>
         <ToggleButtonGroup
           exclusive
           aria-label='text alignment'

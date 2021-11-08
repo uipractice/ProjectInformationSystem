@@ -747,7 +747,7 @@ function ViewForm() {
                     </Button>
 
                     <Button
-                      className='reshare'
+                      className='reshare active-reminder'
                       ref={inputRef}
                       style={{
                         marginBottom: '90px',
