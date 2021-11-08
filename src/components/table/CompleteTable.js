@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function CompleteTable({ data }) {
   const [filteredData, setFilteredData] = useState([]);
-  const [searchValue, setSearchValue] = useState();
+  const [searchValue, setSearchValue] = useState('');
 
   const [rowOriginal, setRowOriginal] = useState({});
 
@@ -48,7 +48,8 @@ function CompleteTable({ data }) {
   const [noRecords, setNoRecords] = useState(false);
 
   const [enteredValue, setEnteredValue] = useState('');
-  const [filterValue,setFilterValue]=useState('Active')
+  const [filterValue,setFilterValue]=useState('Active');
+  const [emptySearch,setSearchText]=useState('')
 
   const classes = useStyles();
 
@@ -73,7 +74,7 @@ function CompleteTable({ data }) {
   function handleSelectedStatus(selectedState) {
     setFilterValue(selectedState);
     setEnteredValue('');
-    setSearchValue('');
+    
     let filterResult;
     if (selectedState === 'Active')
       filterResult = data.filter((row) => row.status !== 'Deleted');
@@ -114,7 +115,6 @@ function CompleteTable({ data }) {
           autoClose: 2900,
         });
         setIsModalOpen(false);
-        console.log(res.data);
         setTimeout(() => {
           window.location.reload();
         }, 3000);
@@ -328,6 +328,8 @@ function CompleteTable({ data }) {
       }
   }, [searchValue]);
 
+ 
+
   return (
     <div>
       <br></br>
@@ -339,6 +341,7 @@ function CompleteTable({ data }) {
               // defaultValue='Active'
               onChange={(e) => {
                 handleSelectedStatus(e.target.value);
+                setSearchText('empty')
               }}
               displayEmpty
               value={filterValue}
@@ -353,11 +356,14 @@ function CompleteTable({ data }) {
               <MenuItem value='All Project'>All Projects</MenuItem>
             </Select>
           </FormControl>
-          <GlobalFilter
+          <GlobalFilter 
             setFilter={(value) => {
               setGlobalFilter(value);
-              setSearchValue(value);
+                setSearchValue(searchValue);
+                setSearchText('')
             }}
+            //  searchValue={searchValue}
+            removeSearchValue={emptySearch}
           />
         </div>
       </div>
