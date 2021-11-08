@@ -317,7 +317,7 @@ function CompleteTable({ data }) {
       );
       setNoRecords(false);
     }
-      if(filteredTableData.length = 0 && searchValue) {
+      if(filteredTableData.length === 0 && searchValue) {
         setNoRecords(true);
       }else{
         setNoRecords(false);
