@@ -71,7 +71,9 @@ function CompleteTable({ data }) {
   };
 
   function handleSelectedStatus(selectedState) {
-    setFilterValue(selectedState)
+    setFilterValue(selectedState);
+    setEnteredValue('');
+    setSearchValue('');
     let filterResult;
     if (selectedState === 'Active')
       filterResult = data.filter((row) => row.status !== 'Deleted');
@@ -525,7 +527,7 @@ function CompleteTable({ data }) {
               <img src={rightIcon} alt='next' />
             </button>{' '}
           </div>}
-          <input className='pagination-search'
+          {!noRecords && <input className='pagination-search'
           type= 'number'
            onChange={(e) => {
             const value= e.target.value-1;
@@ -540,7 +542,7 @@ function CompleteTable({ data }) {
             }
           } }
           value={enteredValue}
-          />
+          />}
         </div>
       </div>
     </div>
