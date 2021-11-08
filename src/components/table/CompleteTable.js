@@ -315,6 +315,7 @@ function CompleteTable({ data }) {
       setFilteredData(
         addSerialNo(data.filter((item) => item.status !== 'Deleted'))
       );
+      handleSelectedStatus('Active');
       setNoRecords(false);
     }
       if(filteredTableData.length === 0 && searchValue) {
@@ -335,6 +336,7 @@ function CompleteTable({ data }) {
               defaultValue='Active'
               onChange={(e) => {
                 handleSelectedStatus(e.target.value);
+                setSearchValue('');
               }}
               displayEmpty
               className={classes.selectEmpty}
