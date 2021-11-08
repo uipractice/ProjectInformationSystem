@@ -308,16 +308,19 @@ function CompleteTable({ data }) {
   }
 
   useEffect(() => {
-    if (filteredTableData.length && globalFilter && searchValue)
+    if (filteredTableData.length && globalFilter && searchValue){
       setFilteredData(addSerialNo(filteredTableData, true));
-    else if (searchValue === '')
+      setNoRecords(false);
+    } else if (searchValue === ''){
       setFilteredData(
         addSerialNo(data.filter((item) => item.status !== 'Deleted'))
       );
+      setNoRecords(false);
+    }
       if(filteredTableData.length = 0 && searchValue) {
-        setNoRecords(false);
-      }else{
         setNoRecords(true);
+      }else{
+        setNoRecords(false);
       }
   }, [searchValue]);
 
