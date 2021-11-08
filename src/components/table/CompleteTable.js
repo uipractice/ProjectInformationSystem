@@ -48,6 +48,7 @@ function CompleteTable({ data }) {
   const [noRecords, setNoRecords] = useState(false);
 
   const [enteredValue, setEnteredValue] = useState('');
+  const [filterValue,setFilterValue]=useState('Active')
 
   const classes = useStyles();
 
@@ -70,9 +71,7 @@ function CompleteTable({ data }) {
   };
 
   function handleSelectedStatus(selectedState) {
-    console.log('SelectedState value: ', selectedState);
-    console.log('Data dot status value: ', data.status);
-    console.log('Data value: ', data);
+    setFilterValue(selectedState)
     let filterResult;
     if (selectedState === 'Active')
       filterResult = data.filter((row) => row.status !== 'Deleted');
@@ -311,11 +310,13 @@ function CompleteTable({ data }) {
     if (filteredTableData.length && globalFilter && searchValue){
       setFilteredData(addSerialNo(filteredTableData, true));
       setNoRecords(false);
+      setEnteredValue('')
     } else if (searchValue === ''){
       setFilteredData(
         addSerialNo(data.filter((item) => item.status !== 'Deleted'))
       );
-      handleSelectedStatus('Active');
+      handleSelectedStatus(filterValue);
+      setEnteredValue('')
       setNoRecords(false);
     }
       if(filteredTableData.length === 0 && searchValue) {
@@ -333,12 +334,12 @@ function CompleteTable({ data }) {
         <div>
           <FormControl className={classes.formControl}>
             <Select
-              defaultValue='Active'
+              // defaultValue='Active'
               onChange={(e) => {
                 handleSelectedStatus(e.target.value);
-                setSearchValue('');
               }}
               displayEmpty
+              value={filterValue}
               className={classes.selectEmpty}
               inputProps={{ 'aria-label': 'Without label' }}
             >
