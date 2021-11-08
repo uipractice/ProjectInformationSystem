@@ -80,6 +80,11 @@ function CompleteTable({ data }) {
     else filterResult = data.filter((row) => row.status === selectedState);
 
     setFilteredData(addSerialNo(filterResult));
+    if(filterResult.length > 0){
+      setNoRecords(false);
+    }else{
+      setNoRecords(true);
+    }
   }
 
   function handleInputChange(evt) {
@@ -309,6 +314,11 @@ function CompleteTable({ data }) {
       setFilteredData(
         addSerialNo(data.filter((item) => item.status !== 'Deleted'))
       );
+      if(filteredTableData.length = 0 && searchValue) {
+        setNoRecords(false);
+      }else{
+        setNoRecords(true);
+      }
   }, [searchValue]);
 
   return (
