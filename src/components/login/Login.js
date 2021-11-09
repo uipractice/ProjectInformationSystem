@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import "./Login.css";
 import "../../index.css";
 import AuthServices from "../../services/AuthServices";
+import { saveAuthToken } from "../utils/authToken";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,8 +41,7 @@ function Login() {
     AuthServices.login(user)
       .then((res) => {
         if (res.data.accessToken) {
-          const token = "123456abcdef";
-          sessionStorage.setItem("auth-token", token);
+          saveAuthToken(res.data.accessToken)
           history.push("/admin");
         } else {
           toast.error(res.data.message + ` ${"!!"}`, {

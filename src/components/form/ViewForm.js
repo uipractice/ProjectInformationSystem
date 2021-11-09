@@ -187,7 +187,7 @@ function ViewForm() {
       .post(getApiUrl(`clientInfo/mailReminder/${id}`), totalState)
       .then((res) => {
         console.log(res.data);
-        toast.success('A Reminder mail has been triggered !', {
+        toast.success('Reminder has been sent!', {
           autoClose: 1800,
         });
       })
@@ -747,7 +747,7 @@ function ViewForm() {
                     </Button>
 
                     <Button
-                      className='reshare'
+                      className='reshare active-reminder'
                       ref={inputRef}
                       style={{
                         marginBottom: '90px',

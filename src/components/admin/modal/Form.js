@@ -125,7 +125,7 @@ function Form({ closeModal }) {
         .then((res) => {
           if (res.data === 'success') {
             closeModal();
-            toast.success('Data Saved Successfully !', {
+            toast.success('Project form shared successfully !', {
               autoClose: 2000,
             });
             console.log(state);

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function CompleteTable({ data }) {
   const [filteredData, setFilteredData] = useState([]);
-  const [searchValue, setSearchValue] = useState();
+  const [searchValue, setSearchValue] = useState('');
 
   const [rowOriginal, setRowOriginal] = useState({});
 
@@ -48,12 +48,18 @@ function CompleteTable({ data }) {
   const [noRecords, setNoRecords] = useState(false);
 
   const [enteredValue, setEnteredValue] = useState('');
+  const [filterValue,setFilterValue]=useState('Active');
+  const [emptySearch,setSearchText]=useState('')
 
   const classes = useStyles();
 
   useEffect(() => {
-    setDefaultFilterData();
+    if(data.length>0){
+      setDefaultFilterData();
+    }
   }, [data]);
+
+
 
   const setDefaultFilterData = () => {
     if (data.length) {
@@ -70,16 +76,22 @@ function CompleteTable({ data }) {
   };
 
   function handleSelectedStatus(selectedState) {
-    console.log('SelectedState value: ', selectedState);
-    console.log('Data dot status value: ', data.status);
-    console.log('Data value: ', data);
+    setFilterValue(selectedState);
+    setEnteredValue('');
     let filterResult;
-    if (selectedState === 'Active')
+    if (selectedState === 'Active'){
       filterResult = data.filter((row) => row.status !== 'Deleted');
+    }
     else if (selectedState === 'All Project') filterResult = data;
     else filterResult = data.filter((row) => row.status === selectedState);
-
+    
     setFilteredData(addSerialNo(filterResult));
+
+    if(filterResult.length > 0){
+      setNoRecords(false);
+    }else{
+      setNoRecords(true);
+    }
   }
 
   function handleInputChange(evt) {
@@ -108,7 +120,6 @@ function CompleteTable({ data }) {
           autoClose: 2900,
         });
         setIsModalOpen(false);
-        console.log(res.data);
         setTimeout(() => {
           window.location.reload();
         }, 3000);
@@ -118,6 +129,7 @@ function CompleteTable({ data }) {
   const customSorting = (c1, c2) => {
     return c1.localeCompare(c2);
   };
+
   const columns = React.useMemo(
     () => [
       {
@@ -303,13 +315,23 @@ function CompleteTable({ data }) {
   }
 
   useEffect(() => {
-    if (filteredTableData.length && globalFilter && searchValue)
-      setFilteredData(addSerialNo(filteredTableData, true));
-    else if (searchValue === '')
-      setFilteredData(
-        addSerialNo(data.filter((item) => item.status !== 'Deleted'))
-      );
+      if(data.length>0){
+        if (filteredTableData.length && globalFilter && searchValue){
+          setFilteredData(addSerialNo(filteredTableData, true));
+          setNoRecords(false);
+          setEnteredValue('')
+        } else if(filteredTableData.length===0 && searchValue===''){
+          setNoRecords(true);
+        }
+        else if(filteredTableData.length===0 && searchValue!==''){
+          setNoRecords(true);
+        }else if(filteredTableData.length && searchValue===''){
+          handleSelectedStatus(filterValue);
+        }
+      }
   }, [searchValue]);
+
+ 
 
   return (
     <div>
@@ -319,11 +341,13 @@ function CompleteTable({ data }) {
         <div>
           <FormControl className={classes.formControl}>
             <Select
-              defaultValue='Active'
+              // defaultValue='Active'
               onChange={(e) => {
                 handleSelectedStatus(e.target.value);
+                setSearchText('empty')
               }}
-              displayEmpty
+              // displayEmpty
+              value={filterValue}
               className={classes.selectEmpty}
               inputProps={{ 'aria-label': 'Without label' }}
             >
@@ -335,11 +359,13 @@ function CompleteTable({ data }) {
               <MenuItem value='All Project'>All Projects</MenuItem>
             </Select>
           </FormControl>
-          <GlobalFilter
+          <GlobalFilter 
             setFilter={(value) => {
               setGlobalFilter(value);
-              setSearchValue(value);
+                setSearchValue(value);
+                setSearchText('')
             }}
+            removeSearchValue={emptySearch}
           />
         </div>
       </div>
@@ -476,7 +502,7 @@ function CompleteTable({ data }) {
                   })}
                 </tr>
               );
-            }): <tr style={{textAlign: 'center'}}><span>No Records found</span></tr>}
+            }): <tr style={{textAlign: 'center'}}><span>No data found</span></tr>}
           </tbody>
         </table>
         <div className='table-pagination'>
@@ -509,7 +535,7 @@ function CompleteTable({ data }) {
               <img src={rightIcon} alt='next' />
             </button>{' '}
           </div>}
-          <input className='pagination-search'
+          {!noRecords && <input className='pagination-search'
           type= 'number'
            onChange={(e) => {
             const value= e.target.value-1;
@@ -524,7 +550,7 @@ function CompleteTable({ data }) {
             }
           } }
           value={enteredValue}
-          />
+          />}
         </div>
       </div>
     </div>

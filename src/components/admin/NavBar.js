@@ -11,6 +11,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Logo from '../../assets/images/eoke_logo.svg';
+import { clearTokens } from '../utils/authToken';
 // components
 import FeedBackModal from '../utils/FeedBackModal';
 // helpers
@@ -27,8 +28,9 @@ toast.configure();
 
 const NavBar = ({ validate, clientForm }) => {
   function handleLogout() {
-    sessionStorage.removeItem('auth-token');
-    checkAuth();
+    clearTokens();
+    history.push('/');
+    // checkAuth();
   }
 
   const history = useHistory();
@@ -37,22 +39,7 @@ const NavBar = ({ validate, clientForm }) => {
    * Checking the authentication
    * @return {null}
    */
-  const checkAuth = () => {
-    if (!sessionStorage.getItem('auth-token')) {
-      history.push('/');
-    } else {
-      const authToken = '123456abcdef';
-      if (sessionStorage.getItem('auth-token') === authToken) {
-        return <Redirect to='/admin_dashboard' />;
-      } else {
-        history.push('/');
-      }
-    }
-  };
 
-  if (validate) {
-    checkAuth();
-  }
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -159,7 +146,7 @@ const NavBar = ({ validate, clientForm }) => {
                     }}
                   >
                     <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
+                      <ClickAwayListener onClickAway={(e) => handleClose(e, true)}>
                         <MenuList
                           autoFocusItem={open}
                           id='menu-list-grow'
