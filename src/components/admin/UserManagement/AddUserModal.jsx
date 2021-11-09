@@ -83,13 +83,11 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
           axios
         .post(getApiUrl(`users/addUser`), state)
         .then((res) => {
-          if (res.data === 'success') {
+          if (res && res.data.status === 'success') {
             // closeModal();
             toast.success('Data Saved Successfully !', {
               autoClose: 2000,
             });
-            console.log(state);
-
             setTimeout(() => {
               window.location.reload();
             }, 2000);
