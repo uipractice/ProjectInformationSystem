@@ -146,7 +146,7 @@ const NavBar = ({ validate, clientForm }) => {
                     }}
                   >
                     <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
+                      <ClickAwayListener onClickAway={(e) => handleClose(e, true)}>
                         <MenuList
                           autoFocusItem={open}
                           id='menu-list-grow'
