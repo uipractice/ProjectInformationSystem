@@ -54,8 +54,12 @@ function CompleteTable({ data }) {
   const classes = useStyles();
 
   useEffect(() => {
-    setDefaultFilterData();
+    if(data.length>0){
+      setDefaultFilterData();
+    }
   }, [data]);
+
+
 
   const setDefaultFilterData = () => {
     if (data.length) {
@@ -74,14 +78,15 @@ function CompleteTable({ data }) {
   function handleSelectedStatus(selectedState) {
     setFilterValue(selectedState);
     setEnteredValue('');
-    
     let filterResult;
-    if (selectedState === 'Active')
+    if (selectedState === 'Active'){
       filterResult = data.filter((row) => row.status !== 'Deleted');
+    }
     else if (selectedState === 'All Project') filterResult = data;
     else filterResult = data.filter((row) => row.status === selectedState);
-
+    
     setFilteredData(addSerialNo(filterResult));
+
     if(filterResult.length > 0){
       setNoRecords(false);
     }else{
@@ -124,6 +129,7 @@ function CompleteTable({ data }) {
   const customSorting = (c1, c2) => {
     return c1.localeCompare(c2);
   };
+
   const columns = React.useMemo(
     () => [
       {
@@ -309,22 +315,19 @@ function CompleteTable({ data }) {
   }
 
   useEffect(() => {
-    if (filteredTableData.length && globalFilter && searchValue){
-      setFilteredData(addSerialNo(filteredTableData, true));
-      setNoRecords(false);
-      setEnteredValue('')
-    } else if (searchValue === ''){
-      setFilteredData(
-        addSerialNo(data.filter((item) => item.status !== 'Deleted'))
-      );
-      handleSelectedStatus(filterValue);
-      setEnteredValue('')
-      setNoRecords(false);
-    }
-      if(filteredTableData.length === 0 && searchValue) {
-        setNoRecords(true);
-      }else{
-        setNoRecords(false);
+      if(data.length>0){
+        if (filteredTableData.length && globalFilter && searchValue){
+          setFilteredData(addSerialNo(filteredTableData, true));
+          setNoRecords(false);
+          setEnteredValue('')
+        } else if(filteredTableData.length===0 && searchValue===''){
+          setNoRecords(true);
+        }
+        else if(filteredTableData.length===0 && searchValue!==''){
+          setNoRecords(true);
+        }else if(filteredTableData.length && searchValue===''){
+          handleSelectedStatus(filterValue);
+        }
       }
   }, [searchValue]);
 
@@ -343,7 +346,7 @@ function CompleteTable({ data }) {
                 handleSelectedStatus(e.target.value);
                 setSearchText('empty')
               }}
-              displayEmpty
+              // displayEmpty
               value={filterValue}
               className={classes.selectEmpty}
               inputProps={{ 'aria-label': 'Without label' }}
@@ -359,10 +362,9 @@ function CompleteTable({ data }) {
           <GlobalFilter 
             setFilter={(value) => {
               setGlobalFilter(value);
-                setSearchValue(searchValue);
+                setSearchValue(value);
                 setSearchText('')
             }}
-            //  searchValue={searchValue}
             removeSearchValue={emptySearch}
           />
         </div>
