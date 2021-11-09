@@ -187,7 +187,7 @@ function ViewForm() {
       .post(getApiUrl(`clientInfo/mailReminder/${id}`), totalState)
       .then((res) => {
         console.log(res.data);
-        toast.success('A Reminder mail has been triggered !', {
+        toast.success('Reminder has been sent!', {
           autoClose: 1800,
         });
       })
