@@ -3,10 +3,23 @@ import ClientForm from './components/form/ClientForm';
 import ViewForm from './components/form/ViewForm';
 import EditViewForm from './components/form/EditViewForm';
 import Login from './components/login/Login';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch ,Redirect} from 'react-router-dom';
 import AdminDashboard from './components/admin/AdminDashboard';
 import InternalClient from './components/admin/InternalClient';
 import UserDetailsDashboard from './components/admin/UserManagement/UserDetailsDashboard';
+import { getAuthToken } from './components/utils/authToken';
+import { render } from '@testing-library/react';
+
+const PrivateRoute=({component:Component, ...rest})=>{
+  const isAuthenticated=getAuthToken()?true:false;
+return(
+  <Route {...rest} render={(props) => (
+    isAuthenticated
+      ? <Component {...props} />
+      : <Redirect to='/' />
+  )} />
+)
+}
 
 function App() {
   return (
@@ -16,27 +29,20 @@ function App() {
           <Route exact path='/'>
             <Login />
           </Route>
-          <Route path='/admin'>
-            <AdminDashboard />
-          </Route>
-          <Route path='/internal'>
-            <InternalClient />
-          </Route>
-          <Route path='/view/:id'>
-            <ViewForm />
-          </Route>
-          <Route path='/edit/:id'>
-            <EditViewForm />
-          </Route>
-          <Route path='/form/:id'>
-            <ClientForm />
-          </Route>
-          <Route path='/client-form/:id'>
-            <ClientForm />
-          </Route>
-          <Route path='/user-details'>
-            <UserDetailsDashboard />
-          </Route>
+          <PrivateRoute path='/admin' component={AdminDashboard}>
+          </PrivateRoute>
+          <PrivateRoute path='/internal' component={InternalClient}>
+          </PrivateRoute>
+          <PrivateRoute path='/view/:id' component={ViewForm}>
+          </PrivateRoute>
+          <PrivateRoute path='/edit/:id' component={EditViewForm}>
+          </PrivateRoute>
+          <PrivateRoute path='/form/:id' component={ClientForm}>
+          </PrivateRoute>
+          <PrivateRoute path='/client-form/:id' component={ClientForm}>
+          </PrivateRoute>
+          <PrivateRoute path='/user-details' component={UserDetailsDashboard}>
+          </PrivateRoute>
         </Switch>
       </Router>
     </div>
