@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './sample.css';
 import { getApiUrl } from '../../utils/helper';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 toast.configure();
 
@@ -15,7 +17,9 @@ const defaultFormData = {
   role: '',
   team: '',
   status: '',
-  dateCreated: '',
+ // dateCreated: '',
+  contactNumber: '',
+  password: '123',
 };
 
 const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolStatus })  => {
@@ -23,7 +27,8 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
       ...defaultFormData,
       autoFill: false,
     });
-    function handleOnChange(e, email) {
+    function handleOnChange(e, email=false) {
+      console.log('check', e);
       const value = e.target.value.replace(/[^a-zA-Z ]/g, '');
       if (email) {
         handleEmailChange(e, email);
@@ -32,6 +37,11 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
           ...state,
           [e.target.name]: e.target.value,
           autoFill: false,
+        });
+      } else if (e.target.name === 'date' || e.target.name === 'contactNumber') {
+        setState({
+          ...state,
+          [e.target.name]: e.target.value,
         });
       } else {
         setState({
@@ -75,6 +85,13 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
     }
   }
 
+  function handleOnDropdownChange(stateName, value) {
+    setState({
+      ...state,
+      [stateName]: value ? value.label : '',
+    });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     if (ValidateEmail(state.emailId)) {
@@ -105,7 +122,12 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
         .catch((err) => console.log(err.response));
     }
   }
- 
+ const handleReset = () => {
+   setState({
+     ...state,
+     ...defaultFormData
+   })
+ }
   return (
     <Modal
       centered
@@ -133,6 +155,16 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
               />
             </div>
             <div className='form-group col-md-4'>
+              <label htmlFor='password'>Password *</label>
+              <input
+                type='password'
+                className='form-control'
+                onChange={handleOnChange}
+                name='password'
+                value={state?state.password: ''}
+              />
+            </div>
+            <div className='form-group col-md-4'>
               <label htmlFor='email'>Email Id * </label>
               <span className='email-help-text'>
                 {' '}
@@ -155,47 +187,64 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
                 cols='50'
               />
             </div>
-            <div className='form-group col-md-4'>
-              <label htmlFor='team'>Team *</label>
-              <input
-                type='text'
-                className='form-control'
-                onChange={handleOnChange}
-                name='team'
-                disabled={isEdit}
-                value={state ? state.team : ''}
-              />
-            </div>
           </div>
           <div className='row'>
           <div className='form-group col-md-4'>
-              <label htmlFor='owner'>Status *</label>
-              <input
-                type='text'
-                className='form-control'
-                onChange={handleOnChange}
-                name='status'
-                disabled={isEdit}
-                value={state ? state.status : ''}
-              />
-            </div>
+          <label>Team * </label>
+          <Autocomplete
+            options={[
+              { label: 'BI Team', value: 1 },
+              { label: 'Big Data Team', value: 2 },
+              { label: 'Block Chain Team', value: 3 },
+              { label: 'BPM Team', value: 4 },
+              { label: 'BPO Team', value: 5 },
+              { label: 'Data Science Team', value: 6 },
+              { label: 'Delivery Team', value: 7 },
+              { label: 'Java Team', value: 8 },
+              { label: 'Microsoft Team', value: 9 },
+              { label: 'Mobility Team', value: 10 },
+              { label: 'Open Source Team', value: 11 },
+              { label: 'Oracle Team', value: 12 },
+              { label: 'Pega Team', value: 13 },
+              { label: 'QA Team', value: 14 },
+              { label: 'RPA Team', value: 15 },
+              { label: 'Sales Force Team', value: 16 },
+              { label: 'Service Now Team', value: 17 },
+              { label: 'Support Team', value: 18 },
+              { label: 'UI Team', value: 19 },
+              { label: 'Other', value: 20 },
+            ]}
+            value={state ? state.team.label : ''}
+            name="team"
+            getOptionLabel={(option) => option.label}
+            onChange={(event, value) => handleOnDropdownChange('team', value)}
+            renderInput={(params) => (
+              <TextField {...params} variant='outlined' name="team"/>
+            )}
+          />
+        </div>
             <div className='form-group col-md-4'>
-              <label htmlFor='owner'>Date Created *</label>
-              <input
-                type='text'
-                className='form-control'
-              //  onChange={handleOnChange}
-                name='owner'
-                disabled={isEdit}
-               // value={state?.owner}
-              />
-            </div>
+          <label>Status * </label>
+          <Autocomplete
+            options={[
+              { label: 'Active', value: 1 },
+              { label: 'InActive', value: 2 },
+            ]}
+            name='status'
+            value={state ? state.status.label : ''}
+            getOptionLabel={(option) => option.label}
+            onChange={(event, value) => handleOnDropdownChange('status', value)}
+            renderInput={(params) => (
+              <TextField {...params} variant='outlined' name="status"/>
+            )}
+          />
+        </div>
             <div className='form-group col-md-4'>
-              <label htmlFor='owner'>Contact Number *</label>
+              <label htmlFor='contactNumber'>Contact Number *</label>
               <input
                 type='text'
                 className='form-control'
-                //onChange={}
+                onChange={(e) => handleOnChange(e)}
                 name='contactNumber'
                 disabled={isEdit}
                 value={state ? state.contactNumber: ''}
@@ -205,39 +254,40 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
           </div>
 
           <div className='row'>
-          <div className='form-group col-md-4'>
-              <label htmlFor='owner'>Role *</label>
-              <input
-                type='text'
-                className='form-control'
-              //  onChange={handleOnChange}
-                name='owner'
-                disabled={isEdit}
-               // value={state?.owner}
-              />
-            </div>
+            <div className='form-group col-md-4'>
+          <label>Role * </label>
+          <Autocomplete
+            options={[
+              { label: 'Admin', value: 1 },
+              { label: 'SuperAdmin', value: 2 },
+              { label: 'Guest', value: 3 },
+            ]}
+            value={state ? state.role.label : ''}
+            name="role"
+            getOptionLabel={(option) => option.label}
+            onChange={(event, value) => handleOnDropdownChange('role', value)}
+            renderInput={(params) => (
+              <TextField {...params} variant='outlined' name="role"/>
+            )}
+          />
+        </div>
             </div>
           <div className='form-group row share '>
             <div className='col-md-12 text-center'>
               <button
                 className='form-control btn btn-primary'
-               // onClick={handleReset}
+                onClick={() => handleReset()}
               >
                 Reset
               </button>
               <button
                 className='form-control btn btn-primary share-btn'
-                onClick={handleSubmit}
-                // disabled={
-                //   Object.keys(state).some((key) =>
-                //     nonMandatoryFields.includes(key) ? false : state[key] === ''
-                //   ) ||
-                //   Object.keys(billingDetails).some((key) =>
-                //     nonMandatoryFields.includes(key)
-                //       ? false
-                //       : billingDetails[key] === ''
-                //   )
-                // }
+                onClick={() => handleSubmit()}
+                disabled={
+                  Object.keys(state).some((key) =>
+                  state[key] === ''
+                  )
+                }
               >
                 {isEdit ? 'Renew' : 'Save'}
               </button>
