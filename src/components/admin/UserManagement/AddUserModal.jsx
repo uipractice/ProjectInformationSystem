@@ -39,6 +39,13 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
           autoFill: false,
         });
       } else if (e.target.name === 'date' || e.target.name === 'contactNumber') {
+        let stateValue = e.target.value;
+        if(e.target.name === 'contactNumber') {
+          stateValue = 
+              e.target.value.match(/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/) 
+              ? e.target.value
+              : '';
+        }
         setState({
           ...state,
           [e.target.name]: e.target.value,
@@ -135,7 +142,7 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
       style={{ borderRadius: '0 !important' }}
       show={isOpen}
       backdrop='static'
-      onHide={closeModal}
+      onHide={() => closeModal()}
       className='software-modal'
     >
       <Modal.Header closeButton className=''>
