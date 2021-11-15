@@ -193,9 +193,9 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
             <div className='form-group col-md-4'>
               <label htmlFor='owner'>Contact Number *</label>
               <input
-                type='number'
+                type='text'
                 className='form-control'
-                onChange={handleOnChange}
+                //onChange={}
                 name='contactNumber'
                 disabled={isEdit}
                 value={state ? state.contactNumber: ''}
