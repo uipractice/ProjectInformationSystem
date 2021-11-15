@@ -12,6 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Logo from '../../assets/images/eoke_logo.svg';
 import { clearTokens } from '../utils/authToken';
+import { superAdmin } from '../constants/constants';
+import { getUser } from "../utils/userDetails";
 // components
 import FeedBackModal from '../utils/FeedBackModal';
 // helpers
@@ -172,9 +174,10 @@ const NavBar = ({ validate, clientForm }) => {
                             handleInputChange={(e) => handleInputChange(e)}
                             feedbackText={feedbackText}
                           />
-                          <MenuItem className='logout' onClick={handleUserDetails}>
+                          {JSON.parse(getUser()).role === superAdmin &&   <MenuItem className='logout' onClick={handleUserDetails}>
                             User Details
-                          </MenuItem>
+                          </MenuItem> }
+                        
                           <MenuItem className='logout' onClick={handleLogout}>
                             Logout
                           </MenuItem>

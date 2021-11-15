@@ -12,6 +12,8 @@ import IconActive from '../../assets/images/active.svg';
 import NavBar from './NavBar';
 import { getApiUrl } from '../utils/helper';
 import InternalClient from './InternalClient';
+import { superAdmin } from '../constants/constants';
+import { getUser } from "../utils/userDetails";
 
 export default function AdminDashboard() {
   const [data, setData] = useState([]);
@@ -23,7 +25,7 @@ export default function AdminDashboard() {
   const [deleteCount, setDeleteCount] = useState('');
   const [showInternalProject, setShowInternalProject] = useState(false);
   const [showClientProject, setShowClientProject] = useState(true);
-
+  console.log(JSON.parse(getUser()).role)
   useEffect(() => {
     axios(getApiUrl(`clientInfo`))
       .then((res) => {
@@ -69,13 +71,16 @@ export default function AdminDashboard() {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-12 ms-sm-auto col-lg-12 custom-scroll'>
-            <ShareButtonSection
-              showInternalView={(client, internal) =>
-                showInternalContent(client, internal)
-              }
-              internal={showInternalProject}
-              client={showClientProject}
-            />
+             {JSON.parse(getUser()).role=== superAdmin && 
+                        <ShareButtonSection
+                        showInternalView={(client, internal) =>
+                          showInternalContent(client, internal)
+                        }
+                        internal={showInternalProject}
+                        client={showClientProject}
+                      />
+            } 
+
             {showClientProject && !showInternalProject && (
               <div className='row'>
                 <RowHeaderValue
