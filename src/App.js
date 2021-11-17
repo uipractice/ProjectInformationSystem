@@ -16,7 +16,7 @@ function App() {
           <Route exact path='/'>
             <Login />
           </Route>
-          <Route path='/admin'>
+          <Route path='/dashboard'>
             <AdminDashboard />
           </Route>
           <Route path='/internal'>

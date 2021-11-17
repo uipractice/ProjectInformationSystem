@@ -37,7 +37,7 @@ function Login() {
         if (res.data.accessToken) {
           const token = "123456abcdef";
           sessionStorage.setItem("auth-token", token);
-          history.push("/admin");
+          history.push("/dashboard");
         } else {
           toast.error(res.data.message + ` ${"!!"}`, {
             autoClose: 2000,

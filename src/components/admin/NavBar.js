@@ -25,13 +25,14 @@ toast.configure();
  * @return {null}
  */
 
-const NavBar = ({ validate, clientForm }) => {
+const NavBar = ({ validate, clientForm,title }) => {
   function handleLogout() {
     sessionStorage.removeItem('auth-token');
     checkAuth();
   }
 
   const history = useHistory();
+
 
   /**
    * Checking the authentication
@@ -61,6 +62,7 @@ const NavBar = ({ validate, clientForm }) => {
     setOpen(!open);
   };
   const [feedbackText, setFeedbackText] = React.useState('');
+  const [view]=React.useState(title)
 
   /**
    * Setting modal close state and call api to send the mail.
@@ -125,20 +127,27 @@ const NavBar = ({ validate, clientForm }) => {
   const handleUserDetails = () => {
     return history.push('/user-details');
   }
+  const handleDashboard = () => {
+    return  history.push('/dashboard',);
+  }
 
   return (
     <div>
       <div className='navbar navbar-dark sticky-top  p-0 shadow header_nav'>
-        <div className='row'>
+        <div className='row full-width'>
+          <div className="d-flex flex-1">
           <a
-            className='navbar-brand col-md-6 px-4'
+            className='navbar-brand  px-1'
           >
             <img src={Logo} alt='Evoke Technologies' />
           </a>
-          <h3>Project Information System </h3>
-        </div>
-
-        {!clientForm && (
+          <h3 >Project Information System </h3>
+          </div>
+          
+          <div className="d-flex flex-1">
+          <h3 className="view">{view}</h3>
+          </div>
+          {!clientForm && (
           <ul className='navbar-nav px-3'>
             <li className='nav-item text-nowrap'>
               <Button
@@ -170,12 +179,7 @@ const NavBar = ({ validate, clientForm }) => {
                           onKeyDown={handleListKeyDown}
                         >
                           {/* <MenuItem className='myprofile'>My profile</MenuItem> */}
-                          <MenuItem
-                            className='feedback'
-                            onClick={handleClickOpen}
-                          >
-                            Provide Feedback
-                          </MenuItem>
+
                           <FeedBackModal
                             open={feedback}
                             closeHandler={(e, closeClick) => {
@@ -184,9 +188,19 @@ const NavBar = ({ validate, clientForm }) => {
                             }}
                             handleInputChange={(e) => handleInputChange(e)}
                             feedbackText={feedbackText}
-                          />
+                          />                        
+                          <MenuItem className='logout' onClick={handleDashboard}>
+                          DashBoard
+                        </MenuItem>
+
                           <MenuItem className='logout' onClick={handleUserDetails}>
-                            User Details
+                            User Management
+                          </MenuItem>
+                          <MenuItem
+                            className='feedback'
+                            onClick={handleClickOpen}
+                          >
+                            Provide Feedback
                           </MenuItem>
                           <MenuItem className='logout' onClick={handleLogout}>
                             Logout
@@ -200,6 +214,10 @@ const NavBar = ({ validate, clientForm }) => {
             </li>
           </ul>
         )}
+
+        </div>
+
+ 
       </div>
     </div>
   );

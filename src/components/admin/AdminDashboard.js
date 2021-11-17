@@ -13,7 +13,7 @@ import NavBar from './NavBar';
 import { getApiUrl } from '../utils/helper';
 import InternalClient from './InternalClient';
 
-export default function AdminDashboard() {
+ function AdminDashboard() {
   const [data, setData] = useState([]);
   const [totalCount, setTotalCount] = useState('');
   const [pendingCount, setPendingCount] = useState('');
@@ -65,7 +65,7 @@ export default function AdminDashboard() {
   };
   return (
     <div>
-      <NavBar validate={true} />
+      <NavBar validate={true} title={'DASHBOARD'}/>
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-12 ms-sm-auto col-lg-12 custom-scroll'>
@@ -122,3 +122,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+export default AdminDashboard

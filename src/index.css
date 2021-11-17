@@ -962,6 +962,16 @@ select.form-control:-internal-autofill-selected {
 .download-btn {
   cursor: pointer !important;
 }
+.view{
+  color: #fff !important;
+}
+.full-width{
+  width: 100%;
+    justify-content: space-between;
+}
+.flex-1{
+  flex: 1;
+}
 @media (max-width: 448px) {
   .footer {
     height: 60px;
