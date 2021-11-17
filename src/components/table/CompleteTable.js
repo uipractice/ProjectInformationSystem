@@ -17,6 +17,8 @@ import {
 import { format } from 'date-fns';
 import './table.css';
 import GlobalFilter from './GlobalFilter';
+import {guest,superAdmin} from '../constants/constants';
+import { getUser } from "../utils/userDetails";
 
 import rightIcon from '../../assets/images/right-icon.svg';
 import leftIcon from '../../assets/images/left-icon.svg';
@@ -70,9 +72,7 @@ function CompleteTable({ data }) {
   };
 
   function handleSelectedStatus(selectedState) {
-    console.log('SelectedState value: ', selectedState);
-    console.log('Data dot status value: ', data.status);
-    console.log('Data value: ', data);
+
     let filterResult;
     if (selectedState === 'Active')
       filterResult = data.filter((row) => row.status !== 'Deleted');
@@ -133,7 +133,9 @@ function CompleteTable({ data }) {
         Cell: ({ row }) => {
           return (
             <Link
+            style={{'pointerEvents':JSON.parse(getUser()).role === guest?'none':'cursor'}}
               to={{
+
                 pathname: `/view/${row.original._id}`,
                 state: {
                   projectNameByIT: row.original.projectNameByIT,
@@ -232,6 +234,7 @@ function CompleteTable({ data }) {
       },
       {
         Header: 'ACTION',
+        accessor: 'action',
         width: 120,
         Cell: ({ row }) => (
           <a
@@ -274,7 +277,8 @@ function CompleteTable({ data }) {
       columns,
       data: filteredData,
       initialState: {
-        pageSize: 5,
+        pageSize: 5, 
+        hiddenColumns:JSON.parse(getUser()).role === guest? ['action']:[''],
         sortBy: [
           {
             id: 'updatedAt',

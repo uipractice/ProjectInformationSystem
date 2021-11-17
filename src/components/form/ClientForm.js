@@ -945,11 +945,7 @@ function ClientForm() {
                     </Form>
                   ) : (
                     clientFormSubmitted && (
-                      <div
-                        style={{
-                          padding: '140px',
-                        }}
-                      >
+                      <div className="thankyou-text">
                         Thank you for your time ! <br />
                         Form has been submitted successfully. <br />
                         We will let you know, if any further information is
