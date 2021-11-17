@@ -6,13 +6,14 @@ import NavBar from '../NavBar';
 import Footer from '../Footer';
 import UserTable from '../UserManagement/UserTable';
 import AddUserModal from './AddUserModal';
+import { useHistory } from "react-router-dom";
 import './UserDetails.css';
 
 
 const UserDetailsDashboard = () => {
     const [userDetails, setUserDetails] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    
+    const history = useHistory();
     const openModal = () => {
        setShowModal(true);
     }
