@@ -28,6 +28,12 @@ const UserDetailsDashboard = () => {
     getUserDetails();
 }, []);
  
+const getUpdatedData = ()=>{
+  setShowModal(false);
+  getUserDetails();
+  }
+
+
   return (
     <div>
        <NavBar />
@@ -39,7 +45,7 @@ const UserDetailsDashboard = () => {
        </div>
        {showModal && <AddUserModal isOpen={showModal}  closeModal={() => {
             setShowModal(false);
-          }}/>}
+          }} updateToolStatus={() => getUpdatedData()}/>}
        {userDetails && userDetails.data && userDetails.data.length > 0 &&  <UserTable 
        data ={userDetails.data} />}
        <Footer />

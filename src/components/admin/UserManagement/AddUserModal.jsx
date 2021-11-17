@@ -15,14 +15,13 @@ const defaultFormData = {
   userName: '',
   emailId: '',
   role: '',
-  team: '',
+  team: "",
   status: '',
- // dateCreated: '',
   contactNumber: '',
   password: '123',
 };
 
-const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolStatus })  => {
+const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false, updateToolStatus })  => {
     const [state, setState] = useState({
       ...defaultFormData,
       autoFill: false,
@@ -39,13 +38,13 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
           autoFill: false,
         });
       } else if (e.target.name === 'date' || e.target.name === 'contactNumber') {
-        let stateValue = e.target.value;
-        if(e.target.name === 'contactNumber') {
-          stateValue = 
-              e.target.value.match(/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/) 
-              ? e.target.value
-              : '';
-        }
+       // let stateValue = e.target.value;
+        // if(e.target.name === 'contactNumber') {
+        //   stateValue = 
+        //       e.target.value.match(/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/) 
+        //       ? e.target.value
+        //       : '';
+        // }
         setState({
           ...state,
           [e.target.name]: e.target.value,
@@ -111,10 +110,8 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
             // closeModal();
             toast.success('Data Saved Successfully !', {
               autoClose: 2000,
+              onClose: updateToolStatus()
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
           } else {
             toast.error('Data Saved FAILED !', {
               autoClose: 2000,
@@ -129,10 +126,17 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
         .catch((err) => console.log(err.response));
     }
   }
- const handleReset = () => {
+ const handleReset = (e) => {
+   e.preventDefault();
    setState({
      ...state,
-     ...defaultFormData
+      userName: '',
+      emailId: '',
+      role: '',
+      team: '',
+      status: '',
+      contactNumber: '',
+      password: '123',
    })
  }
   return (
@@ -221,13 +225,14 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
               { label: 'UI Team', value: 19 },
               { label: 'Other', value: 20 },
             ]}
-            value={state ? state.team.label : ''}
+            value={state.team}
             name="team"
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option) => state.team ? option : option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
             onChange={(event, value) => handleOnDropdownChange('team', value)}
-            renderInput={(params) => (
+            renderInput={(params) => 
               <TextField {...params} variant='outlined' name="team"/>
-            )}
+            }
           />
         </div>
             <div className='form-group col-md-4'>
@@ -238,8 +243,9 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
               { label: 'InActive', value: 2 },
             ]}
             name='status'
-            value={state ? state.status.label : ''}
-            getOptionLabel={(option) => option.label}
+            value={state ? state.status : ''}
+            getOptionLabel={(option) => state.status ? option : option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
             onChange={(event, value) => handleOnDropdownChange('status', value)}
             renderInput={(params) => (
               <TextField {...params} variant='outlined' name="status"/>
@@ -269,9 +275,10 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
               { label: 'SuperAdmin', value: 2 },
               { label: 'Guest', value: 3 },
             ]}
-            value={state ? state.role.label : ''}
+            value={state ? state.role : ''}
             name="role"
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option) => state.role ? option : option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
             onChange={(event, value) => handleOnDropdownChange('role', value)}
             renderInput={(params) => (
               <TextField {...params} variant='outlined' name="role"/>
@@ -283,13 +290,13 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false,updateToolSt
             <div className='col-md-12 text-center'>
               <button
                 className='form-control btn btn-primary'
-                onClick={() => handleReset()}
+                onClick={(e) => handleReset(e)}
               >
                 Reset
               </button>
               <button
                 className='form-control btn btn-primary share-btn'
-                onClick={() => handleSubmit()}
+                onClick={(e) => handleSubmit(e)}
                 disabled={
                   Object.keys(state).some((key) =>
                   state[key] === ''

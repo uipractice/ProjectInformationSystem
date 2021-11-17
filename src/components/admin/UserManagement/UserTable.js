@@ -165,6 +165,12 @@ function CompleteTable({ data }) {
       //   },
       // },
       {
+        Header: 'Date Created',
+        accessor: 'createdAt',
+        width: 10,
+        isVisible:"false"
+      },
+      {
         Header: 'CONTACT NO',
         accessor: 'contactNumber',
         sticky: 'left',
@@ -232,12 +238,13 @@ function CompleteTable({ data }) {
       data: filteredData,
       initialState: {
         pageSize: 5,
-        // sortBy: [
-        //   {
-        //     id: 'updatedAt',
-        //     desc: true,
-        //   },
-        // ],
+        hiddenColumns:['createdAt'],
+        sortBy: [
+          {
+            id: 'createdAt',
+            desc: true,
+          },
+        ],
       },
     },
     useGlobalFilter,
