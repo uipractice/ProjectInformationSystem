@@ -6,12 +6,15 @@ import NavBar from '../NavBar';
 import Footer from '../Footer';
 import UserTable from '../UserManagement/UserTable';
 import AddUserModal from './AddUserModal';
+import EditFormModal from './EditFormModal';
 import './UserDetails.css';
 
 
 const UserDetailsDashboard = () => {
     const [userDetails, setUserDetails] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [editModal, setEditModal] = useState(false);
+    const [editData, setEditData] = useState({});
     
     const openModal = () => {
        setShowModal(true);
@@ -30,6 +33,7 @@ const UserDetailsDashboard = () => {
  
 const getUpdatedData = ()=>{
   setShowModal(false);
+  setEditModal(false);
   getUserDetails();
   }
 
@@ -46,8 +50,9 @@ const getUpdatedData = ()=>{
        {showModal && <AddUserModal isOpen={showModal}  closeModal={() => {
             setShowModal(false);
           }} updateToolStatus={() => getUpdatedData()}/>}
+       {editModal && <AddUserModal isOpen={editModal}  updateToolStatus={() => getUpdatedData()} updatedData={editData} closeModal={() => setEditModal(false)}/>}
        {userDetails && userDetails.data && userDetails.data.length > 0 &&  <UserTable 
-       data ={userDetails.data} />}
+       data ={userDetails.data} getEditForm={(data) => { setEditModal(true); setEditData(data)}} />}
        <Footer />
      </div>
   );

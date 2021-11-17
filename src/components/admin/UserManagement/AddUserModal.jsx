@@ -10,22 +10,22 @@ import TextField from '@material-ui/core/TextField';
 
 toast.configure();
 
-// default fotm data
+const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false, updateToolStatus })  => {
+  // default fotm data
 const defaultFormData = {
-  userName: '',
-  emailId: '',
-  role: '',
-  team: "",
-  status: '',
-  contactNumber: '',
+  userName: updatedData ? updatedData.values.userName : '',
+  emailId: updatedData ? updatedData.values.emailId : '',
+  role: updatedData ? updatedData.values.role : '',
+  team: updatedData ? updatedData.values.team : "",
+  status: updatedData ? updatedData.values.status : '',
+  contactNumber: updatedData ? updatedData.values.contactNumber : '',
   password: '123',
 };
-
-const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false, updateToolStatus })  => {
     const [state, setState] = useState({
       ...defaultFormData,
       autoFill: false,
     });
+    const [data, setData] = useState(updatedData.values)
     function handleOnChange(e, email=false) {
       console.log('check', e);
       const value = e.target.value.replace(/[^a-zA-Z ]/g, '');
@@ -97,9 +97,35 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false, updateToolS
       [stateName]: value ? value.label : '',
     });
   }
+function handleUpdate() {
+  delete state.autoFill;
+          axios
+        .put(getApiUrl(`users/updateUser/${updatedData.original._id}`), state)
+        .then((res) => {
+          console.log('testinside-outside');
+          if (res && res.data.status === 'success') {
+            toast.success('Data Updated Successfully !', {
+              autoClose: 2000,
+              onClose: updateToolStatus()
+            });
+          } else {
+            toast.error('Data Update FAILED !', {
+              autoClose: 2000,
+            });
+          }
+        })
+        .then(() => {
+          window.close();
+        })
 
+        .catch((err) => console.log('error', err.response));
+    
+}
   function handleSubmit(e) {
     e.preventDefault();
+    if(data){
+      return handleUpdate();
+    }
     if (ValidateEmail(state.emailId)) {
       delete state.autoFill;
       console.log(state,'state');
@@ -227,7 +253,7 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false, updateToolS
             ]}
             value={state.team}
             name="team"
-            getOptionLabel={(option) => state.team ? option : option.label}
+            getOptionLabel={(option) => state.team && !option.label ? option : option.label}
             getOptionSelected={(option, value) => option.value === value.value}
             onChange={(event, value) => handleOnDropdownChange('team', value)}
             renderInput={(params) => 
@@ -244,7 +270,7 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false, updateToolS
             ]}
             name='status'
             value={state ? state.status : ''}
-            getOptionLabel={(option) => state.status ? option : option.label}
+            getOptionLabel={(option) => state.status && !option.label ? option : option.label}
             getOptionSelected={(option, value) => option.value === value.value}
             onChange={(event, value) => handleOnDropdownChange('status', value)}
             renderInput={(params) => (
@@ -277,7 +303,7 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false, updateToolS
             ]}
             value={state ? state.role : ''}
             name="role"
-            getOptionLabel={(option) => state.role ? option : option.label}
+            getOptionLabel={(option) => state.role && !option.label ? option : option.label}
             getOptionSelected={(option, value) => option.value === value.value}
             onChange={(event, value) => handleOnDropdownChange('role', value)}
             renderInput={(params) => (
@@ -303,7 +329,7 @@ const AddUserModal = ({ isOpen, closeModal, rowData, isEdit = false, updateToolS
                   )
                 }
               >
-                {isEdit ? 'Renew' : 'Save'}
+                {data ? 'Update' : 'Save'}
               </button>
             </div>
           </div>

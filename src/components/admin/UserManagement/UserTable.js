@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
-function CompleteTable({ data }) {
+function CompleteTable({ data, getEditForm }) {
   const [filteredData, setFilteredData] = useState([]);
   const [searchValue, setSearchValue] = useState();
 
@@ -210,6 +210,22 @@ function CompleteTable({ data }) {
             }}
           >
             <img src={DeleteImg} alt='Evoke Technologies' />
+          </a>
+        ),
+      },
+      {
+        Header: 'Edit',
+        width: 120,
+        Cell: ({ row }) => (
+          <a
+            {...(row.original.status === 'Deleted'
+              ? { className: 'delete-icon disableDeleteBtn' }
+              : { className: 'delete-icon ' })}
+            onClick={(e) => {
+              getEditForm(row);
+            }}
+          >
+            Edit
           </a>
         ),
       },
