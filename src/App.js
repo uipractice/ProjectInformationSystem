@@ -29,7 +29,7 @@ function App() {
           <Route exact path='/'>
             <Login />
           </Route>
-          <PrivateRoute path='/admin' component={AdminDashboard}>
+          <PrivateRoute path='/dashboard' component={AdminDashboard}>
           </PrivateRoute>
           <PrivateRoute path='/internal' component={InternalClient}>
           </PrivateRoute>

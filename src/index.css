@@ -966,6 +966,16 @@ select.form-control:-internal-autofill-selected {
 .download-btn {
   cursor: pointer !important;
 }
+.view{
+  color: #fff !important;
+}
+.full-width{
+  width: 100%;
+    justify-content: space-between;
+}
+.flex-1{
+  flex: 1;
+}
 .thankyou-text{
   padding: 140px;
   color:#626364

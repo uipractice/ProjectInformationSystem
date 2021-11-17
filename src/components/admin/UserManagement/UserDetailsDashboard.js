@@ -6,7 +6,7 @@ import NavBar from '../NavBar';
 import Footer from '../Footer';
 import UserTable from '../UserManagement/UserTable';
 import AddUserModal from './AddUserModal';
-import EditFormModal from './EditFormModal';
+import { useHistory } from "react-router-dom";
 import './UserDetails.css';
 
 
@@ -16,6 +16,7 @@ const UserDetailsDashboard = () => {
     const [editModal, setEditModal] = useState(false);
     const [editData, setEditData] = useState({});
     
+    const history = useHistory();
     const openModal = () => {
        setShowModal(true);
     }
@@ -40,9 +41,13 @@ const getUpdatedData = ()=>{
 
   return (
     <div>
-       <NavBar />
+       <NavBar title={'USER MANAGEMENT'}/>
        <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 userDetail'>
-           <h3>USER MANAGEMENT SYSTEM</h3>
+       <button
+            type='button'
+            className='btn work_btn work_btn_blue center modal-button'
+            onClick={()=>history.push('/dashboard')}
+            >Dashboard</button>
            <button
             type='button'
             className='btn work_btn work_btn_blue center modal-button' onClick={() => openModal()}>Add User</button>

@@ -44,7 +44,7 @@ function Login() {
         if (res.data.accessToken) {
           saveAuthToken(res.data.accessToken)
           saveUser(JSON.stringify(res.data.user))
-          history.push("/admin");
+          history.push("/dashboard");
         } else {
           toast.error(res.data.message + ` ${"!!"}`, {
             autoClose: 2000,
