@@ -176,7 +176,7 @@ function handleUpdate() {
       className='software-modal'
     >
       <Modal.Header closeButton className=''>
-        <h3>Add User</h3>
+        <h3>{!updatedData ? 'Add User' : 'Update User Details Screen'}</h3>
       </Modal.Header>
       <Modal.Body>
         <form>
