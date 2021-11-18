@@ -4,6 +4,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import { makeStyles } from '@material-ui/core/styles';
 import UpDownImg from '../../../assets/images/sorting.svg';
+import Edit from '../../../assets/images/edit.svg'
 import {
   useTable,
   useSortBy,
@@ -197,36 +198,33 @@ function CompleteTable({ data, getEditForm }) {
         Header: 'ACTION',
         width: 120,
         Cell: ({ row }) => (
-          <a
-            {...(row.original.status === 'Deleted'
-              ? { className: 'delete-icon disableDeleteBtn' }
-              : { className: 'delete-icon ' })}
-            onClick={(e) => {
+          <div>
+          <img
+            className={`p-2 pointer ${
+              row.original.status === 'deleted' ? 'disableEditBtn' : ''
+            }`}
+            src={Edit}
+            alt='Evoke Technologies'
+            height='31px'
+            onClick={() => {
+              getEditForm(row);
+            }}
+          />
+          <img
+            className={`p-2 pointer ${
+              row.original.status === 'deleted' ? 'disableDeleteBtn' : ''
+            }`}
+            src={DeleteImg}
+            alt='Evoke Technologies'
+            onClick={() => {
               setRowOriginal({
                 ...row.original,
                 deleteReason: '',
               });
               setIsModalOpen(true);
             }}
-          >
-            <img src={DeleteImg} alt='Evoke Technologies' />
-          </a>
-        ),
-      },
-      {
-        Header: 'Edit',
-        width: 120,
-        Cell: ({ row }) => (
-          <a
-            {...(row.original.status === 'Deleted'
-              ? { className: 'delete-icon disableDeleteBtn' }
-              : { className: 'delete-icon ' })}
-            onClick={(e) => {
-              getEditForm(row);
-            }}
-          >
-            Edit
-          </a>
+          />
+        </div>
         ),
       },
     ],
