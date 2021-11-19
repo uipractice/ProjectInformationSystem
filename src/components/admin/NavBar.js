@@ -60,7 +60,7 @@ const NavBar = ({ validate, clientForm,title }) => {
    * @param {Boolean} closeClick contains boolean to defined the close click.
    * @return {null}
    */
-  const handleClose = (event, closeClick) => {
+  const handleClose = (event, closeClick) => { 
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -68,10 +68,10 @@ const NavBar = ({ validate, clientForm,title }) => {
     setFeedback(false);
     if (!closeClick) {
       const feedbackDescription = {
-        feedbackText
-      }
-
-      axios
+      feedbackText
+    }
+    
+    axios
         .post(getApiUrl(`clientInfo/feebackMail`), feedbackDescription)
         .then((res) => {
           console.log(res.data);
@@ -81,6 +81,10 @@ const NavBar = ({ validate, clientForm,title }) => {
         })
         .catch((err) => console.log(err.response));
     }
+  };
+
+  const handleClickAway = () => {
+   setOpen(false)
   };
 
   const [feedback, setFeedback] = React.useState(false);
@@ -161,7 +165,7 @@ const NavBar = ({ validate, clientForm,title }) => {
                     }}
                   >
                     <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
+                      <ClickAwayListener onClickAway={handleClickAway}>
                         <MenuList
                           autoFocusItem={open}
                           id='menu-list-grow'
@@ -178,11 +182,11 @@ const NavBar = ({ validate, clientForm,title }) => {
                             handleInputChange={(e) => handleInputChange(e)}
                             feedbackText={feedbackText}
                           />                        
-                          <MenuItem className='logout' onClick={handleDashboard}>
+                          <MenuItem className='user' onClick={handleDashboard}>
                           DashBoard
                         </MenuItem>
 
-                          {JSON.parse(getUser()).role === superAdmin &&   <MenuItem className='logout' onClick={handleUserDetails}>
+                          {JSON.parse(getUser()).role === superAdmin &&   <MenuItem className='dashboard' onClick={handleUserDetails}>
                           User Management
                           </MenuItem> }
                           <MenuItem
