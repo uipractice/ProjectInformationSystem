@@ -121,7 +121,7 @@ function ViewForm() {
       .catch((err) => console.log(err.response));
 
     setTimeout(() => {
-      history.push('/admin');
+      history.push('/dashboard');
     }, 2000);
   };
 
@@ -178,7 +178,7 @@ function ViewForm() {
       .catch((err) => console.log(err.response));
 
     setTimeout(() => {
-      history.push('/admin');
+      history.push('/dashboard');
     }, 2000);
   };
 
@@ -194,7 +194,7 @@ function ViewForm() {
       .catch((err) => console.log(err.response));
 
     setTimeout(() => {
-      history.push('/admin');
+      history.push('/dashboard');
     }, 2000);
   };
 
@@ -269,7 +269,7 @@ function ViewForm() {
     return status === 'Deleted' ? (
       <Button
         className='reshare'
-        onClick={() => history.push('/admin')}
+        onClick={() => history.push('/dashboard')}
         ref={inputRef}
         style={{
           marginBottom: '20px',
@@ -305,7 +305,7 @@ function ViewForm() {
     return status === 'Approved' ? (
       <Button
         className='reshare'
-        onClick={() => history.push('/admin')}
+        onClick={() => history.push('/dashboard')}
         ref={inputRef}
         style={{
           marginBottom: '20px',
@@ -477,7 +477,7 @@ function ViewForm() {
                 </button>
                 <button
                   className='modal-closeBtn'
-                  onClick={() => history.push('/admin')}
+                  onClick={() => history.push('/dashboard')}
                 >
                   <svg className='_modal-close-icon' viewBox='0 0 40 40'>
                     <path d='M 10,10 L 30,30 M 30,10 L 10,30' />
@@ -733,7 +733,7 @@ function ViewForm() {
 
                     <Button
                       className='reshare'
-                      onClick={() => history.push('/admin')}
+                      onClick={() => history.push('/dashboard')}
                       ref={inputRef}
                       style={{
                         marginBottom: '90px',
