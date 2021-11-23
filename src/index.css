@@ -452,6 +452,7 @@ a:focus {
   background: url('./assets/images/user.svg') no-repeat center center !important;
   height: 33px;
   width: 34px;
+  top: 9px;
   vertical-align: middle;
   border: none !important;
 }
@@ -856,6 +857,20 @@ select.form-control:-internal-autofill-selected {
   border-radius: 4px;
 }
 
+.header_nav .navbar-nav .MuiPaper-root li.user {
+  background: url('./assets/images/usermanagement.svg') no-repeat left #fff;
+  background-size: 13px;
+  background-origin: content-box;
+  background-position: -25px;
+}
+
+.header_nav .navbar-nav .MuiPaper-root li.dashboard {
+  background: url('./assets/images/dashboard.svg') no-repeat left #fff;
+  background-size: 13px;
+  background-origin: content-box;
+  background-position: -25px;
+}
+
 .header_nav .navbar-nav .MuiPaper-root li.logout {
   background: url('./assets/images/Logout_icon.svg') no-repeat left #fff;
   background-size: 13px;
@@ -884,12 +899,12 @@ select.form-control:-internal-autofill-selected {
 .header_nav .navbar-nav .MuiPaper-root::before {
   content: '';
   position: absolute;
-  top: -20%;
+  top: -12%;
   left: auto;
-  right: 17px;
+  right: 32px;
   margin-left: 43px;
   border-width: 10px;
-  border-bottom: 10px solid #f8f8fb;
+  border-bottom: 14px solid #f8f8fb;
   border-style: solid;
   border-color: transparent transparent #f8f8fb transparent;
 }
