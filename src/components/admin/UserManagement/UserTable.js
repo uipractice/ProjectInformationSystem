@@ -4,7 +4,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import { makeStyles } from '@material-ui/core/styles';
 import UpDownImg from '../../../assets/images/sorting.svg';
-import Edit from '../../../assets/images/edit.svg'
+import Edit from '../../../assets/images/edit-icon1.svg'
 import {
   useTable,
   useSortBy,
@@ -290,7 +290,7 @@ function CompleteTable({ data, getEditForm }) {
   }, [searchValue]);
 
   return (
-    <div>
+    <div class="col-md-12 ms-sm-auto col-lg-12 custom-scroll">
       <br></br>
       <div>
         <Modal

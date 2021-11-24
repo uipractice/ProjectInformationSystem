@@ -127,7 +127,7 @@ const NavBar = ({ validate, clientForm,title }) => {
   return (
     <div>
       <div className='navbar navbar-dark sticky-top  p-0 shadow header_nav'>
-        <div className='row full-width'>
+        <div className='full-width'>
           <div className="d-flex flex-1">
           <a
             className='navbar-brand  px-1'
