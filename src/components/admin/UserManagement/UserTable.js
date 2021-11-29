@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import DeleteImg from '../../assets/images/delete.svg';
+import DeleteImg from '../../../assets/images/delete.svg';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import UpDownImg from '../../assets/images/sorting.svg';
+import UpDownImg from '../../../assets/images/sorting.svg';
+import Edit from '../../../assets/images/edit-icon1.svg'
 import {
   useTable,
   useSortBy,
@@ -15,17 +12,14 @@ import {
   usePagination,
 } from 'react-table';
 import { format } from 'date-fns';
-import './table.css';
-import GlobalFilter from './GlobalFilter';
-import {guest,superAdmin} from '../constants/constants';
-import { getUser } from "../utils/userDetails";
+import '../../table/table.css';
 
-import rightIcon from '../../assets/images/right-icon.svg';
-import leftIcon from '../../assets/images/left-icon.svg';
+import rightIcon from '../../../assets/images/right-icon.svg';
+import leftIcon from '../../../assets/images/left-icon.svg';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getApiUrl } from '../utils/helper';
+import { getApiUrl } from '../../utils/helper';
 
 toast.configure();
 
@@ -39,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
-function CompleteTable({ data }) {
+function CompleteTable({ data, getEditForm }) {
   const [filteredData, setFilteredData] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState();
 
   const [rowOriginal, setRowOriginal] = useState({});
 
@@ -50,18 +44,12 @@ function CompleteTable({ data }) {
   const [noRecords, setNoRecords] = useState(false);
 
   const [enteredValue, setEnteredValue] = useState('');
-  const [filterValue,setFilterValue]=useState('Active');
-  const [emptySearch,setSearchText]=useState('')
 
   const classes = useStyles();
 
   useEffect(() => {
-    if(data.length>0){
-      setDefaultFilterData();
-    }
+    setDefaultFilterData();
   }, [data]);
-
-
 
   const setDefaultFilterData = () => {
     if (data.length) {
@@ -76,26 +64,6 @@ function CompleteTable({ data }) {
       serial: index + 1,
     }));
   };
-
-  function handleSelectedStatus(selectedState) {
-    setFilterValue(selectedState);
-    setEnteredValue('');
-
-    let filterResult;
-    if (selectedState === 'Active'){
-      filterResult = data.filter((row) => row.status !== 'Deleted');
-    }
-    else if (selectedState === 'All Project') filterResult = data;
-    else filterResult = data.filter((row) => row.status === selectedState);
-    
-    setFilteredData(addSerialNo(filterResult));
-
-    if(filterResult.length > 0){
-      setNoRecords(false);
-    }else{
-      setNoRecords(true);
-    }
-  }
 
   function handleInputChange(evt) {
     const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
@@ -114,124 +82,103 @@ function CompleteTable({ data }) {
 
   const handleUpdateStatus = (e) => {
     e.preventDefault();
-    rowOriginal.status = 'Deleted';
     const id = rowOriginal._id;
     axios
-      .post(getApiUrl(`clientInfo/deleteStatus/${id}`), rowOriginal)
+      .delete(getApiUrl(`users/deleteUser/${id}`))
       .then((res) => {
-        toast.warn('Record has been marked DELETED !', {
+        toast.error('User has been marked DELETED !', {
           autoClose: 2900,
         });
         setIsModalOpen(false);
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+         setTimeout(() => {
+          window.location.reload(false);
+         }, 3000);
       })
       .catch((err) => console.log(err.response));
   };
   const customSorting = (c1, c2) => {
     return c1.localeCompare(c2);
   };
-
   const columns = React.useMemo(
     () => [
       {
-        Header: 'PROJECT NAME',
-        accessor: 'projectNameByIT',
+        Header: 'NAME',
+        accessor: 'userName',
         width: 231,
         sortType: (a, b) => {
           return customSorting(
-            a.original.projectNameByIT,
-            b.original.projectNameByIT
-          );
-        },
-        Cell: ({ row }) => {
-          return (
-            <Link
-            style={{'pointerEvents':JSON.parse(getUser()).role === guest?'none':'cursor'}}
-              to={{
-
-                pathname: `/view/${row.original._id}`,
-                state: {
-                  projectNameByIT: row.original.projectNameByIT,
-                  projectManager: row.original.projectManager,
-                  email: row.original.email,
-                  practice: row.original.practice,
-                  status: row.original.status,
-                  id: row.original._id,
-                  projectName: row.original.projectName,
-                  securityMeasure: row.original.securityMeasure,
-                  informIT: row.original.informIT,
-                  workStationSelected: row.original.workStationSelected,
-                  devTypeSelected: row.original.devTypeSelected,
-                  allowedWebsite: row.original.allowedWebsite,
-                  isNDAsigned: row.original.isNDAsigned,
-                  isGDPRcompliance: row.original.isGDPRcompliance,
-                  isCyberSecConducted: row.original.isCyberSecConducted,
-                  securityBreach: row.original.securityBreach,
-                  isDisasterInsuCovered: row.original.isDisasterInsuCovered,
-                  disasterDetails: row.original.disasterDetails,
-                  showInsuranceDetails: row.original.showInsuranceDetails,
-                  isIsolatedEnvReq: row.original.isIsolatedEnvReq,
-                  isolationDetails: row.original.isolationDetails,
-                  showIsolatedDetails: row.original.showIsolatedDetails,
-                  isDLPreq: row.original.isDLPreq,
-                  isClientEmailProvided: row.original.isClientEmailProvided,
-                  deleteReason: row.original.deleteReason,
-                  reshareReason: row.original.reshareReason,
-                  uploadedFiles: row.original.uploadedFiles,
-                },
-              }}
-              title={row.original.projectNameByIT}
-            >
-              {row.original.projectNameByIT}
-            </Link>
+            a.original.userName,
+            b.original.userName
           );
         },
         sticky: 'left',
       },
       {
-        Header: 'PROJECT MANAGER',
-        accessor: 'projectManager',
+        Header: 'USER ID/EMAIL ADDRESS',
+        accessor: 'emailId',
         width: 230,
         sticky: 'left',
         sortType: (a, b) => {
           return customSorting(
-            a.original.projectManager,
-            b.original.projectManager
+            a.original.emailId,
+            b.original.emailId
           );
         },
       },
       {
-        Header: 'PRACTICE NAME',
-        accessor: 'practice',
+        Header: 'ROLE',
+        accessor: 'role',
         sticky: 'left',
         width: 200,
         sortType: (a, b) => {
-          return customSorting(a.original.practice, b.original.practice);
+          return customSorting(a.original.role, b.original.role);
         },
       },
       {
-        Header: 'ASSIGN DATE',
+        Header: 'TEAM',
+        accessor: 'team',
+        sticky: 'left',
+        width: 200,
+        sortType: (a, b) => {
+          return customSorting(a.original.team, b.original.team);
+        },
+      },
+      // {
+      //   Header: 'DATE CREATED',
+      //   accessor: 'dateCreated',
+      //   width: 167,
+      //   sortType: (a, b) => {
+      //     return customSorting(a.original.dateCreated, b.original.dateCreated);
+      //   },
+      //   Cell: ({ value }) => {
+      //     return format(new Date(value), 'dd/MM/yyyy');
+      //   },
+      // },
+      // {
+      //   Header: 'UPDATED DATE',
+      //   accessor: 'updatedAt',
+      //   width: 187,
+      //   sortType: (a, b) => {
+      //     return customSorting(a.original.updatedAt, b.original.updatedAt);
+      //   },
+      //   Cell: ({ value }) => {
+      //     return format(new Date(value), 'dd/MM/yyyy');
+      //   },
+      // },
+      {
+        Header: 'Date Created',
         accessor: 'createdAt',
-        width: 167,
-        sortType: (a, b) => {
-          return customSorting(a.original.createdAt, b.original.createdAt);
-        },
-        Cell: ({ value }) => {
-          return format(new Date(value), 'dd/MM/yyyy');
-        },
+        width: 10,
+        isVisible:"false"
       },
       {
-        Header: 'UPDATED DATE',
-        accessor: 'updatedAt',
-        width: 187,
-        sortType: (a, b) => {
-          return customSorting(a.original.updatedAt, b.original.updatedAt);
-        },
-        Cell: ({ value }) => {
-          return format(new Date(value), 'dd/MM/yyyy');
-        },
+        Header: 'CONTACT NO',
+        accessor: 'contactNumber',
+        sticky: 'left',
+        width: 200,
+        // sortType: (a, b) => {
+        //   return customSorting(a.original.contactNumber, b.original.contactNumber);
+        // },
       },
       {
         Header: 'STATUS',
@@ -249,23 +196,35 @@ function CompleteTable({ data }) {
       },
       {
         Header: 'ACTION',
-        accessor: 'action',
         width: 120,
         Cell: ({ row }) => (
-          <a
-            {...(row.original.status === 'Deleted'
-              ? { className: 'delete-icon disableDeleteBtn' }
-              : { className: 'delete-icon ' })}
-            onClick={(e) => {
+          <div>
+          <img
+            className={`p-2 pointer ${
+              row.original.status === 'deleted' ? 'disableEditBtn' : ''
+            }`}
+            src={Edit}
+            alt='Evoke Technologies'
+            height='31px'
+            onClick={() => {
+              getEditForm(row);
+            }}
+          />
+          <img
+            className={`p-2 pointer ${
+              row.original.status === 'deleted' ? 'disableDeleteBtn' : ''
+            }`}
+            src={DeleteImg}
+            alt='Evoke Technologies'
+            onClick={() => {
               setRowOriginal({
                 ...row.original,
                 deleteReason: '',
               });
               setIsModalOpen(true);
             }}
-          >
-            <img src={DeleteImg} alt='Evoke Technologies' />
-          </a>
+          />
+        </div>
         ),
       },
     ],
@@ -292,11 +251,11 @@ function CompleteTable({ data }) {
       columns,
       data: filteredData,
       initialState: {
-        pageSize: 5, 
-        hiddenColumns:JSON.parse(getUser()).role === guest? ['action']:[''],
+        pageSize: 5,
+        hiddenColumns:['createdAt'],
         sortBy: [
           {
-            id: 'updatedAt',
+            id: 'createdAt',
             desc: true,
           },
         ],
@@ -322,61 +281,17 @@ function CompleteTable({ data }) {
   }
 
   useEffect(() => {
-      if(data.length>0){
-        if (filteredTableData.length && globalFilter && searchValue){
-          setFilteredData(addSerialNo(filteredTableData, true));
-          setNoRecords(false);
-          setEnteredValue('')
-        } else if(filteredTableData.length===0 && searchValue===''){
-          setNoRecords(true);
-        }
-        else if(filteredTableData.length===0 && searchValue!==''){
-          setNoRecords(true);
-        }else if(filteredTableData.length && searchValue===''){
-          handleSelectedStatus(filterValue);
-        }
-      }
+    if (filteredTableData.length && globalFilter && searchValue)
+      setFilteredData(addSerialNo(filteredTableData, true));
+    else if (searchValue === '')
+      setFilteredData(
+        addSerialNo(data.filter((item) => item.status !== 'Deleted'))
+      );
   }, [searchValue]);
 
- 
-
   return (
-    <div>
+    <div class="col-md-12 ms-sm-auto col-lg-12 custom-scroll">
       <br></br>
-      <div className='filter-row'>
-        <h5>PROJECT DETAILS</h5>
-        <div>
-          <FormControl className={classes.formControl}>
-            <Select
-              // defaultValue='Active'
-              onChange={(e) => {
-                handleSelectedStatus(e.target.value);
-                setSearchText('empty')
-              }}
-              // displayEmpty
-              value={filterValue}
-              className={classes.selectEmpty}
-              inputProps={{ 'aria-label': 'Without label' }}
-            >
-              <MenuItem value='Active'>Active</MenuItem>
-              <MenuItem value='Pending'>Pending</MenuItem>
-              <MenuItem value='Submitted'>Submitted</MenuItem>
-              <MenuItem value='Approved'>Approved</MenuItem>
-              <MenuItem value='Deleted'>Deleted</MenuItem>
-              <MenuItem value='All Project'>All Projects</MenuItem>
-            </Select>
-          </FormControl>
-          <GlobalFilter 
-            setFilter={(value) => {
-              setGlobalFilter(value);
-                setSearchValue(value);
-                setSearchText('')
-            }}
-            removeSearchValue={emptySearch}
-          />
-        </div>
-      </div>
-
       <div>
         <Modal
           isOpen={isModalOpen}
@@ -490,17 +405,7 @@ function CompleteTable({ data }) {
                   {row.cells.map((cell) => {
                     let style = {};
                     style = { textAlign: 'left' };
-                    if (cell.column.id === 'status') {
-                      if (cell.value === 'Pending') {
-                        style = { color: '#F16A21', textAlign: 'left' };
-                      } else if (cell.value === 'Submitted') {
-                        style = { color: '#0066FF', textAlign: 'left' };
-                      } else if (cell.value === 'Completed') {
-                        style = { color: '#13BC86', textAlign: 'left' };
-                      } else if (cell.value === 'Approved') {
-                        style = { color: 'green', textAlign: 'left' };
-                      }
-                    }
+                   
                     return (
                       <td {...cell.getCellProps({ style })}>
                         {cell.render('Cell')}
@@ -542,7 +447,7 @@ function CompleteTable({ data }) {
               <img src={rightIcon} alt='next' />
             </button>{' '}
           </div>}
-          {!noRecords && <input className='pagination-search'
+          <input className='pagination-search'
           type= 'number'
            onChange={(e) => {
             const value= e.target.value-1;
@@ -557,7 +462,7 @@ function CompleteTable({ data }) {
             }
           } }
           value={enteredValue}
-          />}
+          />
         </div>
       </div>
     </div>

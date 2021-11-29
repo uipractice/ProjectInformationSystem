@@ -194,7 +194,7 @@ function ClientForm() {
           if (window.location.hash.indexOf('client-form') !== -1) {
             setClientFormSubmitted(true);
           } else {
-            history.push('/#/admin');
+            history.push('/#/dashboard');
           }
           toast.success('Form Saved Successfully!');
         })

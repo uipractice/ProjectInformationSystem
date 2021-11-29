@@ -7,6 +7,7 @@ import { saveAuthToken } from "../utils/authToken";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { saveUser } from "../utils/userDetails";
 
 toast.configure();
 
@@ -42,7 +43,8 @@ function Login() {
       .then((res) => {
         if (res.data.accessToken) {
           saveAuthToken(res.data.accessToken)
-          history.push("/admin");
+          saveUser(JSON.stringify(res.data.user))
+          history.push("/dashboard");
         } else {
           toast.error(res.data.message + ` ${"!!"}`, {
             autoClose: 2000,
