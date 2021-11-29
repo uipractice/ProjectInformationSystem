@@ -509,7 +509,7 @@ function CompleteTable({ data }) {
                   })}
                 </tr>
               );
-            }): <tr style={{textAlign: 'center'}}><span>No Records found</span></tr>}
+            }): <tr style={{textAlign: 'center'}}><span>No data found</span></tr>}
           </tbody>
         </table>
         <div className='table-pagination'>

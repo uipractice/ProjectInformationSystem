@@ -29,8 +29,8 @@ const FeedBackModal = (props) => {
       </Button>
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
-          <h3>Hello Friends</h3>
-          <p>Your review will help us to provide you better experience</p>
+          <h3>Hello Friends,</h3>
+          <p>Your review will help us to provide you better experience.</p>
           <textarea
             type='text'
             autoFocus={true}
@@ -40,7 +40,7 @@ const FeedBackModal = (props) => {
             value={props.feedbackText}
           />
           <span style={{ fontSize: '10px' }}>
-            Note: *Allows only alphabetics and Numerics
+            Note: *Please use alphabet and numbers
           </span>
         </DialogContentText>
       </DialogContent>
