@@ -25,7 +25,6 @@ import { getUser } from "../utils/userDetails";
   const [deleteCount, setDeleteCount] = useState('');
   const [showInternalProject, setShowInternalProject] = useState(false);
   const [showClientProject, setShowClientProject] = useState(true);
-  console.log(JSON.parse(getUser()).role)
   useEffect(() => {
     axios(getApiUrl(`clientInfo`))
       .then((res) => {
@@ -57,6 +56,7 @@ import { getUser } from "../utils/userDetails";
   }, [deleteCount, showClientProject, showInternalProject]);
 
   const showInternalContent = (client, internal) => {
+    
     if (client) {
       setShowClientProject(client);
       setShowInternalProject(internal);
@@ -64,6 +64,7 @@ import { getUser } from "../utils/userDetails";
       setShowInternalProject(internal);
       setShowClientProject(client);
     }
+    setData([])
   };
   return (
     <div>
