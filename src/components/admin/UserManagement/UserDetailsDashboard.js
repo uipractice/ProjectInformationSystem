@@ -6,60 +6,87 @@ import NavBar from '../NavBar';
 import Footer from '../Footer';
 import UserTable from '../UserManagement/UserTable';
 import AddUserModal from './AddUserModal';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import './UserDetails.css';
-
+import Arrow from '../../../assets/images/Arrow.svg';
+import UserManagement from '../../../assets/images/UserManagement.png';
 
 const UserDetailsDashboard = () => {
-    const [userDetails, setUserDetails] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [editModal, setEditModal] = useState(false);
-    const [editData, setEditData] = useState({});
-    
-    const history = useHistory();
-    const openModal = () => {
-       setShowModal(true);
-    }
-    const getUserDetails = () => {
-      axios.get(getApiUrl(`users`))
-    .then((res) => {
-      setUserDetails(res)
-    })
-    .catch((err) => err);
-   }
+  const [userDetails, setUserDetails] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [editData, setEditData] = useState({});
 
-   useEffect(()=>{
+  const history = useHistory();
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const getUserDetails = () => {
+    axios
+      .get(getApiUrl(`users`))
+      .then((res) => {
+        setUserDetails(res);
+      })
+      .catch((err) => err);
+  };
+
+  useEffect(() => {
     getUserDetails();
-}, []);
- 
-const getUpdatedData = ()=>{
-  setShowModal(false);
-  setEditModal(false);
-  getUserDetails();
-  }
+  }, []);
 
+  const getUpdatedData = () => {
+    setShowModal(false);
+    setEditModal(false);
+    getUserDetails();
+  };
 
   return (
     <div>
-       <NavBar title={'USER MANAGEMENT'}/>
-       <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 userDetail'>
-       <button
-            type='button'
-            className='btn work_btn work_btn_blue center modal-button'
-            onClick={()=>history.push('/dashboard')}
-            >Dashboard</button>
-           <button
-            type='button'
-            className='btn work_btn work_btn_blue center modal-button' onClick={() => openModal()}>Add User</button>
-       </div>
-       {showModal && <AddUserModal isOpen={showModal}  closeModal={() => {
+      <NavBar />
+      <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 userDetail'>
+        <div
+          type='button'
+          onClick={() => history.push('/dashboard')}
+        >
+         <img src={Arrow} alt='User' />
+         <img src={UserManagement} alt='User Management' style ={{paddingLeft:'10px'}}/>
+        </div>
+        <button
+          type='button'
+          className='btn work_btn work_btn_blue center modal-button'
+          onClick={() => openModal()}
+        >
+          Add User
+        </button>
+      </div>
+      {showModal && (
+        <AddUserModal
+          isOpen={showModal}
+          closeModal={() => {
             setShowModal(false);
-          }} updateToolStatus={() => getUpdatedData()}/>}
-       {editModal && <AddUserModal isOpen={editModal}  updateToolStatus={() => getUpdatedData()} updatedData={editData} closeModal={() => setEditModal(false)}/>}
-       {userDetails && userDetails.data && userDetails.data.length > 0 &&  <UserTable 
-       data ={userDetails.data} getEditForm={(data) => { setEditModal(true); setEditData(data)}} />}
-       <Footer />
-     </div>
+          }}
+          updateToolStatus={() => getUpdatedData()}
+        />
+      )}
+      {editModal && (
+        <AddUserModal
+          isOpen={editModal}
+          updateToolStatus={() => getUpdatedData()}
+          updatedData={editData}
+          closeModal={() => setEditModal(false)}
+        />
+      )}
+      {userDetails && userDetails.data && userDetails.data.length > 0 && (
+        <UserTable
+          data={userDetails.data}
+          getEditForm={(data) => {
+            setEditModal(true);
+            setEditData(data);
+          }}
+        />
+      )}
+      <Footer />
+    </div>
   );
 };
 
