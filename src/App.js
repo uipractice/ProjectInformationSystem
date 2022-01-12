@@ -28,6 +28,8 @@ function App() {
           <Route exact path='/'>
             <Login />
           </Route>
+          <Route path='/client-form/:id' component={ClientForm}>
+          </Route>
           <PrivateRoute path='/admin' component={AdminDashboard}>
           </PrivateRoute>
           <PrivateRoute path='/internal' component={InternalClient}>
@@ -37,8 +39,6 @@ function App() {
           <PrivateRoute path='/edit/:id' component={EditViewForm}>
           </PrivateRoute>
           <PrivateRoute path='/form/:id' component={ClientForm}>
-          </PrivateRoute>
-          <PrivateRoute path='/client-form/:id' component={ClientForm}>
           </PrivateRoute>
         </Switch>
       </Router>
