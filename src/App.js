@@ -9,7 +9,6 @@ import InternalClient from './components/admin/InternalClient';
 import UserDetailsDashboard from './components/admin/UserManagement/UserDetailsDashboard';
 import { getAuthToken } from './components/utils/authToken';
 import { render } from '@testing-library/react';
-
 const PrivateRoute=({component:Component, ...rest})=>{
   const isAuthenticated=getAuthToken()?true:false;
 return(
@@ -20,7 +19,6 @@ return(
   )} />
 )
 }
-
 function App() {
   return (
     <div className='App'>
@@ -28,6 +26,8 @@ function App() {
         <Switch>
           <Route exact path='/'>
             <Login />
+          </Route>
+          <Route path='/client-form/:id' component={ClientForm}>
           </Route>
           <PrivateRoute path='/dashboard' component={AdminDashboard}>
           </PrivateRoute>
@@ -39,8 +39,6 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path='/form/:id' component={ClientForm}>
           </PrivateRoute>
-          <PrivateRoute path='/client-form/:id' component={ClientForm}>
-          </PrivateRoute>
           <PrivateRoute path='/user-details' component={UserDetailsDashboard}>
           </PrivateRoute>
         </Switch>
@@ -48,5 +46,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
