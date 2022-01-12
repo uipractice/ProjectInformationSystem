@@ -12,8 +12,10 @@ import IconActive from '../../assets/images/active.svg';
 import NavBar from './NavBar';
 import { getApiUrl } from '../utils/helper';
 import InternalClient from './InternalClient';
+import { superAdmin } from '../constants/constants';
+import { getUser } from "../utils/userDetails";
 
-export default function AdminDashboard() {
+ function AdminDashboard() {
   const [data, setData] = useState([]);
   const [totalCount, setTotalCount] = useState('');
   const [pendingCount, setPendingCount] = useState('');
@@ -23,7 +25,6 @@ export default function AdminDashboard() {
   const [deleteCount, setDeleteCount] = useState('');
   const [showInternalProject, setShowInternalProject] = useState(false);
   const [showClientProject, setShowClientProject] = useState(true);
-
   useEffect(() => {
     axios(getApiUrl(`clientInfo`))
       .then((res) => {
@@ -55,6 +56,7 @@ export default function AdminDashboard() {
   }, [deleteCount, showClientProject, showInternalProject]);
 
   const showInternalContent = (client, internal) => {
+    
     if (client) {
       setShowClientProject(client);
       setShowInternalProject(internal);
@@ -62,20 +64,24 @@ export default function AdminDashboard() {
       setShowInternalProject(internal);
       setShowClientProject(client);
     }
+    setData([])
   };
   return (
     <div>
-      <NavBar validate={true} />
+      <NavBar validate={true} title={'DASHBOARD'}/>
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-12 ms-sm-auto col-lg-12 custom-scroll'>
-            <ShareButtonSection
-              showInternalView={(client, internal) =>
-                showInternalContent(client, internal)
-              }
-              internal={showInternalProject}
-              client={showClientProject}
-            />
+             {JSON.parse(getUser()).role=== superAdmin && 
+                        <ShareButtonSection
+                        showInternalView={(client, internal) =>
+                          showInternalContent(client, internal)
+                        }
+                        internal={showInternalProject}
+                        client={showClientProject}
+                      />
+            } 
+
             {showClientProject && !showInternalProject && (
               <div className='row'>
                 <RowHeaderValue
@@ -122,3 +128,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+export default AdminDashboard

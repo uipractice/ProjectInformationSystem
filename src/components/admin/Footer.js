@@ -49,7 +49,7 @@ const Footer = () => {
         .catch((err) => console.log(err.response));
 
       setTimeout(() => {
-        history.push('/admin');
+        history.push('/dashboard');
       }, 2000);
     }
   };
