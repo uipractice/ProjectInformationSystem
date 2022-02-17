@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Modal } from 'react-bootstrap';
+import { ToggleButtonGroup, ToggleButton, Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './sample.css';
@@ -14,19 +14,6 @@ import moment from 'moment';
 toast.configure();
 
 const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false, updateToolStatus }) => {
-
-  console.log("updated data------------------", updatedData)
-
-  // default fotm data
-  // const defaultFormData = {
-  //   userName: updatedData ? updatedData.values.userName : '',
-  //   emailId: updatedData ? updatedData.values.emailId : '',
-  //   role: updatedData ? updatedData.values.role : '',
-  //   team: updatedData ? updatedData.values.team : "",
-  //   status: updatedData ? updatedData.values.status : '',
-  //   contactNumber: updatedData ? updatedData.values.contactNumber : '',
-  //   password: '',
-  // };
 
   const defaultFormData1 = {
     userId: updatedData ? updatedData.values.userId : '',
@@ -196,10 +183,10 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
       password: '',
       userName: '',
       contactNumber: '',
-      practice:  '',
+      practice: '',
       practiceName: '',
-      pset:  [],
-      status:  '',
+      pset: [],
+      status: '',
       role: '',
     })
   }
@@ -218,6 +205,263 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
       </Modal.Header>
       <Modal.Body>
         <form>
+          <div className='row'>
+            <div className='form-group col-md-6'>
+              <label htmlFor='softwareType'>Role *</label>
+              <ToggleButtonGroup
+                type='radio'
+                name='roleType'
+                value={state?.role}
+                disabled={isEdit}
+                onChange={(val) => setState({ ...state, role: val })}
+              >
+                <ToggleButton
+                  disabled={isEdit}
+                  checked={state?.role === 'superAdmin'}
+                  value={'superAdmin'}
+                  className='superAdmin'
+                >
+                  Super Admin
+                </ToggleButton>
+                <ToggleButton
+                  disabled={isEdit}
+                  checked={state?.role === 'Admin'}
+                  value={'Admin'}
+                  className='Admin'
+                >
+                  Admin
+                </ToggleButton>
+                <ToggleButton
+                  disabled={isEdit}
+                  checked={state?.role === 'Guest'}
+                  value={'Guest'}
+                  className='Guest'
+                >
+                  Guest
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            <div className='form-group col-md-6'>
+              <label htmlFor='softwareName'>Name</label>
+              <input
+                type='text'
+                className='form-control'
+                onChange={handleOnChange}
+                name='userName'
+                value={state ? state.userName : ''}
+              />
+            </div>
+          </div>
+          <div className='row'>
+            <div className='form-group col-md-6'>
+              <label htmlFor='email'>User ID/Email Address</label>
+              <input
+                type='text'
+                className='form-control'
+                onChange={(e) => { handleOnChange(e, true) }}
+                name='userId'
+                value={state ? state.userId : ''}
+              />
+            </div>
+            <div className='form-group col-md-6'>
+              <label htmlFor='conatactNumber'>Contact No.</label>
+              <input
+                type='text'
+                className='form-control'
+                onChange={(e) => handleOnChange(e)}
+                name='contactNumber'
+                disabled={isEdit}
+                value={state ? state.contactNumber : ''}
+              />
+            </div>
+          </div>
+          <div className='row'>
+            <div className='form-group col-md-6'>
+              <label>Status * </label>
+              <Autocomplete
+                options={[
+                  { label: 'Active', value: 1 },
+                  { label: 'InActive', value: 2 },
+                ]}
+                name='status'
+                value={state ? state.status : ''}
+                getOptionLabel={(option) => state.status && !option.label ? option : option.label}
+                getOptionSelected={(option, value) => option.value === value.value}
+                onChange={(event, value) => handleOnDropdownChange('status', value)}
+                renderInput={(params) => (
+                  <TextField {...params} variant='outlined' name="status" />
+                )}
+              />
+            </div>
+          <div className='form-group col-md-6'>
+          <label htmlFor='password'>Password *</label>
+              <input
+                type='password'
+                className='form-control'
+                onChange={handleOnChange}
+                name='password'
+                value={state ? state.password : ''}
+            />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='form-group col-md-6'>
+            <label htmlFor='email'>Practice</label>
+            <Autocomplete
+              options={[
+                { label: 'BI Team', value: 1 },
+                { label: 'Big Data Team', value: 2 },
+                { label: 'Block Chain Team', value: 3 },
+                { label: 'BPM Team', value: 4 },
+                { label: 'BPO Team', value: 5 },
+                { label: 'Data Science Team', value: 6 },
+                { label: 'Delivery Team', value: 7 },
+                { label: 'Java Team', value: 8 },
+                { label: 'Microsoft Team', value: 9 },
+                { label: 'Mobility Team', value: 10 },
+                { label: 'Open Source Team', value: 11 },
+                { label: 'Oracle Team', value: 12 },
+                { label: 'Pega Team', value: 13 },
+                { label: 'QA Team', value: 14 },
+                { label: 'RPA Team', value: 15 },
+                { label: 'Sales Force Team', value: 16 },
+                { label: 'Service Now Team', value: 17 },
+                { label: 'Support Team', value: 18 },
+                { label: 'UI Team', value: 19 },
+                { label: 'Other', value: 20 },
+              ]}
+              value={state.practice}
+            name="practice"
+            getOptionLabel={(option) => state.practice && !option.label ? option : option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
+            onChange={(event, value) => handleOnDropdownChange('practice', value)}
+            renderInput={(params) =>
+              <TextField {...params} variant='outlined' name="practice" />
+              }
+            />
+          </div>
+          <div className='form-group col-md-6'>
+            <label htmlFor='practiceName'>Practice Name</label>
+            <input
+            type='text'
+            className='form-control'
+            onChange={handleOnChange}
+            name='practiceName'
+            value={state ? state.practiceName : ''}
+          />
+          </div>
+        </div>
+        <div className='row form-group dashed-box'>
+          {/* <div className='row form-group'> */}
+          <label htmlFor='actionsForUser'>Select  Actions user can perform </label>
+          <div className='row form-group col-md-12 '>
+            <div className='form-group col-md-3'>
+              <input
+                className='checkBox'
+                name='shareProjectForm'
+                type="checkbox"
+                defaultChecked={updatedData ? updatedData.values.pset.includes("shareProjectForm")?true:false :false}
+                onClick={(e) => { handlePset(e) }}
+              />
+              <label>Share Project Form</label>
+            </div>
+
+            <div className='form-group col-md-3'>
+              <input
+                className='checkBox'
+                name='sendRemainder'
+                type="checkbox"
+                defaultChecked={updatedData ? updatedData.values.pset.includes("sendRemainder")?true:false :false}
+                onClick={(e) => { handlePset(e) }}
+                
+
+              /> <label>Send Remainder</label>
+            </div>
+            <div className='form-group col-md-3'>
+              <input
+                className='checkBox'
+                name='fillForm'
+                type="checkbox"
+                defaultChecked={updatedData ? updatedData.values.pset.includes("fillForm")?true:false :false}
+                onClick={(e) => { handlePset(e) }}
+                
+
+              /> <label>Fill Form</label>
+            </div>
+            <div className='form-group col-md-3'>
+              <input
+                className='checkBox'
+                name='approve'
+                type="checkbox"
+                defaultChecked={updatedData ? updatedData.values.pset.includes("approve")?true:false :false}
+                onClick={(e) => { handlePset(e) }}
+                
+
+              /> <label>Approve</label>
+            </div>
+
+          </div>
+          <div className='row form-group col-md-12 '>
+            <div className='form-group col-md-3'>
+              <input
+                className='checkBox'
+                name='reshareProjectForm'
+                type="checkbox"
+                defaultChecked={updatedData ? updatedData.values.pset.includes("reshareProjectForm")?true:false :false}
+                defaultChecked={false}
+                onClick={(e) => { handlePset(e) }}
+                
+
+              /> <label>ReShare Project Form</label>
+            </div>
+            <div className='form-group col-md-3'>
+              <input
+                className='checkBox'
+                name='editForm'
+                type="checkbox"
+                defaultChecked={updatedData ? updatedData.values.pset.includes("editForm")?true:false :false}
+                onClick={(e) => { handlePset(e) }}
+                
+
+              /> <label>Edit Form</label>
+            </div>
+            <div className='form-group col-md-3'>
+              <input
+                className='checkBox'
+                name='deleteForm'
+                type="checkbox"
+                defaultChecked={updatedData ? updatedData.values.pset.includes("deleteForm")?true:false :false}
+                onClick={(e) => { handlePset(e) }}
+                
+
+              /><label>Delete Form</label>
+            </div>
+          </div>
+        </div>
+
+        <div className='form-group row share '>
+          <div className='col-md-12 text-center'>
+            <button
+              className='form-control btn btn-primary'
+              onClick={(e) => handleReset(e)}
+            >
+              Reset
+            </button>
+            <button
+              className='form-control btn btn-primary share-btn'
+              onClick={(e) => handleSubmit(e)}
+              disabled={
+                Object.keys(state).some((key) =>
+                  state[key] === ''
+                )
+              }
+            >
+              {data ? 'Update' : 'Add'}
+            </button>
+          </div>
+        </div>
+      </form>
+      {/* <form>
           <div className='row'>
             <div className='form-group col-md-4'>
               <label htmlFor='softwareName'>Name *</label>
@@ -272,212 +516,132 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                 cols='50'
               />
             </div> */}
-          </div>
-          <div className='row'>
-            <div className='form-group col-md-4'>
-              <label>Practice * </label>
-              <Autocomplete
-                options={[
-                  { label: 'BI Team', value: 1 },
-                  { label: 'Big Data Team', value: 2 },
-                  { label: 'Block Chain Team', value: 3 },
-                  { label: 'BPM Team', value: 4 },
-                  { label: 'BPO Team', value: 5 },
-                  { label: 'Data Science Team', value: 6 },
-                  { label: 'Delivery Team', value: 7 },
-                  { label: 'Java Team', value: 8 },
-                  { label: 'Microsoft Team', value: 9 },
-                  { label: 'Mobility Team', value: 10 },
-                  { label: 'Open Source Team', value: 11 },
-                  { label: 'Oracle Team', value: 12 },
-                  { label: 'Pega Team', value: 13 },
-                  { label: 'QA Team', value: 14 },
-                  { label: 'RPA Team', value: 15 },
-                  { label: 'Sales Force Team', value: 16 },
-                  { label: 'Service Now Team', value: 17 },
-                  { label: 'Support Team', value: 18 },
-                  { label: 'UI Team', value: 19 },
-                  { label: 'Other', value: 20 },
-                ]}
-                value={state.practice}
-                name="practice"
-                getOptionLabel={(option) => state.practice && !option.label ? option : option.label}
-                getOptionSelected={(option, value) => option.value === value.value}
-                onChange={(event, value) => handleOnDropdownChange('practice', value)}
-                renderInput={(params) =>
-                  <TextField {...params} variant='outlined' name="practice" />
-                }
-              />
-            </div>
-            <div className='form-group col-md-4'>
-              <label htmlFor='softwareName'>Practice Name *</label>
-              <input
-                type='text'
-                className='form-control'
-                onChange={handleOnChange}
-                name='practiceName'
-                value={state ? state.practiceName : ''}
-              />
-            </div>
+      {/* </div> */}
+      {/* <div className='row'>
+        <div className='form-group col-md-4'>
+          <label>Practice * </label>
+          <Autocomplete
+            options={[
+              { label: 'BI Team', value: 1 },
+              { label: 'Big Data Team', value: 2 },
+              { label: 'Block Chain Team', value: 3 },
+              { label: 'BPM Team', value: 4 },
+              { label: 'BPO Team', value: 5 },
+              { label: 'Data Science Team', value: 6 },
+              { label: 'Delivery Team', value: 7 },
+              { label: 'Java Team', value: 8 },
+              { label: 'Microsoft Team', value: 9 },
+              { label: 'Mobility Team', value: 10 },
+              { label: 'Open Source Team', value: 11 },
+              { label: 'Oracle Team', value: 12 },
+              { label: 'Pega Team', value: 13 },
+              { label: 'QA Team', value: 14 },
+              { label: 'RPA Team', value: 15 },
+              { label: 'Sales Force Team', value: 16 },
+              { label: 'Service Now Team', value: 17 },
+              { label: 'Support Team', value: 18 },
+              { label: 'UI Team', value: 19 },
+              { label: 'Other', value: 20 },
+            ]}
+            value={state.practice}
+            name="practice"
+            getOptionLabel={(option) => state.practice && !option.label ? option : option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
+            onChange={(event, value) => handleOnDropdownChange('practice', value)}
+            renderInput={(params) =>
+              <TextField {...params} variant='outlined' name="practice" />
+            }
+          />
+        </div>
+        <div className='form-group col-md-4'>
+          <label htmlFor='softwareName'>Practice Name *</label>
+          <input
+            type='text'
+            className='form-control'
+            onChange={handleOnChange}
+            name='practiceName'
+            value={state ? state.practiceName : ''}
+          />
+        </div>
 
-            <div className='form-group col-md-4'>
-              <label htmlFor='contactNumber'>Contact Number *</label>
-              <input
-                type='text'
-                className='form-control'
-                onChange={(e) => handleOnChange(e)}
-                name='contactNumber'
-                disabled={isEdit}
-                value={state ? state.contactNumber : ''}
-              />
-            </div>
+        <div className='form-group col-md-4'>
+          <label htmlFor='contactNumber'>Contact Number *</label>
+          <input
+            type='text'
+            className='form-control'
+            onChange={(e) => handleOnChange(e)}
+            name='contactNumber'
+            disabled={isEdit}
+            value={state ? state.contactNumber : ''}
+          />
+        </div>
 
-          </div>
+      </div> */}
 
-          <div className='row'>
-            <div className='form-group col-md-4'>
-              <label>Role * </label>
-              <Autocomplete
-                options={[
-                  { label: 'Admin', value: 1 },
-                  { label: 'SuperAdmin', value: 2 },
-                  { label: 'Guest', value: 3 },
-                ]}
-                value={state ? state.role : ''}
-                name="role"
-                getOptionLabel={(option) => state.role && !option.label ? option : option.label}
-                getOptionSelected={(option, value) => option.value === value.value}
-                onChange={(event, value) => handleOnDropdownChange('role', value)}
-                renderInput={(params) => (
-                  <TextField {...params} variant='outlined' name="role" />
-                )}
-              />
-            </div>
-            <div className='form-group col-md-4'>
-              <label>Status * </label>
-              <Autocomplete
-                options={[
-                  { label: 'Active', value: 1 },
-                  { label: 'InActive', value: 2 },
-                ]}
-                name='status'
-                value={state ? state.status : ''}
-                getOptionLabel={(option) => state.status && !option.label ? option : option.label}
-                getOptionSelected={(option, value) => option.value === value.value}
-                onChange={(event, value) => handleOnDropdownChange('status', value)}
-                renderInput={(params) => (
-                  <TextField {...params} variant='outlined' name="status" />
-                )}
-              />
-            </div>
-          </div>
+      {/* <div className='row'>
+        <div className='form-group col-md-4'>
+          <label>Role * </label>
+          <Autocomplete
+            options={[
+              { label: 'Admin', value: 1 },
+              { label: 'SuperAdmin', value: 2 },
+              { label: 'Guest', value: 3 },
+            ]}
+            value={state ? state.role : ''}
+            name="role"
+            getOptionLabel={(option) => state.role && !option.label ? option : option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
+            onChange={(event, value) => handleOnDropdownChange('role', value)}
+            renderInput={(params) => (
+              <TextField {...params} variant='outlined' name="role" />
+            )}
+          />
+        </div>
+        <div className='form-group col-md-4'>
+          <label>Status * </label>
+          <Autocomplete
+            options={[
+              { label: 'Active', value: 1 },
+              { label: 'InActive', value: 2 },
+            ]}
+            name='status'
+            value={state ? state.status : ''}
+            getOptionLabel={(option) => state.status && !option.label ? option : option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
+            onChange={(event, value) => handleOnDropdownChange('status', value)}
+            renderInput={(params) => (
+              <TextField {...params} variant='outlined' name="status" />
+            )}
+          />
+        </div>
+      </div> */}
 
-          <div className='row'>
-            <div className='form-group col-md-12'>
-              <label>Select Actions User Can Perform</label>
-              <div className='dashed-box'>
-                <div className='row '>
-                  <div className='form-group col-md-3'>
-                    <input
-                      className='checkBox'
-                      name='shareProjectForm'
-                      type="checkbox"
-                      onClick={(e) => { handlePset(e) }}
-                      value={state?.shareProjectForm}
-                    />
-                    <label>Share Project Form</label>
-                  </div>
-                  <div className='form-group col-md-3'>
-                    <input
-                      className='checkBox'
-                      name='sendRemainder'
-                      type="checkbox"
-                      onClick={(e) => { handlePset(e) }}
-                      value={state?.sendRemainder}
 
-                    /> <label>Send Remainder</label>
-                  </div>
-                  <div className='form-group col-md-3'>
-                    <input
-                      className='checkBox'
-                      name='fillForm'
-                      type="checkbox"
-                      onClick={(e) => { handlePset(e) }}
-                      value={state?.fillForm}
 
-                    /> <label>Fill Form</label>
-                  </div>
-                  <div className='form-group col-md-3'>
-                    <input
-                      className='checkBox'
-                      name='approve'
-                      type="checkbox"
-                      onClick={(e) => { handlePset(e) }}
-                      value={state?.approve}
-
-                    /> <label>Approve</label>
-                  </div>
-
-                  <div className='form-group col-md-3'>
-                    <input
-                      className='checkBox'
-                      name='reshareProjectForm'
-                      type="checkbox"
-                      onClick={(e) => { handlePset(e) }}
-                      value={state?.reshareProjectForm}
-
-                    /> <label>ReShare Project Form</label>
-                  </div>
-                  <div className='form-group col-md-3'>
-                    <input
-                      className='checkBox'
-                      name='editForm'
-                      type="checkbox"
-                      onClick={(e) => { handlePset(e) }}
-                      value={state?.editForm}
-
-                    /> <label>Edit Form</label>
-                  </div>
-                  <div className='form-group col-md-3'>
-                    <input
-                      className='checkBox'
-                      name='deleteForm'
-                      type="checkbox"
-                      onClick={(e) => { handlePset(e) }}
-                      value={state?.deleteForm}
-
-                    /><label>Delete Form</label>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <div className='form-group row share '>
-            <div className='col-md-12 text-center'>
-              <button
-                className='form-control btn btn-primary'
-                onClick={(e) => handleReset(e)}
-              >
-                Reset
-              </button>
-              <button
-                className='form-control btn btn-primary share-btn'
-                onClick={(e) => handleSubmit(e)}
-                disabled={
-                  Object.keys(state).some((key) =>
-                    state[key] === ''
-                  )
-                }
-              >
-                {data ? 'Update' : 'Save'}
-              </button>
-            </div>
-          </div>
-        </form>
-      </Modal.Body>
-    </Modal>
+      {/* <div className='form-group row share '>
+        <div className='col-md-12 text-center'>
+          <button
+            className='form-control btn btn-primary'
+            onClick={(e) => handleReset(e)}
+          >
+            Reset
+          </button>
+          <button
+            className='form-control btn btn-primary share-btn'
+            onClick={(e) => handleSubmit(e)}
+            disabled={
+              Object.keys(state).some((key) =>
+                state[key] === ''
+              )
+            }
+          >
+            {data ? 'Update' : 'Save'}
+          </button>
+        </div>
+      </div> */}
+      {/* </form>  */}
+    </Modal.Body >
+    </Modal >
   );
 }
 export default AddUserModal;

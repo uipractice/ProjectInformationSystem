@@ -41,13 +41,16 @@ const getUpdatedData = ()=>{
 
   return (
     <div>
-       <NavBar title={'USER MANAGEMENT'}/>
+       <NavBar/>
        <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 userDetail'>
-       <button
+       <label className='btn_ums'
+       onClick={()=>history.push('/dashboard')}
+       > USER MANAGEMENT SYSTEM </label>
+       {/* <button
             type='button'
             className='btn work_btn work_btn_blue center modal-button'
             onClick={()=>history.push('/dashboard')}
-            >Dashboard</button>
+            >Dashboard</button> */}
            <button
             type='button'
             className='btn work_btn work_btn_blue center modal-button' onClick={() => openModal()}>Add User</button>
