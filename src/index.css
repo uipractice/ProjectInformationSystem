@@ -83,6 +83,19 @@ a:focus {
   text-align: left;
   margin-bottom: 0;
 }
+.btn_ums {
+  width: 246.14px;
+  height: 24.17px;
+  left: 44.12px;
+  top: calc(50% - 24.17px/2 - 256.9px);
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+}
 
 .work_btn {
   min-width: 237px;

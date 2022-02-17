@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import axios from 'axios';
-import { Modal } from 'react-bootstrap';
+import { ToggleButtonGroup, ToggleButton, Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './sample.css';
@@ -180,6 +180,230 @@ function handleUpdate() {
       </Modal.Header>
       <Modal.Body>
         <form>
+        <div className='row'>
+          <div className='form-group col-md-6'>
+            <label htmlFor='softwareType'>Role *</label>
+            <ToggleButtonGroup
+              type='radio'
+              name='roleType'
+              value={state?.roleType}
+              disabled={isEdit}
+              onChange={(val) => setState({ ...state, roleType: val })}
+            >
+              <ToggleButton
+                  disabled={isEdit}
+                  checked={state?.roleType === 'superAdmin'}
+                  value={'superAdmin'}
+                  className='superAdmin'
+              >
+                  Super Admin
+              </ToggleButton>
+              <ToggleButton
+                disabled={isEdit}
+                checked={state?.roleType === 'Admin'}
+                value={'Admin'}
+                className='Admin'
+              >
+                  Admin
+              </ToggleButton>
+              <ToggleButton
+                disabled={isEdit}
+                checked={state?.roleType === 'Guest'}
+                value={'Guest'}
+                className='Guest'
+              >
+                  Guest
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+          <div className='form-group col-md-6'>
+            <label htmlFor='softwareName'>Name</label>
+            <input
+              type='text'
+              className='form-control'
+              onChange={handleOnChange}
+              name='name'
+              disabled={isEdit}
+              value={state?.name}
+            />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='form-group col-md-6'>
+            <label htmlFor='email'>User ID/Email Address</label>   
+            <input
+              type='text'
+              className='form-control'
+              onChange={handleOnChange}
+              name='email'
+              disabled={isEdit}
+              value={state?.email}
+            />
+          </div>
+          <div className='form-group col-md-6'>
+            <label htmlFor='conatactNumber'>Contact No.</label>
+            <input
+              type='numbers'
+              className='form-control'
+              onChange={(e) => handleOnChange(e)}
+              name='contactNumber'
+              disabled={isEdit}
+              value={state ? state.contactNumber: ''}
+            />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='form-group col-md-6'>
+          <label htmlFor='email'>Practice</label>
+          <Autocomplete
+            options={[
+              { label: 'BI Team', value: 1 },
+              { label: 'Big Data Team', value: 2 },
+              { label: 'Block Chain Team', value: 3 },
+              { label: 'BPM Team', value: 4 },
+              { label: 'BPO Team', value: 5 },
+              { label: 'Data Science Team', value: 6 },
+              { label: 'Delivery Team', value: 7 },
+              { label: 'Java Team', value: 8 },
+              { label: 'Microsoft Team', value: 9 },
+              { label: 'Mobility Team', value: 10 },
+              { label: 'Open Source Team', value: 11 },
+              { label: 'Oracle Team', value: 12 },
+              { label: 'Pega Team', value: 13 },
+              { label: 'QA Team', value: 14 },
+              { label: 'RPA Team', value: 15 },
+              { label: 'Sales Force Team', value: 16 },
+              { label: 'Service Now Team', value: 17 },
+              { label: 'Support Team', value: 18 },
+              { label: 'UI Team', value: 19 },
+              { label: 'Other', value: 20 },
+            ]}
+            value={state.team}
+            name="team"
+            getOptionLabel={(option) => state.team && !option.label ? option : option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
+            onChange={(event, value) => handleOnDropdownChange('team', value)}
+            renderInput={(params) => 
+              <TextField {...params} variant='outlined' name="team"/>
+            }
+          />
+          </div>
+          <div className='form-group col-md-6'>
+            <label htmlFor='practiceName'>Practice Name</label>
+            <input
+              type='text'
+              className='form-control'
+              onChange={handleOnChange}
+              name='practiceName'
+              disabled={isEdit}
+              value={state?.practiceName}
+            />
+          </div>
+        </div>
+        <div className='row form-group dashed-box'>
+        {/* <div className='row form-group'> */}
+          <label htmlFor='actionsForUser'>Select  Actions user can perform </label>
+          <div className='row form-group col-md-12 '>
+            <div className='form-group col-md-3'>
+            <input
+                className='checkBox'
+                name='shareProjectForm'
+                type="checkbox"
+                onChange={handleOnChange}
+                value={state?.shareProjectForm}
+              />
+              <label> Share Project Form </label>
+            </div>
+            <div className='form-group col-md-3'>
+            <input
+                className='checkBox'
+                name='sendReminder'
+                type="checkbox"
+                onChange={handleOnChange}
+                value={state?.sendReminder}
+              />
+              <label> Send Reminder </label>
+            </div>
+            <div className='form-group col-md-3'>
+            <input
+                className='checkBox'
+                name='fillForm'
+                type="checkbox"
+                onChange={handleOnChange}
+                value={state?.fillForm}
+              />
+              <label> Fill Form </label>
+            </div>
+            <div className='form-group col-md-3'>
+            <input
+                className='checkBox'
+                name='approve'
+                type="checkbox"
+                onChange={handleOnChange}
+                value={state?.approve}
+              />
+              <label> Approve </label>
+            </div>
+            
+          </div>
+          <div className='row form-group col-md-12 '>
+            <div className='form-group col-md-3'>
+            <input
+                className='checkBox'
+                name='reshareProjectForm'
+                type="checkbox"
+                onChange={handleOnChange}
+                value={state?.reshareProjectForm}
+              />
+              <label> Reshare Project Form </label>
+            </div>
+            <div className='form-group col-md-3'>
+            <input
+                className='checkBox'
+                name='editForm'
+                type="checkbox"
+                onChange={handleOnChange}
+                value={state?.editForm}
+              />
+              <label> Edit Form </label>
+            </div>
+            <div className='form-group col-md-3'>
+            <input
+                className='checkBox'
+                name='deleteForm'
+                type="checkbox"
+                onChange={handleOnChange}
+                value={state?.deleteForm}
+              />
+              <label> Delete Form </label>
+            </div>
+            
+          </div>
+        {/* </div> */}
+        </div>
+        <div className='form-group row share '>
+            <div className='col-md-12 text-center'>
+              <button
+                className='form-control btn btn-primary'
+                onClick={(e) => handleReset(e)}
+              >
+                Reset
+              </button>
+              <button
+                className='form-control btn btn-primary share-btn'
+                onClick={(e) => handleSubmit(e)}
+                disabled={
+                  Object.keys(state).some((key) =>
+                  state[key] === ''
+                  )
+                }
+              >
+                {data ? 'Update' : 'Add'}
+              </button>
+            </div>
+          </div>
+        </form>
+        {/* <form>
           <div className='row'>
             <div className='form-group col-md-4'>
               <label htmlFor='softwareName'>User Name *</label>
@@ -333,7 +557,7 @@ function handleUpdate() {
               </button>
             </div>
           </div>
-        </form>
+        </form> */}
       </Modal.Body>
     </Modal>
   );
