@@ -173,7 +173,7 @@
   }
   .form-group .dashed-box {
     border: 1px dashed #bdbdbd !important;
-    background: #f8f8f8;
+    background: rgba(248, 248, 248, 0.5);
     text-align: center;
     color: #929292;
     display: inline-flex;

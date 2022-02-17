@@ -52,12 +52,21 @@ const getUpdatedData = ()=>{
             type='button'
             className='btn work_btn work_btn_blue center modal-button' onClick={() => openModal()}>Add User</button>
        </div>
-       {showModal && <AddUserModal isOpen={showModal}  closeModal={() => {
-            setShowModal(false);
-          }} updateToolStatus={() => getUpdatedData()}/>}
-       {editModal && <AddUserModal isOpen={editModal}  updateToolStatus={() => getUpdatedData()} updatedData={editData} closeModal={() => setEditModal(false)}/>}
-       {userDetails && userDetails.data && userDetails.data.length > 0 &&  <UserTable 
-       data ={userDetails.data} getEditForm={(data) => { setEditModal(true); setEditData(data)}} />}
+       {showModal && <AddUserModal 
+                          isOpen={showModal}  
+                          closeModal={() => {setShowModal(false);}} 
+                          updateToolStatus={() => getUpdatedData()}/>}
+
+       {editModal && <AddUserModal 
+                          isOpen={editModal}  
+                          updateToolStatus={() => getUpdatedData()} 
+                          updatedData={editData} 
+                          closeModal={() => setEditModal(false)}/>}
+
+       {userDetails && userDetails.data && userDetails.data.length > 0 &&  
+                <UserTable 
+                    data ={userDetails.data} 
+                    getEditForm={(data) => { setEditModal(true); setEditData(data)}} />}
        <Footer />
      </div>
   );
