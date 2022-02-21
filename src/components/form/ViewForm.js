@@ -13,6 +13,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../admin/NavBar';
 import { getApiUrl } from '../utils/helper';
+import { getUser } from "../utils/userDetails";
+import { superAdmin } from '../constants/constants';
+
 toast.configure();
 
 function ViewForm() {
@@ -20,6 +23,9 @@ function ViewForm() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRestoreModalOpen, setRestoreIsModalOpen] = useState(false);
+  const [userRole, setUserRole] = useState('');
+  const [pset, setPset] = useState([]);
+  
 
   const handleEditViewForm = () => {
     history.push('/edit/' + id);
@@ -28,6 +34,9 @@ function ViewForm() {
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
+    let user = JSON.parse(getUser());
+    setUserRole(user.role)
+    setPset(user.pset)
   }, []);
 
   const location = useLocation();
@@ -237,6 +246,7 @@ function ViewForm() {
           marginRight: '15px',
           width: '130px',
         }}
+        disabled={userRole === superAdmin || pset.includes("reshareProjectForm") ? false :true}
       >
         {' '}
         Reshare
@@ -258,6 +268,7 @@ function ViewForm() {
           marginRight: '15px',
           width: '130px',
         }}
+        disabled={userRole === superAdmin || pset.includes("approve") ? false :true}
       >
         {' '}
         Approve
@@ -472,6 +483,7 @@ function ViewForm() {
                   onClick={() => {
                     handleEditViewForm();
                   }}
+                  disabled={userRole === superAdmin || pset.includes("editForm") ? false :true}
                 >
                   <img src={editIcon} alt='edit icon' />
                 </button>
@@ -755,6 +767,7 @@ function ViewForm() {
                         marginRight: '15px',
                         width: '130px',
                       }}
+                      disabled = {userRole === superAdmin || pset.includes("sendRemainder") ? false :true}
                       onClick={() => {
                         handleReminder();
                       }}

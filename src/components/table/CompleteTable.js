@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
-function CompleteTable({ data }) {
+function CompleteTable({ data, role, pset }) {
   const [filteredData, setFilteredData] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
@@ -149,7 +149,7 @@ function CompleteTable({ data }) {
         Cell: ({ row }) => {
           return (
             <Link
-            style={{'pointerEvents':JSON.parse(getUser()).role === guest?'none':'cursor'}}
+            style={{'pointerEvents':JSON.parse(getUser()).role === superAdmin || pset.includes("shareProjectForm")?'cursor':'none'}}
               to={{
 
                 pathname: `/view/${row.original._id}`,
@@ -294,7 +294,7 @@ function CompleteTable({ data }) {
       data: filteredData,
       initialState: {
         pageSize: 5, 
-        hiddenColumns:JSON.parse(getUser()).role === guest? ['action']:[''],
+        hiddenColumns:JSON.parse(getUser()).role === superAdmin || pset.includes("deleteForm")? ['']:['action'],
         sortBy: [
           {
             id: 'updatedAt',
