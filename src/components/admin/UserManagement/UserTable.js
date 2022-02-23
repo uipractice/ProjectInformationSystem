@@ -248,7 +248,7 @@ function CompleteTable({ data, getEditForm }) {
       data: filteredData,
       initialState: {
         pageSize: 5,
-        hiddenColumns:['createdAt','password','pset'],
+        hiddenColumns:['createdAt','password','pset','practiceName'],
         sortBy: [
           {
             id: 'createdAt',
