@@ -607,6 +607,18 @@ select.form-control:-internal-autofill-selected {
   border-bottom: 1px solid #bdbdbd;
   border-radius: 0;
 }
+.reset-form {
+  /* position: absolute; */
+width: 450px;
+height: 44px;
+left: 488.92px;
+top: 272.55px;
+
+background: #FFFFFF;
+border: 1px solid #BDBDBD;
+box-sizing: border-box;
+border-radius: 4px;
+}
 .project-details-form.formView .form-group button,
 .project-details-form.formView .form-group button:active,
 .project-details-form.formView .form-group button:hover {

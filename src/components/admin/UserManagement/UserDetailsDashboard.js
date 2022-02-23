@@ -7,6 +7,7 @@ import Footer from '../Footer';
 import UserTable from '../UserManagement/UserTable';
 import AddUserModal from './AddUserModal';
 import { useHistory } from "react-router-dom";
+import leftIcon from '../../../../src/assets/images/ums-left-icon.svg';
 import './UserDetails.css';
 
 
@@ -42,15 +43,13 @@ const getUpdatedData = ()=>{
   return (
     <div>
        <NavBar/>
-       <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 userDetail'>
-       <label className='btn_ums'
-       onClick={()=>history.push('/dashboard')}
-       > USER MANAGEMENT SYSTEM </label>
-       {/* <button
-            type='button'
-            className='btn work_btn work_btn_blue center modal-button'
-            onClick={()=>history.push('/dashboard')}
-            >Dashboard</button> */}
+       <div className='d-flex justify-content-between align-items-center pt-3 mb-3 userDetail'>
+       <span className='ums-label'>
+       <img
+        onClick={()=>history.push('/dashboard')}
+        src={leftIcon} /> &nbsp;
+       <label> USER MANAGEMENT SYSTEM </label>
+       </span>
            <button
             type='button'
             className='btn work_btn work_btn_blue center modal-button' onClick={() => openModal()}>Add User</button>
