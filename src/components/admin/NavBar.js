@@ -1,5 +1,5 @@
 // common imports
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -9,6 +9,8 @@ import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
+import InputLabel from '@material-ui/core/InputLabel'
 import MenuList from '@material-ui/core/MenuList';
 import Logo from '../../assets/images/eoke_logo.svg';
 import { clearTokens } from '../utils/authToken';
@@ -42,7 +44,8 @@ const NavBar = ({ validate, clientForm,title }) => {
    * Checking the authentication
    * @return {null}
    */
-
+  const [userRole, setUserRole] = useState('');
+  const [userDesignation, setUserDesignation] = useState([]);
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -105,6 +108,18 @@ const NavBar = ({ validate, clientForm,title }) => {
       setOpen(false);
     }
   }
+
+  useEffect(() => {
+    let user = JSON.parse(getUser());
+    setUserRole(user.userName)
+    if (user.role === "superAdmin") {
+      let name = user.role.substring(0, 5) + " " + user.role.substring(5, user.role.length)
+      let role = name.charAt(0).toUpperCase() + name.slice(1);
+      setUserDesignation(role)
+    } else {
+      setUserDesignation(user.role)
+    }
+  }, [])
   // return focus to the button when we transitioned from !open -> open
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
@@ -122,6 +137,9 @@ const NavBar = ({ validate, clientForm,title }) => {
   }
   const handleDashboard = () => {
     return  history.push('/dashboard',);
+  }
+  const handleReset = () => {
+    return history.push('/reset-password')
   }
 
   return (
@@ -171,8 +189,14 @@ const NavBar = ({ validate, clientForm,title }) => {
                           id='menu-list-grow'
                           onKeyDown={handleListKeyDown}
                         >
-                          {/* <MenuItem className='myprofile'>My profile</MenuItem> */}
-
+                          <MenuItem className='myprofile'>{userRole}</MenuItem>
+                          <InputLabel 
+                            style={{
+                              paddingLeft: '40px',
+                              fontSize: '12px'
+                            }}
+                            className='user-designation'>{userDesignation}</InputLabel>
+                          <Divider />
                           <FeedBackModal
                             open={feedback}
                             closeHandler={(e, closeClick) => {
@@ -185,6 +209,9 @@ const NavBar = ({ validate, clientForm,title }) => {
                           <MenuItem className='user' onClick={handleDashboard}>
                           DashBoard
                         </MenuItem>
+                        <MenuItem className='user' onClick={handleReset}>
+                          Reset Password
+                        </MenuItem>
 
                           {JSON.parse(getUser()).role === superAdmin &&   <MenuItem className='dashboard' onClick={handleUserDetails}>
                           User Management
@@ -195,6 +222,7 @@ const NavBar = ({ validate, clientForm,title }) => {
                           >
                             Provide Feedback
                           </MenuItem>
+                          <Divider />
                           <MenuItem className='logout' onClick={handleLogout}>
                             Logout
                           </MenuItem>

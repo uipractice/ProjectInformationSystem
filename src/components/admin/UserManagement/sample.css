@@ -163,6 +163,17 @@
     line-height: 27px;
     /* padding-left: 5px; */
   }
+  .reset-passwrod {
+    width: 450px;
+height: 44px;
+left: 488.92px;
+top: 272.55px;
+
+background: #FFFFFF;
+border: 1px solid #BDBDBD;
+box-sizing: border-box;
+border-radius: 4px;
+  }
   input:-internal-autofill-selected {
     background-color: #fff !important;
     color: #57565c;
@@ -170,6 +181,12 @@
   .form-group .long {
     height: 70px;
     overflow: auto;
+  }
+  .ums-label {
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 19px;
+    color: #023047;
   }
   .form-group .dashed-box {
     border: 1px dashed #bdbdbd !important;
@@ -265,6 +282,30 @@
   .btn-primary.focus,
   .btn-primary:focus {
     box-shadow: 0 0 0 0 !important;
+  }
+  .reset {
+    width: 450px;
+    height: 44px;
+    left: 488.92px;
+    top: 272.55px;
+
+    background: #FFFFFF;
+    border: 1px solid #BDBDBD;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+  .changePassword {
+    width: 143px;
+    height: 22px;
+    left: 438.86px;
+    top: calc(50% - 22px/2 - 179.09px);
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    color: #219EBC;
   }
   .form-control:focus,
   .form-control:active,

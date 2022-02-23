@@ -5,6 +5,7 @@ import EditViewForm from './components/form/EditViewForm';
 import Login from './components/login/Login';
 import { HashRouter as Router, Route, Switch ,Redirect} from 'react-router-dom';
 import AdminDashboard from './components/admin/AdminDashboard';
+import ResetPassword from './components/admin/ResetPassword';
 import InternalClient from './components/admin/InternalClient';
 import UserDetailsDashboard from './components/admin/UserManagement/UserDetailsDashboard';
 import { getAuthToken } from './components/utils/authToken';
@@ -30,6 +31,8 @@ function App() {
           <Route path='/client-form/:id' component={ClientForm}>
           </Route>
           <PrivateRoute path='/dashboard' component={AdminDashboard}>
+          </PrivateRoute>
+          <PrivateRoute path='/reset-password' component={ResetPassword}>
           </PrivateRoute>
           <PrivateRoute path='/internal' component={InternalClient}>
           </PrivateRoute>
