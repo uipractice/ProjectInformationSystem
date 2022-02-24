@@ -60,6 +60,13 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
     }
   }
 
+  function handlePassword(e) {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  }
+
   function handlePset(e) {
     let psett = [...state.pset];
     if (e.target.checked == false) {
@@ -299,59 +306,59 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
               <input
                 type='password'
                 className='form-control'
-                onChange={handleOnChange}
+                onChange={handlePassword}
                 name='password'
                 value={state ? state.password : ''}
               />
             </div>
             <div className='form-group col-md-4'>
-            <label htmlFor='email'>Practice</label>
-            <Autocomplete
-              options={[
-                { label: 'BI Team', value: 1 },
-                { label: 'Big Data Team', value: 2 },
-                { label: 'Block Chain Team', value: 3 },
-                { label: 'BPM Team', value: 4 },
-                { label: 'BPO Team', value: 5 },
-                { label: 'Data Science Team', value: 6 },
-                { label: 'Delivery Team', value: 7 },
-                { label: 'Java Team', value: 8 },
-                { label: 'Microsoft Team', value: 9 },
-                { label: 'Mobility Team', value: 10 },
-                { label: 'Open Source Team', value: 11 },
-                { label: 'Oracle Team', value: 12 },
-                { label: 'Pega Team', value: 13 },
-                { label: 'QA Team', value: 14 },
-                { label: 'RPA Team', value: 15 },
-                { label: 'Sales Force Team', value: 16 },
-                { label: 'Service Now Team', value: 17 },
-                { label: 'Support Team', value: 18 },
-                { label: 'UI Team', value: 19 },
-                { label: 'Other', value: 20 },
-              ]}
-              value={state.practice}
-            name="practice"
-            getOptionLabel={(option) => state.practice && !option.label ? option : option.label}
-            getOptionSelected={(option, value) => option.value === value.value}
-            onChange={(event, value) => handleOnDropdownChange('practice', value)}
-            renderInput={(params) =>
-              <TextField {...params} variant='outlined' name="practice" />
-              }
-            />
-          </div>
-          <div className='form-group col-md-4'>
+              <label htmlFor='email'>Practice</label>
+              <Autocomplete
+                options={[
+                  { label: 'BI Team', value: 1 },
+                  { label: 'Big Data Team', value: 2 },
+                  { label: 'Block Chain Team', value: 3 },
+                  { label: 'BPM Team', value: 4 },
+                  { label: 'BPO Team', value: 5 },
+                  { label: 'Data Science Team', value: 6 },
+                  { label: 'Delivery Team', value: 7 },
+                  { label: 'Java Team', value: 8 },
+                  { label: 'Microsoft Team', value: 9 },
+                  { label: 'Mobility Team', value: 10 },
+                  { label: 'Open Source Team', value: 11 },
+                  { label: 'Oracle Team', value: 12 },
+                  { label: 'Pega Team', value: 13 },
+                  { label: 'QA Team', value: 14 },
+                  { label: 'RPA Team', value: 15 },
+                  { label: 'Sales Force Team', value: 16 },
+                  { label: 'Service Now Team', value: 17 },
+                  { label: 'Support Team', value: 18 },
+                  { label: 'UI Team', value: 19 },
+                  { label: 'Other', value: 20 },
+                ]}
+                value={state.practice}
+                name="practice"
+                getOptionLabel={(option) => state.practice && !option.label ? option : option.label}
+                getOptionSelected={(option, value) => option.value === value.value}
+                onChange={(event, value) => handleOnDropdownChange('practice', value)}
+                renderInput={(params) =>
+                  <TextField {...params} variant='outlined' name="practice" />
+                }
+              />
+            </div>
+            <div className='form-group col-md-4'>
               <label htmlFor='practiceName'>Practice Name</label>
               <input
                 type='text'
                 className='form-control'
                 onChange={handleOnChange}
                 name='practiceName'
-                disabled={state.practice == "Other"? false : true}
+                disabled={state.practice == "Other" ? false : true}
                 value={state ? state.practiceName : ''}
               />
             </div>
           </div>
-         
+
           <div className='row form-group dashed-box'>
             {/* <div className='row form-group'> */}
             <label htmlFor='actionsForUser'>Select  Actions user can perform </label>
