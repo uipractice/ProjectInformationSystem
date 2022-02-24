@@ -167,6 +167,16 @@ a:focus {
   border: 0;
   border-radius: 0;
 }
+.card-body-reset {
+  width: 600px;
+  height: 53.6px;
+  left: 420px;
+  top: 159.1px;
+
+  background: #F8F8F8;
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 4px 4px 0px 0px;
+}
 
 /* .card:hover {
         box-shadow: 0 6px 12px rgba(140,152,164,.25)!important;
