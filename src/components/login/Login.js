@@ -44,7 +44,16 @@ function Login() {
         if (res.data.accessToken) {
           saveAuthToken(res.data.accessToken)
           saveUser(JSON.stringify(res.data.user))
-          history.push("/dashboard");
+          if(user.password == "123"){
+            toast.info("Please Change the password", {
+              autoClose: 2000,
+            });
+            history.push("/reset-password");
+          }
+          else{
+            history.push("/dashboard");
+          }
+         
         } else {
           toast.error(res.data.message + ` ${"!!"}`, {
             autoClose: 2000,
