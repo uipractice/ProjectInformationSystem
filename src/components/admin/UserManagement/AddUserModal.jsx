@@ -7,8 +7,9 @@ import './sample.css';
 import { getApiUrl } from '../../utils/helper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox'
 import moment from 'moment';
+import showPassword from '../../../assets/images/show-password.svg'
+import hidePassword from '../../../assets/images/hide-password.svg'
 
 
 toast.configure();
@@ -28,6 +29,8 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
     createdAt: updatedData ? updatedData.values.createdAt : moment().format('YYYY-MM-DD'),
     updatedAt: moment().format('YYYY-MM-DD'),
   };
+
+  const [passwordImage, setPasswordImage] = useState(showPassword)
 
   const [state, setState] = useState({
     ...defaultFormData1,
@@ -84,6 +87,17 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
       ...state,
       pset: psett,
     });
+  }
+
+  function handlePasswordVisibility() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+      setPasswordImage(hidePassword) 
+    } else {
+      x.type = "password";
+      setPasswordImage(showPassword)
+    }
   }
 
 
@@ -301,15 +315,18 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
           </div>
           <div className='row'>
 
-            <div className='form-group col-md-4'>
+            <div className='form-group form-password col-md-4'>
               <label htmlFor='password'>Password *</label>
               <input
                 type='password'
                 className='form-control'
                 onChange={handlePassword}
                 name='password'
+                id='password'
                 value={state ? state.password : ''}
               />
+              <img src={passwordImage} onClick={() => { handlePasswordVisibility() }} />
+
             </div>
             <div className='form-group col-md-4'>
               <label htmlFor='email'>Practice</label>
