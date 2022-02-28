@@ -905,6 +905,13 @@ border-radius: 4px;
   background-position: -25px;
 }
 
+.header_nav .navbar-nav .MuiPaper-root li.resetPassword {
+  background: url('./assets/images/Reset-password.svg') no-repeat left #fff;
+  background-size: 13px;
+  background-origin: content-box;
+  background-position: -25px;
+}
+
 .header_nav .navbar-nav .MuiPaper-root li.dashboard {
   background: url('./assets/images/dashboard.svg') no-repeat left #fff;
   background-size: 13px;

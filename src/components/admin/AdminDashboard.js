@@ -94,7 +94,7 @@ function AdminDashboard() {
             }
 
             {showClientProject && !showInternalProject && (
-              <div className='row'>
+              <div className='row' style={pset.includes("shareProjectForm") ? '' :{marginTop : '15px'}}>
                 <RowHeaderValue
                   projectStatus='Projects'
                   iconImg={IconProjects}

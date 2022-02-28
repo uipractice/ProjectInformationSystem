@@ -80,6 +80,9 @@
     right: 20px
   }
 
+  ::-ms-reveal {
+    display: none;
+}
 
   .btn-primary:hover {
     background: transparent;

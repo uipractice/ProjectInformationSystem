@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./Login.css";
 import "../../index.css";
@@ -9,10 +9,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { saveUser } from "../utils/userDetails";
 
+import showPassword from '../../assets/images/show-password.svg'
+import hidePassword from '../../assets/images/hide-password.svg'
+
 toast.configure();
 
 function Login() {
   const inputRef = useRef(null);
+  const [passwordImage, setPasswordImage] = useState(showPassword)
 
   useEffect(() => {
     inputRef.current.focus();
@@ -26,10 +30,38 @@ function Login() {
   const history = useHistory();
 
   function handleCredentials(evt) {
-    setUser({
-      ...user,
-      [evt.target.name]: evt.target.value,
-    });
+    if (evt.target.name == "userName") {
+      let lastChar = evt.target.value.charAt(evt.target.value.length - 1)
+      if (lastChar === '@') {
+        setUser({
+          ...user,
+          [evt.target.name]: evt.target.value + 'evoketechnologies.com',
+        });
+      }
+      else {
+        setUser({
+          ...user,
+          [evt.target.name]: evt.target.value,
+        });
+      }
+    }
+    else {
+      setUser({
+        ...user,
+        [evt.target.name]: evt.target.value,
+      });
+    }
+  }
+
+  function handlePasswordVisibility() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+      setPasswordImage(hidePassword)
+    } else {
+      x.type = "password";
+      setPasswordImage(showPassword)
+    }
   }
 
   function handleLogin(e) {
@@ -44,16 +76,21 @@ function Login() {
         if (res.data.accessToken) {
           saveAuthToken(res.data.accessToken)
           saveUser(JSON.stringify(res.data.user))
-          if(user.password == "123"){
+          if (res.data.user.status == "InActive") {
+            toast.error("Account Inactive", {
+              autoClose: 2000,
+            });
+          }
+          else if (res.data.user.password == "123") {
             toast.info("Please Change the password", {
               autoClose: 2000,
             });
             history.push("/reset-password");
           }
-          else{
+          else {
             history.push("/dashboard");
           }
-         
+
         } else {
           toast.error(res.data.message + ` ${"!!"}`, {
             autoClose: 2000,
@@ -109,7 +146,7 @@ function Login() {
                 />
               </div>
 
-              <div className="validate-input m-b-40">
+              <div className="validate-input form-password m-b-40">
                 <label className="form-label">Password</label>
                 <input
                   type="password"
@@ -117,7 +154,9 @@ function Login() {
                   onChange={handleCredentials}
                   name="password"
                   value={user.password}
+                  id="password"
                 />
+                <img src={passwordImage} onClick={() => { handlePasswordVisibility() }} />
               </div>
 
               <div className="col-md-12 form_btn_group">

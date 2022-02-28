@@ -18,7 +18,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
 
   const defaultFormData1 = {
     userId: updatedData ? updatedData.values.userId : '',
-    password: updatedData ? updatedData.values.password : '',
+    password: updatedData ? updatedData.values.password : '123',
     userName: updatedData ? updatedData.values.userName : '',
     contactNumber: updatedData ? updatedData.values.contactNumber : '',
     practice: updatedData ? updatedData.values.practice : '',
@@ -93,7 +93,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
     var x = document.getElementById("password");
     if (x.type === "password") {
       x.type = "text";
-      setPasswordImage(hidePassword) 
+      setPasswordImage(hidePassword)
     } else {
       x.type = "password";
       setPasswordImage(showPassword)
@@ -102,10 +102,11 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
 
 
   function handleEmailChange(e, email) {
-    if (e.key === '@' && !state.autoFill && email) {
+    let lastChar = e.target.value.charAt(e.target.value.length - 1)
+    if (lastChar === '@' && !state.autoFill && email) {
       setState({
         ...state,
-        [e.target.name]: e.target.value + '@evoketechnologies.com',
+        [e.target.name]: e.target.value + 'evoketechnologies.com',
         autoFill: true,
       });
     } else if (!state.autoFill) {
@@ -169,6 +170,12 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
     e.preventDefault();
     if (data) {
       return handleUpdate();
+    }
+    if (state.contactNumber.length < 10) {
+      toast.error('Please Enter Valid Phone Number !', {
+        autoClose: 2000,
+      });
+      return;
     }
     if (ValidateEmail(state.userId)) {
       delete state.autoFill;
@@ -377,7 +384,6 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
           </div>
 
           <div className='row form-group dashed-box'>
-            {/* <div className='row form-group'> */}
             <label htmlFor='actionsForUser'>Select  Actions user can perform </label>
             <div className='row form-group col-md-12 '>
               <div className='form-group col-md-3'>
@@ -385,7 +391,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='shareProjectForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" ? true : false}
+                  disabled={state.role == "Guest" || state.role == '' ? true : false}
                   defaultChecked={updatedData ? updatedData.values.pset.includes("shareProjectForm") ? true : false : false}
                   onClick={(e) => { handlePset(e) }}
                 />
@@ -397,7 +403,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='sendRemainder'
                   type="checkbox"
-                  disabled={state.role == "Guest" ? true : false}
+                  disabled={state.role == "Guest" || state.role == '' ? true : false}
                   defaultChecked={updatedData ? updatedData.values.pset.includes("sendRemainder") ? true : false : false}
                   onClick={(e) => { handlePset(e) }}
 
