@@ -415,7 +415,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='fillForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" ? true : false}
+                  disabled={state.role == "Guest" || state.role == '' ? true : false}
                   defaultChecked={updatedData ? updatedData.values.pset.includes("fillForm") ? true : false : false}
                   onClick={(e) => { handlePset(e) }}
 
@@ -427,7 +427,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='approve'
                   type="checkbox"
-                  disabled={state.role == "Guest" ? true : false}
+                  disabled={state.role == "Guest" || state.role == '' ? true : false}
                   defaultChecked={updatedData ? updatedData.values.pset.includes("approve") ? true : false : false}
                   onClick={(e) => { handlePset(e) }}
 
@@ -442,7 +442,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='reshareProjectForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" ? true : false}
+                  disabled={state.role == "Guest" || state.role == '' ? true : false}
                   defaultChecked={updatedData ? updatedData.values.pset.includes("reshareProjectForm") ? true : false : false}
                   defaultChecked={false}
                   onClick={(e) => { handlePset(e) }}
@@ -455,7 +455,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='editForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" ? true : false}
+                  disabled={state.role == "Guest" || state.role == '' ? true : false}
                   defaultChecked={updatedData ? updatedData.values.pset.includes("editForm") ? true : false : false}
                   onClick={(e) => { handlePset(e) }}
 
@@ -467,7 +467,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='deleteForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" ? true : false}
+                  disabled={state.role == "Guest" || state.role == '' ? true : false}
                   defaultChecked={updatedData ? updatedData.values.pset.includes("deleteForm") ? true : false : false}
                   onClick={(e) => { handlePset(e) }}
 
