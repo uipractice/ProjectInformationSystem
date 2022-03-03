@@ -1,5 +1,5 @@
 // common imports
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -9,6 +9,8 @@ import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
+import InputLabel from '@material-ui/core/InputLabel'
 import MenuList from '@material-ui/core/MenuList';
 import Logo from '../../assets/images/eoke_logo.svg';
 import { clearTokens } from '../utils/authToken';
@@ -28,7 +30,7 @@ toast.configure();
  * @return {null}
  */
 
-const NavBar = ({ validate, clientForm,title }) => {
+const NavBar = ({ validate, clientForm, title }) => {
   function handleLogout() {
     clearTokens();
     history.push('/');
@@ -42,7 +44,8 @@ const NavBar = ({ validate, clientForm,title }) => {
    * Checking the authentication
    * @return {null}
    */
-
+  const [userRole, setUserRole] = useState('');
+  const [userDesignation, setUserDesignation] = useState([]);
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -51,7 +54,7 @@ const NavBar = ({ validate, clientForm,title }) => {
     setOpen(!open);
   };
   const [feedbackText, setFeedbackText] = React.useState('');
-  const [view]=React.useState(title)
+  const [view] = React.useState(title)
 
   /**
    * Setting modal close state and call api to send the mail.
@@ -60,7 +63,7 @@ const NavBar = ({ validate, clientForm,title }) => {
    * @param {Boolean} closeClick contains boolean to defined the close click.
    * @return {null}
    */
-  const handleClose = (event, closeClick) => { 
+  const handleClose = (event, closeClick) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -68,10 +71,10 @@ const NavBar = ({ validate, clientForm,title }) => {
     setFeedback(false);
     if (!closeClick) {
       const feedbackDescription = {
-      feedbackText
-    }
-    
-    axios
+        feedbackText
+      }
+
+      axios
         .post(getApiUrl(`clientInfo/feebackMail`), feedbackDescription)
         .then((res) => {
           console.log(res.data);
@@ -84,7 +87,7 @@ const NavBar = ({ validate, clientForm,title }) => {
   };
 
   const handleClickAway = () => {
-   setOpen(false)
+    setOpen(false)
   };
 
   const [feedback, setFeedback] = React.useState(false);
@@ -105,6 +108,18 @@ const NavBar = ({ validate, clientForm,title }) => {
       setOpen(false);
     }
   }
+
+  useEffect(() => {
+    let user = JSON.parse(getUser());
+    setUserRole(user.userName)
+    if (user.role === "superAdmin") {
+      let name = user.role.substring(0, 5) + " " + user.role.substring(5, user.role.length)
+      let role = name.charAt(0).toUpperCase() + name.slice(1);
+      setUserDesignation(role)
+    } else {
+      setUserDesignation(user.role)
+    }
+  }, [])
   // return focus to the button when we transitioned from !open -> open
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
@@ -121,7 +136,10 @@ const NavBar = ({ validate, clientForm,title }) => {
     return history.push('/user-details');
   }
   const handleDashboard = () => {
-    return  history.push('/dashboard',);
+    return history.push('/dashboard',);
+  }
+  const handleReset = () => {
+    return history.push('/reset-password')
   }
 
   return (
@@ -129,88 +147,98 @@ const NavBar = ({ validate, clientForm,title }) => {
       <div className='navbar navbar-dark sticky-top  p-0 shadow header_nav'>
         <div className='full-width'>
           <div className="d-flex flex-1">
-          <a
-            className='navbar-brand  px-1'
-          >
-            <img src={Logo} alt='Evoke Technologies' />
-          </a>
-          <h3 >Project Information System </h3>
+            <a
+              className='navbar-brand  px-1'
+            >
+              <img src={Logo} alt='Evoke Technologies' />
+            </a>
+            <h3 >Project Information System </h3>
           </div>
-          
+
           <div className="d-flex flex-1">
-          <h3 className="view">{view}</h3>
+            <h3 className="view">{view}</h3>
           </div>
           {!clientForm && (
-          <ul className='navbar-nav px-3'>
-            <li className='nav-item text-nowrap'>
-              <Button
-                ref={anchorRef}
-                aria-controls={open ? 'menu-list-grow' : undefined}
-                aria-haspopup='true'
-                onClick={handleToggle}
-              ></Button>
-              <Popper
-                open={open}
-                anchorEl={anchorRef.current}
-                role={undefined}
-                transition
-                disablePortal
-              >
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    style={{
-                      transformOrigin:
-                        placement === 'bottom' ? 'center top' : 'center bottom',
-                    }}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={handleClickAway}>
-                        <MenuList
-                          autoFocusItem={open}
-                          id='menu-list-grow'
-                          onKeyDown={handleListKeyDown}
-                        >
-                          {/* <MenuItem className='myprofile'>My profile</MenuItem> */}
-
-                          <FeedBackModal
-                            open={feedback}
-                            closeHandler={(e, closeClick) => {
-                              setFeedbackText('');
-                              handleClose(e, closeClick);
-                            }}
-                            handleInputChange={(e) => handleInputChange(e)}
-                            feedbackText={feedbackText}
-                          />                        
-                          <MenuItem className='user' onClick={handleDashboard}>
-                          DashBoard
-                        </MenuItem>
-
-                          {JSON.parse(getUser()).role === superAdmin &&   <MenuItem className='dashboard' onClick={handleUserDetails}>
-                          User Management
-                          </MenuItem> }
-                          <MenuItem
-                            className='feedback'
-                            onClick={handleClickOpen}
+            <ul className='navbar-nav px-3'>
+              <li className='nav-item text-nowrap'>
+                <Button
+                  ref={anchorRef}
+                  aria-controls={open ? 'menu-list-grow' : undefined}
+                  aria-haspopup='true'
+                  onClick={handleToggle}
+                ></Button>
+                <Popper
+                  open={open}
+                  anchorEl={anchorRef.current}
+                  role={undefined}
+                  transition
+                  disablePortal
+                >
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      style={{
+                        transformOrigin:
+                          placement === 'bottom' ? 'center top' : 'center bottom',
+                      }}
+                    >
+                      <Paper>
+                        <ClickAwayListener onClickAway={handleClickAway}>
+                          <MenuList
+                            autoFocusItem={open}
+                            id='menu-list-grow'
+                            onKeyDown={handleListKeyDown}
                           >
-                            Provide Feedback
-                          </MenuItem>
-                          <MenuItem className='logout' onClick={handleLogout}>
-                            Logout
-                          </MenuItem>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
-            </li>
-          </ul>
-        )}
+                            <MenuItem className='myprofile'>{userRole}</MenuItem>
+                            <InputLabel
+                              style={{
+                                paddingLeft: '40px',
+                                fontSize: '12px'
+                              }}
+                              className='user-designation'>{userDesignation}</InputLabel>
+                            <Divider />
+                            <FeedBackModal
+                              open={feedback}
+                              closeHandler={(e, closeClick) => {
+                                setFeedbackText('');
+                                handleClose(e, closeClick);
+                              }}
+                              handleInputChange={(e) => handleInputChange(e)}
+                              feedbackText={feedbackText}
+                            />
+                            <MenuItem className='user' onClick={handleDashboard}>
+                              DashBoard
+                            </MenuItem>
+                            <MenuItem className='resetPassword' onClick={handleReset}>
+                              Reset Password
+                            </MenuItem>
+
+                            {JSON.parse(getUser()).role === superAdmin && <MenuItem className='dashboard' onClick={handleUserDetails}>
+                              User Management
+                            </MenuItem>}
+                            <MenuItem
+                              className='feedback'
+                              onClick={handleClickOpen}
+                            >
+                              Provide Feedback
+                            </MenuItem>
+                            <Divider />
+                            <MenuItem className='logout' onClick={handleLogout}>
+                              Logout
+                            </MenuItem>
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              </li>
+            </ul>
+          )}
 
         </div>
 
- 
+
       </div>
     </div>
   );

@@ -115,13 +115,13 @@ function CompleteTable({ data, getEditForm }) {
       },
       {
         Header: 'USER ID/EMAIL ADDRESS',
-        accessor: 'emailId',
+        accessor: 'userId',
         width: 230,
         sticky: 'left',
         sortType: (a, b) => {
           return customSorting(
-            a.original.emailId,
-            b.original.emailId
+            a.original.userId,
+            b.original.userId
           );
         },
       },
@@ -135,39 +135,38 @@ function CompleteTable({ data, getEditForm }) {
         },
       },
       {
-        Header: 'TEAM',
-        accessor: 'team',
+        Header: 'Practice',
+        accessor: 'practice',
         sticky: 'left',
         width: 200,
         sortType: (a, b) => {
-          return customSorting(a.original.team, b.original.team);
+          return customSorting(a.original.practice, b.original.practice);
         },
       },
-      // {
-      //   Header: 'DATE CREATED',
-      //   accessor: 'dateCreated',
-      //   width: 167,
-      //   sortType: (a, b) => {
-      //     return customSorting(a.original.dateCreated, b.original.dateCreated);
-      //   },
-      //   Cell: ({ value }) => {
-      //     return format(new Date(value), 'dd/MM/yyyy');
-      //   },
-      // },
-      // {
-      //   Header: 'UPDATED DATE',
-      //   accessor: 'updatedAt',
-      //   width: 187,
-      //   sortType: (a, b) => {
-      //     return customSorting(a.original.updatedAt, b.original.updatedAt);
-      //   },
-      //   Cell: ({ value }) => {
-      //     return format(new Date(value), 'dd/MM/yyyy');
-      //   },
-      // },
+      {
+        Header: 'Practice Name',
+        accessor: 'practiceName',
+        sticky: 'left',
+        width: 200,
+        sortType: (a, b) => {
+          return customSorting(a.original.practiceName, b.original.practiceName);
+        },
+      },
       {
         Header: 'Date Created',
         accessor: 'createdAt',
+        width: 10,
+        isVisible:"false"
+      },
+      {
+        Header: 'Password',
+        accessor: 'password',
+        width: 10,
+        isVisible:"false"
+      },
+      {
+        Header: 'Permission Set',
+        accessor: 'pset',
         width: 10,
         isVisible:"false"
       },
@@ -176,9 +175,6 @@ function CompleteTable({ data, getEditForm }) {
         accessor: 'contactNumber',
         sticky: 'left',
         width: 200,
-        // sortType: (a, b) => {
-        //   return customSorting(a.original.contactNumber, b.original.contactNumber);
-        // },
       },
       {
         Header: 'STATUS',
@@ -252,7 +248,7 @@ function CompleteTable({ data, getEditForm }) {
       data: filteredData,
       initialState: {
         pageSize: 5,
-        hiddenColumns:['createdAt'],
+        hiddenColumns:['createdAt','password','pset','practiceName'],
         sortBy: [
           {
             id: 'createdAt',

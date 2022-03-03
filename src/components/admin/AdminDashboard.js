@@ -15,7 +15,7 @@ import InternalClient from './InternalClient';
 import { superAdmin } from '../constants/constants';
 import { getUser } from "../utils/userDetails";
 
- function AdminDashboard() {
+function AdminDashboard() {
   const [data, setData] = useState([]);
   const [totalCount, setTotalCount] = useState('');
   const [pendingCount, setPendingCount] = useState('');
@@ -25,6 +25,17 @@ import { getUser } from "../utils/userDetails";
   const [deleteCount, setDeleteCount] = useState('');
   const [showInternalProject, setShowInternalProject] = useState(false);
   const [showClientProject, setShowClientProject] = useState(true);
+  const [userRole, setUserRole] = useState('');
+  const [pset, setPset] = useState([]);
+
+  useEffect(() => {
+    let user = JSON.parse(getUser());
+    setUserRole(user.role)
+    setPset(user.pset)
+    localStorage.setItem("userRole",user.role)
+    localStorage.setItem("pSet",user.pset)
+  }, [])
+
   useEffect(() => {
     axios(getApiUrl(`clientInfo`))
       .then((res) => {
@@ -56,7 +67,7 @@ import { getUser } from "../utils/userDetails";
   }, [deleteCount, showClientProject, showInternalProject]);
 
   const showInternalContent = (client, internal) => {
-    
+
     if (client) {
       setShowClientProject(client);
       setShowInternalProject(internal);
@@ -68,22 +79,22 @@ import { getUser } from "../utils/userDetails";
   };
   return (
     <div>
-      <NavBar validate={true} title={'DASHBOARD'}/>
+      <NavBar validate={true} />
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-12 ms-sm-auto col-lg-12 custom-scroll'>
-             {JSON.parse(getUser()).role=== superAdmin && 
-                        <ShareButtonSection
-                        showInternalView={(client, internal) =>
-                          showInternalContent(client, internal)
-                        }
-                        internal={showInternalProject}
-                        client={showClientProject}
-                      />
-            } 
+            {JSON.parse(getUser()).role === superAdmin || pset.includes("shareProjectForm") ?
+              <ShareButtonSection
+                showInternalView={(client, internal) =>
+                  showInternalContent(client, internal)
+                }
+                internal={showInternalProject}
+                client={showClientProject}
+              /> : ''
+            }
 
             {showClientProject && !showInternalProject && (
-              <div className='row'>
+              <div className='row' style={pset.includes("shareProjectForm") ? '' :{marginTop : '15px'}}>
                 <RowHeaderValue
                   projectStatus='Projects'
                   iconImg={IconProjects}
@@ -118,7 +129,7 @@ import { getUser } from "../utils/userDetails";
               </div>
             )}
             {showClientProject && !showInternalProject && (
-              <CompleteTable data={data} />
+              <CompleteTable data={data} role={userRole} pset={pset}/>
             )}
             {showInternalProject && <InternalClient />}
           </div>

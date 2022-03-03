@@ -65,6 +65,25 @@
     padding-right: 10px;
     margin-bottom: 1rem;
   }
+
+  .form-password{
+    position: relative;
+  }
+
+  .form-password input {  
+    display:block;
+    /* width: 100%;  */
+  }
+  .form-password img { 
+    position: absolute; 
+    top:45px; 
+    right: 20px
+  }
+
+  ::-ms-reveal {
+    display: none;
+}
+
   .btn-primary:hover {
     background: transparent;
     color: #209ec5;
@@ -163,6 +182,17 @@
     line-height: 27px;
     /* padding-left: 5px; */
   }
+  .reset-passwrod {
+    width: 450px;
+height: 44px;
+left: 488.92px;
+top: 272.55px;
+
+background: #FFFFFF;
+border: 1px solid #BDBDBD;
+box-sizing: border-box;
+border-radius: 4px;
+  }
   input:-internal-autofill-selected {
     background-color: #fff !important;
     color: #57565c;
@@ -171,8 +201,15 @@
     height: 70px;
     overflow: auto;
   }
+  .ums-label {
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 19px;
+    color: #023047;
+  }
   .form-group .dashed-box {
     border: 1px dashed #bdbdbd !important;
+    height: 100px;
     background: #f8f8f8;
     text-align: center;
     color: #929292;
@@ -180,11 +217,34 @@
     justify-content: center;
     align-items: center;
   }
+
+  .dashed {
+    border: 1px dashed #bdbdbd !important;
+    height: 100px;
+    background: #f8f8f8;
+    text-align: center;
+    color: #929292;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
   .form-group select {
     appearance: none;
     position: relative;
     color: #626364 !important;
    /* background: url('../../assets/images/down-arrow.svg') no-repeat 90%;*/
+  }
+  .checkBox {
+    width: 18px;
+    height: 12px;
+    left: 584.13px;
+    top: 479.47px;
+
+    background: #FFFFFF;
+    border: 0.5px solid #919090;
+    box-sizing: border-box;
+    border-radius: 2px;
   }
   .form-group .files-container {
     display: inline-flex;
@@ -242,6 +302,95 @@
   .btn-primary:focus {
     box-shadow: 0 0 0 0 !important;
   }
+  .reset-box {
+    position: absolute;
+    width: 600px;
+    height: 400.17px;
+    left: 370px;
+    top: 137.04px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  .reset-header {
+    position: absolute;
+    width: 600px;
+    height: 50.6px;
+    background: #F8F8F8;
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 4px 4px 0px 0px;
+  }
+  .change-pwd-header {
+    position: absolute;
+    width: 143px;
+    height: 20px;
+    left: 15px;
+    top:24.51%;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color: #219EBC;
+  }
+  .new-password {
+    position: absolute;
+    width: 191.36px;
+    height: 16px;
+    left: 220.67px;
+    top: 70.85px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: #929292;
+  }
+  .confirm-password {
+    position: absolute;
+    width: 191.36px;
+    height: 16px;
+    left: 220.67px;
+    top: 170.85px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: #929292;
+  }
+  .change-password {
+    position: absolute;
+    width: 191.36px;
+    height: 16px;
+    left: 220.67px;
+    top: 280.85px;
+  }
+  .cancel-btn {
+    position: absolute;
+    left: 94.19%;
+    right: 30.84%;
+    top: 24.51%;
+    bottom: 73.57%;
+    /* border: 2px solid #57565C; */
+  }
+  
+  .reset {
+    width: 450px;
+    height: 44px;
+    left: 488.92px;
+    top: 272.55px;
+    background: #FFFFFF;
+    border: 1px solid #BDBDBD;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+  /* .changePassword {
+    width: 143px;
+    height: 22px;
+    left: 438.86px;
+    top: calc(50% - 22px/2 - 179.09px);
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    color: #219EBC;
+  } */
   .form-control:focus,
   .form-control:active,
   .form-control:-internal-autofill-selected,
@@ -262,7 +411,7 @@
     margin-bottom: 10px !important;
   }
   .software-modal .modal-dialog {
-    max-width: 1075px;
+    max-width: 800px;
   }
   .software-modal .modal-content {
     border-radius: 4px;
