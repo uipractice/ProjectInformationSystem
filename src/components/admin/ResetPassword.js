@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -27,17 +27,6 @@ function ResetPassword() {
         });
     }
 
-    function handlePasswordVisibility() {
-        var x = document.getElementById("password");
-        if (x.type === "password") {
-            x.type = "text";
-            setPasswordImage(hidePassword)
-        } else {
-            x.type = "password";
-            setPasswordImage(showPassword)
-        }
-    }
-
     function handleSubmit() {
 
         let userData = JSON.parse(getUser())
@@ -64,7 +53,7 @@ function ResetPassword() {
     }
     function handlePasswordVisibility(type) {
         if (type == "password") {
-            var x = document.getElementById("password");
+            let x = document.getElementById("password");
             if (x.type === "password") {
                 x.type = "text";
                 setPasswordImage(hidePassword)
@@ -74,7 +63,7 @@ function ResetPassword() {
             }
         }
         if (type == "confirmPassword") {
-            var x = document.getElementById("confirmPassword");
+            let x = document.getElementById("confirmPassword");
             if (x.type === "password") {
                 x.type = "text";
                 setConfirmPasswordImage(hidePassword)

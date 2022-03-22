@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { ToggleButtonGroup, ToggleButton, Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -72,14 +72,13 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
 
   function handlePset(e) {
     let psett = [...state.pset];
-    if (e.target.checked == false) {
-      if (psett.indexOf(e.target.name) > 0) {
+    if (!e.target.checked) {
+      if (psett.includes(e.target.name)) {
         psett.splice(psett.indexOf(e.target.name), 1)
       }
-
     }
     else {
-      if (psett.indexOf(e.target.name) < 0) {
+      if (!psett.includes(e.target.name)) {
         psett.push(e.target.name)
       }
     }
@@ -184,7 +183,6 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
         .post(getApiUrl(`users/addUser`), state)
         .then((res) => {
           if (res && res.data.status === 'success') {
-            // closeModal();
             toast.success('Data Saved Successfully !', {
               autoClose: 2000,
               onClose: updateToolStatus()
@@ -444,7 +442,6 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   type="checkbox"
                   disabled={state.role == "Guest" || state.role == '' ? true : false}
                   defaultChecked={updatedData ? updatedData.values.pset.includes("reshareProjectForm") ? true : false : false}
-                  defaultChecked={false}
                   onClick={(e) => { handlePset(e) }}
 
 

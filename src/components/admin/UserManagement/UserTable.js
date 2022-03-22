@@ -11,7 +11,6 @@ import {
   useGlobalFilter,
   usePagination,
 } from 'react-table';
-import { format } from 'date-fns';
 import '../../table/table.css';
 
 import rightIcon from '../../../assets/images/right-icon.svg';
@@ -44,8 +43,6 @@ function CompleteTable({ data, getEditForm }) {
   const [noRecords, setNoRecords] = useState(false);
 
   const [enteredValue, setEnteredValue] = useState('');
-
-  const classes = useStyles();
 
   useEffect(() => {
     setDefaultFilterData();
@@ -90,9 +87,9 @@ function CompleteTable({ data, getEditForm }) {
           autoClose: 2900,
         });
         setIsModalOpen(false);
-         setTimeout(() => {
+        setTimeout(() => {
           window.location.reload(false);
-         }, 3000);
+        }, 3000);
       })
       .catch((err) => console.log(err.response));
   };
@@ -156,19 +153,19 @@ function CompleteTable({ data, getEditForm }) {
         Header: 'Date Created',
         accessor: 'createdAt',
         width: 10,
-        isVisible:"false"
+        isVisible: "false"
       },
       {
         Header: 'Password',
         accessor: 'password',
         width: 10,
-        isVisible:"false"
+        isVisible: "false"
       },
       {
         Header: 'Permission Set',
         accessor: 'pset',
         width: 10,
-        isVisible:"false"
+        isVisible: "false"
       },
       {
         Header: 'CONTACT NO',
@@ -195,32 +192,30 @@ function CompleteTable({ data, getEditForm }) {
         width: 120,
         Cell: ({ row }) => (
           <div>
-          <img
-            className={`p-2 pointer ${
-              row.original.status === 'deleted' ? 'disableEditBtn' : ''
-            }`}
-            src={Edit}
-            alt='Evoke Technologies'
-            height='31px'
-            onClick={() => {
-              getEditForm(row);
-            }}
-          />
-          <img
-            className={`p-2 pointer ${
-              row.original.status === 'deleted' ? 'disableDeleteBtn' : ''
-            }`}
-            src={DeleteImg}
-            alt='Evoke Technologies'
-            onClick={() => {
-              setRowOriginal({
-                ...row.original,
-                deleteReason: '',
-              });
-              setIsModalOpen(true);
-            }}
-          />
-        </div>
+            <img
+              className={`p-2 pointer ${row.original.status === 'deleted' ? 'disableEditBtn' : ''
+                }`}
+              src={Edit}
+              alt='Evoke Technologies'
+              height='31px'
+              onClick={() => {
+                getEditForm(row);
+              }}
+            />
+            <img
+              className={`p-2 pointer ${row.original.status === 'deleted' ? 'disableDeleteBtn' : ''
+                }`}
+              src={DeleteImg}
+              alt='Evoke Technologies'
+              onClick={() => {
+                setRowOriginal({
+                  ...row.original,
+                  deleteReason: '',
+                });
+                setIsModalOpen(true);
+              }}
+            />
+          </div>
         ),
       },
     ],
@@ -240,7 +235,6 @@ function CompleteTable({ data, getEditForm }) {
     pageOptions,
     prepareRow,
     state,
-    setGlobalFilter,
     rows: filteredTableData,
   } = useTable(
     {
@@ -248,7 +242,7 @@ function CompleteTable({ data, getEditForm }) {
       data: filteredData,
       initialState: {
         pageSize: 5,
-        hiddenColumns:['createdAt','password','pset','practiceName'],
+        hiddenColumns: ['createdAt', 'password', 'pset', 'practiceName'],
         sortBy: [
           {
             id: 'createdAt',
@@ -401,7 +395,7 @@ function CompleteTable({ data, getEditForm }) {
                   {row.cells.map((cell) => {
                     let style = {};
                     style = { textAlign: 'left' };
-                   
+
                     return (
                       <td {...cell.getCellProps({ style })}>
                         {cell.render('Cell')}
@@ -410,26 +404,14 @@ function CompleteTable({ data, getEditForm }) {
                   })}
                 </tr>
               );
-            }): <tr style={{textAlign: 'center'}}><span>No Records found</span></tr>}
+            }) : <tr style={{ textAlign: 'center' }}><span>No Records found</span></tr>}
           </tbody>
         </table>
         <div className='table-pagination'>
-         {!noRecords && <span className='paginate'>
+          {!noRecords && <span className='paginate'>
             <b>{start}</b> to <b>{end}</b> of <b>{filteredData.length}</b>
           </span>}
-          {/* <label>Rows per page:</label>
-        <select
-          value={pageSize}
-          onChange={(e) => setPageSize(Number(e.target.value))}
-          className='pageNum'
-        >
-          {[7, 15, 25, 50, 100].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              {pageSize}
-            </option>
-          ))}
-        </select> */}
-         {!noRecords && <span>
+          {!noRecords && <span>
             Page{' '}
             <strong>
               {pageIndex + 1} of {pageOptions.length}
@@ -444,20 +426,20 @@ function CompleteTable({ data, getEditForm }) {
             </button>{' '}
           </div>}
           <input className='pagination-search'
-          type= 'number'
-           onChange={(e) => {
-            const value= e.target.value-1;
-            const enteredValue = e.target.value.match(/^([1-9]\d*)?$/)['input'] ? e.target.value : ''; 
-            if(pageOptions.length > value){
-              gotoPage(value);
-              setEnteredValue(enteredValue);
-              setNoRecords(false);
-            }else{
-              setEnteredValue(e.target.value);
-              setNoRecords(true);
-            }
-          } }
-          value={enteredValue}
+            type='number'
+            onChange={(e) => {
+              const value = e.target.value - 1;
+              const enteredValue = e.target.value.match(/^([1-9]\d*)?$/)['input'] ? e.target.value : '';
+              if (pageOptions.length > value) {
+                gotoPage(value);
+                setEnteredValue(enteredValue);
+                setNoRecords(false);
+              } else {
+                setEnteredValue(e.target.value);
+                setNoRecords(true);
+              }
+            }}
+            value={enteredValue}
           />
         </div>
       </div>

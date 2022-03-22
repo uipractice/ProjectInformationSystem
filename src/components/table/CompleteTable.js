@@ -17,7 +17,7 @@ import {
 import { format } from 'date-fns';
 import './table.css';
 import GlobalFilter from './GlobalFilter';
-import {guest,superAdmin} from '../constants/constants';
+import {superAdmin} from '../constants/constants';
 import { getUser } from "../utils/userDetails";
 
 import rightIcon from '../../assets/images/right-icon.svg';

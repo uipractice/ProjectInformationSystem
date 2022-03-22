@@ -1,6 +1,6 @@
 // common imports
 import React, { useState, useEffect } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -34,7 +34,6 @@ const NavBar = ({ validate, clientForm, title }) => {
   function handleLogout() {
     clearTokens();
     history.push('/');
-    // checkAuth();
   }
 
   const history = useHistory();
