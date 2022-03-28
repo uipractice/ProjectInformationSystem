@@ -7,28 +7,17 @@ import './sample.css';
 import { getApiUrl } from '../../utils/helper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import moment from 'moment';
 import showPassword from '../../../assets/images/show-password.svg'
 import hidePassword from '../../../assets/images/hide-password.svg'
+import { findValue, formData, findInputValue } from '../../commonFunctions'
+import { exp1 } from '../../constants/regex'
 
 
 toast.configure();
 
 const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false, updateToolStatus }) => {
 
-  const defaultFormData1 = {
-    userId: updatedData ? updatedData.values.userId : '',
-    password: updatedData ? updatedData.values.password : '123',
-    userName: updatedData ? updatedData.values.userName : '',
-    contactNumber: updatedData ? updatedData.values.contactNumber : '',
-    practice: updatedData ? updatedData.values.practice : '',
-    practiceName: updatedData ? updatedData.values.practiceName : null,
-    pset: updatedData ? updatedData.values.pset : [],
-    status: updatedData ? updatedData.values.status : '',
-    role: updatedData ? updatedData.values.role : '',
-    createdAt: updatedData ? updatedData.values.createdAt : moment().format('YYYY-MM-DD'),
-    updatedAt: moment().format('YYYY-MM-DD'),
-  };
+  const defaultFormData1 = formData(updatedData);
 
   const [passwordImage, setPasswordImage] = useState(showPassword)
 
@@ -36,14 +25,14 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
     ...defaultFormData1,
     autoFill: false,
   });
-  const [data, setData] = useState(updatedData.values)
+  const data = updatedData.values
 
   function handleOnChange(e, email = false) {
     console.log('check', e);
     const value = e.target.value.replace(/[^a-zA-Z ]/g, '');
     if (email) {
       handleEmailChange(e, email);
-    } else if (value.match(/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+([\s]+)*$/)) {
+    } else if (value.match(exp1)) {
       setState({
         ...state,
         [e.target.name]: e.target.value,
@@ -73,12 +62,12 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
   function handlePset(e) {
     let psett = [...state.pset];
     if (!e.target.checked) {
-      if (psett.includes(e.target.name)) {
+      if (findValue(psett, e.target.name)) {
         psett.splice(psett.indexOf(e.target.name), 1)
       }
     }
     else {
-      if (!psett.includes(e.target.name)) {
+      if (!findValue(psett, e.target.name)) {
         psett.push(e.target.name)
       }
     }
@@ -216,6 +205,20 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
       role: '',
     })
   }
+
+  const handleInputVisibility = () => {
+    return state.role == "Guest" || state.role == '' ? true : false
+  }
+
+  const handlePermissionCheckbox = (permType) => {
+    if (updatedData) {
+      return findValue(updatedData.values.pset, permType) ? true : false
+    }
+    else {
+      return false
+    }
+  }
+
   return (
     <Modal
       centered
@@ -274,7 +277,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                 className='form-control'
                 onChange={handleOnChange}
                 name='userName'
-                value={state ? state.userName : ''}
+                value={findInputValue(state, 'userName')}
               />
             </div>
           </div>
@@ -286,7 +289,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                 className='form-control'
                 onChange={(e) => { handleOnChange(e, true) }}
                 name='userId'
-                value={state ? state.userId : ''}
+                value={findInputValue(state, 'userId')}
               />
             </div>
             <div className='form-group col-md-3'>
@@ -297,7 +300,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                 onChange={(e) => handleOnChange(e)}
                 name='contactNumber'
                 disabled={isEdit}
-                value={state ? state.contactNumber : ''}
+                value={findInputValue(state, 'contactNumber')}
               />
             </div>
             <div className='form-group col-md-3'>
@@ -308,7 +311,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   { label: 'InActive', value: 2 },
                 ]}
                 name='status'
-                value={state ? state.status : ''}
+                value={findInputValue(state, 'status')}
                 getOptionLabel={(option) => state.status && !option.label ? option : option.label}
                 getOptionSelected={(option, value) => option.value === value.value}
                 onChange={(event, value) => handleOnDropdownChange('status', value)}
@@ -328,7 +331,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                 onChange={handlePassword}
                 name='password'
                 id='password'
-                value={state ? state.password : ''}
+                value={findInputValue(state, 'password')}
               />
               <img src={passwordImage} onClick={() => { handlePasswordVisibility() }} />
 
@@ -376,7 +379,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                 onChange={handleOnChange}
                 name='practiceName'
                 disabled={state.practice == "Other" ? false : true}
-                value={state ? state.practiceName : ''}
+                value={findInputValue(state, 'practiceName')}
               />
             </div>
           </div>
@@ -389,8 +392,8 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='shareProjectForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" || state.role == '' ? true : false}
-                  defaultChecked={updatedData ? updatedData.values.pset.includes("shareProjectForm") ? true : false : false}
+                  disabled={handleInputVisibility()}
+                  defaultChecked={handlePermissionCheckbox("shareProjectForm")}
                   onClick={(e) => { handlePset(e) }}
                 />
                 <label>Share Project Form</label>
@@ -401,8 +404,8 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='sendRemainder'
                   type="checkbox"
-                  disabled={state.role == "Guest" || state.role == '' ? true : false}
-                  defaultChecked={updatedData ? updatedData.values.pset.includes("sendRemainder") ? true : false : false}
+                  disabled={handleInputVisibility()}
+                  defaultChecked={handlePermissionCheckbox("sendRemainder")}
                   onClick={(e) => { handlePset(e) }}
 
 
@@ -413,8 +416,8 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='fillForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" || state.role == '' ? true : false}
-                  defaultChecked={updatedData ? updatedData.values.pset.includes("fillForm") ? true : false : false}
+                  disabled={handleInputVisibility()}
+                  defaultChecked={handlePermissionCheckbox("fillForm")}
                   onClick={(e) => { handlePset(e) }}
 
 
@@ -425,8 +428,8 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='approve'
                   type="checkbox"
-                  disabled={state.role == "Guest" || state.role == '' ? true : false}
-                  defaultChecked={updatedData ? updatedData.values.pset.includes("approve") ? true : false : false}
+                  disabled={handleInputVisibility()}
+                  defaultChecked={handlePermissionCheckbox("approve")}
                   onClick={(e) => { handlePset(e) }}
 
 
@@ -440,8 +443,8 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='reshareProjectForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" || state.role == '' ? true : false}
-                  defaultChecked={updatedData ? updatedData.values.pset.includes("reshareProjectForm") ? true : false : false}
+                  disabled={handleInputVisibility()}
+                  defaultChecked={handlePermissionCheckbox("reshareProjectForm")}
                   onClick={(e) => { handlePset(e) }}
 
 
@@ -452,8 +455,8 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='editForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" || state.role == '' ? true : false}
-                  defaultChecked={updatedData ? updatedData.values.pset.includes("editForm") ? true : false : false}
+                  disabled={handleInputVisibility()}
+                  defaultChecked={handlePermissionCheckbox("editForm")}
                   onClick={(e) => { handlePset(e) }}
 
 
@@ -464,8 +467,8 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
                   className='checkBox'
                   name='deleteForm'
                   type="checkbox"
-                  disabled={state.role == "Guest" || state.role == '' ? true : false}
-                  defaultChecked={updatedData ? updatedData.values.pset.includes("deleteForm") ? true : false : false}
+                  disabled={handleInputVisibility()}
+                  defaultChecked={handlePermissionCheckbox("deleteForm")}
                   onClick={(e) => { handlePset(e) }}
 
 

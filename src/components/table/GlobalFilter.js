@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
+import { exp3 } from '../constants/regex';
 
 function GlobalFilter({ setFilter,removeSearchValue }) {
 
@@ -18,7 +19,7 @@ function GlobalFilter({ setFilter,removeSearchValue }) {
       <input
         onChange={(e) => {
           const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
-          if(value.match(/[a-zA-Z0-9]+([\s]+)*$/)){
+          if(value.match(exp3)){
           setSearchText(value);
           onChange(value);
           }else{

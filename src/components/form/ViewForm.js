@@ -15,6 +15,7 @@ import NavBar from '../admin/NavBar';
 import { getApiUrl } from '../utils/helper';
 import { getUser } from "../utils/userDetails";
 import { superAdmin } from '../constants/constants';
+import { exp3 } from '../constants/regex';
 
 toast.configure();
 
@@ -25,7 +26,7 @@ function ViewForm() {
   const [isRestoreModalOpen, setRestoreIsModalOpen] = useState(false);
   const [userRole, setUserRole] = useState('');
   const [pset, setPset] = useState([]);
-  
+
 
   const handleEditViewForm = () => {
     history.push('/edit/' + id);
@@ -96,9 +97,18 @@ function ViewForm() {
     reshareReason: '',
   });
 
+  const handlePSet = (pType) => {
+    if (userRole === superAdmin) {
+      return true
+    }
+    else {
+      return pset.includes(pType) ? false : true
+    }
+  }
+
   function reshareReasonInput(evt) {
     const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
-    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+    if (value.match(exp3)) {
       setTotalState({
         ...totalState,
         reshareReason: value,
@@ -246,7 +256,7 @@ function ViewForm() {
           marginRight: '15px',
           width: '130px',
         }}
-        disabled={userRole === superAdmin || pset.includes("reshareProjectForm") ? false :true}
+        disabled={handlePSet("reshareProjectForm")}
       >
         {' '}
         Reshare
@@ -268,7 +278,7 @@ function ViewForm() {
           marginRight: '15px',
           width: '130px',
         }}
-        disabled={userRole === superAdmin || pset.includes("approve") ? false :true}
+        disabled = {handlePSet("approve")}
       >
         {' '}
         Approve
@@ -483,7 +493,7 @@ function ViewForm() {
                   onClick={() => {
                     handleEditViewForm();
                   }}
-                  disabled={userRole === superAdmin || pset.includes("editForm") ? false :true}
+                  disabled = {handlePSet("editForm")}
                 >
                   <img src={editIcon} alt='edit icon' />
                 </button>
@@ -767,7 +777,7 @@ function ViewForm() {
                         marginRight: '15px',
                         width: '130px',
                       }}
-                      disabled = {userRole === superAdmin || pset.includes("sendRemainder") ? false :true}
+                      disabled={handlePSet("sendRemainder")}
                       onClick={() => {
                         handleReminder();
                       }}

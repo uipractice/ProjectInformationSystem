@@ -5,9 +5,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { exp3 } from '../constants/regex';
 
 const FeedBackModal = (props) => {
-  const feedBackText = /[a-zA-Z0-9]+([\s]+)*$/;
+  const feedBackText = exp3;
   return (
     <Dialog
       open={props.open}

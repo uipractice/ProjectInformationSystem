@@ -19,6 +19,7 @@ import leftIcon from '../../../assets/images/left-icon.svg';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getApiUrl } from '../../utils/helper';
+import { exp3 } from '../../constants/regex'
 
 toast.configure();
 
@@ -34,8 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function CompleteTable({ data, getEditForm }) {
   const [filteredData, setFilteredData] = useState([]);
-  const [searchValue, setSearchValue] = useState();
-
+  const searchValue = ''
   const [rowOriginal, setRowOriginal] = useState({});
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,7 +64,7 @@ function CompleteTable({ data, getEditForm }) {
 
   function handleInputChange(evt) {
     const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
-    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+    if (value.match(exp3)) {
       setRowOriginal({
         ...rowOriginal,
         deleteReason: value,
@@ -96,6 +96,7 @@ function CompleteTable({ data, getEditForm }) {
   const customSorting = (c1, c2) => {
     return c1.localeCompare(c2);
   };
+
   const columns = React.useMemo(
     () => [
       {
@@ -277,7 +278,7 @@ function CompleteTable({ data, getEditForm }) {
       setFilteredData(
         addSerialNo(data.filter((item) => item.status !== 'Deleted'))
       );
-  }, [searchValue]);
+  }, []);
 
   return (
     <div class="col-md-12 ms-sm-auto col-lg-12 custom-scroll">
@@ -429,10 +430,10 @@ function CompleteTable({ data, getEditForm }) {
             type='number'
             onChange={(e) => {
               const value = e.target.value - 1;
-              const enteredValue = e.target.value.match(/^([1-9]\d*)?$/)['input'] ? e.target.value : '';
+              const enteredInputValue = e.target.value.match(/^([1-9]\d*)?$/)['input'] ? e.target.value : '';
               if (pageOptions.length > value) {
                 gotoPage(value);
-                setEnteredValue(enteredValue);
+                setEnteredValue(enteredInputValue);
                 setNoRecords(false);
               } else {
                 setEnteredValue(e.target.value);

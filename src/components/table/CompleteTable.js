@@ -26,6 +26,7 @@ import leftIcon from '../../assets/images/left-icon.svg';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getApiUrl } from '../utils/helper';
+import { exp3 } from '../constants/regex';
 
 toast.configure();
 
@@ -100,7 +101,7 @@ function CompleteTable({ data, role, pset }) {
 
   function handleInputChange(evt) {
     const value = evt.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
-    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+    if (value.match(exp3)) {
       setRowOriginal({
         ...rowOriginal,
         deleteReason: value,
@@ -517,18 +518,6 @@ function CompleteTable({ data, role, pset }) {
          {!noRecords && <span className='paginate'>
             <b>{start}</b> to <b>{end}</b> of <b>{filteredData.length}</b>
           </span>}
-          {/* <label>Rows per page:</label>
-        <select
-          value={pageSize}
-          onChange={(e) => setPageSize(Number(e.target.value))}
-          className='pageNum'
-        >
-          {[7, 15, 25, 50, 100].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              {pageSize}
-            </option>
-          ))}
-        </select> */}
          {!noRecords && <span>
             Page{' '}
             <strong>
@@ -547,10 +536,10 @@ function CompleteTable({ data, role, pset }) {
           type= 'number'
            onChange={(e) => {
             const value= e.target.value-1;
-            const enteredValue = e.target.value.match(/^([1-9]\d*)?$/)['input'] ? e.target.value : ''; 
+            const enteredInputValue = e.target.value.match(/^([1-9]\d*)?$/)['input'] ? e.target.value : ''; 
             if(pageOptions.length > value){
               gotoPage(value);
-              setEnteredValue(enteredValue);
+              setEnteredValue(enteredInputValue);
               setNoRecords(false);
             }else{
               setEnteredValue(e.target.value);

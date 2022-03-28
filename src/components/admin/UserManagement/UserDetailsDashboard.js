@@ -4,7 +4,7 @@ import axios from 'axios';
 import { getApiUrl } from '../../utils/helper';
 import NavBar from '../NavBar';
 import Footer from '../Footer';
-import UserTable from '../UserManagement/UserTable';
+import UserTable from '../UserManagement/CompleteTable';
 import AddUserModal from './AddUserModal';
 import { useHistory } from "react-router-dom";
 import leftIcon from '../../../../src/assets/images/ums-left-icon.svg';

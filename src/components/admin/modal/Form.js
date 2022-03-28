@@ -8,6 +8,7 @@ import { getApiUrl } from '../../utils/helper';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { exp1, exp4 } from '../../constants/regex';
 
 toast.configure();
 
@@ -35,7 +36,7 @@ function Form({ closeModal }) {
     const value = e.target.value.replace(/[^a-zA-Z ]/g, '');
     if (email) {
       handleEmailChange(e, email);
-    } else if (value.match(/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+([\s]+)*$/)) {
+    } else if (value.match(exp1)) {
       setState({
         ...state,
         [e.target.name]: e.target.value,
@@ -79,7 +80,7 @@ function Form({ closeModal }) {
 
   function handleOtherPractice(e) {
     const value = e.target.value.replace(/[^a-zA-Z ]/g, '');
-    if (value.match(/[a-zA-Z]+([\s]+)*$/)) {
+    if (value.match(exp4)) {
       setNewPractice(value);
     } else {
       setNewPractice('');
@@ -89,7 +90,7 @@ function Form({ closeModal }) {
   const handleReset = (e) => {
     e.preventDefault();
     setState({
-       ...state,
+      ...state,
       projectNameByIT: '',
       projectManager: '',
       email: '',
@@ -99,8 +100,8 @@ function Form({ closeModal }) {
   };
 
   const mailformat =
-  /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
-  
+    /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@evoketechnologies.com(\s*,\s*|\s*$))*$/;
+
   function ValidateEmail(inputText) {
     if (inputText.match(mailformat)) {
       return true;
@@ -147,7 +148,7 @@ function Form({ closeModal }) {
         .catch((err) => console.log(err.response));
     }
   }
- 
+
   return (
     <form>
       <div className='row'>
@@ -252,11 +253,11 @@ function Form({ closeModal }) {
           </button>
 
           {state.projectNameByIT &&
-          state.projectManager &&
-          state.email &&
-          state.practice.label &&
-          (state.practice.label !== 'Other' ||
-            (state.practice.label === 'Other' && newPractice)) ? (
+            state.projectManager &&
+            state.email &&
+            state.practice.label &&
+            (state.practice.label !== 'Other' ||
+              (state.practice.label === 'Other' && newPractice)) ? (
             <button
               className='form-control btn btn-primary share-btn'
               onClick={handleSubmit}

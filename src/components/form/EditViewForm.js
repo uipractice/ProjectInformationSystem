@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../admin/NavBar';
 import { getApiUrl } from '../utils/helper';
+import { exp3 } from '../constants/regex';
 
 toast.configure();
 
@@ -580,7 +581,7 @@ const dlPreqMethod = () => {
                           /[^a-zA-Z0-9 ]/g,
                           ''
                         );
-                        if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                        if (value.match(exp3)) {
                           setSecurityMeasure(value);
                         } else {
                           setSecurityMeasure((previousState) => '');
@@ -602,7 +603,7 @@ const dlPreqMethod = () => {
                           /[^a-zA-Z0-9 ]/g,
                           ''
                         );
-                        if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                        if (value.match(exp3)) {
                           setInformIT(value);
                         } else {
                           setInformIT((previousState) => '');
@@ -808,7 +809,7 @@ const dlPreqMethod = () => {
                           /[^a-zA-Z0-9 ]/g,
                           ''
                         );
-                        if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                        if (value.match(exp3)) {
                           setSecurityBreach(value);
                         } else {
                           setSecurityBreach((previousState) => '');
@@ -863,7 +864,7 @@ const dlPreqMethod = () => {
                                 /[^a-zA-Z0-9 ]/g,
                                 ''
                               );
-                              if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                              if (value.match(exp3)) {
                                 setDisasterDetails(value);
                               } else {
                                 setDisasterDetails((previousState) => '');
@@ -927,7 +928,7 @@ const dlPreqMethod = () => {
                                 /[^a-zA-Z0-9 ]/g,
                                 ''
                               );
-                              if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+                              if (value.match(exp3)) {
                                 setIsolationDetails(value);
                               } else {
                                 setIsolationDetails((previousState) => '');

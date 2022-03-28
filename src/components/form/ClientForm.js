@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../admin/NavBar';
 import { getApiUrl } from '../utils/helper';
+import { exp2, exp3 } from '../constants/regex';
 toast.configure();
 
 function ClientForm() {
@@ -223,7 +224,7 @@ function ClientForm() {
 
   function handlePlainText(e) {
     const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
-    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+    if (value.match(exp3)) {
       setState({
         ...state,
         [e.target.name]: value,
@@ -238,7 +239,7 @@ function ClientForm() {
 
   function handlePlainTextWebsite(e) {
     const value = e.target.value.replace(/[^a-zA-Z0-9./:, ]/g, '');
-    if (value.match(/[a-zA-Z0-9./:,]+([\s]+)*$/)) {
+    if (value.match(exp2)) {
       setState({
         ...state,
         [e.target.name]: value,
@@ -253,7 +254,7 @@ function ClientForm() {
 
   function handleProjectName(e) {
     const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
-    if (value.match(/[a-zA-Z0-9]+([\s]+)*$/)) {
+    if (value.match(exp3)) {
       setPrevProjectName(value);
     } else {
       setPrevProjectName('');
