@@ -1,4 +1,6 @@
 import moment from 'moment';
+import { getUser } from "../utils/userDetails";
+import { superAdmin } from '../constants/constants';
 
 export const findValue = (inputArray, reqValue) => {
     return inputArray.includes(reqValue) ? true : false
@@ -37,6 +39,22 @@ export const formData = (inputData) => {
     }
 }
 
-export const findInputValue = (state, type) =>{
+export const findInputValue = (state, type) => {
     return state ? state[type] : ''
+}
+
+export const addSerialNo = (dataArr = [], tableFilter = false) => {
+    return dataArr.map((value, index) => ({
+        ...(tableFilter ? value.original : value),
+        serial: index + 1,
+    }));
+};
+
+export const calculateHiddenColumns = (type, pset=[]) => {
+    if(type == 'dashboard'){
+        return JSON.parse(getUser()).role === superAdmin || pset.includes("deleteForm") ? [''] : ['action']
+    }
+    else if(type == 'user'){
+        return ['createdAt', 'password', 'pset', 'practiceName']
+    }
 }

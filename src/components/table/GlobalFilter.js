@@ -3,7 +3,6 @@ import { useAsyncDebounce } from 'react-table';
 import { exp3 } from '../constants/regex';
 
 function GlobalFilter({ setFilter,removeSearchValue }) {
-
   useEffect(()=>{
     if(removeSearchValue ==='empty'){
       setSearchText('');
