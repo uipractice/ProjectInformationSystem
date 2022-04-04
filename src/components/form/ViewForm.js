@@ -99,7 +99,7 @@ function ViewForm() {
 
   const handlePSet = (pType) => {
     if (userRole === superAdmin) {
-      return true
+      return false
     }
     else {
       return pset.includes(pType) ? false : true

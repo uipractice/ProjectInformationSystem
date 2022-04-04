@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../admin/NavBar';
 import { getApiUrl } from '../utils/helper';
 import { exp2, exp3 } from '../constants/regex';
+import ShowFiles from '../common/ShowFiles';
 toast.configure();
 
 function ClientForm() {
@@ -457,6 +458,13 @@ function ClientForm() {
       });
     }
   }
+
+  function handleFileImports(key) {
+    const fileState = [...fileData];
+    fileState.splice(key, 1);
+    setFileData(fileState);
+  }
+
   return (
     <div>
       <NavBar
@@ -483,8 +491,8 @@ function ClientForm() {
                     </svg>
                   </button>
                   {prevStatus === 'Pending' &&
-                  prevStatus !== 'deleted' &&
-                  !clientFormSubmitted ? (
+                    prevStatus !== 'deleted' &&
+                    !clientFormSubmitted ? (
                     <Form>
                       <Form.Group style={{ marginBottom: '40px' }}>
                         <Form.Label>Name of the project or client</Form.Label>
@@ -904,28 +912,7 @@ function ClientForm() {
                             document.getElementById('file').click()
                           }
                         />
-                        <div
-                          className={`${
-                            fileData.length <= 0 && 'no-selected-items'
-                          }
-                       ${fileData.length > 0 && 'selected-items'}`}
-                        >
-                          {fileData &&
-                            fileData.map((item, key) => (
-                              <span
-                                key={key}
-                                className='file-close-icon'
-                                onClick={() => {
-                                  const fileState = [...fileData];
-                                  fileState.splice(key, 1);
-                                  setFileData(fileState);
-                                }}
-                              >
-                                {fileData[key].name}
-                                &nbsp;&nbsp;
-                              </span>
-                            ))}
-                        </div>
+                        <ShowFiles fileData = {fileData} handleFile = {(e) => handleFileImports(e)}/>
                       </Form.Group>
 
                       <Button

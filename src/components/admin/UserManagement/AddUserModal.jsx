@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToggleButtonGroup, ToggleButton, Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -9,14 +9,14 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import showPassword from '../../../assets/images/show-password.svg'
 import hidePassword from '../../../assets/images/hide-password.svg'
-import { findValue, formData, findInputValue } from '../../commonFunctions'
+import { findValue, formData, findInputValue } from '../../common/commonFunctions'
 import { exp1 } from '../../constants/regex'
+import { commonTeams } from '../../common/commonTeams'
 
 
 toast.configure();
 
 const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false, updateToolStatus }) => {
-
   const defaultFormData1 = formData(updatedData);
 
   const [passwordImage, setPasswordImage] = useState(showPassword)
@@ -26,6 +26,14 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
     autoFill: false,
   });
   const data = updatedData.values
+  const [teams, setTeams] = useState(commonTeams)
+
+  useEffect(() => {
+    commonTeams.forEach((team) => {
+      team.label = team.label + ' Team'
+    })
+    setTeams(commonTeams)
+  }, []);
 
   function handleOnChange(e, email = false) {
     console.log('check', e);
@@ -339,28 +347,7 @@ const AddUserModal = ({ isOpen, closeModal, updatedData = false, isEdit = false,
             <div className='form-group col-md-4'>
               <label htmlFor='email'>Practice</label>
               <Autocomplete
-                options={[
-                  { label: 'BI Team', value: 1 },
-                  { label: 'Big Data Team', value: 2 },
-                  { label: 'Block Chain Team', value: 3 },
-                  { label: 'BPM Team', value: 4 },
-                  { label: 'BPO Team', value: 5 },
-                  { label: 'Data Science Team', value: 6 },
-                  { label: 'Delivery Team', value: 7 },
-                  { label: 'Java Team', value: 8 },
-                  { label: 'Microsoft Team', value: 9 },
-                  { label: 'Mobility Team', value: 10 },
-                  { label: 'Open Source Team', value: 11 },
-                  { label: 'Oracle Team', value: 12 },
-                  { label: 'Pega Team', value: 13 },
-                  { label: 'QA Team', value: 14 },
-                  { label: 'RPA Team', value: 15 },
-                  { label: 'Sales Force Team', value: 16 },
-                  { label: 'Service Now Team', value: 17 },
-                  { label: 'Support Team', value: 18 },
-                  { label: 'UI Team', value: 19 },
-                  { label: 'Other', value: 20 },
-                ]}
+                options={teams}
                 value={state.practice}
                 name="practice"
                 getOptionLabel={(option) => state.practice && !option.label ? option : option.label}

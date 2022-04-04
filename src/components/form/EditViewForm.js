@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../admin/NavBar';
 import { getApiUrl } from '../utils/helper';
 import { exp3 } from '../constants/regex';
+import ShowFiles from '../common/ShowFiles';
 
 toast.configure();
 
@@ -107,69 +108,69 @@ function EditViewForm() {
       setGDPRcomplianceSecond('outline-info');
     }
   }
-const isCyberSecConductedMethod = () => {
-  if (isCyberSecConducted === 'Yes') {
-    setCyberSecConductedFirst('info');
-    setCyberSecConductedSecond('outline-info');
-    setCyberSecConducted('Yes');
-  } else if (isCyberSecConducted === 'No') {
-    setCyberSecConductedFirst('outline-info');
-    setCyberSecConductedSecond('info');
-    setCyberSecConducted('No');
-  } else {
-    setCyberSecConductedFirst('outline-info');
-    setCyberSecConductedSecond('outline-info');
+  const isCyberSecConductedMethod = () => {
+    if (isCyberSecConducted === 'Yes') {
+      setCyberSecConductedFirst('info');
+      setCyberSecConductedSecond('outline-info');
+      setCyberSecConducted('Yes');
+    } else if (isCyberSecConducted === 'No') {
+      setCyberSecConductedFirst('outline-info');
+      setCyberSecConductedSecond('info');
+      setCyberSecConducted('No');
+    } else {
+      setCyberSecConductedFirst('outline-info');
+      setCyberSecConductedSecond('outline-info');
+    }
   }
-}
-const isIsolatedEnvMethod = () => {
-  if (isIsolatedEnvReq === 'Yes') {
-    setIsolatedEnvReqFirst('info');
-    setIsolatedEnvReqSecond('outline-info');
-    setIsolatedEnvReq('Yes');
-    setShowIsolatedDetails(true);
-  } else if (isIsolatedEnvReq === 'No') {
-    setIsolatedEnvReqFirst('outline-info');
-    setIsolatedEnvReqSecond('info');
-    setIsolatedEnvReq('No');
-    setShowIsolatedDetails(false);
-  } else {
-    setIsolatedEnvReqFirst('outline-info');
-    setIsolatedEnvReqSecond('outline-info');
-    setShowIsolatedDetails(false);
+  const isIsolatedEnvMethod = () => {
+    if (isIsolatedEnvReq === 'Yes') {
+      setIsolatedEnvReqFirst('info');
+      setIsolatedEnvReqSecond('outline-info');
+      setIsolatedEnvReq('Yes');
+      setShowIsolatedDetails(true);
+    } else if (isIsolatedEnvReq === 'No') {
+      setIsolatedEnvReqFirst('outline-info');
+      setIsolatedEnvReqSecond('info');
+      setIsolatedEnvReq('No');
+      setShowIsolatedDetails(false);
+    } else {
+      setIsolatedEnvReqFirst('outline-info');
+      setIsolatedEnvReqSecond('outline-info');
+      setShowIsolatedDetails(false);
+    }
   }
-}
-const isDisasterInsuCoveredMethod = () => {
-  if (isDisasterInsuCovered === 'Yes') {
-    setDisasterInsuCoveredFirst('info');
-    setDisasterInsuCoveredSecond('outline-info');
-    setDisasterInsuCovered('Yes');
-    setShowInsuranceDetails(true);
-  } else if (isDisasterInsuCovered === 'No') {
-    setDisasterInsuCoveredFirst('outline-info');
-    setDisasterInsuCoveredSecond('info');
-    setDisasterInsuCovered('No');
-    setShowInsuranceDetails(false);
-  } else {
-    setDisasterInsuCoveredFirst('outline-info');
-    setDisasterInsuCoveredSecond('outline-info');
-    setShowInsuranceDetails(false);
+  const isDisasterInsuCoveredMethod = () => {
+    if (isDisasterInsuCovered === 'Yes') {
+      setDisasterInsuCoveredFirst('info');
+      setDisasterInsuCoveredSecond('outline-info');
+      setDisasterInsuCovered('Yes');
+      setShowInsuranceDetails(true);
+    } else if (isDisasterInsuCovered === 'No') {
+      setDisasterInsuCoveredFirst('outline-info');
+      setDisasterInsuCoveredSecond('info');
+      setDisasterInsuCovered('No');
+      setShowInsuranceDetails(false);
+    } else {
+      setDisasterInsuCoveredFirst('outline-info');
+      setDisasterInsuCoveredSecond('outline-info');
+      setShowInsuranceDetails(false);
+    }
   }
-}
-const dlPreqMethod = () => {
-  if (isDLPreq === 'Yes') {
-    setDLPreqFirst('info');
-    setDLPreqSecond('outline-info');
-    setDLPreq('Yes');
-  } else if (isDLPreq === 'No') {
-    setDLPreqFirst('outline-info');
-    setDLPreqSecond('info');
-    setDLPreq('No');
-  } else {
-    setDLPreqFirst('outline-info');
-    setDLPreqSecond('outline-info');
-  }
+  const dlPreqMethod = () => {
+    if (isDLPreq === 'Yes') {
+      setDLPreqFirst('info');
+      setDLPreqSecond('outline-info');
+      setDLPreq('Yes');
+    } else if (isDLPreq === 'No') {
+      setDLPreqFirst('outline-info');
+      setDLPreqSecond('info');
+      setDLPreq('No');
+    } else {
+      setDLPreqFirst('outline-info');
+      setDLPreqSecond('outline-info');
+    }
 
-}
+  }
   const clientInfoFormData = () => {
     setIsNDAsignedMethod();
     isGDPRComplainceMethod();
@@ -505,10 +506,10 @@ const dlPreqMethod = () => {
       status &&
       CyberSecConducted &&
       IsolatedEnvReq &&
-      ((showInsuranceDetails  && disasterDetails) ||
-        !showInsuranceDetails ) &&
-      ((showIsolatedDetails  && isolationDetails) ||
-        !showIsolatedDetails )
+      ((showInsuranceDetails && disasterDetails) ||
+        !showInsuranceDetails) &&
+      ((showIsolatedDetails && isolationDetails) ||
+        !showIsolatedDetails)
     ) {
       return (
         <Button
@@ -541,6 +542,12 @@ const dlPreqMethod = () => {
         </Button>
       );
     }
+  }
+
+  function handleImports(key) {
+    const fileState = [...fileData];
+    fileState.splice(key, 1);
+    setFileData(fileState);
   }
 
   return (
@@ -1004,47 +1011,29 @@ const dlPreqMethod = () => {
                   </Form.Group>
 
                   <Form.Group style={{ marginBottom: '40px' }}>
-                      <Form.Label>Choose files to upload </Form.Label>
+                    <Form.Label>Choose files to upload </Form.Label>
 
-                      <br></br>
-                      <input
-                        type='file'
-                        name='fileName'
-                        id='file'
-                        accept='*.*'
-                        multiple
-                        onChange={(e) =>  addAttachment(e)}
-                        onClick={(e) => e.target.value = null}
-                        style={{ display: 'none' }}
-                      />
-                      <input
-                        type='button'
-                        value='Choose File'
-                        className='choose-btn'
-                        onClick={(e) =>
-                          document.getElementById('file').click()
-                        }
-                      />
-                    
-                      <div
-                       className={`${fileData.length <= 0 && "no-selected-items"}
-                       ${fileData.length > 0 && "selected-items"}`}>
-                        {fileData.map((item, key) => (
-                              <span
-                                key={key}
-                                className='file-close-icon'
-                                onClick={() => {
-                                  const fileState = [...fileData ];
-                                  fileState.splice(key, 1);
-                                  setFileData(fileState);
-                                }}
-                              >
-                                {fileData[key].name}
-                                &nbsp;&nbsp;
-                              </span>
-                          ))}
-                      </div>
-                    </Form.Group>
+                    <br></br>
+                    <input
+                      type='file'
+                      name='fileName'
+                      id='file'
+                      accept='*.*'
+                      multiple
+                      onChange={(e) => addAttachment(e)}
+                      onClick={(e) => e.target.value = null}
+                      style={{ display: 'none' }}
+                    />
+                    <input
+                      type='button'
+                      value='Choose File'
+                      className='choose-btn'
+                      onClick={(e) =>
+                        document.getElementById('file').click()
+                      }
+                    />
+                    <ShowFiles fileData={fileData} handleFile={(e) => handleImports(e)} />
+                  </Form.Group>
 
                   <Button
                     onClick={() => window.location.reload()}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -9,10 +9,19 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField'
+import { commonTeams } from '../../common/commonTeams';
 
 toast.configure();
 
 function EditViewForm({ isOpen, closeModal, data }) {
+  const [teams, setTeams] = useState(commonTeams)
+
+  useEffect(() => {
+    commonTeams.forEach((team) => {
+      team.label = team.label + ' Team'
+    })
+    setTeams(commonTeams)
+  }, []);
 
   function SubmitButton() {
     return (
@@ -89,28 +98,7 @@ function EditViewForm({ isOpen, closeModal, data }) {
                     <Form.Group style={{ marginBottom: '40px' }}>
                       <Form.Label>Team * </Form.Label>
                       <Autocomplete
-                        options={[
-                          { label: 'BI Team', value: 1 },
-                          { label: 'Big Data Team', value: 2 },
-                          { label: 'Block Chain Team', value: 3 },
-                          { label: 'BPM Team', value: 4 },
-                          { label: 'BPO Team', value: 5 },
-                          { label: 'Data Science Team', value: 6 },
-                          { label: 'Delivery Team', value: 7 },
-                          { label: 'Java Team', value: 8 },
-                          { label: 'Microsoft Team', value: 9 },
-                          { label: 'Mobility Team', value: 10 },
-                          { label: 'Open Source Team', value: 11 },
-                          { label: 'Oracle Team', value: 12 },
-                          { label: 'Pega Team', value: 13 },
-                          { label: 'QA Team', value: 14 },
-                          { label: 'RPA Team', value: 15 },
-                          { label: 'Sales Force Team', value: 16 },
-                          { label: 'Service Now Team', value: 17 },
-                          { label: 'Support Team', value: 18 },
-                          { label: 'UI Team', value: 19 },
-                          { label: 'Other', value: 20 },
-                        ]}
+                        options={teams}
                         value={data.team}
                         name="team"
                         getOptionLabel={(option) => data.team && option.label ? option.label : option}
